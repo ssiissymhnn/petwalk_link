@@ -82,11 +82,35 @@
               <div class="form">
                 <div class="field">
                   <div class="label">이메일</div>
-                  <input class="input" type="email" placeholder="name@example.com" value="bori.owner@email.com" />
+                  <input
+                    class="input"
+                    id="emailInput"
+                    type="email"
+                    inputmode="email"
+                    autocomplete="email"
+                    autocapitalize="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    enterkeyhint="next"
+                    placeholder="name@example.com"
+                    value="bori.owner@email.com"
+                  />
                 </div>
                 <div class="field">
                   <div class="label">비밀번호</div>
-                  <input class="input" type="password" placeholder="8자 이상" value="password" />
+                  <input
+                    class="input"
+                    id="passwordInput"
+                    type="password"
+                    inputmode="text"
+                    autocomplete="new-password"
+                    autocapitalize="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    enterkeyhint="done"
+                    placeholder="8자 이상"
+                    value="password"
+                  />
                 </div>
                 <div class="field">
                   <div class="label">약관 동의</div>
@@ -134,9 +158,18 @@
                 </div>
                 <div class="field">
                   <div class="label">중요한 기준</div>
-                  <div class="card" style="margin-top:0;">
-                    <div class="muted">안전(차도/교차로) · 혼잡도 · 그늘/수변 · 조용함</div>
-                  </div>
+                  <input
+                    class="input"
+                    id="priorityInput"
+                    type="text"
+                    inputmode="text"
+                    autocomplete="off"
+                    autocapitalize="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    placeholder="예: 안전(차도/교차로) · 혼잡도 · 그늘/수변 · 조용함"
+                    value=""
+                  />
                 </div>
                 <div class="actions">
                   <button class="cta secondary" data-nav="signup" style="flex:1;">이전</button>
@@ -165,15 +198,54 @@
                     <option>1살</option>
                     <option selected>2살</option>
                     <option>3살</option>
-                    <option>4살+</option>
+                    <option>4살</option>
+                    <option>5살</option>
+                    <option>6살</option>
+                    <option>7살</option>
+                    <option>8살</option>
+                    <option>9살</option>
+                    <option>10살</option>
+                    <option>11살</option>
+                    <option>12살</option>
+                    <option>13살</option>
+                    <option>14살</option>
+                    <option>15살</option>
+                    <option>16살</option>
+                    <option>17살</option>
+                    <option>18살</option>
+                    <option>19살</option>
+                    <option>20살</option>
+                    <option>20+</option>
                   </select>
                 </div>
                 <div class="field">
                   <div class="label">종</div>
                   <select class="select">
+                    <option>믹스견</option>
                     <option>말티즈</option>
                     <option>푸들</option>
-                    <option selected>믹스견</option>
+                    <option>포메라니안</option>
+                    <option>치와와</option>
+                    <option>시츄</option>
+                    <option>비숑프리제</option>
+                    <option>요크셔테리어</option>
+                    <option>닥스훈트</option>
+                    <option>웰시코기</option>
+                    <option>비글</option>
+                    <option>프렌치불도그</option>
+                    <option>시바이누</option>
+                    <option>보더콜리</option>
+                    <option>코커스패니얼</option>
+                    <option>골든리트리버</option>
+                    <option>래브라도리트리버</option>
+                    <option>진돗개</option>
+                    <option>사모예드</option>
+                    <option>시베리안허스키</option>
+                    <option>도베르만</option>
+                    <option>로트와일러</option>
+                    <option>셰틀랜드쉽독</option>
+                    <option>미니어처핀셔</option>
+                    <option>퍼그</option>
                     <option>기타</option>
                   </select>
                 </div>
@@ -425,6 +497,8 @@
       const tosRequired = document.getElementById("tosRequired");
       const tosChip = document.getElementById("tosChip");
       const signupNext = document.getElementById("signupNext");
+      const emailInput = document.getElementById("emailInput");
+      const passwordInput = document.getElementById("passwordInput");
       function syncTos() {
         const ok = !!(tosRequired && tosRequired.checked);
         if (tosChip) tosChip.textContent = ok ? "체크됨" : "미체크";
@@ -436,6 +510,14 @@
       }
       if (tosRequired) tosRequired.addEventListener("change", syncTos);
       syncTos();
+
+      // Improve mobile keyboard invocation in WebView/mobile browsers
+      [emailInput, passwordInput].forEach((el) => {
+        if (!el) return;
+        el.addEventListener("touchend", () => {
+          setTimeout(() => el.focus(), 0);
+        }, { passive: true });
+      });
 
       // Walk interactions
       const voiceChip = document.getElementById("voiceChip");
@@ -463,3 +545,4 @@
   </script>
 </body>
 </html>
+
