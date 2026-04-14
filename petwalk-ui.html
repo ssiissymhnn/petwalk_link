@@ -72,6 +72,13 @@
     .checkrow{display:flex;align-items:flex-start;gap:10px}
     .check{width:18px;height:18px;margin-top:2px;accent-color:var(--main)}
     .small{font-size:12px;color:var(--muted)}
+    .req{color:#19B23A;margin-left:3px;font-weight:800}
+    .grid-card{border:1px solid #000000;border-radius:14px;background:#FFFFFF;overflow:auto}
+    .matrix{width:100%;border-collapse:collapse;min-width:520px}
+    .matrix th,.matrix td{border:1px solid #000000;padding:8px 6px;text-align:center;font-size:11px}
+    .matrix th:first-child,.matrix td:first-child{text-align:left;white-space:nowrap;font-weight:700;min-width:110px}
+    .matrix th{background:#F6F6F6;font-weight:800}
+    .matrix input[type="radio"], .matrix input[type="checkbox"]{accent-color:#19B23A;width:15px;height:15px}
     /* Auth (login / signup method) — sage / cream mood */
     .view[data-view="login"],.view[data-view="signupMethod"]{
       background:#ffffff;
@@ -258,7 +265,7 @@
               <div class="progress"><span data-progress></span></div>
               <div class="form">
                 <div class="field">
-                  <div class="label">이메일</div>
+                  <div class="label">이메일 <span class="req">*</span></div>
                   <input
                     class="input"
                     id="emailInput"
@@ -274,7 +281,7 @@
                   />
                 </div>
                 <div class="field">
-                  <div class="label">비밀번호</div>
+                  <div class="label">비밀번호 <span class="req">*</span></div>
                   <input
                     class="input"
                     id="passwordInput"
@@ -290,7 +297,7 @@
                   />
                 </div>
                 <div class="field">
-                  <div class="label">약관 동의</div>
+                  <div class="label">“약관 동의”</div>
                   <div class="card" style="margin-top:0;">
                     <div class="checkrow">
                       <input class="check" id="tosRequired" type="checkbox" />
@@ -321,20 +328,52 @@
               <div class="progress"><span data-progress></span></div>
               <div class="form">
                 <div class="field">
-                  <div class="label">닉네임</div>
+                  <div class="label">닉네임 <span class="req">*</span></div>
                   <input class="input" type="text" value="보리 보호자" />
                 </div>
                 <div class="field">
-                  <div class="label">주 산책 시간대</div>
-                  <select class="select">
-                    <option>아침(6~10)</option>
-                    <option selected>저녁(18~22)</option>
-                    <option>야간(22~2)</option>
-                    <option>유동적</option>
-                  </select>
+                  <div class="label">주 산책 시간대 <span class="req">*</span></div>
+                  <div class="grid-card">
+                    <table class="matrix" aria-label="주 산책 시간대 선택">
+                      <thead>
+                        <tr>
+                          <th>구분</th>
+                          <th>4시~6시</th>
+                          <th>아침 6시~9시</th>
+                          <th>오전 9시~12시</th>
+                          <th>오후 12시~16시</th>
+                          <th>오후 16시~20시</th>
+                          <th>오후 20시~22시</th>
+                          <th>오후 22시~</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>평일</td>
+                          <td><input type="checkbox" /></td>
+                          <td><input type="checkbox" /></td>
+                          <td><input type="checkbox" /></td>
+                          <td><input type="checkbox" /></td>
+                          <td><input type="checkbox" checked /></td>
+                          <td><input type="checkbox" checked /></td>
+                          <td><input type="checkbox" /></td>
+                        </tr>
+                        <tr>
+                          <td>주말</td>
+                          <td><input type="checkbox" /></td>
+                          <td><input type="checkbox" checked /></td>
+                          <td><input type="checkbox" /></td>
+                          <td><input type="checkbox" checked /></td>
+                          <td><input type="checkbox" checked /></td>
+                          <td><input type="checkbox" /></td>
+                          <td><input type="checkbox" /></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
                 <div class="field">
-                  <div class="label">중요한 기준</div>
+                  <div class="label">산책시 중요한 기준</div>
                   <input
                     class="input"
                     id="priorityInput"
@@ -423,7 +462,7 @@
                     <option>셰틀랜드쉽독</option>
                     <option>미니어처핀셔</option>
                     <option>퍼그</option>
-                    <option>기타</option>
+                    <option>그 외</option>
                   </select>
                 </div>
                 <div class="field">
@@ -434,9 +473,62 @@
                   </select>
                 </div>
                 <div class="field">
-                  <div class="label">성격(요약)</div>
-                  <div class="card" style="margin-top:0;">
-                    <div class="muted">에너지 높음 · 자극 민감 · 탐색성 높음</div>
+                  <div class="label">성격(객관식)</div>
+                  <div class="grid-card">
+                    <table class="matrix" aria-label="강아지 성격 선택">
+                      <thead>
+                        <tr>
+                          <th>성격</th>
+                          <th>전혀 아니다</th>
+                          <th>아니다</th>
+                          <th>보통이다</th>
+                          <th>그렇다</th>
+                          <th>매우그렇다</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>활발하다</td>
+                          <td><input type="radio" name="trait-active" /></td>
+                          <td><input type="radio" name="trait-active" /></td>
+                          <td><input type="radio" name="trait-active" /></td>
+                          <td><input type="radio" name="trait-active" /></td>
+                          <td><input type="radio" name="trait-active" checked /></td>
+                        </tr>
+                        <tr>
+                          <td>소심하다</td>
+                          <td><input type="radio" name="trait-shy" checked /></td>
+                          <td><input type="radio" name="trait-shy" /></td>
+                          <td><input type="radio" name="trait-shy" /></td>
+                          <td><input type="radio" name="trait-shy" /></td>
+                          <td><input type="radio" name="trait-shy" /></td>
+                        </tr>
+                        <tr>
+                          <td>호기심 많다</td>
+                          <td><input type="radio" name="trait-curious" /></td>
+                          <td><input type="radio" name="trait-curious" /></td>
+                          <td><input type="radio" name="trait-curious" /></td>
+                          <td><input type="radio" name="trait-curious" checked /></td>
+                          <td><input type="radio" name="trait-curious" /></td>
+                        </tr>
+                        <tr>
+                          <td>낯선 환경에 민감하다</td>
+                          <td><input type="radio" name="trait-sensitive" /></td>
+                          <td><input type="radio" name="trait-sensitive" /></td>
+                          <td><input type="radio" name="trait-sensitive" checked /></td>
+                          <td><input type="radio" name="trait-sensitive" /></td>
+                          <td><input type="radio" name="trait-sensitive" /></td>
+                        </tr>
+                        <tr>
+                          <td>사회성이 좋다</td>
+                          <td><input type="radio" name="trait-social" /></td>
+                          <td><input type="radio" name="trait-social" /></td>
+                          <td><input type="radio" name="trait-social" /></td>
+                          <td><input type="radio" name="trait-social" checked /></td>
+                          <td><input type="radio" name="trait-social" /></td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
                 <div class="actions">
@@ -877,7 +969,7 @@
               </button>
               <button class="tab-hit" data-tab="pet" type="button" aria-label="반려견">
                 <span class="tab-ico" aria-hidden="true">🐕</span>
-                <span>반려견</span>
+                <span>펫로그</span>
               </button>
               <button class="tab-hit" data-tab="home" type="button" aria-label="홈">
                 <span class="tab-ico" aria-hidden="true">⌂</span>
