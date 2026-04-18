@@ -8,122 +8,147 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet">
   <style>
-    :root { --main:#19B23A; --point:#00E933; --soft-mint:#C9FAD4; --black:#000000; --white:#FFFFFF; --sub:#AAAAAA; --sep:#F6F6F6; --bg:#FFFFFF; --card:#FFFFFF; --text:#000000; --muted:var(--sub); --primary:var(--main); --primary-dark:var(--main); --line:#000000; --shadow:0 16px 36px rgba(0,0,0,.14); --radius:22px; }
+    :root { --main:#19B23A; --point:#00E933; --soft-mint:#C9FAD4; --black:#1a1a1a; --white:#FFFFFF; --sub:#999999; --sep:#F2F3F5; --bg:#F7F8FA; --card:#FFFFFF; --text:#1a1a1a; --muted:var(--sub); --primary:var(--main); --primary-dark:#0fa34e; --line:rgba(0,0,0,.08); --shadow:0 8px 28px rgba(0,0,0,.08); --radius:16px; }
     *{box-sizing:border-box} body{margin:0;font-family:"Pretendard",sans-serif;background:var(--bg);color:var(--text)}
     .wrap{max-width:1320px;margin:0 auto;padding:28px 22px 40px}.title{font-size:24px;font-weight:800;margin:8px 0 22px}
     .phones{display:grid;grid-template-columns:minmax(320px, 420px);justify-content:center}
-    .phone{background:var(--card);border-radius:34px;padding:18px 14px 16px;min-height:760px;box-shadow:var(--shadow);border:1px solid var(--line);position:relative;overflow:hidden}
-    .screen{border-radius:28px;background:var(--white);height:100%;padding:12px;position:relative}
+    .phone{background:var(--card);border-radius:34px;padding:18px 14px 16px;min-height:760px;box-shadow:0 12px 40px rgba(0,0,0,.10);border:1px solid rgba(0,0,0,.06);position:relative;overflow:hidden}
+    .screen{border-radius:28px;background:var(--bg);height:100%;padding:12px;position:relative}
     .row{display:flex;align-items:center;justify-content:space-between}.muted{color:var(--muted);font-size:12px}.h2{font-size:20px;font-weight:800;margin:0}
     .app-header{position:absolute;left:12px;right:12px;top:10px;z-index:8;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
     .app-logo{font-family:"Madimi One", system-ui, sans-serif;font-size:22px;letter-spacing:.02em;color:var(--main);pointer-events:none}
-    .chip{font-size:12px;background:var(--point);color:var(--black);padding:7px 10px;border-radius:999px;font-weight:700}
-    .card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 8px 20px rgba(0,0,0,.08);padding:12px;margin-top:10px}
-    .card.clickable{cursor:pointer;transition:transform .08s ease, box-shadow .08s ease, border-color .08s ease}
-    .card.clickable:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(0,0,0,.16);border-color:var(--point)}
+    .chip{font-size:12px;background:rgba(25,178,58,.1);color:var(--main);padding:7px 10px;border-radius:999px;font-weight:700}
+    .card{background:var(--white);border:1px solid rgba(0,0,0,.06);border-radius:var(--radius);box-shadow:0 2px 8px rgba(0,0,0,.04);padding:12px;margin-top:10px}
+    .card.clickable{cursor:pointer;transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease}
+    .card.clickable:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(25,178,58,.12);border-color:rgba(25,178,58,.3)}
     .card.clickable:active{transform:translateY(0)}
-    .map{height:134px;border-radius:18px;background:radial-gradient(circle at 20% 30%,var(--point) 0 9%,transparent 10%),radial-gradient(circle at 72% 68%,var(--main) 0 11%,transparent 12%),linear-gradient(130deg,var(--white) 0%,var(--white) 100%);position:relative;overflow:hidden}
-    .map:before,.map:after{content:"";position:absolute;border-radius:999px}.map:before{width:220px;height:220px;top:-94px;left:-70px;border:12px solid rgba(80,157,255,.28)}.map:after{width:220px;height:220px;bottom:-116px;right:-84px;border:10px dashed rgba(255,200,87,.6)}
-    .metric{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.metric .item{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:8px;text-align:center}
+    .map{height:134px;border-radius:16px;background:radial-gradient(circle at 20% 30%,rgba(25,178,58,.12) 0 9%,transparent 10%),radial-gradient(circle at 72% 68%,rgba(15,163,78,.1) 0 11%,transparent 12%),linear-gradient(130deg,var(--sep) 0%,#fff 100%);position:relative;overflow:hidden}
+    .map:before,.map:after{content:"";position:absolute;border-radius:999px}.map:before{width:220px;height:220px;top:-94px;left:-70px;border:12px solid rgba(25,178,58,.08)}.map:after{width:220px;height:220px;bottom:-116px;right:-84px;border:10px dashed rgba(25,178,58,.06)}
+    .metric{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.metric .item{background:var(--bg);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:8px;text-align:center}
     .big{font-size:40px;font-weight:900;letter-spacing:1px;line-height:1.05;text-align:center;margin:8px 0 10px}
-    .bar{background:var(--white);border-radius:99px;height:8px;margin:6px 0;overflow:hidden;border:1px solid var(--line)}.bar>span{display:block;height:100%;width:62%;background:linear-gradient(90deg,var(--primary),var(--primary-dark))}
-    .cta{margin-top:10px;width:100%;border:none;border-radius:14px;padding:12px;font-size:15px;font-weight:800;cursor:pointer;background:var(--main);color:var(--white)}
+    .bar{background:var(--sep);border-radius:99px;height:8px;margin:6px 0;overflow:hidden;border:none}.bar>span{display:block;height:100%;width:62%;background:linear-gradient(90deg,var(--primary),var(--primary-dark));border-radius:99px}
+    .cta{margin-top:10px;width:100%;border:none;border-radius:12px;padding:12px;font-size:15px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#19B23A 0%,#0fa34e 100%);color:var(--white);box-shadow:0 4px 12px rgba(25,178,58,.25);transition:transform .1s ease,box-shadow .1s ease}
+    .cta:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(25,178,58,.3)}
+    .cta:active{transform:translateY(0);box-shadow:0 2px 8px rgba(25,178,58,.2)}
     /* Bottom nav (ref image style) */
-    .tabs{position:absolute;left:0;right:0;bottom:0;background:var(--white);border-top:1px solid var(--sep);padding:8px 10px 10px;box-shadow:0 -6px 18px rgba(0,0,0,.06)}
+    .tabs{position:absolute;left:0;right:0;bottom:0;background:var(--white);border-top:1px solid rgba(0,0,0,.06);padding:8px 10px 10px;box-shadow:0 -4px 12px rgba(0,0,0,.04)}
     .tabs-inner{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;gap:2px;max-width:100%}
     .tab-hit{background:none;border:none;padding:6px 2px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--sub);font-size:10px;font-weight:700;-webkit-tap-highlight-color:transparent}
     .tab-hit .tab-ico{font-size:20px;line-height:1;opacity:.8}
     .tab-hit.active{color:var(--main)}
     .tab-hit.active .tab-ico{opacity:1}
-    .floating-reroute{position:absolute;left:16px;right:16px;bottom:124px;background:var(--white);border-radius:16px;border:1px solid var(--line);box-shadow:0 12px 25px rgba(0,0,0,.18);padding:10px}
-    .btns{display:flex;gap:8px;margin-top:8px}.btn{flex:1;border-radius:10px;padding:9px 0;font-size:12px;font-weight:700;border:1px solid var(--line);background:var(--white);color:var(--black)}.btn.primary{background:var(--main);color:var(--white);border-color:var(--main)}
+    .view[data-view="walk"]{position:relative}
+    .reroute-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:20;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(2px)}
+    .reroute-overlay.show{display:flex}
+    .reroute-modal{background:var(--white);border-radius:20px;border:1px solid rgba(0,0,0,.06);box-shadow:0 16px 40px rgba(0,0,0,.18);padding:24px 20px;width:100%;max-width:320px;text-align:center;animation:modalIn .25s ease}
+    @keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+    .reroute-modal-icon{font-size:40px;margin-bottom:12px}
+    .reroute-modal-title{font-size:18px;font-weight:800;color:var(--text);margin-bottom:6px}
+    .reroute-modal-reason{font-size:13px;color:var(--main);font-weight:700;margin-bottom:4px}
+    .reroute-modal-detail{font-size:12px;color:var(--sub);margin-bottom:20px;line-height:1.5}
+    .reroute-btns{display:flex;flex-direction:column;gap:10px}
+    .reroute-btn{width:100%;border-radius:14px;padding:16px;font-size:16px;font-weight:800;cursor:pointer;border:none;transition:transform .1s ease,box-shadow .1s ease}
+    .reroute-btn:hover{transform:translateY(-1px)}
+    .reroute-btn:active{transform:translateY(0)}
+    .reroute-btn.primary{background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;box-shadow:0 4px 14px rgba(25,178,58,.25)}
+    .reroute-btn.secondary{background:var(--white);color:var(--text);border:1px solid rgba(0,0,0,.1)}
+    .reroute-btn.secondary:hover{background:var(--sep)}
+    .btns{display:flex;gap:8px;margin-top:8px}.btn{flex:1;border-radius:10px;padding:9px 0;font-size:12px;font-weight:700;border:1px solid rgba(0,0,0,.08);background:var(--white);color:var(--text);transition:background .1s ease}.btn:hover{background:var(--sep)}.btn.primary{background:linear-gradient(135deg,#19B23A,#0fa34e);color:var(--white);border-color:transparent;box-shadow:0 2px 8px rgba(25,178,58,.2)}
     .views{height:100%;padding-top:42px}
     .screen--tabs .views{padding-bottom:74px}
     .view{display:none;height:100%}
     .view.active{display:block}
-    .view[data-view="walk"], .view[data-view="walkHome"]{overflow:auto}
-    .home-bg{background:var(--white);border-radius:20px;padding:8px}
+    .view[data-view="walk"]{overflow:hidden}
+    .view[data-view="walkHome"]{overflow:auto}
+    .home-bg{background:var(--white);border-radius:20px;padding:8px;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04)}
     .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-    .iconbtn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px 10px;font-weight:800;color:var(--black);cursor:pointer}
+    .iconbtn{border:1px solid rgba(0,0,0,.08);background:#fff;border-radius:10px;padding:8px 10px;font-weight:800;color:var(--text);cursor:pointer;transition:background .1s ease}
+    .iconbtn:hover{background:var(--sep)}
     .hint{font-size:12px;color:var(--muted);margin-top:8px}
     .flow{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
-    .flow-step{background:#ffffff;border:1px solid #000000;border-radius:6px;padding:8px 10px;font-size:13px;font-weight:700}
-    .flow-step.active{background:#00E933;border:1px solid #000000}
-    .hero{margin-top:16px;padding:14px;border:1px solid var(--line);border-radius:18px;background:#fff}
+    .flow-step{background:#ffffff;border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:8px 10px;font-size:13px;font-weight:700}
+    .flow-step.active{background:rgba(25,178,58,.1);border:1px solid var(--main);color:var(--main)}
+    .hero{margin-top:16px;padding:14px;border:1px solid rgba(0,0,0,.06);border-radius:16px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.04)}
     .form{margin-top:10px}
     .field{margin-top:10px}
     .label{font-size:12px;font-weight:800;color:var(--black);margin-bottom:6px}
     .input, .select{
       width:100%;
-      border:1px solid var(--line);
-      border-radius:14px;
+      border:1px solid rgba(0,0,0,.1);
+      border-radius:12px;
       padding:11px 12px;
       background:#fff;
       outline:none;
       font-weight:700;
       color:var(--text);
+      transition:border-color .15s ease,box-shadow .15s ease;
     }
+    .input:focus,.select:focus{border-color:var(--main);box-shadow:0 0 0 3px rgba(25,178,58,.1)}
     .select{appearance:none}
     .actions{display:flex;gap:10px;margin-top:14px}
-    .cta.secondary{background:#ffffff;color:var(--black);border:1px solid var(--line)}
-    .progress{height:10px;border-radius:999px;background:#ffffff;overflow:hidden;border:1px solid var(--line);margin-top:10px}
-    .progress > span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--primary),var(--primary-dark));transition:width .18s ease}
+    .cta.secondary{background:#ffffff;color:var(--text);border:1px solid rgba(0,0,0,.08);box-shadow:none}
+    .cta.secondary:hover{background:var(--sep)}
+    .progress{height:8px;border-radius:999px;background:var(--sep);overflow:hidden;border:none;margin-top:10px}
+    .progress > span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--primary),var(--primary-dark));transition:width .18s ease;border-radius:999px}
     .tabs.hidden{display:none}
     .checkrow{display:flex;align-items:flex-start;gap:10px}
     .check{width:18px;height:18px;margin-top:2px;accent-color:var(--main)}
     .small{font-size:12px;color:var(--muted)}
-    .req{color:#19B23A;margin-left:3px;font-weight:800}
-    .grid-card{border:1px solid #000000;border-radius:14px;background:#FFFFFF;overflow:auto}
+    .req{color:var(--main);margin-left:3px;font-weight:800}
+    .grid-card{border:1px solid rgba(0,0,0,.06);border-radius:14px;background:#FFFFFF;overflow:auto;box-shadow:0 2px 8px rgba(0,0,0,.04)}
     .matrix{width:100%;border-collapse:collapse;min-width:520px}
-    .matrix th,.matrix td{border:1px solid #000000;padding:8px 6px;text-align:center;font-size:11px}
+    .matrix th,.matrix td{border:1px solid rgba(0,0,0,.06);padding:8px 6px;text-align:center;font-size:11px}
     .matrix th:first-child,.matrix td:first-child{text-align:left;white-space:nowrap;font-weight:700;min-width:110px}
-    .matrix th{background:#F6F6F6;font-weight:800}
+    .matrix th{background:var(--sep);font-weight:800}
     .matrix input[type="radio"], .matrix input[type="checkbox"]{accent-color:#19B23A;width:15px;height:15px}
     /* Auth (login / signup method) — sage / cream mood */
     .view[data-view="login"],.view[data-view="signupMethod"]{
       background:#ffffff;
-      border-radius:20px;height:100%;padding:22px 18px 24px;overflow:auto;border:1px solid rgba(83,127,94,.12);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
+      border-radius:20px;height:100%;padding:22px 18px 24px;overflow:auto;border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 2px 8px rgba(0,0,0,.04);
     }
-    .auth-login-title{text-align:center;font-size:28px;font-weight:800;letter-spacing:.06em;margin:8px 0 20px;color:var(--black)}
-    .auth-seg{display:grid;grid-template-columns:1fr 1fr;border-radius:10px;overflow:hidden;border:1px solid #19B23A;margin:0 auto 14px;max-width:240px;background:#FFFFFF}
-    .auth-seg-item{border:none;padding:8px 8px;font-size:12px;font-weight:700;cursor:pointer;background:transparent;color:#000000}
-    .auth-seg-item.active{background:#19B23A;color:#FFFFFF;box-shadow:none}
-    .auth-input{width:100%;border:1px solid rgba(83,127,94,.28);border-radius:12px;padding:14px 12px;font-size:15px;margin-bottom:10px;outline:none;box-sizing:border-box;background:rgba(255,255,255,.92)}
-    .auth-input:focus{border-color:var(--main);box-shadow:0 0 0 3px rgba(0,0,0,.12)}
-    .auth-input::placeholder{color:#000000}
-    .auth-checkrow{display:flex;align-items:center;gap:8px;margin:6px 0 18px;font-size:13px;color:#000000}
+    .auth-login-title{text-align:center;font-size:28px;font-weight:800;letter-spacing:.06em;margin:8px 0 20px;color:var(--text)}
+    .auth-input{width:100%;border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:14px 12px;font-size:15px;margin-bottom:10px;outline:none;box-sizing:border-box;background:#fff;transition:border-color .15s ease,box-shadow .15s ease}
+    .auth-input:focus{border-color:var(--main);box-shadow:0 0 0 3px rgba(25,178,58,.1)}
+    .auth-input::placeholder{color:var(--sub)}
+    .auth-checkrow{display:flex;align-items:center;gap:8px;margin:6px 0 18px;font-size:13px;color:var(--text)}
     .auth-checkrow input{width:16px;height:16px;accent-color:var(--main)}
-    .auth-btn-black{width:100%;border:none;border-radius:12px;padding:15px;font-size:16px;font-weight:800;background:var(--main);color:#fff;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.22)}
-    .auth-links{display:flex;align-items:center;justify-content:center;gap:10px;margin:18px 0 22px;font-size:13px;color:#000000;flex-wrap:wrap}
-    .auth-links .sep{color:rgba(83,127,94,.25);font-weight:300}
-    .auth-link-btn{border:none;background:none;padding:0;font:inherit;color:var(--black);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+    .auth-btn-black{width:100%;border:none;border-radius:12px;padding:15px;font-size:16px;font-weight:800;background:linear-gradient(135deg,#19B23A 0%,#0fa34e 100%);color:#fff;cursor:pointer;box-shadow:0 4px 14px rgba(25,178,58,.25);transition:transform .1s ease,box-shadow .1s ease}
+    .auth-btn-black:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(25,178,58,.3)}
+    .auth-btn-black:active{transform:translateY(0)}
+    .auth-links{display:flex;align-items:center;justify-content:center;gap:10px;margin:18px 0 22px;font-size:13px;color:var(--sub);flex-wrap:wrap}
+    .auth-links .sep{color:rgba(0,0,0,.15);font-weight:300}
+    .auth-link-btn{border:none;background:none;padding:0;font:inherit;color:var(--text);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
     .auth-social-stack{display:flex;flex-direction:column;gap:10px;margin-top:8px}
-    .auth-social-btn{display:flex;align-items:center;gap:12px;width:100%;border:none;border-radius:10px;padding:14px 14px;font-size:15px;font-weight:700;cursor:pointer;text-align:left}
-    .auth-social-btn .ico{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0}
-    .auth-social-btn.naver{background:var(--main);color:#fff}
-    .auth-social-btn.naver .ico{background:#fff;color:var(--black)}
-    .auth-social-btn.facebook{background:var(--point);color:#000}
-    .auth-social-btn.facebook .ico{background:#fff;color:#000}
-    .auth-social-btn.google{background:#fff;color:#000;border:1px solid #000}
-    .auth-social-btn.google .ico{background:#fff;border:1px solid #000;color:#000;font-weight:900;font-size:18px}
-    .view[data-view="login"] .auth-social-btn.naver,
-    .view[data-view="login"] .auth-social-btn.google,
-    .view[data-view="login"] .auth-social-btn.facebook{background:#FFFFFF;color:#000000;border:1px solid #19B23A}
-    .view[data-view="login"] .auth-social-btn.naver .ico,
-    .view[data-view="login"] .auth-social-btn.google .ico,
-    .view[data-view="login"] .auth-social-btn.facebook .ico{background:#FFFFFF;color:#000000;border:1px solid #19B23A}
-    .auth-social-btn.email-signup{background:var(--main);color:#fff;justify-content:flex-start}
-    .auth-social-btn.email-signup .ico{background:#fff;color:var(--black);font-size:16px}
-    .auth-back{position:absolute;left:18px;top:18px;border:1px solid #000000;background:#FFFFFF;border-radius:12px;width:40px;height:40px;font-size:20px;font-weight:700;cursor:pointer;color:#000000}
+    .auth-social-btn{display:flex;align-items:center;gap:12px;width:100%;border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:14px 14px;font-size:15px;font-weight:700;cursor:pointer;text-align:left;background:#fff;color:var(--text);transition:background .1s ease,border-color .1s ease}
+    .auth-social-btn:hover{background:var(--sep);border-color:rgba(0,0,0,.1)}
+    .auth-social-btn .ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0}
+    .auth-social-btn.naver{background:#03C75A;color:#fff;border-color:transparent}
+    .auth-social-btn.naver .ico{background:rgba(255,255,255,.2);color:#fff}
+    .auth-social-btn.naver:hover{background:#02b351}
+    .auth-social-btn.facebook{background:#1877F2;color:#fff;border-color:transparent}
+    .auth-social-btn.facebook .ico{background:rgba(255,255,255,.2);color:#fff}
+    .auth-social-btn.facebook:hover{background:#1565d8}
+    .auth-social-btn.google{background:#fff;color:var(--text);border:1px solid rgba(0,0,0,.1)}
+    .auth-social-btn.google .ico{background:var(--sep);color:var(--text);font-weight:900;font-size:18px}
+    .view[data-view="login"] .auth-social-btn.naver{background:#03C75A;color:#fff;border-color:transparent}
+    .view[data-view="login"] .auth-social-btn.naver .ico{background:rgba(255,255,255,.2);color:#fff}
+    .view[data-view="login"] .auth-social-btn.google{background:#fff;color:var(--text);border:1px solid rgba(0,0,0,.1)}
+    .view[data-view="login"] .auth-social-btn.google .ico{background:var(--sep);color:var(--text)}
+    .view[data-view="login"] .auth-social-btn.facebook{background:#1877F2;color:#fff;border-color:transparent}
+    .view[data-view="login"] .auth-social-btn.facebook .ico{background:rgba(255,255,255,.2);color:#fff}
+    .auth-social-btn.email-signup{background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;justify-content:flex-start;border-color:transparent;box-shadow:0 4px 12px rgba(25,178,58,.2)}
+    .auth-social-btn.email-signup .ico{background:rgba(255,255,255,.2);color:#fff;font-size:16px}
+    .auth-back{position:absolute;left:18px;top:18px;border:1px solid rgba(0,0,0,.08);background:#FFFFFF;border-radius:10px;width:40px;height:40px;font-size:20px;font-weight:700;cursor:pointer;color:var(--text);transition:background .1s ease}
+    .auth-back:hover{background:var(--sep)}
     .view[data-view="signupMethod"]{position:relative;padding-top:56px}
-    .auth-method-title{text-align:center;font-size:16px;font-weight:800;margin:0 0 22px;line-height:1.4;color:var(--black)}
-    .auth-footer-note{text-align:center;font-size:13px;color:#000000;margin-top:22px;line-height:1.5}
-    .auth-inline-link{border:none;background:none;padding:0;font:inherit;font-weight:800;color:var(--black);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+    .auth-method-title{text-align:center;font-size:16px;font-weight:800;margin:0 0 22px;line-height:1.4;color:var(--text)}
+    .auth-footer-note{text-align:center;font-size:13px;color:var(--sub);margin-top:22px;line-height:1.5}
+    .auth-inline-link{border:none;background:none;padding:0;font:inherit;font-weight:800;color:var(--main);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
     /* Email signup (PetWalk 시작하기) — same mood + top back */
-    .view[data-view="signup"]{background:#ffffff;border-radius:20px;padding:12px;height:100%;overflow:auto;border:1px solid #000000}
+    .view[data-view="signup"]{background:#ffffff;border-radius:20px;padding:12px;height:100%;overflow:auto;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04)}
     .view[data-view="signup"] .topbar{margin-bottom:6px}
-    .view[data-view="signup"] .chip{background:var(--soft-mint);color:#000000}
+    .view[data-view="signup"] .chip{background:rgba(25,178,58,.1);color:var(--main)}
     /* 마이페이지 */
     .mypage-screen{padding:0;height:100%;overflow:auto}
     .mypage-profile{
@@ -213,40 +238,43 @@
 
     .mypage-sub-screen{padding:4px 2px 8px;height:100%;overflow:auto}
     /* Explore map */
-    .explore-shell{height:100%;display:flex;flex-direction:column;position:relative;background:#FFFFFF;border-radius:20px;overflow:hidden}
-    .explore-head{padding:10px 10px 8px;border-bottom:1px solid #000000;background:#FFFFFF}
+    .explore-shell{height:100%;display:flex;flex-direction:column;position:relative;background:#FFFFFF;border-radius:20px;overflow:hidden;border:1px solid rgba(0,0,0,.06)}
+    .explore-head{padding:10px 10px 8px;border-bottom:1px solid rgba(0,0,0,.06);background:#FFFFFF}
     .explore-location-wrap{position:relative}
-    .explore-location-btn{border:none;background:none;padding:0;display:flex;align-items:center;gap:6px;font-size:16px;font-weight:900;color:#000000;cursor:pointer}
-    .explore-location-arrow{width:22px;height:22px;border-radius:999px;background:#FFFFFF;border:1px solid #000000;display:flex;align-items:center;justify-content:center;font-size:12px;color:#000000}
-    .explore-location-menu{position:absolute;top:32px;left:0;right:0;background:#FFFFFF;border:1px solid #000000;border-radius:12px;box-shadow:0 10px 20px rgba(0,0,0,.12);padding:6px;display:none;z-index:3}
+    .explore-location-btn{border:none;background:none;padding:0;display:flex;align-items:center;gap:6px;font-size:16px;font-weight:900;color:var(--text);cursor:pointer}
+    .explore-location-arrow{width:22px;height:22px;border-radius:999px;background:var(--sep);border:none;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text)}
+    .explore-location-menu{position:absolute;top:32px;left:0;right:0;background:#FFFFFF;border:1px solid rgba(0,0,0,.06);border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.1);padding:6px;display:none;z-index:3}
     .explore-location-menu.show{display:block}
-    .explore-location-option{width:100%;border:none;background:#FFFFFF;padding:9px 10px;border-radius:10px;text-align:left;font-size:13px;font-weight:700;color:#000000;cursor:pointer}
-    .explore-location-option.active,.explore-location-option:hover{background:#00E933}
+    .explore-location-option{width:100%;border:none;background:#FFFFFF;padding:9px 10px;border-radius:10px;text-align:left;font-size:13px;font-weight:700;color:var(--text);cursor:pointer;transition:background .1s ease}
+    .explore-location-option.active{background:rgba(25,178,58,.1);color:var(--main)}
+    .explore-location-option:hover{background:var(--sep)}
     .explore-cats{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}
-    .explore-cat-btn{border:1px solid #000000;background:#FFFFFF;border-radius:12px;padding:8px 4px 7px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:700;color:#000000;cursor:pointer}
+    .explore-cat-btn{border:1px solid rgba(0,0,0,.06);background:#FFFFFF;border-radius:12px;padding:8px 4px 7px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:700;color:var(--text);cursor:pointer;transition:background .1s ease,border-color .1s ease}
     .explore-cat-btn .ico{width:22px;height:22px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:12px}
-    .explore-cat-btn.active{border-color:#000000;background:#00E933;color:#000000}
-    .explore-map-wrap{position:relative;flex:1;min-height:300px;background:#FFFFFF}
-    .explore-map{position:absolute;inset:0;overflow:hidden;touch-action:none;background:#FFFFFF}
+    .explore-cat-btn.active{border-color:var(--main);background:rgba(25,178,58,.1);color:var(--main)}
+    .explore-map-wrap{position:relative;flex:1;min-height:300px;background:var(--sep)}
+    .explore-map{position:absolute;inset:0;overflow:hidden;touch-action:none;background:var(--sep)}
     .explore-map-grid{position:absolute;inset:0;background:
-      linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px),
-      linear-gradient(0deg, rgba(255,255,255,.3) 1px, transparent 1px),
-      linear-gradient(180deg,#FFFFFF 0%,#00E933 45%,#FFFFFF 100%);
+      linear-gradient(90deg, rgba(25,178,58,.06) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(25,178,58,.06) 1px, transparent 1px),
+      linear-gradient(180deg,#F7F8FA 0%,rgba(25,178,58,.08) 45%,#F7F8FA 100%);
       background-size:34px 34px,34px 34px,100% 100%;
       transform-origin:center center;
     }
-    .explore-river{position:absolute;left:10%;right:8%;top:42%;height:22%;background:rgba(106,168,220,.65);border-radius:999px;filter:blur(.5px);transform:rotate(-8deg)}
-    .explore-marker{position:absolute;width:26px;height:26px;border-radius:50%;border:2px solid #FFFFFF;box-shadow:0 2px 6px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;font-size:13px;color:#FFFFFF}
+    .explore-river{position:absolute;left:10%;right:8%;top:42%;height:22%;background:rgba(106,168,220,.45);border-radius:999px;filter:blur(1px);transform:rotate(-8deg)}
+    .explore-marker{position:absolute;width:26px;height:26px;border-radius:50%;border:2px solid #FFFFFF;box-shadow:0 2px 8px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;font-size:13px;color:#FFFFFF}
     .explore-map-zoom{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px;z-index:2}
-    .explore-zoom-btn{width:34px;height:34px;border:1px solid #000000;background:#FFFFFF;border-radius:10px;font-size:18px;font-weight:800;color:#000000;cursor:pointer}
-    .explore-bottom-sheet{position:absolute;left:0;right:0;bottom:0;background:#FFFFFF;border-top:1px solid #000000;border-radius:16px 16px 0 0;box-shadow:0 -8px 20px rgba(0,0,0,.14);transform:translateY(calc(100% - 56px));transition:transform .25s ease;z-index:4;max-height:56%}
+    .explore-zoom-btn{width:34px;height:34px;border:1px solid rgba(0,0,0,.08);background:#FFFFFF;border-radius:10px;font-size:18px;font-weight:800;color:var(--text);cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.06);transition:background .1s ease}
+    .explore-zoom-btn:hover{background:var(--sep)}
+    .explore-bottom-sheet{position:absolute;left:0;right:0;bottom:0;background:#FFFFFF;border-top:1px solid rgba(0,0,0,.06);border-radius:16px 16px 0 0;box-shadow:0 -6px 16px rgba(0,0,0,.08);transform:translateY(calc(100% - 56px));transition:transform .25s ease;z-index:4;max-height:56%}
     .explore-bottom-sheet.open{transform:translateY(0)}
     .explore-bottom-sheet.full{top:0;bottom:0;max-height:none;border-radius:0;transform:translateY(0)}
     .explore-sheet-toggle{width:100%;border:none;background:none;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
-    .explore-sheet-toggle .left{display:flex;align-items:center;gap:8px;font-weight:800;color:#000000}
-    .explore-sheet-toggle .right{font-size:12px;color:#000000;font-weight:700}
+    .explore-sheet-toggle .left{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--text)}
+    .explore-sheet-toggle .right{font-size:12px;color:var(--main);font-weight:700}
     .explore-sheet-list{padding:0 12px 12px;max-height:220px;overflow:auto}
-    .explore-list-item{border:1px solid #000000;border-radius:12px;padding:10px;margin-bottom:8px;background:#FFFFFF}
+    .explore-list-item{border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:10px;margin-bottom:8px;background:#FFFFFF;box-shadow:0 1px 4px rgba(0,0,0,.04);transition:border-color .1s ease}
+    .explore-list-item:hover{border-color:rgba(25,178,58,.2)}
     .explore-list-item .name{font-size:13px;font-weight:800}
     .explore-list-item .meta{font-size:11px;color:var(--sub);margin-top:3px}
 
@@ -256,29 +284,147 @@
     .walk-home::-webkit-scrollbar-thumb{background:var(--sep);border-radius:999px}
     .walk-home::-webkit-scrollbar-track{background:transparent}
     .walk-section{padding:14px 12px}
-    .walk-section + .walk-section{border-top:10px solid var(--sep)}
+    .walk-section + .walk-section{border-top:8px solid var(--sep)}
     .walk-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .walk-section-title{font-size:14px;font-weight:800;color:var(--black)}
-    .walk-section-more{font-size:12px;font-weight:700;color:var(--sub);cursor:pointer;background:none;border:none;padding:0}
+    .walk-section-more{font-size:12px;font-weight:700;color:var(--main);cursor:pointer;background:none;border:none;padding:0}
     .hscroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
     .hscroll::-webkit-scrollbar{height:6px}
     .hscroll::-webkit-scrollbar-thumb{background:var(--sep);border-radius:999px}
-    .hcard{min-width:210px;max-width:210px;scroll-snap-align:start;border:1px solid rgba(0,0,0,.12);border-radius:14px;overflow:hidden;background:#fff}
-    .hcard-img{height:110px;background:linear-gradient(135deg,var(--sep) 0%, #FFFFFF 60%);position:relative}
+    .hcard{min-width:210px;max-width:210px;scroll-snap-align:start;border:1px solid rgba(0,0,0,.06);border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
+    .hcard:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(25,178,58,.1);border-color:rgba(25,178,58,.2)}
+    .hcard-img{height:110px;background:linear-gradient(135deg,rgba(25,178,58,.06) 0%, var(--sep) 60%);position:relative}
     .hcard-rank{position:absolute;left:10px;bottom:8px;background:var(--main);color:#fff;font-size:12px;font-weight:900;border-radius:999px;padding:4px 8px}
     .hcard-body{padding:10px}
     .hcard-title{font-size:13px;font-weight:800;color:var(--black);line-height:1.2}
     .hcard-meta{font-size:11px;color:var(--sub);margin-top:6px}
     .hcard-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-    .tag{font-size:10px;font-weight:800;padding:4px 8px;border-radius:999px;background:var(--sep);color:var(--black)}
-    .walk-reco .tag{background:var(--soft-mint)}
-    .walk-picked{border:1px solid #000000;border-radius:14px;padding:10px;background:#FFFFFF;margin:0 12px 12px;display:none}
+    .tag{font-size:10px;font-weight:800;padding:4px 8px;border-radius:999px;background:var(--sep);color:var(--text)}
+    .walk-reco .tag{background:rgba(25,178,58,.08);color:var(--main)}
+    .walk-picked{border:1px solid rgba(25,178,58,.2);border-radius:14px;padding:10px;background:#FFFFFF;margin:0 12px 12px;display:none;box-shadow:0 2px 8px rgba(25,178,58,.08)}
     .walk-picked.show{display:block}
-    .walk-picked-title{font-size:13px;font-weight:800;color:#000000}
+    .walk-picked-title{font-size:13px;font-weight:800;color:var(--text)}
     .walk-picked-meta{font-size:11px;color:var(--sub);margin-top:5px}
-    .walk-picked-cta{margin-top:8px;width:100%;border:none;border-radius:10px;padding:10px 0;background:#19B23A;color:#FFFFFF;font-weight:800;cursor:pointer}
+    .walk-picked-cta{margin-top:8px;width:100%;border:none;border-radius:10px;padding:10px 0;background:linear-gradient(135deg,#19B23A,#0fa34e);color:#FFFFFF;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(25,178,58,.2);transition:transform .1s ease}
+    .walk-picked-cta:hover{transform:translateY(-1px)}
     .view[data-view="pet"] .chip,
-    .view[data-view="home"] .chip{background:var(--soft-mint)}
+    .view[data-view="home"] .chip{background:rgba(25,178,58,.1);color:var(--main)}
+    /* Petlog */
+    .petlog-screen{padding:0;height:100%;overflow:auto}
+    .petlog-profile-card{
+      background:linear-gradient(135deg, #19B23A 0%, #0fa34e 40%, #00E933 100%);
+      border-radius:20px;padding:22px 18px;margin-bottom:14px;position:relative;overflow:hidden;
+    }
+    .petlog-profile-card::before{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.08);top:-30px;right:-20px}
+    .petlog-profile-inner{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
+    .petlog-avatar{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+    .petlog-profile-info{flex:1;color:#fff}
+    .petlog-profile-name{font-size:18px;font-weight:800;letter-spacing:.02em}
+    .petlog-profile-sub{font-size:12px;opacity:.82;margin-top:2px;font-weight:500}
+    .petlog-add-btn{background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:10px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap}
+    .petlog-add-btn:active{background:rgba(255,255,255,.35)}
+
+    /* Calendar */
+    .cal-header{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:12px}
+    .cal-month{font-size:16px;font-weight:800;color:var(--text)}
+    .cal-nav{width:32px;height:32px;border-radius:50%;border:1px solid rgba(0,0,0,.08);background:#fff;font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);transition:background .1s ease}
+    .cal-nav:hover{background:var(--sep)}
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px}
+    .cal-dow{text-align:center;font-size:11px;font-weight:700;color:var(--sub);padding:4px 0}
+    .cal-day{text-align:center;font-size:13px;font-weight:600;color:var(--text);padding:8px 0;border-radius:10px;cursor:default;position:relative}
+    .cal-day.empty{visibility:hidden}
+    .cal-day.walked{cursor:pointer;color:var(--main);font-weight:800}
+    .cal-day.walked::after{content:"";position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:var(--main)}
+    .cal-day.walked:hover{background:rgba(25,178,58,.08)}
+    .cal-day.today{background:rgba(25,178,58,.12);color:var(--main);font-weight:900;border-radius:10px}
+    .cal-day.today::after{content:"";position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:var(--main)}
+    .cal-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .cal-summary-item{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:12px 8px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.03)}
+    .cal-summary-val{font-size:18px;font-weight:900;color:var(--main);display:block}
+    .cal-summary-label{font-size:10px;color:var(--sub);font-weight:600;margin-top:2px;display:block}
+
+    /* Journal */
+    .journal-card{border-radius:16px;overflow:hidden;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+    .journal-map{height:140px;background:linear-gradient(160deg,#e8f5e9 0%,#c8e6c9 30%,#a5d6a7 60%,#81c784 100%);position:relative}
+    .journal-map::after{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='120'%3E%3Cpath d='M20 100 Q80 80 130 55 Q180 30 230 25 Q260 22 280 18' stroke='white' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}
+    .journal-stats{display:flex;align-items:center;justify-content:center;padding:14px 16px;background:#fff}
+    .journal-stat{flex:1;text-align:center}
+    .journal-stat-val{font-size:22px;font-weight:900;color:var(--text)}
+    .journal-stat-unit{font-size:11px;color:var(--sub);font-weight:600;margin-left:2px}
+    .journal-stat-divider{width:1px;height:28px;background:rgba(0,0,0,.08);flex-shrink:0}
+
+    /* Analysis result */
+    .analysis-result-card{background:linear-gradient(135deg,#19B23A 0%,#0fa34e 40%,#00E933 100%);border-radius:16px;padding:24px 20px;text-align:center;position:relative;overflow:hidden}
+    .analysis-result-card::before{content:"";position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.08);top:-40px;right:-30px}
+    .analysis-badge{font-size:12px;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:10px}
+    .analysis-type{font-size:24px;font-weight:900;color:#fff;margin-bottom:8px;letter-spacing:.02em}
+    .analysis-desc{font-size:13px;color:rgba(255,255,255,.88);line-height:1.6;font-weight:500}
+
+    /* Walk live screen */
+    .walk-live{height:100%;display:flex;flex-direction:column;background:var(--bg);border-radius:20px;overflow:hidden;position:relative}
+    .walk-live-topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;position:absolute;top:0;left:0;right:0;z-index:5}
+    .walk-live-back,.walk-live-more{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.85);border:none;font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.1);backdrop-filter:blur(4px)}
+    .walk-live-back:hover,.walk-live-more:hover{background:rgba(255,255,255,.95)}
+    .walk-live-badge{background:rgba(255,255,255,.85);backdrop-filter:blur(4px);padding:6px 14px;border-radius:999px;font-size:12px;font-weight:800;color:var(--main);box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;align-items:center;gap:6px}
+    .walk-live-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--main);animation:pulse 1.5s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+    .walk-live-map{flex-shrink:0;height:240px;position:relative;overflow:hidden;
+      background:linear-gradient(160deg,#e8f5e9 0%,#c8e6c9 30%,#a5d6a7 60%,#81c784 100%)}
+    .walk-live-map-inner{position:absolute;inset:0;
+      background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Cpath d='M30 160 Q80 140 120 100 Q160 60 200 50 Q240 40 270 30' stroke='white' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='270' cy='30' r='6' fill='white'/%3E%3Ccircle cx='30' cy='160' r='5' fill='%2319B23A'/%3E%3C/svg%3E") center/contain no-repeat}
+    .walk-live-route-label{position:absolute;bottom:12px;left:12px;right:12px;display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+    .walk-live-route-label span:first-child{font-size:14px;font-weight:800;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+    .walk-live-route-meta{font-size:11px;color:rgba(255,255,255,.85);font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.25)}
+
+    .walk-live-stats{display:flex;align-items:center;justify-content:center;padding:18px 16px;background:#fff;border-bottom:1px solid rgba(0,0,0,.06)}
+    .walk-live-stat{flex:1;text-align:center}
+    .walk-live-stat-val{font-size:28px;font-weight:900;color:var(--text);line-height:1.1;letter-spacing:-.5px}
+    .walk-live-stat-unit{font-size:11px;color:var(--sub);font-weight:600;margin-top:2px}
+    .walk-live-stat-divider{width:1px;height:36px;background:rgba(0,0,0,.08);flex-shrink:0}
+
+    .walk-live-log{flex:1;overflow:auto;padding:14px 16px;background:#fff}
+    .walk-live-log-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:12px}
+    .walk-live-timeline{display:flex;flex-direction:column;gap:0;position:relative;padding-left:8px}
+    .walk-live-entry{display:flex;align-items:center;gap:12px;padding:8px 0;position:relative}
+    .walk-live-entry::before{content:"";position:absolute;left:44px;top:0;bottom:0;width:2px;background:rgba(0,0,0,.06)}
+    .walk-live-entry:last-child::before{display:none}
+    .walk-live-time{font-size:12px;font-weight:700;color:var(--sub);width:36px;flex-shrink:0;text-align:right}
+    .walk-live-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;z-index:1;box-shadow:0 0 0 3px rgba(255,255,255,1)}
+    .walk-live-desc{font-size:13px;font-weight:600;color:var(--text)}
+    .walk-live-entry.active .walk-live-desc{color:var(--main);font-weight:800}
+    .walk-live-entry.active .walk-live-time{color:var(--main)}
+
+    .walk-live-actions{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 14px;background:#fff;border-top:1px solid rgba(0,0,0,.06);gap:10px}
+    .walk-action-btn{display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;cursor:pointer;padding:8px 12px;border-radius:12px;font-size:11px;font-weight:700;color:var(--text);transition:background .12s ease;min-width:64px}
+    .walk-action-btn:hover{background:var(--sep)}
+    .walk-action-btn:active{background:rgba(25,178,58,.08)}
+    .walk-action-ico{font-size:22px;line-height:1}
+    .walk-action-btn.voice-off{color:var(--sub);opacity:.6}
+    .walk-action-end{flex:1;max-width:160px;border:none;border-radius:14px;padding:14px 8px;font-size:15px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%);color:#fff;box-shadow:0 4px 12px rgba(239,68,68,.25);transition:transform .1s ease,box-shadow .1s ease}
+    .walk-action-end:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(239,68,68,.3)}
+    .walk-action-end:active{transform:translateY(0)}
+
+    /* Toggle switch */
+    .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--sep)}
+    .toggle-row:last-child{border-bottom:none}
+    .toggle-row-left{display:flex;align-items:center;gap:12px;flex:1}
+    .toggle-row-ico{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+    .toggle-row-text{display:flex;flex-direction:column;font-size:14px;font-weight:600;color:var(--text)}
+    .toggle-row-hint{font-size:11px;color:var(--sub);font-weight:500;margin-top:2px}
+    .toggle-switch{position:relative;width:48px;height:28px;flex-shrink:0}
+    .toggle-switch input{opacity:0;width:0;height:0;position:absolute}
+    .toggle-track{position:absolute;inset:0;background:rgba(0,0,0,.12);border-radius:999px;cursor:pointer;transition:background .2s ease}
+    .toggle-track::after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;top:3px;left:3px;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:transform .2s ease}
+    .toggle-switch input:checked + .toggle-track{background:var(--main)}
+    .toggle-switch input:checked + .toggle-track::after{transform:translateX(20px)}
+    .toggle-sub-row{padding-left:62px;opacity:1;transition:opacity .15s ease}
+    .toggle-sub-row.disabled{opacity:.4;pointer-events:none}
+    /* Font size selected */
+    .font-opt{position:relative}
+    .font-opt.selected{background:rgba(25,178,58,.06)}
+    .font-opt.selected .mypage-row-text{color:var(--main);font-weight:800}
+    .font-opt.selected::after{content:"✓";position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--main);font-size:16px;font-weight:900}
     @media (max-width:980px){.phones{grid-template-columns:1fr}.phone{min-height:720px}}
   </style>
 </head>
@@ -296,10 +442,6 @@
             <!-- LOGIN (app entry) -->
             <div class="view active" data-view="login">
               <h1 class="auth-login-title">LOGIN</h1>
-              <div class="auth-seg" role="tablist" aria-label="로그인 유형">
-                <button type="button" class="auth-seg-item active" data-login-tab="member" aria-selected="true">회원</button>
-                <button type="button" class="auth-seg-item" data-login-tab="guest" aria-selected="false">비회원</button>
-              </div>
               <input class="auth-input" type="text" placeholder="아이디 또는 이메일" autocomplete="username" />
               <input class="auth-input" type="password" placeholder="비밀번호" autocomplete="current-password" />
               <label class="auth-checkrow"><input type="checkbox" /> 로그인 상태 유지</label>
@@ -645,28 +787,360 @@
                 <div class="row"><strong>추천 이유</strong><span class="muted">보리 성향 기반</span></div>
                 <p class="muted" style="margin:8px 0 0;">에너지 높음 + 자극 민감: 넓고 덜 붐비는 경로를 우선 제안해요.</p>
               </div>
-              <div class="hint">하단 탭으로 산책·반려견·탐색·마이페이지를 이동할 수 있어요.</div>
+              <div class="hint">하단 탭으로 산책·반려견·여행·마이페이지를 이동할 수 있어요.</div>
               </div>
             </div>
 
-            <!-- PET (반려견) -->
+            <!-- PET (펫로그 메인) -->
             <div class="view" data-view="pet" data-tab-root="pet">
-              <div class="home-bg">
+              <div class="petlog-screen">
+                <div class="petlog-profile-card">
+                  <div class="petlog-profile-inner">
+                    <div class="petlog-avatar">🐕</div>
+                    <div class="petlog-profile-info">
+                      <div class="petlog-profile-name" id="petDogName">보리</div>
+                      <div class="petlog-profile-sub">푸들 · 2살 · 암컷</div>
+                    </div>
+                    <button type="button" class="petlog-add-btn" data-nav="pet_add">+ 추가</button>
+                  </div>
+                </div>
+
+                <div class="mypage-group" style="margin-top:4px;">
+                  <div class="mypage-group-title">반려견 관리</div>
+                  <div class="mypage-group-card">
+                    <div class="mypage-list">
+                      <button type="button" class="mypage-row" data-nav="pet_add">
+                        <span class="mypage-row-ico green">➕</span>
+                        <span class="mypage-row-text">반려견 추가<span class="mypage-row-hint">새 반려견의 정보를 등록해요</span></span>
+                        <span class="mypage-row-arrow">›</span>
+                      </button>
+                      <button type="button" class="mypage-row" data-nav="pet_edit">
+                        <span class="mypage-row-ico blue">✏️</span>
+                        <span class="mypage-row-text">반려견 정보 수정<span class="mypage-row-hint">이름, 나이, 성격 등 수정</span></span>
+                        <span class="mypage-row-arrow">›</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mypage-group">
+                  <div class="mypage-group-title">기록 & 분석</div>
+                  <div class="mypage-group-card">
+                    <div class="mypage-list">
+                      <button type="button" class="mypage-row" data-nav="pet_monthly">
+                        <span class="mypage-row-ico orange">📅</span>
+                        <span class="mypage-row-text">월간 산책 기록<span class="mypage-row-hint">날짜별 산책 이력을 확인해요</span></span>
+                        <span class="mypage-row-arrow">›</span>
+                      </button>
+                      <button type="button" class="mypage-row" data-nav="pet_analysis_select">
+                        <span class="mypage-row-ico purple">🧠</span>
+                        <span class="mypage-row-text">반려견 성향 분석<span class="mypage-row-hint">AI 기반 산책 성향 리포트</span></span>
+                        <span class="mypage-row-arrow">›</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PET: 반려견 추가 (견 정보 입력) -->
+            <div class="view" data-view="pet_add" data-tab-root="pet">
+              <div class="mypage-sub-screen">
                 <div class="topbar">
-                  <span class="chip">내 반려견</span>
-                  <span class="muted">프로필</span>
+                  <button class="iconbtn" data-nav="pet">←</button>
+                  <span class="muted">반려견 추가</span>
                 </div>
-                <p class="h2"><span id="petDogName">보리</span>의 프로필</p>
-                <p class="muted">산책 성향과 기본 정보를 한눈에 볼 수 있어요.</p>
-                <div class="card">
-                  <div class="row"><strong>기본 정보</strong><span class="chip">맞춤 추천 반영</span></div>
-                  <p class="muted" style="margin:10px 0 0;">이름 · 나이 · 견종 · 성별은 가입 단계에서 입력한 값이 반영됩니다.</p>
+                <p class="mypage-subtitle">견 정보 입력</p>
+                <p class="stub-muted">반려견의 기본 정보를 입력해 주세요.</p>
+                <div class="form">
+                  <div class="field">
+                    <div class="label">이름 <span class="req">*</span></div>
+                    <input class="input" type="text" placeholder="반려견 이름" />
+                  </div>
+                  <div class="field">
+                    <div class="label">나이 <span class="req">*</span></div>
+                    <select class="select">
+                      <option value="">선택</option>
+                      <option>1살</option><option>2살</option><option>3살</option><option>4살</option><option>5살</option>
+                      <option>6살</option><option>7살</option><option>8살</option><option>9살</option><option>10살</option>
+                      <option>11살</option><option>12살</option><option>13살</option><option>14살</option><option>15살+</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <div class="label">견종 <span class="req">*</span></div>
+                    <select class="select">
+                      <option value="">선택</option>
+                      <option>믹스견</option><option>말티즈</option><option>푸들</option><option>포메라니안</option>
+                      <option>치와와</option><option>시츄</option><option>비숑프리제</option><option>골든리트리버</option>
+                      <option>진돗개</option><option>웰시코기</option><option>프렌치불도그</option><option>그 외</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <div class="label">성별</div>
+                    <select class="select">
+                      <option>암컷</option><option>수컷</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <div class="label">몸무게 (kg)</div>
+                    <input class="input" type="number" placeholder="예: 5.2" />
+                  </div>
+                  <div class="field">
+                    <div class="label">특이사항</div>
+                    <input class="input" type="text" placeholder="알레르기, 건강 이슈 등" />
+                  </div>
+                  <div class="actions" style="margin-top:18px;">
+                    <button class="cta secondary" data-nav="pet" style="flex:1;">취소</button>
+                    <button class="cta" data-nav="pet" style="flex:1;">등록하기</button>
+                  </div>
                 </div>
-                <div class="card">
-                  <div class="row"><strong>성향 요약</strong><span class="muted">에너지 높음</span></div>
-                  <p class="muted" style="margin:10px 0 0;">자극 민감 · 탐색성 높음 — 경로 추천에 사용돼요.</p>
+              </div>
+            </div>
+
+            <!-- PET: 반려견 정보 수정 -->
+            <div class="view" data-view="pet_edit" data-tab-root="pet">
+              <div class="mypage-sub-screen">
+                <div class="topbar">
+                  <button class="iconbtn" data-nav="pet">←</button>
+                  <span class="muted">정보 수정</span>
                 </div>
-                <p class="hint">상세 편집·건강 기록은 이후 버전에서 마이페이지와 연결할 수 있어요.</p>
+                <p class="mypage-subtitle">반려견 정보 수정</p>
+                <p class="stub-muted">보리의 정보를 수정할 수 있어요.</p>
+                <div class="form">
+                  <div class="field">
+                    <div class="label">이름</div>
+                    <input class="input" type="text" value="보리" />
+                  </div>
+                  <div class="field">
+                    <div class="label">나이</div>
+                    <select class="select">
+                      <option>1살</option><option selected>2살</option><option>3살</option><option>4살</option><option>5살</option>
+                      <option>6살</option><option>7살</option><option>8살</option><option>9살</option><option>10살</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <div class="label">견종</div>
+                    <select class="select">
+                      <option>믹스견</option><option>말티즈</option><option selected>푸들</option><option>포메라니안</option>
+                      <option>치와와</option><option>시츄</option><option>비숑프리제</option><option>골든리트리버</option>
+                      <option>진돗개</option><option>웰시코기</option><option>프렌치불도그</option><option>그 외</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <div class="label">성별</div>
+                    <select class="select">
+                      <option selected>암컷</option><option>수컷</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <div class="label">몸무게 (kg)</div>
+                    <input class="input" type="number" value="5.2" />
+                  </div>
+                  <div class="field">
+                    <div class="label">성격 메모</div>
+                    <input class="input" type="text" value="활발하고 호기심 많음" />
+                  </div>
+                  <div class="actions" style="margin-top:18px;">
+                    <button class="cta secondary" data-nav="pet" style="flex:1;">취소</button>
+                    <button class="cta" data-nav="pet" style="flex:1;">저장하기</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PET: 월간 산책 기록 (캘린더) -->
+            <div class="view" data-view="pet_monthly" data-tab-root="pet">
+              <div class="mypage-sub-screen">
+                <div class="topbar">
+                  <button class="iconbtn" data-nav="pet">←</button>
+                  <span class="muted">산책 기록</span>
+                </div>
+                <p class="mypage-subtitle">월간 산책 기록</p>
+                <p class="stub-muted">날짜를 눌러 상세 산책 기록을 확인하세요.</p>
+
+                <div class="cal-header">
+                  <button type="button" class="cal-nav" id="calPrev">‹</button>
+                  <span class="cal-month" id="calMonth">2026년 4월</span>
+                  <button type="button" class="cal-nav" id="calNext">›</button>
+                </div>
+                <div class="cal-grid">
+                  <div class="cal-dow">일</div><div class="cal-dow">월</div><div class="cal-dow">화</div><div class="cal-dow">수</div><div class="cal-dow">목</div><div class="cal-dow">금</div><div class="cal-dow">토</div>
+                  <div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div>
+                  <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day walked" data-nav="pet_journal">3</div><div class="cal-day">4</div>
+                  <div class="cal-day walked" data-nav="pet_journal">5</div><div class="cal-day">6</div><div class="cal-day walked" data-nav="pet_journal">7</div><div class="cal-day walked" data-nav="pet_journal">8</div><div class="cal-day">9</div><div class="cal-day walked" data-nav="pet_journal">10</div><div class="cal-day">11</div>
+                  <div class="cal-day walked" data-nav="pet_journal">12</div><div class="cal-day walked" data-nav="pet_journal">13</div><div class="cal-day">14</div><div class="cal-day walked" data-nav="pet_journal">15</div><div class="cal-day">16</div><div class="cal-day walked" data-nav="pet_journal">17</div><div class="cal-day">18</div>
+                  <div class="cal-day today" data-nav="pet_journal">19</div><div class="cal-day">20</div><div class="cal-day">21</div><div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div>
+                  <div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div><div class="cal-day">29</div><div class="cal-day">30</div>
+                </div>
+
+                <div class="cal-summary">
+                  <div class="cal-summary-item">
+                    <span class="cal-summary-val">12회</span>
+                    <span class="cal-summary-label">이번달 산책</span>
+                  </div>
+                  <div class="cal-summary-item">
+                    <span class="cal-summary-val">18.4km</span>
+                    <span class="cal-summary-label">총 거리</span>
+                  </div>
+                  <div class="cal-summary-item">
+                    <span class="cal-summary-val">4.8h</span>
+                    <span class="cal-summary-label">총 시간</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PET: 산책 일지 상세 -->
+            <div class="view" data-view="pet_journal" data-tab-root="pet">
+              <div class="mypage-sub-screen">
+                <div class="topbar">
+                  <button class="iconbtn" data-nav="pet_monthly">←</button>
+                  <span class="muted">산책 일지</span>
+                </div>
+                <p class="mypage-subtitle">산책 일지 상세</p>
+                <p class="stub-muted">4월 19일 (토) 산책 기록</p>
+
+                <div class="journal-card">
+                  <div class="journal-map"></div>
+                  <div class="journal-stats">
+                    <div class="journal-stat"><span class="journal-stat-val">2.4</span><span class="journal-stat-unit">km</span></div>
+                    <div class="journal-stat-divider"></div>
+                    <div class="journal-stat"><span class="journal-stat-val">34</span><span class="journal-stat-unit">분</span></div>
+                    <div class="journal-stat-divider"></div>
+                    <div class="journal-stat"><span class="journal-stat-val">4.2</span><span class="journal-stat-unit">km/h</span></div>
+                  </div>
+                </div>
+
+                <div class="mypage-group-card" style="margin-top:12px;">
+                  <div class="mypage-list">
+                    <div class="mypage-row mypage-row--sub" style="cursor:default;">
+                      <span class="mypage-row-ico green">🚶</span>
+                      <span class="mypage-row-text">경로<span class="mypage-row-hint">강변 그늘 루프</span></span>
+                    </div>
+                    <div class="mypage-row mypage-row--sub" style="cursor:default;">
+                      <span class="mypage-row-ico blue">⏰</span>
+                      <span class="mypage-row-text">시간<span class="mypage-row-hint">18:14 ~ 18:48</span></span>
+                    </div>
+                    <div class="mypage-row mypage-row--sub" style="cursor:default;">
+                      <span class="mypage-row-ico orange">💩</span>
+                      <span class="mypage-row-text">배변 기록<span class="mypage-row-hint">1회 (18:22)</span></span>
+                    </div>
+                    <div class="mypage-row mypage-row--sub" style="cursor:default;">
+                      <span class="mypage-row-ico cyan">🌤️</span>
+                      <span class="mypage-row-text">날씨<span class="mypage-row-hint">맑음 · 18°C · 습도 45%</span></span>
+                    </div>
+                    <div class="mypage-row mypage-row--sub" style="cursor:default;">
+                      <span class="mypage-row-ico purple">📝</span>
+                      <span class="mypage-row-text">메모<span class="mypage-row-hint">보리가 공놀이를 좋아해서 2분 정도 놀았어요</span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PET: 반려견 성향 분석 - 반려견 선택 -->
+            <div class="view" data-view="pet_analysis_select" data-tab-root="pet">
+              <div class="mypage-sub-screen">
+                <div class="topbar">
+                  <button class="iconbtn" data-nav="pet">←</button>
+                  <span class="muted">성향 분석</span>
+                </div>
+                <p class="mypage-subtitle">반려견 성향 분석</p>
+                <p class="stub-muted">분석할 반려견을 선택하세요.</p>
+
+                <div class="mypage-group-card">
+                  <div class="mypage-list">
+                    <button type="button" class="mypage-row" data-nav="pet_analysis_period">
+                      <span class="mypage-row-ico green">🐕</span>
+                      <span class="mypage-row-text">보리<span class="mypage-row-hint">푸들 · 2살 · 암컷</span></span>
+                      <span class="mypage-row-arrow">›</span>
+                    </button>
+                  </div>
+                </div>
+                <p class="hint" style="margin-top:12px;">반려견 추가 후 여기에 목록이 표시됩니다.</p>
+              </div>
+            </div>
+
+            <!-- PET: 반려견 성향 분석 - 기간 설정 -->
+            <div class="view" data-view="pet_analysis_period" data-tab-root="pet">
+              <div class="mypage-sub-screen">
+                <div class="topbar">
+                  <button class="iconbtn" data-nav="pet_analysis_select">←</button>
+                  <span class="muted">기간 설정</span>
+                </div>
+                <p class="mypage-subtitle">분석 기간 설정</p>
+                <p class="stub-muted">보리의 산책 데이터를 분석할 기간을 선택하세요.</p>
+
+                <div class="mypage-group-card" id="analysisPeriodGroup">
+                  <div class="mypage-list">
+                    <button type="button" class="mypage-row mypage-row--sub font-opt" data-period="1w">
+                      <span class="mypage-row-ico cyan">📊</span>
+                      <span class="mypage-row-text">최근 1주</span>
+                    </button>
+                    <button type="button" class="mypage-row mypage-row--sub font-opt" data-period="2w">
+                      <span class="mypage-row-ico cyan">📊</span>
+                      <span class="mypage-row-text">최근 2주</span>
+                    </button>
+                    <button type="button" class="mypage-row mypage-row--sub font-opt selected" data-period="1m">
+                      <span class="mypage-row-ico cyan">📊</span>
+                      <span class="mypage-row-text">최근 1개월</span>
+                    </button>
+                    <button type="button" class="mypage-row mypage-row--sub font-opt" data-period="3m">
+                      <span class="mypage-row-ico cyan">📊</span>
+                      <span class="mypage-row-text">최근 3개월</span>
+                    </button>
+                  </div>
+                </div>
+
+                <button type="button" class="cta" data-nav="pet_analysis_result" style="margin-top:16px;">분석 시작</button>
+              </div>
+            </div>
+
+            <!-- PET: AI 성향 분석 결과 -->
+            <div class="view" data-view="pet_analysis_result" data-tab-root="pet">
+              <div class="mypage-sub-screen">
+                <div class="topbar">
+                  <button class="iconbtn" data-nav="pet_analysis_period">←</button>
+                  <span class="muted">분석 결과</span>
+                </div>
+                <p class="mypage-subtitle">AI 성향 분석 결과</p>
+                <p class="stub-muted">보리 · 최근 1개월 데이터 기반</p>
+
+                <div class="analysis-result-card">
+                  <div class="analysis-badge">🧠 AI 분석 완료</div>
+                  <div class="analysis-type">탐험가 타입</div>
+                  <div class="analysis-desc">보리는 새로운 경로에 대한 호기심이 높고,<br>활동량이 많은 탐험가 성향이에요.</div>
+                </div>
+
+                <div class="mypage-group-card" style="margin-top:12px;">
+                  <div class="mypage-list">
+                    <div class="mypage-row mypage-row--sub" style="cursor:default;">
+                      <span class="mypage-row-ico green">⚡</span>
+                      <span class="mypage-row-text">활동량<span class="mypage-row-hint">상위 20% — 하루 평균 2.1km</span></span>
+                    </div>
+                    <div class="mypage-row mypage-row--sub" style="cursor:default;">
+                      <span class="mypage-row-ico blue">🔄</span>
+                      <span class="mypage-row-text">경로 다양성<span class="mypage-row-hint">높음 — 5개 이상의 다른 코스 이용</span></span>
+                    </div>
+                    <div class="mypage-row mypage-row--sub" style="cursor:default;">
+                      <span class="mypage-row-ico orange">🕐</span>
+                      <span class="mypage-row-text">선호 시간대<span class="mypage-row-hint">오후 16시~20시 (73%)</span></span>
+                    </div>
+                    <div class="mypage-row mypage-row--sub" style="cursor:default;">
+                      <span class="mypage-row-ico purple">🌿</span>
+                      <span class="mypage-row-text">선호 환경<span class="mypage-row-hint">공원/강변 선호 · 혼잡 회피 경향</span></span>
+                    </div>
+                    <div class="mypage-row mypage-row--sub" style="cursor:default;">
+                      <span class="mypage-row-ico cyan">📈</span>
+                      <span class="mypage-row-text">컨디션 변화<span class="mypage-row-hint">안정적 — 산책 후 만족도 꾸준히 높음</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card" style="margin-top:12px;">
+                  <div class="row"><strong>AI 추천</strong><span class="chip">맞춤 제안</span></div>
+                  <p class="muted" style="margin:8px 0 0;">보리는 새로운 루트를 좋아해요. 주 2~3회 새로운 코스를 섞어주면 산책 만족도가 높아질 거예요.</p>
+                </div>
               </div>
             </div>
 
@@ -687,15 +1161,15 @@
                     </div>
                   </div>
                   <div class="explore-cats" id="exploreCategoryBar">
-                    <button type="button" class="explore-cat-btn" data-cat="stay"><span class="ico" style="background:#19B23A;color:#FFFFFF;">🏨</span><span>숙소</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="food"><span class="ico" style="background:#00E933;color:#000000;">🍜</span><span>맛집</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="cafe"><span class="ico" style="background:#19B23A;color:#FFFFFF;">☕</span><span>카페</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="field"><span class="ico" style="background:#00E933;color:#000000;">🏟</span><span>운동장</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="trail"><span class="ico" style="background:#19B23A;color:#FFFFFF;">🥾</span><span>산책로</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="hospital"><span class="ico" style="background:#00E933;color:#000000;">🏥</span><span>병원</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="tour"><span class="ico" style="background:#19B23A;color:#FFFFFF;">📍</span><span>관광지</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="petshop"><span class="ico" style="background:#00E933;color:#000000;">🦴</span><span>펫용품</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="all"><span class="ico" style="background:#000000;color:#FFFFFF;">◎</span><span>전체</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="all"><span class="ico" style="background:#19B23A;color:#FFFFFF;">◎</span><span>전체</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="stay"><span class="ico" style="background:rgba(25,178,58,.12);color:#19B23A;">🏨</span><span>숙소</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="food"><span class="ico" style="background:rgba(0,233,51,.12);color:#0fa34e;">🍜</span><span>맛집</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="cafe"><span class="ico" style="background:rgba(25,178,58,.12);color:#19B23A;">☕</span><span>카페</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="field"><span class="ico" style="background:rgba(0,233,51,.12);color:#0fa34e;">🏟</span><span>운동장</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="trail"><span class="ico" style="background:rgba(25,178,58,.12);color:#19B23A;">🥾</span><span>산책로</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="hospital"><span class="ico" style="background:rgba(0,233,51,.12);color:#0fa34e;">🏥</span><span>병원</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="tour"><span class="ico" style="background:rgba(25,178,58,.12);color:#19B23A;">📍</span><span>관광지</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="petshop"><span class="ico" style="background:rgba(0,233,51,.12);color:#0fa34e;">🦴</span><span>펫용품</span></button>
                   </div>
                 </div>
                 <div class="explore-map-wrap">
@@ -751,38 +1225,92 @@
 
             <!-- WALK -->
             <div class="view" data-view="walk" data-tab-root="walk">
-              <div class="topbar">
-                <button class="iconbtn" data-nav="routes">←</button>
-                <span class="chip" id="voiceChip">음성안내 ON</span>
-              </div>
-              <div class="row" style="margin-bottom:8px;">
-                <div>
-                  <div class="muted">산책 진행중</div>
-                  <div style="font-weight:800;" id="walkRouteName">강변 그늘 루프</div>
+              <div class="walk-live">
+                <!-- Top bar -->
+                <div class="walk-live-topbar">
+                  <button class="walk-live-back" data-nav="routes" aria-label="뒤로">←</button>
+                  <span class="walk-live-badge" id="voiceChip">산책 중</span>
+                  <button class="walk-live-more" id="walkMoreBtn" type="button">⋯</button>
                 </div>
-                <button class="iconbtn" id="toggleVoice">음성</button>
-              </div>
-              <div class="muted" id="walkRouteMeta">2.4km · 34분 · 혼잡 낮음</div>
-              <div class="card" style="padding:8px;">
-                <div class="map" style="height:320px;"></div>
-              </div>
-              <div class="card">
-                <div class="big">00:27:42</div>
-                <div class="metric">
-                  <div class="item"><div class="muted">걸음</div><strong>4,120</strong></div>
-                  <div class="item"><div class="muted">칼로리</div><strong>186</strong></div>
-                  <div class="item"><div class="muted">거리</div><strong>1.9 km</strong></div>
+
+                <!-- Map area -->
+                <div class="walk-live-map">
+                  <div class="walk-live-map-inner"></div>
+                  <div class="walk-live-route-label">
+                    <span id="walkRouteName">강변 그늘 루프</span>
+                    <span class="walk-live-route-meta" id="walkRouteMeta">2.4km · 34분</span>
+                  </div>
+                </div>
+
+                <!-- Stats panel -->
+                <div class="walk-live-stats">
+                  <div class="walk-live-stat">
+                    <div class="walk-live-stat-val">1.9</div>
+                    <div class="walk-live-stat-unit">km</div>
+                  </div>
+                  <div class="walk-live-stat-divider"></div>
+                  <div class="walk-live-stat">
+                    <div class="walk-live-stat-val">27:42</div>
+                    <div class="walk-live-stat-unit">시간</div>
+                  </div>
+                  <div class="walk-live-stat-divider"></div>
+                  <div class="walk-live-stat">
+                    <div class="walk-live-stat-val">4.2</div>
+                    <div class="walk-live-stat-unit">km/h</div>
+                  </div>
+                </div>
+
+                <!-- Walk log -->
+                <div class="walk-live-log">
+                  <div class="walk-live-log-title">산책 기록</div>
+                  <div class="walk-live-timeline">
+                    <div class="walk-live-entry">
+                      <span class="walk-live-time">18:14</span>
+                      <span class="walk-live-dot" style="background:var(--main)"></span>
+                      <span class="walk-live-desc">산책 시작 · 집 근처</span>
+                    </div>
+                    <div class="walk-live-entry">
+                      <span class="walk-live-time">18:22</span>
+                      <span class="walk-live-dot" style="background:#f97316"></span>
+                      <span class="walk-live-desc">배변 처리 완료</span>
+                    </div>
+                    <div class="walk-live-entry">
+                      <span class="walk-live-time">18:28</span>
+                      <span class="walk-live-dot" style="background:#3b82f6"></span>
+                      <span class="walk-live-desc">공놀이 2분</span>
+                    </div>
+                    <div class="walk-live-entry active">
+                      <span class="walk-live-time">18:42</span>
+                      <span class="walk-live-dot" style="background:var(--main)"></span>
+                      <span class="walk-live-desc">현재 위치</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bottom action buttons -->
+                <div class="walk-live-actions">
+                  <button type="button" class="walk-action-btn" id="poopRecord">
+                    <span class="walk-action-ico">💩</span>
+                    <span>배변 기록</span>
+                  </button>
+                  <button type="button" class="walk-action-end" id="walkEndBtn">산책 종료</button>
+                  <button type="button" class="walk-action-btn" id="toggleVoice">
+                    <span class="walk-action-ico" id="voiceActionIco">🔊</span>
+                    <span id="voiceActionLabel">음성 안내</span>
+                  </button>
                 </div>
               </div>
-              <div class="floating-reroute" id="rerouteCard" style="display:none;">
-                <div class="row">
-                  <strong>더 좋은 길이 있어요</strong>
-                  <span class="muted" id="rerouteReason">혼잡 증가 감지</span>
-                </div>
-                <div class="muted" style="margin-top:4px;" id="rerouteDetail">2분 단축, 반려견 마주침 빈도 낮음</div>
-                <div class="btns">
-                  <button class="btn" id="keepRoute">유지하기</button>
-                  <button class="btn primary" id="changeRoute">경로 변경</button>
+
+              <div class="reroute-overlay" id="rerouteOverlay">
+                <div class="reroute-modal" id="rerouteCard">
+                  <div class="reroute-modal-icon">🗺️</div>
+                  <div class="reroute-modal-title">더 좋은 길이 있어요!</div>
+                  <div class="reroute-modal-reason" id="rerouteReason">혼잡 증가 감지</div>
+                  <div class="reroute-modal-detail" id="rerouteDetail">현재 경로보다 2분 단축되고,<br>반려견 마주침 빈도가 낮은 길이에요.</div>
+                  <div class="reroute-btns">
+                    <button class="reroute-btn primary" id="changeRoute">경로 변경하기</button>
+                    <button class="reroute-btn secondary" id="keepRoute">현재 경로 유지</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -827,10 +1355,10 @@
 
                 <div class="walk-section walk-reco">
                   <div class="walk-section-head">
-                    <div class="walk-section-title">반려견 성향 추천 코스</div>
+                    <div class="walk-section-title">추천 코스</div>
                     <button type="button" class="walk-section-more">전체보기</button>
                   </div>
-                  <div class="hscroll" aria-label="반려견 성향 추천 코스">
+                  <div class="hscroll" aria-label="추천 코스">
                     <div class="hcard" data-walk-route="노들섬" data-walk-meta="2.4km · 34분 · 잔디/그늘 균형">
                       <div class="hcard-img"></div>
                       <div class="hcard-body">
@@ -858,34 +1386,31 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-
-                <div class="walk-section">
-                  <div class="walk-section-head">
-                    <div class="walk-section-title">날씨/혼잡도 기반 추천 코스</div>
-                    <button type="button" class="walk-section-more">전체보기</button>
-                  </div>
-                  <div class="hscroll" aria-label="날씨/혼잡도 기반 추천 코스">
                     <div class="hcard" data-walk-route="그늘 많은 루프 코스" data-walk-meta="1.9km · 29분 · 체감 시원">
                       <div class="hcard-img"></div>
                       <div class="hcard-body">
-                        <div class="hcard-title">그늘 많은 루프 코스</div>
-                        <div class="hcard-meta">오늘 혼잡도 낮음</div>
+                        <div class="row"><div class="hcard-title">그늘 많은 루프 코스</div><div class="hcard-meta">혼잡도 낮음</div></div>
+                        <div class="hcard-tags">
+                          <span class="tag">#그늘많음</span><span class="tag">#시원함</span>
+                        </div>
                       </div>
                     </div>
                     <div class="hcard" data-walk-route="강변 바람 코스" data-walk-meta="2.2km · 33분 · 바람 쾌적">
                       <div class="hcard-img"></div>
                       <div class="hcard-body">
-                        <div class="hcard-title">강변 바람 코스</div>
-                        <div class="hcard-meta">체감 쾌적</div>
+                        <div class="row"><div class="hcard-title">강변 바람 코스</div><div class="hcard-meta">체감 쾌적</div></div>
+                        <div class="hcard-tags">
+                          <span class="tag">#강변</span><span class="tag">#바람좋음</span>
+                        </div>
                       </div>
                     </div>
                     <div class="hcard" data-walk-route="주거지 조용한 코스" data-walk-meta="1.6km · 25분 · 혼잡 낮음">
                       <div class="hcard-img"></div>
                       <div class="hcard-body">
-                        <div class="hcard-title">주거지 조용한 코스</div>
-                        <div class="hcard-meta">소음 낮음</div>
+                        <div class="row"><div class="hcard-title">주거지 조용한 코스</div><div class="hcard-meta">소음 낮음</div></div>
+                        <div class="hcard-tags">
+                          <span class="tag">#조용함</span><span class="tag">#한적함</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -991,9 +1516,9 @@
                 <p class="stub-muted">아래 항목을 눌러 세부 설정 화면으로 이동합니다.</p>
                 <div class="mypage-group-card">
                   <div class="mypage-list">
-                    <button type="button" class="mypage-row mypage-row--sub" data-nav="mypage_setting_situation">
+                    <button type="button" class="mypage-row mypage-row--sub" data-nav="mypage_setting_noti">
                       <span class="mypage-row-ico orange">🔔</span>
-                      <span class="mypage-row-text">상황별 맞춤 알림 설정</span>
+                      <span class="mypage-row-text">알림 설정<span class="mypage-row-hint">PUSH, 산책 추천, 야간 알림 등</span></span>
                       <span class="mypage-row-arrow">›</span>
                     </button>
                     <button type="button" class="mypage-row mypage-row--sub" data-nav="mypage_setting_voice">
@@ -1004,11 +1529,6 @@
                     <button type="button" class="mypage-row mypage-row--sub" data-nav="mypage_setting_font">
                       <span class="mypage-row-ico purple">🔤</span>
                       <span class="mypage-row-text">폰트 크기 설정</span>
-                      <span class="mypage-row-arrow">›</span>
-                    </button>
-                    <button type="button" class="mypage-row mypage-row--sub" data-nav="mypage_setting_push">
-                      <span class="mypage-row-ico green">📲</span>
-                      <span class="mypage-row-text">PUSH 알림 설정</span>
                       <span class="mypage-row-arrow">›</span>
                     </button>
                   </div>
@@ -1110,15 +1630,72 @@
               </div>
             </div>
 
-            <div class="view" data-view="mypage_setting_situation" data-tab-root="mypage">
+            <div class="view" data-view="mypage_setting_noti" data-tab-root="mypage">
               <div class="mypage-sub-screen">
                 <div class="topbar">
                   <button class="iconbtn" data-nav="mypage_system">←</button>
                   <span class="muted">알림</span>
                 </div>
-                <p class="mypage-subtitle">상황별 맞춤 알림 설정</p>
-                <p class="stub-muted">혼잡도·날씨·산책 완료 등 상황별로 알림을 켜고 끌 수 있어요.</p>
-                <div class="card"><div class="muted">토글·시간대 설정 UI가 여기에 들어갑니다.</div></div>
+                <p class="mypage-subtitle">알림 설정</p>
+                <p class="stub-muted">산책 관련 알림을 항목별로 관리할 수 있어요.</p>
+
+                <div class="mypage-group-card">
+                  <div class="toggle-row">
+                    <div class="toggle-row-left">
+                      <span class="toggle-row-ico" style="background:rgba(25,178,58,.1);color:#19B23A">📲</span>
+                      <span class="toggle-row-text">PUSH 알림<span class="toggle-row-hint">앱 전체 푸시 알림 허용</span></span>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" id="togglePush" checked /><span class="toggle-track"></span></label>
+                  </div>
+
+                  <div class="toggle-row">
+                    <div class="toggle-row-left">
+                      <span class="toggle-row-ico" style="background:rgba(249,115,22,.1);color:#f97316">⏰</span>
+                      <span class="toggle-row-text">산책 추천 시간 알림<span class="toggle-row-hint">설정한 시간대에 산책 추천을 보내드려요</span></span>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" id="toggleWalkReco" checked /><span class="toggle-track"></span></label>
+                  </div>
+
+                  <div class="toggle-row toggle-sub-row" id="nightNotiRow">
+                    <div class="toggle-row-left">
+                      <span class="toggle-row-ico" style="background:rgba(139,92,246,.1);color:#8b5cf6">🌙</span>
+                      <span class="toggle-row-text">야간 알림 허용<span class="toggle-row-hint">22시~07시 사이에도 알림을 받아요</span></span>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" id="toggleNight" /><span class="toggle-track"></span></label>
+                  </div>
+
+                  <div class="toggle-row">
+                    <div class="toggle-row-left">
+                      <span class="toggle-row-ico" style="background:rgba(59,130,246,.1);color:#3b82f6">🌤️</span>
+                      <span class="toggle-row-text">날씨 변화 알림<span class="toggle-row-hint">비, 폭염 등 산책에 영향을 주는 날씨 변화</span></span>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" checked /><span class="toggle-track"></span></label>
+                  </div>
+
+                  <div class="toggle-row">
+                    <div class="toggle-row-left">
+                      <span class="toggle-row-ico" style="background:rgba(239,68,68,.1);color:#ef4444">🚨</span>
+                      <span class="toggle-row-text">혼잡도 알림<span class="toggle-row-hint">자주 가는 경로의 혼잡도 변화 시 알림</span></span>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" checked /><span class="toggle-track"></span></label>
+                  </div>
+
+                  <div class="toggle-row">
+                    <div class="toggle-row-left">
+                      <span class="toggle-row-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">✅</span>
+                      <span class="toggle-row-text">산책 완료 요약<span class="toggle-row-hint">산책 끝난 뒤 요약 리포트 알림</span></span>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" checked /><span class="toggle-track"></span></label>
+                  </div>
+
+                  <div class="toggle-row">
+                    <div class="toggle-row-left">
+                      <span class="toggle-row-ico" style="background:rgba(249,115,22,.1);color:#f97316">📢</span>
+                      <span class="toggle-row-text">공지사항 및 이벤트<span class="toggle-row-hint">서비스 업데이트, 이벤트 소식</span></span>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" /><span class="toggle-track"></span></label>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -1129,8 +1706,17 @@
                   <span class="muted">음성</span>
                 </div>
                 <p class="mypage-subtitle">음성 안내 기본 설정</p>
-                <p class="stub-muted">음성 켜짐/꺼짐, 안내 빈도, 볼륨 프리셋 등을 설정합니다.</p>
-                <div class="card"><div class="muted">산책 화면의 음성 토글과 연동되는 기본값입니다.</div></div>
+                <p class="stub-muted">산책 중 음성 안내의 기본값을 설정합니다.</p>
+
+                <div class="mypage-group-card">
+                  <div class="toggle-row">
+                    <div class="toggle-row-left">
+                      <span class="toggle-row-ico" style="background:rgba(59,130,246,.1);color:#3b82f6">🔊</span>
+                      <span class="toggle-row-text">음성 안내<span class="toggle-row-hint">산책 시작 시 음성 안내를 자동으로 켭니다</span></span>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" id="toggleVoiceDefault" checked /><span class="toggle-track"></span></label>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -1141,34 +1727,24 @@
                   <span class="muted">표시</span>
                 </div>
                 <p class="mypage-subtitle">폰트 크기 설정</p>
-                <p class="stub-muted">작게 / 보통 / 크게 중 선택하는 접근성 옵션 예시입니다.</p>
-                <div class="mypage-group-card">
+                <p class="stub-muted">원하는 글자 크기를 선택하세요.</p>
+                <div class="mypage-group-card" id="fontSizeGroup">
                   <div class="mypage-list">
-                    <button type="button" class="mypage-row mypage-row--sub">
-                      <span class="mypage-row-text">작게</span>
+                    <button type="button" class="mypage-row mypage-row--sub font-opt" data-font="small">
+                      <span class="mypage-row-text" style="font-size:13px;">작게</span>
                     </button>
-                    <button type="button" class="mypage-row mypage-row--sub">
-                      <span class="mypage-row-text">보통 (기본)</span>
+                    <button type="button" class="mypage-row mypage-row--sub font-opt selected" data-font="medium">
+                      <span class="mypage-row-text">보통</span>
                     </button>
-                    <button type="button" class="mypage-row mypage-row--sub">
-                      <span class="mypage-row-text">크게</span>
+                    <button type="button" class="mypage-row mypage-row--sub font-opt" data-font="large">
+                      <span class="mypage-row-text" style="font-size:16px;">크게</span>
                     </button>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="view" data-view="mypage_setting_push" data-tab-root="mypage">
-              <div class="mypage-sub-screen">
-                <div class="topbar">
-                  <button class="iconbtn" data-nav="mypage_system">←</button>
-                  <span class="muted">PUSH</span>
-                </div>
-                <p class="mypage-subtitle">PUSH 알림 설정</p>
-                <p class="stub-muted">마케팅·서비스·산책 리마인더 등 푸시 채널을 구분해 관리합니다.</p>
-                <div class="card"><div class="muted">OS 권한과 앱 내 채널 스위치가 여기에 배치됩니다.</div></div>
-              </div>
-            </div>
+            
           </div>
 
           <div class="tabs hidden" id="tabs">
@@ -1185,9 +1761,9 @@
                 <span class="tab-ico" aria-hidden="true">⌂</span>
                 <span>홈</span>
               </button>
-              <button class="tab-hit" data-tab="explore" type="button" aria-label="탐색">
+              <button class="tab-hit" data-tab="explore" type="button" aria-label="여행">
                 <span class="tab-ico" aria-hidden="true">🧭</span>
-                <span>탐색</span>
+                <span>여행</span>
               </button>
               <button class="tab-hit" data-tab="mypage" type="button" aria-label="마이페이지">
                 <span class="tab-ico" aria-hidden="true">👤</span>
@@ -1226,10 +1802,16 @@
         ["mypage_notice", 100],
         ["mypage_support", 100],
         ["mypage_terms", 100],
-        ["mypage_setting_situation", 100],
+        ["pet_add", 100],
+        ["pet_edit", 100],
+        ["pet_monthly", 100],
+        ["pet_journal", 100],
+        ["pet_analysis_select", 100],
+        ["pet_analysis_period", 100],
+        ["pet_analysis_result", 100],
+        ["mypage_setting_noti", 100],
         ["mypage_setting_voice", 100],
         ["mypage_setting_font", 100],
-        ["mypage_setting_push", 100],
       ]);
       const progressEls = Array.from(document.querySelectorAll("[data-progress]"));
 
@@ -1277,17 +1859,16 @@
       }
 
       function handleRerouteVisibility(viewName) {
-        const rerouteCard = document.getElementById("rerouteCard");
-        if (!rerouteCard) return;
-        rerouteCard.style.display = "none";
+        const overlay = document.getElementById("rerouteOverlay");
+        if (!overlay) return;
+        overlay.classList.remove("show");
         if (rerouteTimer) {
           clearTimeout(rerouteTimer);
           rerouteTimer = null;
         }
         if (viewName === "walk") {
-          // Show suggestion after walk map is visible for a moment.
           rerouteTimer = setTimeout(() => {
-            rerouteCard.style.display = "block";
+            overlay.classList.add("show");
           }, 2200);
         }
       }
@@ -1335,16 +1916,7 @@
         setActiveView(nav);
       });
 
-      // Login tabs (회원 / 비회원)
-      document.querySelectorAll("[data-login-tab]").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          document.querySelectorAll("[data-login-tab]").forEach((b) => {
-            const on = b === btn;
-            b.classList.toggle("active", on);
-            b.setAttribute("aria-selected", on ? "true" : "false");
-          });
-        });
-      });
+      
 
       // Explore map interactions
       const exploreMap = document.getElementById("exploreMap");
@@ -1598,17 +2170,37 @@
       });
 
       // Walk interactions
-      const voiceChip = document.getElementById("voiceChip");
       const toggleVoice = document.getElementById("toggleVoice");
+      const voiceActionIco = document.getElementById("voiceActionIco");
+      const voiceActionLabel = document.getElementById("voiceActionLabel");
       const walkPickedCard = document.getElementById("walkPickedCard");
       const walkPickedTitle = document.getElementById("walkPickedTitle");
       const walkPickedMeta = document.getElementById("walkPickedMeta");
       const walkPickedStart = document.getElementById("walkPickedStart");
+      const walkEndBtn = document.getElementById("walkEndBtn");
+      const poopRecord = document.getElementById("poopRecord");
       let selectedWalkRoute = null;
       let voiceOn = true;
-      toggleVoice.addEventListener("click", () => {
+      if (toggleVoice) toggleVoice.addEventListener("click", () => {
         voiceOn = !voiceOn;
-        voiceChip.textContent = voiceOn ? "음성안내 ON" : "음성안내 OFF";
+        toggleVoice.classList.toggle("voice-off", !voiceOn);
+        if (voiceActionIco) voiceActionIco.textContent = voiceOn ? "🔊" : "🔇";
+        if (voiceActionLabel) voiceActionLabel.textContent = voiceOn ? "음성 안내" : "음성 꺼짐";
+      });
+      if (walkEndBtn) walkEndBtn.addEventListener("click", () => {
+        setActiveView("walkHome");
+      });
+      if (poopRecord) poopRecord.addEventListener("click", () => {
+        const logTimeline = document.querySelector(".walk-live-timeline");
+        if (!logTimeline) return;
+        const activeEntry = logTimeline.querySelector(".walk-live-entry.active");
+        const now = new Date();
+        const timeStr = String(now.getHours()).padStart(2,"0") + ":" + String(now.getMinutes()).padStart(2,"0");
+        const newEntry = document.createElement("div");
+        newEntry.className = "walk-live-entry";
+        newEntry.innerHTML = '<span class="walk-live-time">' + timeStr + '</span><span class="walk-live-dot" style="background:#f97316"></span><span class="walk-live-desc">배변 기록</span>';
+        if (activeEntry) logTimeline.insertBefore(newEntry, activeEntry);
+        else logTimeline.appendChild(newEntry);
       });
 
       document.querySelectorAll(".hcard[data-walk-route]").forEach((card) => {
@@ -1631,19 +2223,36 @@
         });
       }
 
-      const rerouteCard = document.getElementById("rerouteCard");
-      const rerouteReason = document.getElementById("rerouteReason");
-      const rerouteDetail = document.getElementById("rerouteDetail");
-      document.getElementById("keepRoute").addEventListener("click", () => {
-        rerouteReason.textContent = "현재 경로 유지";
-        rerouteDetail.textContent = "알겠어요. 다음 상황 변화가 감지되면 다시 제안할게요.";
-        rerouteCard.style.opacity = "0.92";
-      });
-      document.getElementById("changeRoute").addEventListener("click", () => {
-        rerouteReason.textContent = "경로 변경 완료";
-        rerouteDetail.textContent = "새 경로로 안내를 시작합니다. 음성 안내를 따라가세요.";
-        rerouteCard.style.opacity = "0.92";
-      });
+      const rerouteOverlay = document.getElementById("rerouteOverlay");
+      function dismissReroute() {
+        if (rerouteOverlay) rerouteOverlay.classList.remove("show");
+        if (rerouteTimer) { clearTimeout(rerouteTimer); rerouteTimer = null; }
+      }
+      document.getElementById("keepRoute").addEventListener("click", dismissReroute);
+      document.getElementById("changeRoute").addEventListener("click", dismissReroute);
+
+      // Night notification depends on walk recommendation toggle
+      const toggleWalkReco = document.getElementById("toggleWalkReco");
+      const nightNotiRow = document.getElementById("nightNotiRow");
+      function syncNightNoti() {
+        if (!toggleWalkReco || !nightNotiRow) return;
+        nightNotiRow.classList.toggle("disabled", !toggleWalkReco.checked);
+      }
+      if (toggleWalkReco) {
+        toggleWalkReco.addEventListener("change", syncNightNoti);
+        syncNightNoti();
+      }
+
+      // Font size selection
+      const fontSizeGroup = document.getElementById("fontSizeGroup");
+      if (fontSizeGroup) {
+        fontSizeGroup.addEventListener("click", (e) => {
+          const btn = e.target.closest(".font-opt");
+          if (!btn) return;
+          fontSizeGroup.querySelectorAll(".font-opt").forEach(b => b.classList.remove("selected"));
+          btn.classList.add("selected");
+        });
+      }
     })();
   </script>
 </body>
