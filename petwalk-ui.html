@@ -98,9 +98,56 @@
     .grid-card{border:1px solid rgba(0,0,0,.06);border-radius:14px;background:#FFFFFF;overflow:auto;box-shadow:0 2px 8px rgba(0,0,0,.04)}
     .matrix{width:100%;border-collapse:collapse;min-width:520px}
     .matrix th,.matrix td{border:1px solid rgba(0,0,0,.06);padding:8px 6px;text-align:center;font-size:11px}
-    .matrix th:first-child,.matrix td:first-child{text-align:left;white-space:nowrap;font-weight:700;min-width:72px;width:72px}
+    .matrix th:first-child,.matrix td:first-child{text-align:left;white-space:nowrap;font-weight:700;min-width:110px}
     .matrix th{background:var(--sep);font-weight:800}
     .matrix input[type="radio"], .matrix input[type="checkbox"]{accent-color:#19B23A;width:15px;height:15px}
+
+    /* === 시간대 선택 (chip + day tabs) === */
+    .timeslot-card{border:1px solid var(--line);border-radius:18px;background:#fff;padding:12px 12px 14px;box-shadow:0 4px 14px rgba(0,0,0,.04)}
+    .timeslot-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--sep);border-radius:12px;padding:4px;gap:4px;margin-bottom:12px}
+    .timeslot-tab{border:none;background:transparent;padding:9px 8px;border-radius:9px;font-size:13px;font-weight:800;cursor:pointer;color:var(--sub);transition:all .15s ease;display:flex;align-items:center;justify-content:center;gap:6px;font-family:inherit}
+    .timeslot-tab.active{background:#fff;color:var(--main);box-shadow:0 2px 6px rgba(0,0,0,.08)}
+    .timeslot-tab .count{font-size:10px;background:var(--main);color:#fff;border-radius:999px;padding:1px 7px;min-width:18px;text-align:center;font-weight:800}
+    .timeslot-tab:not(.active) .count{background:#cfd2cf;color:#fff}
+    .timeslot-pane{display:none}
+    .timeslot-pane.active{display:block}
+    .timeslot-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+    .timeslot-chip{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1.5px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;transition:all .15s ease;font-size:12px;text-align:left;font-family:inherit}
+    .timeslot-chip .ico{font-size:18px;line-height:1;flex-shrink:0}
+    .timeslot-chip .info{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+    .timeslot-chip .label{font-weight:800;color:var(--text);font-size:12px;line-height:1.2}
+    .timeslot-chip .desc{font-size:10px;color:var(--sub);font-weight:600;line-height:1.2}
+    .timeslot-chip .check{width:18px;height:18px;border-radius:50%;border:1.5px solid #d6d6d6;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff;transition:all .15s}
+    .timeslot-chip.selected{background:rgba(25,178,58,.08);border-color:var(--main);box-shadow:0 2px 8px rgba(25,178,58,.12)}
+    .timeslot-chip.selected .check{background:var(--main);border-color:var(--main)}
+    .timeslot-chip.selected .check::after{content:"✓";color:#fff;font-size:11px;font-weight:900}
+    .timeslot-chip.selected .label{color:var(--main)}
+    .timeslot-chip:active{transform:scale(.97)}
+    .timeslot-summary{margin-top:10px;font-size:11px;color:var(--sub);text-align:center;font-weight:600}
+    .timeslot-summary strong{color:var(--main);font-weight:800}
+
+    /* === 태그 다중 선택 === */
+    .tag-grid{display:flex;flex-wrap:wrap;gap:7px}
+    .tag-chip{border:1.5px solid var(--line);background:#fff;color:var(--text);border-radius:999px;padding:9px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s ease;display:inline-flex;align-items:center;gap:5px}
+    .tag-chip .tag-ico{font-size:13px;line-height:1}
+    .tag-chip:hover{border-color:#a8e6b9}
+    .tag-chip.selected{background:var(--main);border-color:var(--main);color:#fff;box-shadow:0 3px 10px rgba(25,178,58,.22)}
+    .tag-chip:active{transform:scale(.96)}
+    .tag-helper{margin-top:8px;font-size:11px;color:var(--sub);font-weight:600}
+    .tag-helper strong{color:var(--main);font-weight:800}
+
+    /* === 성격 슬라이더 카드 (dogInfoTraits) === */
+    .trait-list{display:flex;flex-direction:column;gap:10px}
+    .trait-card{border:1px solid var(--line);border-radius:16px;background:#fff;padding:13px 14px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+    .trait-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .trait-card-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;color:var(--text)}
+    .trait-card-title .trait-emoji{font-size:18px;line-height:1}
+    .trait-card-value{font-size:11px;font-weight:800;color:var(--main);background:rgba(25,178,58,.1);padding:3px 8px;border-radius:999px;white-space:nowrap}
+    .trait-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;background:var(--sep);border-radius:10px;padding:4px}
+    .trait-scale-btn{border:none;background:transparent;padding:8px 4px;border-radius:7px;font-size:10px;font-weight:700;color:var(--sub);cursor:pointer;font-family:inherit;line-height:1.2;transition:all .15s ease}
+    .trait-scale-btn:hover{color:var(--text)}
+    .trait-scale-btn.active{background:var(--main);color:#fff;box-shadow:0 2px 6px rgba(25,178,58,.25);font-weight:800}
+
     /* Auth (login / signup method) — sage / cream mood */
     .view[data-view="login"],.view[data-view="signupMethod"]{
       background:#ffffff;
@@ -299,15 +346,8 @@
     .hcard-title{font-size:13px;font-weight:800;color:var(--black);line-height:1.2}
     .hcard-meta{font-size:11px;color:var(--sub);margin-top:6px}
     .hcard-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-    .hcard-start{margin-top:10px;width:100%;border:none;border-radius:10px;padding:9px 0;background:linear-gradient(135deg,#19B23A,#0fa34e);color:#FFFFFF;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(25,178,58,.2);transition:transform .1s ease}
-    .hcard-start:hover{transform:translateY(-1px)}
     .tag{font-size:10px;font-weight:800;padding:4px 8px;border-radius:999px;background:var(--sep);color:var(--text)}
     .walk-reco .tag{background:rgba(25,178,58,.08);color:var(--main)}
-    .walk-reco .hcard-tags .tag.is-hidden{display:none}
-    .walk-reco .hcard-tags.show-all .tag.is-hidden{display:inline-flex}
-    .walk-reco .hcard-tags.show-all .tag-more{display:none}
-    .tag-more{font-size:10px;font-weight:800;padding:4px 8px;border-radius:999px;background:rgba(25,178,58,.12);color:var(--main);border:1px dashed rgba(25,178,58,.45);cursor:pointer}
-    .tag-more:hover{background:rgba(25,178,58,.2)}
     .walk-picked{border:1px solid rgba(25,178,58,.2);border-radius:14px;padding:10px;background:#FFFFFF;margin:0 12px 12px;display:none;box-shadow:0 2px 8px rgba(25,178,58,.08)}
     .walk-picked.show{display:block}
     .walk-picked-title{font-size:13px;font-weight:800;color:var(--text)}
@@ -330,6 +370,10 @@
     .petlog-profile-sub{font-size:12px;opacity:.82;margin-top:2px;font-weight:500}
     .petlog-add-btn{background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:10px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap}
     .petlog-add-btn:active{background:rgba(255,255,255,.35)}
+    .petlog-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px;position:relative;z-index:1}
+    .petlog-stat{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:10px 6px;text-align:center;backdrop-filter:blur(4px)}
+    .petlog-stat-val{font-size:18px;font-weight:900;color:#fff;line-height:1.1}
+    .petlog-stat-label{font-size:10px;color:rgba(255,255,255,.82);margin-top:3px;font-weight:700;letter-spacing:.02em}
 
     /* Calendar */
     .cal-header{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:12px}
@@ -338,13 +382,23 @@
     .cal-nav:hover{background:var(--sep)}
     .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px}
     .cal-dow{text-align:center;font-size:11px;font-weight:700;color:var(--sub);padding:4px 0}
-    .cal-day{text-align:center;font-size:13px;font-weight:600;color:var(--text);padding:8px 0;border-radius:10px;cursor:default;position:relative}
+    .cal-day{text-align:center;font-size:13px;font-weight:600;color:var(--text);padding:8px 0 14px;border-radius:10px;cursor:default;position:relative}
     .cal-day.empty{visibility:hidden}
-    .cal-day.walked{cursor:pointer;color:var(--main);font-weight:800}
-    .cal-day.walked::after{content:"";position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:var(--main)}
-    .cal-day.walked:hover{background:rgba(25,178,58,.08)}
+    .cal-day.walked{cursor:pointer;color:var(--text);font-weight:700}
+    .cal-day.walked:hover{background:rgba(0,0,0,.04)}
     .cal-day.today{background:rgba(25,178,58,.12);color:var(--main);font-weight:900;border-radius:10px}
-    .cal-day.today::after{content:"";position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:var(--main)}
+    .cal-dots{position:absolute;left:50%;bottom:3px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:2px;pointer-events:none}
+    .cal-dot{width:5px;height:5px;border-radius:50%;background:var(--main);box-shadow:0 0 0 1px rgba(255,255,255,.6)}
+    .cal-dog-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+    .cal-dog-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;border:1.5px solid var(--line);background:#fff;cursor:pointer;font-size:12px;font-weight:700;color:var(--text);font-family:inherit;transition:all .15s ease}
+    .cal-dog-chip .cal-dog-swatch{width:9px;height:9px;border-radius:50%;background:var(--dog-color, var(--main))}
+    .cal-dog-chip.active{border-color:var(--dog-color, var(--main));background:color-mix(in srgb,var(--dog-color,var(--main)) 12%, #fff);color:var(--text)}
+    .cal-dog-chip:not(.active){opacity:.55}
+    .cal-dog-chip:active{transform:scale(.96)}
+    .cal-legend{display:flex;flex-wrap:wrap;gap:10px 14px;margin-top:6px;margin-bottom:10px;padding:8px 12px;background:#fff;border:1px solid var(--line);border-radius:12px}
+    .cal-legend-item{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--sub);font-weight:700}
+    .cal-legend-item .cal-dot{width:7px;height:7px}
+    .cal-legend-item.muted{opacity:.45}
     .cal-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
     .cal-summary-item{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:12px 8px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.03)}
     .cal-summary-val{font-size:18px;font-weight:900;color:var(--main);display:block}
@@ -372,12 +426,6 @@
     .walk-live-topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;position:absolute;top:0;left:0;right:0;z-index:5}
     .walk-live-back,.walk-live-more{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.85);border:none;font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.1);backdrop-filter:blur(4px)}
     .walk-live-back:hover,.walk-live-more:hover{background:rgba(255,255,255,.95)}
-    .walk-more-menu{position:absolute;top:52px;right:12px;z-index:7;background:rgba(255,255,255,.96);backdrop-filter:blur(4px);border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:8px;min-width:148px;box-shadow:0 10px 24px rgba(0,0,0,.16);display:none}
-    .walk-more-menu.show{display:block}
-    .walk-more-item{width:100%;border:none;background:#fff;border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--text);cursor:pointer}
-    .walk-more-item + .walk-more-item{margin-top:4px}
-    .walk-more-item:hover{background:var(--sep)}
-    .walk-more-item-ico{font-size:18px;line-height:1}
     .walk-live-badge{background:rgba(255,255,255,.85);backdrop-filter:blur(4px);padding:6px 14px;border-radius:999px;font-size:12px;font-weight:800;color:var(--main);box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;align-items:center;gap:6px}
     .walk-live-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--main);animation:pulse 1.5s infinite}
     @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
@@ -386,10 +434,6 @@
       background:linear-gradient(160deg,#e8f5e9 0%,#c8e6c9 30%,#a5d6a7 60%,#81c784 100%)}
     .walk-live-map-inner{position:absolute;inset:0;
       background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Cpath d='M30 160 Q80 140 120 100 Q160 60 200 50 Q240 40 270 30' stroke='white' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='270' cy='30' r='6' fill='white'/%3E%3Ccircle cx='30' cy='160' r='5' fill='%2319B23A'/%3E%3C/svg%3E") center/contain no-repeat}
-    .walk-user-pin{position:absolute;left:68%;top:54%;transform:translate(-50%,-50%);width:18px;height:18px;border-radius:50%;background:var(--main);border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.22);z-index:3}
-    .walk-user-pin::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:2px solid rgba(25,178,58,.45)}
-    .walk-map-event-layer{position:absolute;inset:0;z-index:4}
-    .walk-map-event{position:absolute;transform:translate(-50%,-50%);font-size:20px;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.25))}
     .walk-live-route-label{position:absolute;bottom:12px;left:12px;right:12px;display:flex;align-items:baseline;justify-content:space-between;gap:8px}
     .walk-live-route-label span:first-child{font-size:14px;font-weight:800;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.3)}
     .walk-live-route-meta{font-size:11px;color:rgba(255,255,255,.85);font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.25)}
@@ -437,6 +481,40 @@
     .toggle-switch input:checked + .toggle-track::after{transform:translateX(20px)}
     .toggle-sub-row{padding-left:62px;opacity:1;transition:opacity .15s ease}
     .toggle-sub-row.disabled{opacity:.4;pointer-events:none}
+    /* Walk review (산책 종료 후 평가) */
+    .view[data-view="walkReview"]{padding:0;overflow:auto}
+    .review-screen{padding:18px 16px 24px;display:flex;flex-direction:column;gap:14px;min-height:100%}
+    .review-hero{background:linear-gradient(135deg,#19B23A 0%,#0fa34e 50%,#00E933 100%);border-radius:20px;padding:20px 18px;color:#fff;position:relative;overflow:hidden;box-shadow:0 6px 18px rgba(25,178,58,.22)}
+    .review-hero::before{content:"";position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.12);top:-40px;right:-30px}
+    .review-hero-emoji{font-size:34px;line-height:1;margin-bottom:6px;position:relative;z-index:1}
+    .review-hero-title{font-size:18px;font-weight:900;letter-spacing:-.01em;position:relative;z-index:1}
+    .review-hero-sub{font-size:12px;opacity:.88;margin-top:4px;font-weight:600;position:relative;z-index:1}
+    .review-hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px;position:relative;z-index:1}
+    .review-hero-stat{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:10px 4px;text-align:center;backdrop-filter:blur(4px)}
+    .review-hero-stat-val{font-size:17px;font-weight:900;color:#fff;line-height:1.1}
+    .review-hero-stat-label{font-size:10px;color:rgba(255,255,255,.82);margin-top:2px;font-weight:700;letter-spacing:.02em}
+    .review-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 14px 16px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+    .review-card-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+    .review-card-hint{font-size:11px;color:var(--sub);font-weight:600;margin-bottom:12px}
+    .star-row{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:8px}
+    .star-btn{flex:1;background:transparent;border:none;font-size:32px;line-height:1;cursor:pointer;padding:4px 0;color:#e0e0e0;transition:transform .1s ease,color .15s ease;font-family:inherit}
+    .star-btn:hover{transform:scale(1.05)}
+    .star-btn.filled{color:#FBBF24;text-shadow:0 1px 4px rgba(251,191,36,.35)}
+    .star-label{text-align:center;font-size:13px;font-weight:800;color:var(--main);min-height:18px}
+    .review-tag-grid{display:flex;flex-wrap:wrap;gap:6px}
+    .review-tag-chip{border:1.5px solid var(--line);background:#fff;color:var(--text);border-radius:999px;padding:8px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s ease;display:inline-flex;align-items:center;gap:5px}
+    .review-tag-chip.good.selected{background:#19B23A;border-color:#19B23A;color:#fff;box-shadow:0 2px 8px rgba(25,178,58,.22)}
+    .review-tag-chip.bad.selected{background:#ef4444;border-color:#ef4444;color:#fff;box-shadow:0 2px 8px rgba(239,68,68,.22)}
+    .review-tag-chip:active{transform:scale(.96)}
+    .review-tag-section + .review-tag-section{margin-top:14px}
+    .review-tag-section-label{font-size:11px;font-weight:800;color:var(--sub);margin-bottom:7px;letter-spacing:.04em;text-transform:uppercase}
+    .review-memo{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px;font-family:inherit;color:var(--text);resize:vertical;min-height:72px;background:#fff;transition:border-color .15s ease}
+    .review-memo:focus{outline:none;border-color:var(--main);box-shadow:0 0 0 3px rgba(25,178,58,.14)}
+    .review-actions{display:flex;gap:8px;margin-top:6px}
+    .review-skip{flex:0 0 auto;padding:14px 16px;border:1.5px solid var(--line);background:#fff;color:var(--sub);border-radius:14px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+    .review-submit{flex:1;border:none;border-radius:14px;padding:14px;font-size:14px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#19B23A 0%,#0fa34e 100%);color:#fff;box-shadow:0 4px 12px rgba(25,178,58,.25);transition:transform .1s ease,opacity .15s ease;font-family:inherit}
+    .review-submit:hover{transform:translateY(-1px)}
+    .review-submit:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
     /* Font size selected */
     .font-opt{position:relative}
     .font-opt.selected{background:rgba(25,178,58,.06)}
@@ -534,6 +612,7 @@
                   />
                 </div>
                 <div class="field">
+                  <div class="label">“약관 동의”</div>
                   <div class="card" style="margin-top:0;">
                     <div class="checkrow">
                       <input class="check" id="tosRequired" type="checkbox" />
@@ -557,7 +636,7 @@
             <div class="view" data-view="userInfo">
               <div class="topbar">
                 <button class="iconbtn" data-nav="signup">←</button>
-                <span class="muted">2/3</span>
+                <span class="muted">2/4</span>
               </div>
               <p class="h2">유저 정보 입력</p>
               <p class="muted">추천 품질을 위해 산책 선호를 알려주세요.</p>
@@ -569,59 +648,62 @@
                 </div>
                 <div class="field">
                   <div class="label">주 산책 시간대 <span class="req">*</span></div>
-                  <div class="grid-card">
-                    <table class="matrix" aria-label="주 산책 시간대 선택">
-                      <thead>
-                        <tr>
-                          <th>구분</th>
-                          <th>새벽 (오전 4시~6시)</th>
-                          <th>아침 (오전 6시~9시)</th>
-                          <th>오전 (오전 9시~12시)</th>
-                          <th>낮 (오후 12시~4시)</th>
-                          <th>저녁 (오후 4시~8시)</th>
-                          <th>밤 (오후 8시~10시)</th>
-                          <th>늦은 밤 (오후 10시 이후)</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>평일</td>
-                          <td><input type="checkbox" /></td>
-                          <td><input type="checkbox" /></td>
-                          <td><input type="checkbox" /></td>
-                          <td><input type="checkbox" /></td>
-                          <td><input type="checkbox" checked /></td>
-                          <td><input type="checkbox" checked /></td>
-                          <td><input type="checkbox" /></td>
-                        </tr>
-                        <tr>
-                          <td>주말</td>
-                          <td><input type="checkbox" /></td>
-                          <td><input type="checkbox" checked /></td>
-                          <td><input type="checkbox" /></td>
-                          <td><input type="checkbox" checked /></td>
-                          <td><input type="checkbox" checked /></td>
-                          <td><input type="checkbox" /></td>
-                          <td><input type="checkbox" /></td>
-                        </tr>
-                      </tbody>
-                    </table>
+                  <div class="timeslot-card" id="timeslotCard">
+                    <div class="timeslot-tabs" role="tablist" aria-label="요일 구분">
+                      <button type="button" class="timeslot-tab active" data-day-tab="weekday" role="tab" aria-selected="true">
+                        <span>평일</span>
+                        <span class="count" data-count-for="weekday">0</span>
+                      </button>
+                      <button type="button" class="timeslot-tab" data-day-tab="weekend" role="tab" aria-selected="false">
+                        <span>주말</span>
+                        <span class="count" data-count-for="weekend">0</span>
+                      </button>
+                    </div>
+
+                    <div class="timeslot-pane active" data-day-pane="weekday">
+                      <div class="timeslot-grid">
+                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="dawn"><span class="ico">🌙</span><span class="info"><span class="label">새벽</span><span class="desc">04:00~06:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="morning"><span class="ico">🌅</span><span class="info"><span class="label">아침</span><span class="desc">06:00~09:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="forenoon"><span class="ico">☀️</span><span class="info"><span class="label">오전</span><span class="desc">09:00~12:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="afternoon"><span class="ico">🌤️</span><span class="info"><span class="label">낮</span><span class="desc">12:00~16:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip selected" data-day="weekday" data-slot="evening"><span class="ico">🌇</span><span class="info"><span class="label">저녁</span><span class="desc">16:00~20:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip selected" data-day="weekday" data-slot="night"><span class="ico">🌃</span><span class="info"><span class="label">밤</span><span class="desc">20:00~22:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="late"><span class="ico">🌌</span><span class="info"><span class="label">심야</span><span class="desc">22:00~</span></span><span class="check"></span></button>
+                      </div>
+                    </div>
+
+                    <div class="timeslot-pane" data-day-pane="weekend">
+                      <div class="timeslot-grid">
+                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="dawn"><span class="ico">🌙</span><span class="info"><span class="label">새벽</span><span class="desc">04:00~06:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip selected" data-day="weekend" data-slot="morning"><span class="ico">🌅</span><span class="info"><span class="label">아침</span><span class="desc">06:00~09:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="forenoon"><span class="ico">☀️</span><span class="info"><span class="label">오전</span><span class="desc">09:00~12:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip selected" data-day="weekend" data-slot="afternoon"><span class="ico">🌤️</span><span class="info"><span class="label">낮</span><span class="desc">12:00~16:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip selected" data-day="weekend" data-slot="evening"><span class="ico">🌇</span><span class="info"><span class="label">저녁</span><span class="desc">16:00~20:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="night"><span class="ico">🌃</span><span class="info"><span class="label">밤</span><span class="desc">20:00~22:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="late"><span class="ico">🌌</span><span class="info"><span class="label">심야</span><span class="desc">22:00~</span></span><span class="check"></span></button>
+                      </div>
+                    </div>
+
+                    <div class="timeslot-summary">평일·주말 모두 여러 시간대를 선택할 수 있어요.</div>
                   </div>
                 </div>
                 <div class="field">
-                  <div class="label">산책시 중요한 기준</div>
-                  <input
-                    class="input"
-                    id="priorityInput"
-                    type="text"
-                    inputmode="text"
-                    autocomplete="off"
-                    autocapitalize="off"
-                    autocorrect="off"
-                    spellcheck="false"
-                    placeholder="예: 안전(차도/교차로) · 혼잡도 · 그늘/수변 · 조용함"
-                    value=""
-                  />
+                  <div class="label">산책 시 중요한 기준 <span class="small" style="font-weight:600;color:var(--sub);margin-left:4px;">(여러 개 선택 가능)</span></div>
+                  <div class="tag-grid" id="priorityTagGrid">
+                    <button type="button" class="tag-chip selected" data-tag="safety"><span class="tag-ico">🛡️</span>안전(차도/교차로)</button>
+                    <button type="button" class="tag-chip" data-tag="crowd"><span class="tag-ico">👥</span>한적함</button>
+                    <button type="button" class="tag-chip selected" data-tag="shade"><span class="tag-ico">🌳</span>그늘/수변</button>
+                    <button type="button" class="tag-chip" data-tag="quiet"><span class="tag-ico">🤫</span>조용함</button>
+                    <button type="button" class="tag-chip" data-tag="exercise"><span class="tag-ico">💪</span>운동량</button>
+                    <button type="button" class="tag-chip" data-tag="surface"><span class="tag-ico">🛣️</span>노면 상태</button>
+                    <button type="button" class="tag-chip" data-tag="friends"><span class="tag-ico">🐾</span>강아지 친구들</button>
+                    <button type="button" class="tag-chip" data-tag="cafe"><span class="tag-ico">☕</span>인근 카페</button>
+                    <button type="button" class="tag-chip" data-tag="view"><span class="tag-ico">📸</span>풍경/포토</button>
+                    <button type="button" class="tag-chip" data-tag="poo"><span class="tag-ico">🚮</span>배변봉투함</button>
+                    <button type="button" class="tag-chip" data-tag="nightlight"><span class="tag-ico">💡</span>야간 조명</button>
+                    <button type="button" class="tag-chip" data-tag="hill"><span class="tag-ico">⛰️</span>언덕/계단 적음</button>
+                  </div>
+                  <div class="tag-helper"><strong id="priorityTagCount">2</strong>개 선택됨 · 추천 알고리즘에 반영돼요</div>
                 </div>
                 <div class="actions">
                   <button class="cta secondary" data-nav="signup" style="flex:1;">이전</button>
@@ -634,18 +716,18 @@
             <div class="view" data-view="dogInfo">
               <div class="topbar">
                 <button class="iconbtn" data-nav="userInfo">←</button>
-                <span class="muted">3/3</span>
+                <span class="muted">3/4</span>
               </div>
               <p class="h2">반려견 정보 입력</p>
-              <p class="muted">이름/나이/종/성별/성격을 바탕으로 경로를 추천해요.</p>
+              <p class="muted">이름·나이·종·성별을 알려주세요. 성격은 다음 단계에서 입력해요.</p>
               <div class="progress"><span data-progress></span></div>
               <div class="form">
                 <div class="field">
-                  <div class="label">이름 <span class="req">*</span></div>
+                  <div class="label">이름</div>
                   <input class="input" id="dogNameInput" type="text" value="보리" />
                 </div>
                 <div class="field">
-                  <div class="label">나이 <span class="req">*</span></div>
+                  <div class="label">나이</div>
                   <select class="select">
                     <option>1살</option>
                     <option selected>2살</option>
@@ -671,7 +753,7 @@
                   </select>
                 </div>
                 <div class="field">
-                  <div class="label">종 <span class="req">*</span></div>
+                  <div class="label">종</div>
                   <select class="select">
                     <option>믹스견</option>
                     <option>말티즈</option>
@@ -702,73 +784,111 @@
                   </select>
                 </div>
                 <div class="field">
-                  <div class="label">성별 <span class="req">*</span></div>
+                  <div class="label">성별</div>
                   <select class="select">
-                    <option selected>여</option>
-                    <option>남</option>
+                    <option selected>암컷</option>
+                    <option>수컷</option>
                   </select>
-                </div>
-                <div class="field">
-                  <div class="label">성격(객관식) <span class="req">*</span></div>
-                  <div class="grid-card">
-                    <table class="matrix" aria-label="강아지 성격 선택">
-                      <thead>
-                        <tr>
-                          <th>성격</th>
-                          <th>전혀 아니다</th>
-                          <th>아니다</th>
-                          <th>보통이다</th>
-                          <th>그렇다</th>
-                          <th>매우그렇다</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>활발하다</td>
-                          <td><input type="radio" name="trait-active" /></td>
-                          <td><input type="radio" name="trait-active" /></td>
-                          <td><input type="radio" name="trait-active" /></td>
-                          <td><input type="radio" name="trait-active" /></td>
-                          <td><input type="radio" name="trait-active" checked /></td>
-                        </tr>
-                        <tr>
-                          <td>소심하다</td>
-                          <td><input type="radio" name="trait-shy" checked /></td>
-                          <td><input type="radio" name="trait-shy" /></td>
-                          <td><input type="radio" name="trait-shy" /></td>
-                          <td><input type="radio" name="trait-shy" /></td>
-                          <td><input type="radio" name="trait-shy" /></td>
-                        </tr>
-                        <tr>
-                          <td>호기심 많다</td>
-                          <td><input type="radio" name="trait-curious" /></td>
-                          <td><input type="radio" name="trait-curious" /></td>
-                          <td><input type="radio" name="trait-curious" /></td>
-                          <td><input type="radio" name="trait-curious" checked /></td>
-                          <td><input type="radio" name="trait-curious" /></td>
-                        </tr>
-                        <tr>
-                          <td>낯선 환경에 민감하다</td>
-                          <td><input type="radio" name="trait-sensitive" /></td>
-                          <td><input type="radio" name="trait-sensitive" /></td>
-                          <td><input type="radio" name="trait-sensitive" checked /></td>
-                          <td><input type="radio" name="trait-sensitive" /></td>
-                          <td><input type="radio" name="trait-sensitive" /></td>
-                        </tr>
-                        <tr>
-                          <td>사회성이 좋다</td>
-                          <td><input type="radio" name="trait-social" /></td>
-                          <td><input type="radio" name="trait-social" /></td>
-                          <td><input type="radio" name="trait-social" /></td>
-                          <td><input type="radio" name="trait-social" checked /></td>
-                          <td><input type="radio" name="trait-social" /></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
                 </div>
                 <div class="actions">
                   <button class="cta secondary" data-nav="userInfo" style="flex:1;">이전</button>
+                  <button class="cta" data-nav="dogInfoTraits" style="flex:1;">다음</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- DOG INFO: 성격 (별도 페이지) -->
+            <div class="view" data-view="dogInfoTraits">
+              <div class="topbar">
+                <button class="iconbtn" data-nav="dogInfo">←</button>
+                <span class="muted">4/4</span>
+              </div>
+              <p class="h2"><span id="traitsDogName">보리</span>의 성격</p>
+              <p class="muted">아이의 성향을 입력하면 더 잘 맞는 산책 코스를 추천해 드려요.</p>
+              <div class="progress"><span data-progress></span></div>
+              <div class="form">
+                <div class="trait-list" id="dogTraitList">
+                  <div class="trait-card" data-trait="active">
+                    <div class="trait-card-head">
+                      <div class="trait-card-title"><span class="trait-emoji">🐕‍🦺</span>활발해요</div>
+                      <div class="trait-card-value" data-trait-value>매우 그렇다</div>
+                    </div>
+                    <div class="trait-scale">
+                      <button type="button" class="trait-scale-btn" data-score="1">전혀</button>
+                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
+                      <button type="button" class="trait-scale-btn" data-score="3">보통</button>
+                      <button type="button" class="trait-scale-btn" data-score="4">그렇다</button>
+                      <button type="button" class="trait-scale-btn active" data-score="5">매우</button>
+                    </div>
+                  </div>
+                  <div class="trait-card" data-trait="shy">
+                    <div class="trait-card-head">
+                      <div class="trait-card-title"><span class="trait-emoji">🙈</span>소심해요</div>
+                      <div class="trait-card-value" data-trait-value>전혀 아니다</div>
+                    </div>
+                    <div class="trait-scale">
+                      <button type="button" class="trait-scale-btn active" data-score="1">전혀</button>
+                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
+                      <button type="button" class="trait-scale-btn" data-score="3">보통</button>
+                      <button type="button" class="trait-scale-btn" data-score="4">그렇다</button>
+                      <button type="button" class="trait-scale-btn" data-score="5">매우</button>
+                    </div>
+                  </div>
+                  <div class="trait-card" data-trait="curious">
+                    <div class="trait-card-head">
+                      <div class="trait-card-title"><span class="trait-emoji">🔍</span>호기심이 많아요</div>
+                      <div class="trait-card-value" data-trait-value>그렇다</div>
+                    </div>
+                    <div class="trait-scale">
+                      <button type="button" class="trait-scale-btn" data-score="1">전혀</button>
+                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
+                      <button type="button" class="trait-scale-btn" data-score="3">보통</button>
+                      <button type="button" class="trait-scale-btn active" data-score="4">그렇다</button>
+                      <button type="button" class="trait-scale-btn" data-score="5">매우</button>
+                    </div>
+                  </div>
+                  <div class="trait-card" data-trait="sensitive">
+                    <div class="trait-card-head">
+                      <div class="trait-card-title"><span class="trait-emoji">😟</span>낯선 환경에 민감해요</div>
+                      <div class="trait-card-value" data-trait-value>보통이다</div>
+                    </div>
+                    <div class="trait-scale">
+                      <button type="button" class="trait-scale-btn" data-score="1">전혀</button>
+                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
+                      <button type="button" class="trait-scale-btn active" data-score="3">보통</button>
+                      <button type="button" class="trait-scale-btn" data-score="4">그렇다</button>
+                      <button type="button" class="trait-scale-btn" data-score="5">매우</button>
+                    </div>
+                  </div>
+                  <div class="trait-card" data-trait="social">
+                    <div class="trait-card-head">
+                      <div class="trait-card-title"><span class="trait-emoji">🤝</span>사회성이 좋아요</div>
+                      <div class="trait-card-value" data-trait-value>그렇다</div>
+                    </div>
+                    <div class="trait-scale">
+                      <button type="button" class="trait-scale-btn" data-score="1">전혀</button>
+                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
+                      <button type="button" class="trait-scale-btn" data-score="3">보통</button>
+                      <button type="button" class="trait-scale-btn active" data-score="4">그렇다</button>
+                      <button type="button" class="trait-scale-btn" data-score="5">매우</button>
+                    </div>
+                  </div>
+                  <div class="trait-card" data-trait="energy">
+                    <div class="trait-card-head">
+                      <div class="trait-card-title"><span class="trait-emoji">⚡</span>에너지가 넘쳐요</div>
+                      <div class="trait-card-value" data-trait-value>그렇다</div>
+                    </div>
+                    <div class="trait-scale">
+                      <button type="button" class="trait-scale-btn" data-score="1">전혀</button>
+                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
+                      <button type="button" class="trait-scale-btn" data-score="3">보통</button>
+                      <button type="button" class="trait-scale-btn active" data-score="4">그렇다</button>
+                      <button type="button" class="trait-scale-btn" data-score="5">매우</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="actions">
+                  <button class="cta secondary" data-nav="dogInfo" style="flex:1;">이전</button>
                   <button class="cta" data-nav="home" style="flex:1;">완료하고 홈으로</button>
                 </div>
               </div>
@@ -818,6 +938,20 @@
                       <div class="petlog-profile-sub">푸들 · 2살 · 암컷</div>
                     </div>
                     <button type="button" class="petlog-add-btn" data-nav="pet_add">+ 추가</button>
+                  </div>
+                  <div class="petlog-stats">
+                    <div class="petlog-stat">
+                      <div class="petlog-stat-val">47</div>
+                      <div class="petlog-stat-label">총 산책</div>
+                    </div>
+                    <div class="petlog-stat">
+                      <div class="petlog-stat-val">68km</div>
+                      <div class="petlog-stat-label">총 거리</div>
+                    </div>
+                    <div class="petlog-stat">
+                      <div class="petlog-stat-val">32h</div>
+                      <div class="petlog-stat-label">총 시간</div>
+                    </div>
                   </div>
                 </div>
 
@@ -972,20 +1106,45 @@
                   <span class="muted">산책 기록</span>
                 </div>
                 <p class="mypage-subtitle">월간 산책 기록</p>
-                <p class="stub-muted">날짜를 눌러 상세 산책 기록을 확인하세요.</p>
+                <p class="stub-muted">날짜를 눌러 상세 산책 기록을 확인하세요. 점 색깔은 각 반려견의 산책을 의미해요.</p>
+
+                <div class="cal-dog-filter" id="calDogFilter">
+                  <button type="button" class="cal-dog-chip active" data-dog="bori" style="--dog-color:#19B23A;">
+                    <span class="cal-dog-swatch"></span>보리
+                  </button>
+                  <button type="button" class="cal-dog-chip active" data-dog="kongi" style="--dog-color:#F59E0B;">
+                    <span class="cal-dog-swatch"></span>콩이
+                  </button>
+                </div>
 
                 <div class="cal-header">
                   <button type="button" class="cal-nav" id="calPrev">‹</button>
                   <span class="cal-month" id="calMonth">2026년 4월</span>
                   <button type="button" class="cal-nav" id="calNext">›</button>
                 </div>
-                <div class="cal-grid">
+                <div class="cal-grid" id="calGrid">
                   <div class="cal-dow">일</div><div class="cal-dow">월</div><div class="cal-dow">화</div><div class="cal-dow">수</div><div class="cal-dow">목</div><div class="cal-dow">금</div><div class="cal-dow">토</div>
                   <div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div>
-                  <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day walked" data-nav="pet_journal">3</div><div class="cal-day">4</div>
-                  <div class="cal-day walked" data-nav="pet_journal">5</div><div class="cal-day">6</div><div class="cal-day walked" data-nav="pet_journal">7</div><div class="cal-day walked" data-nav="pet_journal">8</div><div class="cal-day">9</div><div class="cal-day walked" data-nav="pet_journal">10</div><div class="cal-day">11</div>
-                  <div class="cal-day walked" data-nav="pet_journal">12</div><div class="cal-day walked" data-nav="pet_journal">13</div><div class="cal-day">14</div><div class="cal-day walked" data-nav="pet_journal">15</div><div class="cal-day">16</div><div class="cal-day walked" data-nav="pet_journal">17</div><div class="cal-day">18</div>
-                  <div class="cal-day today" data-nav="pet_journal">19</div><div class="cal-day">20</div><div class="cal-day">21</div><div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div>
+                  <div class="cal-day">1</div>
+                  <div class="cal-day">2</div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori">3<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span></span></div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="kongi">4<span class="cal-dots"><span class="cal-dot" data-dog="kongi" style="background:#F59E0B;"></span></span></div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori,kongi">5<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="kongi" style="background:#F59E0B;"></span></span></div>
+                  <div class="cal-day">6</div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori">7<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span></span></div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori,kongi">8<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="kongi" style="background:#F59E0B;"></span></span></div>
+                  <div class="cal-day">9</div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="kongi">10<span class="cal-dots"><span class="cal-dot" data-dog="kongi" style="background:#F59E0B;"></span></span></div>
+                  <div class="cal-day">11</div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori">12<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span></span></div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori,kongi">13<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="kongi" style="background:#F59E0B;"></span></span></div>
+                  <div class="cal-day">14</div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori">15<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span></span></div>
+                  <div class="cal-day">16</div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="kongi">17<span class="cal-dots"><span class="cal-dot" data-dog="kongi" style="background:#F59E0B;"></span></span></div>
+                  <div class="cal-day">18</div>
+                  <div class="cal-day today walked" data-nav="pet_journal" data-dogs="bori,kongi">19<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="kongi" style="background:#F59E0B;"></span></span></div>
+                  <div class="cal-day">20</div><div class="cal-day">21</div><div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div>
                   <div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div><div class="cal-day">29</div><div class="cal-day">30</div>
                 </div>
 
@@ -1186,7 +1345,6 @@
                     <button type="button" class="explore-cat-btn" data-cat="hospital"><span class="ico" style="background:rgba(0,233,51,.12);color:#0fa34e;">🏥</span><span>병원</span></button>
                     <button type="button" class="explore-cat-btn" data-cat="tour"><span class="ico" style="background:rgba(25,178,58,.12);color:#19B23A;">📍</span><span>관광지</span></button>
                     <button type="button" class="explore-cat-btn" data-cat="petshop"><span class="ico" style="background:rgba(0,233,51,.12);color:#0fa34e;">🦴</span><span>펫용품</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="playground"><span class="ico" style="background:rgba(25,178,58,.12);color:#19B23A;">🎾</span><span>반려견 놀이터</span></button>
                   </div>
                 </div>
                 <div class="explore-map-wrap">
@@ -1249,22 +1407,10 @@
                   <span class="walk-live-badge" id="voiceChip">산책 중</span>
                   <button class="walk-live-more" id="walkMoreBtn" type="button">⋯</button>
                 </div>
-                <div class="walk-more-menu" id="walkMoreMenu">
-                  <button type="button" class="walk-more-item" data-walk-event="😵"><span class="walk-more-item-ico">😵</span><span>사람 많아요</span></button>
-                  <button type="button" class="walk-more-item" data-walk-event="🌿"><span class="walk-more-item-ico">🌿</span><span>한적해요</span></button>
-                  <button type="button" class="walk-more-item" data-walk-event="🎉"><span class="walk-more-item-ico">🎉</span><span>행사 중</span></button>
-                  <button type="button" class="walk-more-item" data-walk-event="🚧"><span class="walk-more-item-ico">🚧</span><span>공사 중</span></button>
-                  <button type="button" class="walk-more-item" data-walk-event="⛔"><span class="walk-more-item-ico">⛔</span><span>길 막힘</span></button>
-                  <button type="button" class="walk-more-item" data-walk-event="🤢"><span class="walk-more-item-ico">🤢</span><span>이상한 냄새</span></button>
-                  <button type="button" class="walk-more-item" data-walk-event="🐺"><span class="walk-more-item-ico">🐺</span><span>공격견 있음</span></button>
-                  <button type="button" class="walk-more-item" data-walk-event="❗"><span class="walk-more-item-ico">❗</span><span>기타 문제 O</span></button>
-                </div>
 
                 <!-- Map area -->
                 <div class="walk-live-map">
                   <div class="walk-live-map-inner"></div>
-                  <div class="walk-user-pin" id="walkUserPin" aria-hidden="true"></div>
-                  <div class="walk-map-event-layer" id="walkMapEventLayer"></div>
                   <div class="walk-live-route-label">
                     <span id="walkRouteName">강변 그늘 루프</span>
                     <span class="walk-live-route-meta" id="walkRouteMeta">2.4km · 34분</span>
@@ -1344,9 +1490,91 @@
               </div>
             </div>
 
+            <!-- WALK REVIEW (산책 종료 후 루트 평가) -->
+            <div class="view" data-view="walkReview" data-tab-root="walk">
+              <div class="review-screen">
+                <div class="review-hero">
+                  <div class="review-hero-emoji">🐾</div>
+                  <div class="review-hero-title">산책 완료!</div>
+                  <div class="review-hero-sub" id="reviewRouteName">강변 그늘 루프</div>
+                  <div class="review-hero-stats">
+                    <div class="review-hero-stat">
+                      <div class="review-hero-stat-val">2.4</div>
+                      <div class="review-hero-stat-label">km</div>
+                    </div>
+                    <div class="review-hero-stat">
+                      <div class="review-hero-stat-val">34</div>
+                      <div class="review-hero-stat-label">분</div>
+                    </div>
+                    <div class="review-hero-stat">
+                      <div class="review-hero-stat-val">4.2</div>
+                      <div class="review-hero-stat-label">km/h</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="review-card">
+                  <div class="review-card-title">🌟 이 루트는 어떠셨나요?</div>
+                  <div class="review-card-hint">별점을 눌러 만족도를 알려주세요.</div>
+                  <div class="star-row" id="reviewStarRow" role="radiogroup" aria-label="별점">
+                    <button type="button" class="star-btn" data-star="1" aria-label="1점">★</button>
+                    <button type="button" class="star-btn" data-star="2" aria-label="2점">★</button>
+                    <button type="button" class="star-btn" data-star="3" aria-label="3점">★</button>
+                    <button type="button" class="star-btn" data-star="4" aria-label="4점">★</button>
+                    <button type="button" class="star-btn" data-star="5" aria-label="5점">★</button>
+                  </div>
+                  <div class="star-label" id="reviewStarLabel">아직 평가하지 않았어요</div>
+                </div>
+
+                <div class="review-card">
+                  <div class="review-card-title">🏷️ 어떤 점이 좋았/아쉬웠나요?</div>
+                  <div class="review-card-hint">여러 개 선택할 수 있어요.</div>
+                  <div class="review-tag-section">
+                    <div class="review-tag-section-label">👍 좋았던 점</div>
+                    <div class="review-tag-grid" id="reviewGoodTags">
+                      <button type="button" class="review-tag-chip good" data-tag="safe">안전했어요</button>
+                      <button type="button" class="review-tag-chip good" data-tag="quiet">한적했어요</button>
+                      <button type="button" class="review-tag-chip good" data-tag="shade">그늘이 좋았어요</button>
+                      <button type="button" class="review-tag-chip good" data-tag="surface">노면이 좋았어요</button>
+                      <button type="button" class="review-tag-chip good" data-tag="view">풍경이 좋았어요</button>
+                      <button type="button" class="review-tag-chip good" data-tag="dogfriend">강아지 친구를 만났어요</button>
+                      <button type="button" class="review-tag-chip good" data-tag="poo">배변봉투함이 있었어요</button>
+                    </div>
+                  </div>
+                  <div class="review-tag-section">
+                    <div class="review-tag-section-label">👎 아쉬웠던 점</div>
+                    <div class="review-tag-grid" id="reviewBadTags">
+                      <button type="button" class="review-tag-chip bad" data-tag="crowded">사람이 너무 많았어요</button>
+                      <button type="button" class="review-tag-chip bad" data-tag="cars">차량이 위험했어요</button>
+                      <button type="button" class="review-tag-chip bad" data-tag="noisy">시끄러웠어요</button>
+                      <button type="button" class="review-tag-chip bad" data-tag="hill">언덕/계단이 많았어요</button>
+                      <button type="button" class="review-tag-chip bad" data-tag="dirty">노면 상태가 안 좋았어요</button>
+                      <button type="button" class="review-tag-chip bad" data-tag="hot">너무 더웠어요</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="review-card">
+                  <div class="review-card-title">📝 메모 (선택)</div>
+                  <div class="review-card-hint">오늘 산책에서 기억하고 싶은 점을 남겨보세요.</div>
+                  <textarea class="review-memo" id="reviewMemo" placeholder="예: 보리가 강변에서 신나게 뛰어다녔어요!"></textarea>
+                </div>
+
+                <div class="review-actions">
+                  <button type="button" class="review-skip" id="reviewSkip">건너뛰기</button>
+                  <button type="button" class="review-submit" id="reviewSubmit" disabled>저장하고 완료</button>
+                </div>
+              </div>
+            </div>
+
             <!-- WALK HOME (산책 탭 피드) -->
             <div class="view" data-view="walkHome" data-tab-root="walk">
               <div class="walk-home">
+                <div class="walk-picked" id="walkPickedCard">
+                  <div class="walk-picked-title" id="walkPickedTitle">산책로를 선택해 주세요</div>
+                  <div class="walk-picked-meta" id="walkPickedMeta">카드를 누르면 상세 정보가 여기에 표시됩니다.</div>
+                  <button type="button" class="walk-picked-cta" id="walkPickedStart">산책하기</button>
+                </div>
                 <div class="walk-section">
                   <div class="walk-section-head">
                     <div class="walk-section-title">자주 가는 길</div>
@@ -1358,7 +1586,6 @@
                       <div class="hcard-body">
                         <div class="hcard-title">집 근처 보리 최애 공원</div>
                         <div class="hcard-meta">이번달 11회 방문</div>
-                        <button type="button" class="hcard-start" data-start-route>산책 시작</button>
                       </div>
                     </div>
                     <div class="hcard" data-walk-route="동네 산책로" data-walk-meta="2.1km · 31분 · 나무 그늘 많음">
@@ -1366,7 +1593,6 @@
                       <div class="hcard-body">
                         <div class="hcard-title">동네 산책로</div>
                         <div class="hcard-meta">이번달 9회 방문</div>
-                        <button type="button" class="hcard-start" data-start-route>산책 시작</button>
                       </div>
                     </div>
                     <div class="hcard" data-walk-route="백빈건널목" data-walk-meta="1.2km · 20분 · 짧은 루프">
@@ -1374,7 +1600,6 @@
                       <div class="hcard-body">
                         <div class="hcard-title">백빈건널목</div>
                         <div class="hcard-meta">이번달 7회 방문</div>
-                        <button type="button" class="hcard-start" data-start-route>산책 시작</button>
                       </div>
                     </div>
                   </div>
@@ -1386,24 +1611,13 @@
                     <button type="button" class="walk-section-more">전체보기</button>
                   </div>
                   <div class="hscroll" aria-label="추천 코스">
-                    <div class="hcard" data-walk-route="오늘의 코스" data-walk-meta="2.3km · 32분 · 오늘 날씨 최적">
-                      <div class="hcard-img"></div>
-                      <div class="hcard-body">
-                        <div class="row"><div class="hcard-title">오늘의 코스</div><div class="hcard-meta">추천도 91%</div></div>
-                        <div class="hcard-tags">
-                          <span class="tag">#소형견추천</span><span class="tag">#사람적어요</span><span class="tag is-hidden">#쾌적해요</span><span class="tag is-hidden">#만족도높음</span>
-                        </div>
-                        <button type="button" class="hcard-start" data-start-route>산책 시작</button>
-                      </div>
-                    </div>
                     <div class="hcard" data-walk-route="노들섬" data-walk-meta="2.4km · 34분 · 잔디/그늘 균형">
                       <div class="hcard-img"></div>
                       <div class="hcard-body">
                         <div class="row"><div class="hcard-title">노들섬</div><div class="hcard-meta">만족도 79%</div></div>
                         <div class="hcard-tags">
-                          <span class="tag">#활동량높은견</span><span class="tag">#그늘많아요</span><span class="tag is-hidden">#한강뷰좋음</span><span class="tag is-hidden">#재방문많음</span>
+                          <span class="tag">#풀밭많</span><span class="tag">#한강산책</span><span class="tag">#쾌적함</span>
                         </div>
-                        <button type="button" class="hcard-start" data-start-route>산책 시작</button>
                       </div>
                     </div>
                     <div class="hcard" data-walk-route="올림픽공원" data-walk-meta="2.8km · 39분 · 넓은 공간">
@@ -1411,9 +1625,8 @@
                       <div class="hcard-body">
                         <div class="row"><div class="hcard-title">올림픽공원</div><div class="hcard-meta">만족도 84%</div></div>
                         <div class="hcard-tags">
-                          <span class="tag">#중형견적합</span><span class="tag">#평지많아요</span><span class="tag is-hidden">#한적해요</span><span class="tag is-hidden">#인기코스</span>
+                          <span class="tag">#잔잔함</span><span class="tag">#넓은공간</span><span class="tag">#그늘</span>
                         </div>
-                        <button type="button" class="hcard-start" data-start-route>산책 시작</button>
                       </div>
                     </div>
                     <div class="hcard" data-walk-route="용산공원" data-walk-meta="2.0km · 30분 · 차분한 분위기">
@@ -1421,9 +1634,8 @@
                       <div class="hcard-body">
                         <div class="row"><div class="hcard-title">용산공원</div><div class="hcard-meta">만족도 81%</div></div>
                         <div class="hcard-tags">
-                          <span class="tag">#소형견추천</span><span class="tag">#그늘많아요</span><span class="tag is-hidden">#한적해요</span><span class="tag is-hidden">#리뷰좋음</span>
+                          <span class="tag">#잔잔함</span><span class="tag">#한강인근</span>
                         </div>
-                        <button type="button" class="hcard-start" data-start-route>산책 시작</button>
                       </div>
                     </div>
                     <div class="hcard" data-walk-route="그늘 많은 루프 코스" data-walk-meta="1.9km · 29분 · 체감 시원">
@@ -1431,9 +1643,8 @@
                       <div class="hcard-body">
                         <div class="row"><div class="hcard-title">그늘 많은 루프 코스</div><div class="hcard-meta">혼잡도 낮음</div></div>
                         <div class="hcard-tags">
-                          <span class="tag">#푸들친화</span><span class="tag">#그늘많아요</span><span class="tag is-hidden">#바람좋아요</span><span class="tag is-hidden">#만족도높음</span>
+                          <span class="tag">#그늘많음</span><span class="tag">#시원함</span>
                         </div>
-                        <button type="button" class="hcard-start" data-start-route>산책 시작</button>
                       </div>
                     </div>
                     <div class="hcard" data-walk-route="강변 바람 코스" data-walk-meta="2.2km · 33분 · 바람 쾌적">
@@ -1441,9 +1652,8 @@
                       <div class="hcard-body">
                         <div class="row"><div class="hcard-title">강변 바람 코스</div><div class="hcard-meta">체감 쾌적</div></div>
                         <div class="hcard-tags">
-                          <span class="tag">#활동량높은견</span><span class="tag">#바람좋아요</span><span class="tag is-hidden">#쾌적해요</span><span class="tag is-hidden">#재방문많음</span>
+                          <span class="tag">#강변</span><span class="tag">#바람좋음</span>
                         </div>
-                        <button type="button" class="hcard-start" data-start-route>산책 시작</button>
                       </div>
                     </div>
                     <div class="hcard" data-walk-route="주거지 조용한 코스" data-walk-meta="1.6km · 25분 · 혼잡 낮음">
@@ -1451,9 +1661,8 @@
                       <div class="hcard-body">
                         <div class="row"><div class="hcard-title">주거지 조용한 코스</div><div class="hcard-meta">소음 낮음</div></div>
                         <div class="hcard-tags">
-                          <span class="tag">#소형견추천</span><span class="tag">#사람적어요</span><span class="tag is-hidden">#한적해요</span><span class="tag is-hidden">#만족도높음</span>
+                          <span class="tag">#조용함</span><span class="tag">#한적함</span>
                         </div>
-                        <button type="button" class="hcard-start" data-start-route>산책 시작</button>
                       </div>
                     </div>
                   </div>
@@ -1473,20 +1682,6 @@
                     </div>
                     <button type="button" class="mypage-profile-edit" data-nav="mypage_edit">편집</button>
                   </div>
-                  <div class="mypage-stats">
-                    <div class="mypage-stat">
-                      <div class="mypage-stat-val">47</div>
-                      <div class="mypage-stat-label">총 산책</div>
-                    </div>
-                    <div class="mypage-stat">
-                      <div class="mypage-stat-val">68km</div>
-                      <div class="mypage-stat-label">총 거리</div>
-                    </div>
-                    <div class="mypage-stat">
-                      <div class="mypage-stat-val">32h</div>
-                      <div class="mypage-stat-label">총 시간</div>
-                    </div>
-                  </div>
                 </div>
 
                 <div class="mypage-group">
@@ -1494,10 +1689,12 @@
                   <div class="mypage-group-card">
                     <div class="mypage-list">
                       <button type="button" class="mypage-row" data-nav="mypage_edit">
+                        <span class="mypage-row-ico green">✏️</span>
                         <span class="mypage-row-text">내 정보 수정<span class="mypage-row-hint">닉네임, 산책 선호 변경</span></span>
                         <span class="mypage-row-arrow">›</span>
                       </button>
                       <button type="button" class="mypage-row" data-nav="mypage_system">
+                        <span class="mypage-row-ico blue">⚙️</span>
                         <span class="mypage-row-text">시스템 설정<span class="mypage-row-hint">알림, 음성, 폰트</span></span>
                         <span class="mypage-row-arrow">›</span>
                       </button>
@@ -1510,14 +1707,17 @@
                   <div class="mypage-group-card">
                     <div class="mypage-list">
                       <button type="button" class="mypage-row" data-nav="mypage_notice">
+                        <span class="mypage-row-ico orange">📢</span>
                         <span class="mypage-row-text">공지사항</span>
                         <span class="mypage-row-arrow">›</span>
                       </button>
                       <button type="button" class="mypage-row" data-nav="mypage_support">
+                        <span class="mypage-row-ico cyan">💬</span>
                         <span class="mypage-row-text">고객 센터</span>
                         <span class="mypage-row-arrow">›</span>
                       </button>
                       <button type="button" class="mypage-row" data-nav="mypage_terms">
+                        <span class="mypage-row-ico purple">📄</span>
                         <span class="mypage-row-text">약관 및 정책</span>
                         <span class="mypage-row-arrow">›</span>
                       </button>
@@ -1529,10 +1729,12 @@
                   <div class="mypage-group-card">
                     <div class="mypage-list">
                       <button type="button" class="mypage-row mypage-row--danger" data-action="logout">
+                        <span class="mypage-row-ico red">🚪</span>
                         <span class="mypage-row-text">로그아웃</span>
                         <span class="mypage-row-arrow">›</span>
                       </button>
                       <button type="button" class="mypage-row mypage-row--danger" data-action="withdraw">
+                        <span class="mypage-row-ico red">⚠️</span>
                         <span class="mypage-row-text">탈퇴하기</span>
                         <span class="mypage-row-arrow">›</span>
                       </button>
@@ -1553,14 +1755,17 @@
                 <div class="mypage-group-card">
                   <div class="mypage-list">
                     <button type="button" class="mypage-row mypage-row--sub" data-nav="mypage_setting_noti">
+                      <span class="mypage-row-ico orange">🔔</span>
                       <span class="mypage-row-text">알림 설정<span class="mypage-row-hint">PUSH, 산책 추천, 야간 알림 등</span></span>
                       <span class="mypage-row-arrow">›</span>
                     </button>
                     <button type="button" class="mypage-row mypage-row--sub" data-nav="mypage_setting_voice">
+                      <span class="mypage-row-ico blue">🔊</span>
                       <span class="mypage-row-text">음성 안내 기본 설정</span>
                       <span class="mypage-row-arrow">›</span>
                     </button>
                     <button type="button" class="mypage-row mypage-row--sub" data-nav="mypage_setting_font">
+                      <span class="mypage-row-ico purple">🔤</span>
                       <span class="mypage-row-text">폰트 크기 설정</span>
                       <span class="mypage-row-arrow">›</span>
                     </button>
@@ -1595,10 +1800,12 @@
                 <div class="mypage-group-card">
                   <div class="mypage-list">
                     <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-ico orange">📢</span>
                       <span class="mypage-row-text">[안내] 산책 추천 알고리즘 업데이트 (예시)</span>
                       <span class="mypage-row-arrow">›</span>
                     </button>
                     <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-ico blue">🔧</span>
                       <span class="mypage-row-text">[점검] 서비스 점검 안내 (예시)</span>
                       <span class="mypage-row-arrow">›</span>
                     </button>
@@ -1618,10 +1825,12 @@
                 <div class="mypage-group-card">
                   <div class="mypage-list">
                     <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-ico cyan">❓</span>
                       <span class="mypage-row-text">자주 묻는 질문</span>
                       <span class="mypage-row-arrow">›</span>
                     </button>
                     <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-ico green">💬</span>
                       <span class="mypage-row-text">1:1 문의하기</span>
                       <span class="mypage-row-arrow">›</span>
                     </button>
@@ -1640,14 +1849,17 @@
                 <div class="mypage-group-card">
                   <div class="mypage-list">
                     <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-ico purple">📋</span>
                       <span class="mypage-row-text">서비스 이용약관</span>
                       <span class="mypage-row-arrow">›</span>
                     </button>
                     <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-ico purple">🔒</span>
                       <span class="mypage-row-text">개인정보 처리방침</span>
                       <span class="mypage-row-arrow">›</span>
                     </button>
                     <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-ico purple">📍</span>
                       <span class="mypage-row-text">위치기반서비스 이용약관</span>
                       <span class="mypage-row-arrow">›</span>
                     </button>
@@ -1813,12 +2025,14 @@
       const progressByView = new Map([
         ["login", 0],
         ["signupMethod", 0],
-        ["signup", 0],
-        ["userInfo", 33],
-        ["dogInfo", 66],
+        ["signup", 25],
+        ["userInfo", 50],
+        ["dogInfo", 75],
+        ["dogInfoTraits", 100],
         ["home", 100],
         ["routes", 100],
         ["walk", 100],
+        ["walkReview", 100],
         ["walkHome", 100],
         ["pet", 100],
         ["explore", 100],
@@ -1851,6 +2065,7 @@
         handleProgress(name);
         if (name === "home") syncHomeDogName();
         if (name === "pet") syncPetDogName();
+        if (name === "dogInfoTraits") syncTraitsDogName();
       }
 
       function syncHomeDogName() {
@@ -1867,6 +2082,13 @@
         el.textContent = safe;
       }
 
+      function syncTraitsDogName() {
+        const el = document.getElementById("traitsDogName");
+        if (!el) return;
+        const safe = (state.dogName || "").trim() || "반려견";
+        el.textContent = safe;
+      }
+
       function handleProgress(viewName) {
         const value = progressByView.has(viewName) ? progressByView.get(viewName) : 100;
         progressEls.forEach(el => {
@@ -1878,7 +2100,7 @@
         const tabBar = document.getElementById("tabs");
         const screen = document.querySelector(".phone .screen");
         if (!tabBar) return;
-        const onboardingViews = new Set(["login", "signupMethod", "signup", "userInfo", "dogInfo"]);
+        const onboardingViews = new Set(["login", "signupMethod", "signup", "userInfo", "dogInfo", "dogInfoTraits"]);
         const hide = onboardingViews.has(viewName);
         tabBar.classList.toggle("hidden", hide);
         if (screen) screen.classList.toggle("screen--tabs", !hide);
@@ -1966,7 +2188,6 @@
         hospital: "#00E933",
         tour: "#19B23A",
         petshop: "#00E933",
-        playground: "#19B23A",
       };
       const categoryNames = {
         stay: "숙소",
@@ -1977,7 +2198,6 @@
         hospital: "병원",
         tour: "관광지",
         petshop: "펫용품판매소",
-        playground: "반려견 놀이터",
       };
       const categoryIcons = {
         stay: "🏨",
@@ -1988,7 +2208,6 @@
         hospital: "🏥",
         tour: "📍",
         petshop: "🦴",
-        playground: "🎾",
       };
       const exploreSpots = [
         { name: "한강 펫스테이", cat: "stay", x: 20, y: 22 },
@@ -2007,8 +2226,6 @@
         { name: "노들섬", cat: "tour", x: 76, y: 54 },
         { name: "멍멍 펫샵", cat: "petshop", x: 33, y: 25 },
         { name: "한강 펫용품점", cat: "petshop", x: 52, y: 62 },
-        { name: "용산 반려견 놀이터", cat: "playground", x: 58, y: 42 },
-        { name: "한강 멍플레이 존", cat: "playground", x: 24, y: 58 },
       ];
       const exploreState = { selectedCat: null, zoom: 1, panX: 0, panY: 0, sheetOpen: false };
 
@@ -2204,17 +2421,13 @@
       const toggleVoice = document.getElementById("toggleVoice");
       const voiceActionIco = document.getElementById("voiceActionIco");
       const voiceActionLabel = document.getElementById("voiceActionLabel");
-      const walkMoreBtn = document.getElementById("walkMoreBtn");
-      const walkMoreMenu = document.getElementById("walkMoreMenu");
-      const walkUserPin = document.getElementById("walkUserPin");
-      const walkMapEventLayer = document.getElementById("walkMapEventLayer");
+      const walkPickedCard = document.getElementById("walkPickedCard");
+      const walkPickedTitle = document.getElementById("walkPickedTitle");
+      const walkPickedMeta = document.getElementById("walkPickedMeta");
+      const walkPickedStart = document.getElementById("walkPickedStart");
       const walkEndBtn = document.getElementById("walkEndBtn");
       const poopRecord = document.getElementById("poopRecord");
-      function startWalkRoute(routeName, routeMeta) {
-        document.getElementById("walkRouteName").textContent = routeName;
-        document.getElementById("walkRouteMeta").textContent = routeMeta || "거리/시간 정보 준비 중";
-        setActiveView("walk");
-      }
+      let selectedWalkRoute = null;
       let voiceOn = true;
       if (toggleVoice) toggleVoice.addEventListener("click", () => {
         voiceOn = !voiceOn;
@@ -2223,7 +2436,12 @@
         if (voiceActionLabel) voiceActionLabel.textContent = voiceOn ? "음성 안내" : "음성 꺼짐";
       });
       if (walkEndBtn) walkEndBtn.addEventListener("click", () => {
-        setActiveView("walkHome");
+        const routeNameEl = document.getElementById("walkRouteName");
+        const reviewRouteEl = document.getElementById("reviewRouteName");
+        if (routeNameEl && reviewRouteEl) {
+          reviewRouteEl.textContent = (routeNameEl.textContent || "").trim() || "오늘의 산책";
+        }
+        setActiveView("walkReview");
       });
       if (poopRecord) poopRecord.addEventListener("click", () => {
         const logTimeline = document.querySelector(".walk-live-timeline");
@@ -2237,63 +2455,26 @@
         if (activeEntry) logTimeline.insertBefore(newEntry, activeEntry);
         else logTimeline.appendChild(newEntry);
       });
-      if (walkMoreBtn && walkMoreMenu) {
-        walkMoreBtn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          walkMoreMenu.classList.toggle("show");
-        });
-      }
-      if (walkMoreMenu && walkMapEventLayer && walkUserPin) {
-        walkMoreMenu.querySelectorAll("[data-walk-event]").forEach((btn) => {
-          btn.addEventListener("click", () => {
-            const emoji = btn.getAttribute("data-walk-event");
-            if (!emoji) return;
-            const pinRect = walkUserPin.getBoundingClientRect();
-            const layerRect = walkMapEventLayer.getBoundingClientRect();
-            const marker = document.createElement("div");
-            const existing = walkMapEventLayer.querySelectorAll(".walk-map-event").length;
-            const offsetX = ((existing % 3) - 1) * 14;
-            const offsetY = Math.floor(existing / 3) % 2 ? -16 : 12;
-            marker.className = "walk-map-event";
-            marker.textContent = emoji;
-            marker.style.left = `${pinRect.left - layerRect.left + (pinRect.width / 2) + offsetX}px`;
-            marker.style.top = `${pinRect.top - layerRect.top + (pinRect.height / 2) + offsetY}px`;
-            walkMapEventLayer.appendChild(marker);
-            walkMoreMenu.classList.remove("show");
-          });
-        });
-      }
-      document.addEventListener("click", (e) => {
-        if (!walkMoreMenu || !walkMoreBtn) return;
-        if (walkMoreMenu.contains(e.target) || walkMoreBtn.contains(e.target)) return;
-        walkMoreMenu.classList.remove("show");
-      });
 
-      document.querySelectorAll(".hcard[data-walk-route] [data-start-route]").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          const card = btn.closest(".hcard[data-walk-route]");
-          if (!card) return;
+      document.querySelectorAll(".hcard[data-walk-route]").forEach((card) => {
+        card.style.cursor = "pointer";
+        card.addEventListener("click", () => {
           const routeName = card.getAttribute("data-walk-route");
-          const routeMeta = card.getAttribute("data-walk-meta");
-          startWalkRoute(routeName, routeMeta);
+          const routeMeta = card.getAttribute("data-walk-meta") || "거리/시간 정보 준비 중";
+          selectedWalkRoute = { name: routeName, meta: routeMeta };
+          walkPickedTitle.textContent = routeName;
+          walkPickedMeta.textContent = routeMeta;
+          walkPickedCard.classList.add("show");
         });
       });
-
-      document.querySelectorAll(".walk-reco .hcard-tags").forEach((wrap) => {
-        const hiddenTags = wrap.querySelectorAll(".tag.is-hidden");
-        if (!hiddenTags.length) return;
-        const more = document.createElement("button");
-        more.type = "button";
-        more.className = "tag-more";
-        more.textContent = `+${hiddenTags.length}`;
-        more.setAttribute("aria-label", `키워드 ${hiddenTags.length}개 더보기`);
-        more.addEventListener("click", (e) => {
-          e.stopPropagation();
-          wrap.classList.add("show-all");
+      if (walkPickedStart) {
+        walkPickedStart.addEventListener("click", () => {
+          if (!selectedWalkRoute) return;
+          document.getElementById("walkRouteName").textContent = selectedWalkRoute.name;
+          document.getElementById("walkRouteMeta").textContent = selectedWalkRoute.meta;
+          setActiveView("walk");
         });
-        wrap.appendChild(more);
-      });
+      }
 
       const rerouteOverlay = document.getElementById("rerouteOverlay");
       function dismissReroute() {
@@ -2323,6 +2504,178 @@
           if (!btn) return;
           fontSizeGroup.querySelectorAll(".font-opt").forEach(b => b.classList.remove("selected"));
           btn.classList.add("selected");
+        });
+      }
+
+      // === walkReview: 루트 평가 ===
+      const reviewStarRow = document.getElementById("reviewStarRow");
+      const reviewStarLabel = document.getElementById("reviewStarLabel");
+      const reviewSubmit = document.getElementById("reviewSubmit");
+      const reviewSkip = document.getElementById("reviewSkip");
+      const reviewMemo = document.getElementById("reviewMemo");
+      const reviewGoodTags = document.getElementById("reviewGoodTags");
+      const reviewBadTags = document.getElementById("reviewBadTags");
+      let reviewScore = 0;
+      const STAR_LABELS = {
+        0: "아직 평가하지 않았어요",
+        1: "별로였어요 😣",
+        2: "조금 아쉬웠어요 🙁",
+        3: "괜찮았어요 🙂",
+        4: "좋았어요 😊",
+        5: "최고였어요! 😍",
+      };
+      function renderStars() {
+        if (!reviewStarRow) return;
+        reviewStarRow.querySelectorAll(".star-btn").forEach(btn => {
+          const v = Number(btn.dataset.star);
+          btn.classList.toggle("filled", v <= reviewScore);
+        });
+        if (reviewStarLabel) reviewStarLabel.textContent = STAR_LABELS[reviewScore] || "";
+        if (reviewSubmit) reviewSubmit.disabled = reviewScore === 0;
+      }
+      function resetReview() {
+        reviewScore = 0;
+        renderStars();
+        if (reviewMemo) reviewMemo.value = "";
+        [reviewGoodTags, reviewBadTags].forEach(grp => {
+          if (!grp) return;
+          grp.querySelectorAll(".review-tag-chip.selected").forEach(c => c.classList.remove("selected"));
+        });
+      }
+      if (reviewStarRow) {
+        reviewStarRow.querySelectorAll(".star-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const v = Number(btn.dataset.star);
+            reviewScore = (reviewScore === v) ? v - 1 : v;
+            if (reviewScore < 0) reviewScore = 0;
+            renderStars();
+          });
+        });
+        renderStars();
+      }
+      [reviewGoodTags, reviewBadTags].forEach(grp => {
+        if (!grp) return;
+        grp.querySelectorAll(".review-tag-chip").forEach(chip => {
+          chip.addEventListener("click", () => chip.classList.toggle("selected"));
+        });
+      });
+      if (reviewSubmit) {
+        reviewSubmit.addEventListener("click", () => {
+          if (reviewScore === 0) return;
+          resetReview();
+          setActiveView("walkHome");
+        });
+      }
+      if (reviewSkip) {
+        reviewSkip.addEventListener("click", () => {
+          resetReview();
+          setActiveView("walkHome");
+        });
+      }
+
+      // === pet_monthly: 반려견별 색 필터 ===
+      const calDogFilter = document.getElementById("calDogFilter");
+      const calGrid = document.getElementById("calGrid");
+      if (calDogFilter && calGrid) {
+        function applyCalFilter() {
+          const activeDogs = Array.from(calDogFilter.querySelectorAll(".cal-dog-chip.active")).map(c => c.dataset.dog);
+          calGrid.querySelectorAll(".cal-day").forEach(day => {
+            const dogsAttr = day.dataset.dogs;
+            if (!dogsAttr) return;
+            const dogList = dogsAttr.split(",").map(s => s.trim()).filter(Boolean);
+            let anyVisible = false;
+            day.querySelectorAll(".cal-dot").forEach(dot => {
+              const visible = activeDogs.includes(dot.dataset.dog);
+              dot.style.display = visible ? "" : "none";
+              if (visible) anyVisible = true;
+            });
+            const matched = dogList.some(d => activeDogs.includes(d));
+            day.classList.toggle("walked", matched);
+            if (!matched) day.removeAttribute("data-nav");
+            else day.setAttribute("data-nav", "pet_journal");
+          });
+        }
+        calDogFilter.querySelectorAll(".cal-dog-chip").forEach(chip => {
+          chip.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const activeChips = calDogFilter.querySelectorAll(".cal-dog-chip.active");
+            if (chip.classList.contains("active") && activeChips.length === 1) return;
+            chip.classList.toggle("active");
+            applyCalFilter();
+          });
+        });
+        applyCalFilter();
+      }
+
+      // === userInfo: 시간대 chip + day tab ===
+      const timeslotCard = document.getElementById("timeslotCard");
+      if (timeslotCard) {
+        function updateTimeslotCounts() {
+          ["weekday", "weekend"].forEach(day => {
+            const n = timeslotCard.querySelectorAll(`.timeslot-chip[data-day="${day}"].selected`).length;
+            const badge = timeslotCard.querySelector(`[data-count-for="${day}"]`);
+            if (badge) badge.textContent = String(n);
+          });
+        }
+        timeslotCard.querySelectorAll(".timeslot-tab").forEach(tab => {
+          tab.addEventListener("click", () => {
+            const target = tab.dataset.dayTab;
+            timeslotCard.querySelectorAll(".timeslot-tab").forEach(t => {
+              const isActive = t === tab;
+              t.classList.toggle("active", isActive);
+              t.setAttribute("aria-selected", isActive ? "true" : "false");
+            });
+            timeslotCard.querySelectorAll(".timeslot-pane").forEach(p => {
+              p.classList.toggle("active", p.dataset.dayPane === target);
+            });
+          });
+        });
+        timeslotCard.querySelectorAll(".timeslot-chip").forEach(chip => {
+          chip.addEventListener("click", () => {
+            chip.classList.toggle("selected");
+            updateTimeslotCounts();
+          });
+        });
+        updateTimeslotCounts();
+      }
+
+      // === userInfo: 우선순위 태그 ===
+      const priorityTagGrid = document.getElementById("priorityTagGrid");
+      const priorityTagCount = document.getElementById("priorityTagCount");
+      if (priorityTagGrid) {
+        function updatePriorityCount() {
+          if (!priorityTagCount) return;
+          priorityTagCount.textContent = String(priorityTagGrid.querySelectorAll(".tag-chip.selected").length);
+        }
+        priorityTagGrid.querySelectorAll(".tag-chip").forEach(tag => {
+          tag.addEventListener("click", () => {
+            tag.classList.toggle("selected");
+            updatePriorityCount();
+          });
+        });
+        updatePriorityCount();
+      }
+
+      // === dogInfoTraits: 5점 척도 ===
+      const dogTraitList = document.getElementById("dogTraitList");
+      if (dogTraitList) {
+        const SCORE_LABEL = {
+          "1": "전혀 아니다",
+          "2": "아니다",
+          "3": "보통이다",
+          "4": "그렇다",
+          "5": "매우 그렇다",
+        };
+        dogTraitList.querySelectorAll(".trait-card").forEach(card => {
+          const valueEl = card.querySelector("[data-trait-value]");
+          card.querySelectorAll(".trait-scale-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+              card.querySelectorAll(".trait-scale-btn").forEach(b => b.classList.remove("active"));
+              btn.classList.add("active");
+              const score = btn.dataset.score;
+              if (valueEl) valueEl.textContent = SCORE_LABEL[score] || "";
+            });
+          });
         });
       }
     })();
