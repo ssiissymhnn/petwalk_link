@@ -12,8 +12,8 @@
     *{box-sizing:border-box} body{margin:0;font-family:"Pretendard",sans-serif;background:var(--bg);color:var(--text)}
     .wrap{max-width:1320px;margin:0 auto;padding:28px 22px 40px}.title{font-size:24px;font-weight:800;margin:8px 0 22px}
     .phones{display:grid;grid-template-columns:minmax(320px, 420px);justify-content:center}
-    .phone{background:var(--card);border-radius:34px;padding:18px 14px 16px;min-height:760px;box-shadow:0 12px 40px rgba(0,0,0,.10);border:1px solid rgba(0,0,0,.06);position:relative;overflow:hidden}
-    .screen{border-radius:28px;background:var(--bg);height:100%;padding:12px;position:relative}
+    .phone{background:var(--card);border-radius:34px;padding:18px 14px 16px;width:100%;height:760px;box-shadow:0 12px 40px rgba(0,0,0,.10);border:1px solid rgba(0,0,0,.06);position:relative;overflow:hidden;flex-shrink:0}
+    .screen{border-radius:28px;background:var(--bg);height:100%;padding:12px;position:relative;overflow:hidden}
     .row{display:flex;align-items:center;justify-content:space-between}.muted{color:var(--muted);font-size:12px}.h2{font-size:20px;font-weight:800;margin:0}
     .app-header{position:absolute;left:12px;right:12px;top:10px;z-index:8;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
     .app-logo{font-family:"Madimi One", system-ui, sans-serif;font-size:22px;letter-spacing:.02em;color:var(--main);pointer-events:none}
@@ -54,9 +54,9 @@
     .reroute-btn.secondary{background:var(--white);color:var(--text);border:1px solid rgba(0,0,0,.1)}
     .reroute-btn.secondary:hover{background:var(--sep)}
     .btns{display:flex;gap:8px;margin-top:8px}.btn{flex:1;border-radius:10px;padding:9px 0;font-size:12px;font-weight:700;border:1px solid rgba(0,0,0,.08);background:var(--white);color:var(--text);transition:background .1s ease}.btn:hover{background:var(--sep)}.btn.primary{background:linear-gradient(135deg,#19B23A,#0fa34e);color:var(--white);border-color:transparent;box-shadow:0 2px 8px rgba(25,178,58,.2)}
-    .views{height:100%;padding-top:42px}
+    .views{height:100%;padding-top:42px;position:relative}
     .screen--tabs .views{padding-bottom:74px}
-    .view{display:none;height:100%}
+    .view{display:none;height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
     .view.active{display:block}
     .view[data-view="walk"]{overflow:hidden}
     .view[data-view="walkHome"]{overflow:auto}
@@ -137,16 +137,70 @@
     .tag-helper strong{color:var(--main);font-weight:800}
 
     /* === 성격 슬라이더 카드 (dogInfoTraits) === */
-    .trait-list{display:flex;flex-direction:column;gap:10px}
-    .trait-card{border:1px solid var(--line);border-radius:16px;background:#fff;padding:13px 14px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-    .trait-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-    .trait-card-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;color:var(--text)}
-    .trait-card-title .trait-emoji{font-size:18px;line-height:1}
-    .trait-card-value{font-size:11px;font-weight:800;color:var(--main);background:rgba(25,178,58,.1);padding:3px 8px;border-radius:999px;white-space:nowrap}
-    .trait-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;background:var(--sep);border-radius:10px;padding:4px}
-    .trait-scale-btn{border:none;background:transparent;padding:8px 4px;border-radius:7px;font-size:10px;font-weight:700;color:var(--sub);cursor:pointer;font-family:inherit;line-height:1.2;transition:all .15s ease}
-    .trait-scale-btn:hover{color:var(--text)}
-    .trait-scale-btn.active{background:var(--main);color:#fff;box-shadow:0 2px 6px rgba(25,178,58,.25);font-weight:800}
+    /* === Personality quiz (8문항) === */
+    .quiz-list{display:flex;flex-direction:column;gap:12px}
+    .quiz-card{border:1px solid var(--line);border-radius:16px;background:#fff;padding:14px 14px 12px;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:border-color .15s ease,box-shadow .15s ease}
+    .quiz-card.answered{border-color:rgba(25,178,58,.4);box-shadow:0 2px 10px rgba(25,178,58,.1)}
+    .quiz-card-head{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+    .quiz-num{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;padding:0 7px;background:var(--main);color:#fff;border-radius:7px;font-size:10px;font-weight:900;letter-spacing:.04em}
+    .quiz-card.answered .quiz-num{background:#0fa34e}
+    .quiz-card:not(.answered) .quiz-num{background:#cfd2cf}
+    .quiz-title{font-size:14px;font-weight:800;color:var(--text);line-height:1.2}
+    .quiz-desc{font-size:12px;color:var(--sub);font-weight:600;margin-bottom:10px}
+    .quiz-options{display:flex;flex-direction:column;gap:6px}
+    .quiz-option{text-align:left;width:100%;border:1.5px solid var(--line);background:#fff;color:var(--text);border-radius:12px;padding:11px 13px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;transition:all .15s ease;line-height:1.3}
+    .quiz-option:hover{border-color:#a8e6b9;background:rgba(25,178,58,.04)}
+    .quiz-option .quiz-radio{width:18px;height:18px;border-radius:50%;border:1.5px solid #d6d6d6;background:#fff;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;transition:all .15s}
+    .quiz-option.selected{border-color:var(--main);background:rgba(25,178,58,.08);color:var(--text);box-shadow:0 2px 6px rgba(25,178,58,.12)}
+    .quiz-option.selected .quiz-radio{border-color:var(--main);background:var(--main)}
+    .quiz-option.selected .quiz-radio::after{content:"";width:7px;height:7px;border-radius:50%;background:#fff}
+    .quiz-option:active{transform:scale(.99)}
+    .quiz-progress-bar{position:sticky;top:0;background:var(--bg);padding:6px 0 10px;z-index:2}
+    .quiz-progress-track{height:6px;background:var(--sep);border-radius:999px;overflow:hidden}
+    .quiz-progress-fill{height:100%;background:linear-gradient(90deg,#19B23A,#00E933);border-radius:999px;transition:width .25s ease}
+    .quiz-progress-text{font-size:11px;color:var(--sub);font-weight:700;margin-top:6px;text-align:center}
+
+    /* === Wesen test 안내 배너 === */
+    .wesen-notice{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:linear-gradient(135deg,rgba(25,178,58,.08) 0%,rgba(0,233,51,.06) 100%);border:1px solid rgba(25,178,58,.22);border-radius:14px;margin-bottom:14px}
+    .wesen-notice-ico{font-size:20px;line-height:1.2;flex-shrink:0;margin-top:1px}
+    .wesen-notice-text{font-size:12px;color:var(--text);line-height:1.55;font-weight:600}
+    .wesen-notice-text strong{color:var(--main);font-weight:800}
+    .wesen-notice-text em{color:var(--sub);font-style:normal;font-weight:600}
+
+    /* === Petlog 성격 카드 (퀴즈 결과 반영) === */
+    .petlog-personality-card{display:flex;align-items:center;gap:12px;padding:14px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.04);cursor:pointer;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
+    .petlog-personality-card:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(25,178,58,.12);border-color:rgba(25,178,58,.3)}
+    .petlog-personality-card:active{transform:translateY(0)}
+    .petlog-personality-emoji{width:54px;height:54px;border-radius:14px;background:linear-gradient(135deg,rgba(25,178,58,.14),rgba(0,233,51,.08));display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+    .petlog-personality-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+    .petlog-personality-name{font-size:15px;font-weight:800;color:var(--text);letter-spacing:-.005em}
+    .petlog-personality-tagline{font-size:11px;color:var(--sub);font-weight:600;line-height:1.4;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical}
+    .petlog-personality-arrow{color:var(--sub);font-size:18px;font-weight:800;flex-shrink:0}
+    .petlog-personality-empty{display:flex;align-items:center;gap:12px;padding:14px;background:#fff;border:1.5px dashed var(--line);border-radius:16px;cursor:pointer;transition:all .15s ease;color:var(--sub);font-size:13px;font-weight:700}
+    .petlog-personality-empty:hover{border-color:var(--main);color:var(--main);background:rgba(25,178,58,.04)}
+    .petlog-personality-empty .petlog-personality-emoji{background:var(--sep);font-size:24px}
+
+    /* === Result page (성격 결과) === */
+    .result-hero{background:linear-gradient(135deg,#19B23A 0%,#0fa34e 50%,#00E933 100%);border-radius:22px;padding:28px 22px 26px;color:#fff;text-align:center;position:relative;overflow:hidden;box-shadow:0 8px 22px rgba(25,178,58,.24)}
+    .result-hero::before{content:"";position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.1);top:-60px;right:-50px}
+    .result-hero::after{content:"";position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.07);bottom:-50px;left:-30px}
+    .result-emoji{font-size:62px;line-height:1;margin-bottom:10px;position:relative;z-index:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15))}
+    .result-badge{display:inline-block;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.3);padding:4px 12px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.04em;margin-bottom:8px;position:relative;z-index:1;backdrop-filter:blur(4px)}
+    .result-name{font-size:24px;font-weight:900;letter-spacing:-.01em;line-height:1.2;position:relative;z-index:1}
+    .result-tagline{font-size:13px;opacity:.9;margin-top:8px;font-weight:600;line-height:1.5;position:relative;z-index:1}
+    .result-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 16px 18px;box-shadow:0 2px 8px rgba(0,0,0,.04);margin-top:14px}
+    .result-card-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+    .result-card-hint{font-size:11px;color:var(--sub);font-weight:600;margin-bottom:14px}
+    .result-axes{display:flex;flex-direction:column;gap:10px}
+    .result-axis-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px}
+    .result-axis-label{font-size:12px;font-weight:800;color:var(--text);min-width:72px}
+    .result-axis-label .axis-code{display:inline-block;background:var(--sep);color:var(--sub);padding:1px 6px;border-radius:6px;font-size:9px;margin-left:4px;font-weight:700}
+    .result-axis-bar{height:8px;background:var(--sep);border-radius:999px;overflow:hidden;position:relative}
+    .result-axis-fill{height:100%;background:linear-gradient(90deg,#19B23A,#00E933);border-radius:999px;transition:width .6s ease}
+    .result-axis-val{font-size:11px;font-weight:800;color:var(--main);min-width:34px;text-align:right}
+    .result-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+    .result-tag{font-size:11px;font-weight:700;color:var(--main);background:rgba(25,178,58,.1);border:1px solid rgba(25,178,58,.2);border-radius:999px;padding:5px 10px}
+    .result-desc{font-size:13px;color:var(--text);line-height:1.6;font-weight:500}
 
     /* Auth (login / signup method) — sage / cream mood */
     .view[data-view="login"],.view[data-view="signupMethod"]{
@@ -520,7 +574,7 @@
     .font-opt.selected{background:rgba(25,178,58,.06)}
     .font-opt.selected .mypage-row-text{color:var(--main);font-weight:800}
     .font-opt.selected::after{content:"✓";position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--main);font-size:16px;font-weight:900}
-    @media (max-width:980px){.phones{grid-template-columns:1fr}.phone{min-height:720px}}
+    @media (max-width:980px){.phones{grid-template-columns:1fr}.phone{height:720px}}
   </style>
 </head>
 <body>
@@ -803,93 +857,206 @@
                 <button class="iconbtn" data-nav="dogInfo">←</button>
                 <span class="muted">4/4</span>
               </div>
-              <p class="h2"><span id="traitsDogName">보리</span>의 성격</p>
-              <p class="muted">아이의 성향을 입력하면 더 잘 맞는 산책 코스를 추천해 드려요.</p>
+              <p class="h2"><span id="traitsDogName">보리</span>의 성격 알아보기</p>
+              <p class="muted">8개의 질문에 답하면 우리 아이의 산책 성향 유형을 알려드려요.</p>
               <div class="progress"><span data-progress></span></div>
               <div class="form">
-                <div class="trait-list" id="dogTraitList">
-                  <div class="trait-card" data-trait="active">
-                    <div class="trait-card-head">
-                      <div class="trait-card-title"><span class="trait-emoji">🐕‍🦺</span>활발해요</div>
-                      <div class="trait-card-value" data-trait-value>매우 그렇다</div>
+                <div class="wesen-notice" role="note">
+                  <span class="wesen-notice-ico">📋</span>
+                  <div class="wesen-notice-text">
+                    <strong>베젠테스트(Wesen test)</strong>를 활용한 반려견 기질 테스트입니다.<br>
+                    <em>독일에서 사용되는 표준 기질 평가 방식을 산책 환경에 맞춰 재구성했어요.</em>
+                  </div>
+                </div>
+                <div class="quiz-progress-bar">
+                  <div class="quiz-progress-track"><div class="quiz-progress-fill" id="quizProgressFill" style="width:0%"></div></div>
+                  <div class="quiz-progress-text"><strong id="quizAnsweredCount">0</strong> / 8 답변 완료</div>
+                </div>
+
+                <div class="quiz-list" id="quizList">
+                  <div class="quiz-card" data-q="q1">
+                    <div class="quiz-card-head">
+                      <span class="quiz-num">Q1</span>
+                      <span class="quiz-title">다른 강아지를 만났을 때</span>
                     </div>
-                    <div class="trait-scale">
-                      <button type="button" class="trait-scale-btn" data-score="1">전혀</button>
-                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
-                      <button type="button" class="trait-scale-btn" data-score="3">보통</button>
-                      <button type="button" class="trait-scale-btn" data-score="4">그렇다</button>
-                      <button type="button" class="trait-scale-btn active" data-score="5">매우</button>
+                    <div class="quiz-desc">산책 중 다른 강아지를 만났을 때 우리 강아지는?</div>
+                    <div class="quiz-options">
+                      <button type="button" class="quiz-option" data-q="q1" data-opt="0"><span class="quiz-radio"></span>꼬리를 흔들며 먼저 다가간다</button>
+                      <button type="button" class="quiz-option" data-q="q1" data-opt="1"><span class="quiz-radio"></span>조심스럽게 냄새만 맡는다</button>
+                      <button type="button" class="quiz-option" data-q="q1" data-opt="2"><span class="quiz-radio"></span>보호자 뒤로 숨거나 거리를 둔다</button>
+                      <button type="button" class="quiz-option" data-q="q1" data-opt="3"><span class="quiz-radio"></span>짖거나 경계한다</button>
                     </div>
                   </div>
-                  <div class="trait-card" data-trait="shy">
-                    <div class="trait-card-head">
-                      <div class="trait-card-title"><span class="trait-emoji">🙈</span>소심해요</div>
-                      <div class="trait-card-value" data-trait-value>전혀 아니다</div>
+
+                  <div class="quiz-card" data-q="q2">
+                    <div class="quiz-card-head">
+                      <span class="quiz-num">Q2</span>
+                      <span class="quiz-title">낯선 사람을 만났을 때</span>
                     </div>
-                    <div class="trait-scale">
-                      <button type="button" class="trait-scale-btn active" data-score="1">전혀</button>
-                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
-                      <button type="button" class="trait-scale-btn" data-score="3">보통</button>
-                      <button type="button" class="trait-scale-btn" data-score="4">그렇다</button>
-                      <button type="button" class="trait-scale-btn" data-score="5">매우</button>
-                    </div>
-                  </div>
-                  <div class="trait-card" data-trait="curious">
-                    <div class="trait-card-head">
-                      <div class="trait-card-title"><span class="trait-emoji">🔍</span>호기심이 많아요</div>
-                      <div class="trait-card-value" data-trait-value>그렇다</div>
-                    </div>
-                    <div class="trait-scale">
-                      <button type="button" class="trait-scale-btn" data-score="1">전혀</button>
-                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
-                      <button type="button" class="trait-scale-btn" data-score="3">보통</button>
-                      <button type="button" class="trait-scale-btn active" data-score="4">그렇다</button>
-                      <button type="button" class="trait-scale-btn" data-score="5">매우</button>
+                    <div class="quiz-desc">모르는 사람이 다가오면?</div>
+                    <div class="quiz-options">
+                      <button type="button" class="quiz-option" data-q="q2" data-opt="0"><span class="quiz-radio"></span>반갑게 다가간다</button>
+                      <button type="button" class="quiz-option" data-q="q2" data-opt="1"><span class="quiz-radio"></span>가만히 지켜본다</button>
+                      <button type="button" class="quiz-option" data-q="q2" data-opt="2"><span class="quiz-radio"></span>뒤로 물러난다</button>
+                      <button type="button" class="quiz-option" data-q="q2" data-opt="3"><span class="quiz-radio"></span>짖거나 위협한다</button>
                     </div>
                   </div>
-                  <div class="trait-card" data-trait="sensitive">
-                    <div class="trait-card-head">
-                      <div class="trait-card-title"><span class="trait-emoji">😟</span>낯선 환경에 민감해요</div>
-                      <div class="trait-card-value" data-trait-value>보통이다</div>
+
+                  <div class="quiz-card" data-q="q3">
+                    <div class="quiz-card-head">
+                      <span class="quiz-num">Q3</span>
+                      <span class="quiz-title">갑작스러운 소리</span>
                     </div>
-                    <div class="trait-scale">
-                      <button type="button" class="trait-scale-btn" data-score="1">전혀</button>
-                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
-                      <button type="button" class="trait-scale-btn active" data-score="3">보통</button>
-                      <button type="button" class="trait-scale-btn" data-score="4">그렇다</button>
-                      <button type="button" class="trait-scale-btn" data-score="5">매우</button>
-                    </div>
-                  </div>
-                  <div class="trait-card" data-trait="social">
-                    <div class="trait-card-head">
-                      <div class="trait-card-title"><span class="trait-emoji">🤝</span>사회성이 좋아요</div>
-                      <div class="trait-card-value" data-trait-value>그렇다</div>
-                    </div>
-                    <div class="trait-scale">
-                      <button type="button" class="trait-scale-btn" data-score="1">전혀</button>
-                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
-                      <button type="button" class="trait-scale-btn" data-score="3">보통</button>
-                      <button type="button" class="trait-scale-btn active" data-score="4">그렇다</button>
-                      <button type="button" class="trait-scale-btn" data-score="5">매우</button>
+                    <div class="quiz-desc">큰 소리(오토바이, 공사 소리 등)가 났을 때 반응은?</div>
+                    <div class="quiz-options">
+                      <button type="button" class="quiz-option" data-q="q3" data-opt="0"><span class="quiz-radio"></span>신경 쓰지 않고 계속 간다</button>
+                      <button type="button" class="quiz-option" data-q="q3" data-opt="1"><span class="quiz-radio"></span>잠깐 놀라지만 금방 다시 행동한다</button>
+                      <button type="button" class="quiz-option" data-q="q3" data-opt="2"><span class="quiz-radio"></span>멈춰서 주변을 살핀다</button>
+                      <button type="button" class="quiz-option" data-q="q3" data-opt="3"><span class="quiz-radio"></span>크게 놀라거나 도망치려 한다</button>
                     </div>
                   </div>
-                  <div class="trait-card" data-trait="energy">
-                    <div class="trait-card-head">
-                      <div class="trait-card-title"><span class="trait-emoji">⚡</span>에너지가 넘쳐요</div>
-                      <div class="trait-card-value" data-trait-value>그렇다</div>
+
+                  <div class="quiz-card" data-q="q4">
+                    <div class="quiz-card-head">
+                      <span class="quiz-num">Q4</span>
+                      <span class="quiz-title">새로운 길이나 환경</span>
                     </div>
-                    <div class="trait-scale">
-                      <button type="button" class="trait-scale-btn" data-score="1">전혀</button>
-                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
-                      <button type="button" class="trait-scale-btn" data-score="3">보통</button>
-                      <button type="button" class="trait-scale-btn active" data-score="4">그렇다</button>
-                      <button type="button" class="trait-scale-btn" data-score="5">매우</button>
+                    <div class="quiz-desc">처음 가보는 길에서는?</div>
+                    <div class="quiz-options">
+                      <button type="button" class="quiz-option" data-q="q4" data-opt="0"><span class="quiz-radio"></span>신나서 앞장서서 탐색한다</button>
+                      <button type="button" class="quiz-option" data-q="q4" data-opt="1"><span class="quiz-radio"></span>냄새를 맡으며 천천히 적응한다</button>
+                      <button type="button" class="quiz-option" data-q="q4" data-opt="2"><span class="quiz-radio"></span>보호자를 자주 확인한다</button>
+                      <button type="button" class="quiz-option" data-q="q4" data-opt="3"><span class="quiz-radio"></span>불안해하며 걷기를 거부한다</button>
+                    </div>
+                  </div>
+
+                  <div class="quiz-card" data-q="q5">
+                    <div class="quiz-card-head">
+                      <span class="quiz-num">Q5</span>
+                      <span class="quiz-title">갑자기 무언가가 튀어나왔을 때</span>
+                    </div>
+                    <div class="quiz-desc">예상치 못한 자극(고양이, 공 등)이 생기면?</div>
+                    <div class="quiz-options">
+                      <button type="button" class="quiz-option" data-q="q5" data-opt="0"><span class="quiz-radio"></span>바로 쫓아간다</button>
+                      <button type="button" class="quiz-option" data-q="q5" data-opt="1"><span class="quiz-radio"></span>관심을 보이지만 통제 가능하다</button>
+                      <button type="button" class="quiz-option" data-q="q5" data-opt="2"><span class="quiz-radio"></span>놀라서 멈춘다</button>
+                      <button type="button" class="quiz-option" data-q="q5" data-opt="3"><span class="quiz-radio"></span>겁을 먹고 뒤로 물러난다</button>
+                    </div>
+                  </div>
+
+                  <div class="quiz-card" data-q="q6">
+                    <div class="quiz-card-head">
+                      <span class="quiz-num">Q6</span>
+                      <span class="quiz-title">보호자와의 거리</span>
+                    </div>
+                    <div class="quiz-desc">산책 중 보호자와의 관계는?</div>
+                    <div class="quiz-options">
+                      <button type="button" class="quiz-option" data-q="q6" data-opt="0"><span class="quiz-radio"></span>계속 앞서 나가려고 한다</button>
+                      <button type="button" class="quiz-option" data-q="q6" data-opt="1"><span class="quiz-radio"></span>적당히 앞서가며 가끔 돌아본다</button>
+                      <button type="button" class="quiz-option" data-q="q6" data-opt="2"><span class="quiz-radio"></span>보호자 옆에서 걷는다</button>
+                      <button type="button" class="quiz-option" data-q="q6" data-opt="3"><span class="quiz-radio"></span>보호자에게 붙어 떨어지지 않는다</button>
+                    </div>
+                  </div>
+
+                  <div class="quiz-card" data-q="q7">
+                    <div class="quiz-card-head">
+                      <span class="quiz-num">Q7</span>
+                      <span class="quiz-title">줄 당김 / 통제 반응</span>
+                    </div>
+                    <div class="quiz-desc">리드줄을 당겼을 때 반응은?</div>
+                    <div class="quiz-options">
+                      <button type="button" class="quiz-option" data-q="q7" data-opt="0"><span class="quiz-radio"></span>더 세게 당긴다</button>
+                      <button type="button" class="quiz-option" data-q="q7" data-opt="1"><span class="quiz-radio"></span>잠깐 저항하다가 따른다</button>
+                      <button type="button" class="quiz-option" data-q="q7" data-opt="2"><span class="quiz-radio"></span>비교적 잘 따른다</button>
+                      <button type="button" class="quiz-option" data-q="q7" data-opt="3"><span class="quiz-radio"></span>바로 멈추고 보호자를 본다</button>
+                    </div>
+                  </div>
+
+                  <div class="quiz-card" data-q="q8">
+                    <div class="quiz-card-head">
+                      <span class="quiz-num">Q8</span>
+                      <span class="quiz-title">낯선 물체</span>
+                    </div>
+                    <div class="quiz-desc">처음 보는 물건(우산, 조형물 등)을 보면?</div>
+                    <div class="quiz-options">
+                      <button type="button" class="quiz-option" data-q="q8" data-opt="0"><span class="quiz-radio"></span>바로 다가가서 확인한다</button>
+                      <button type="button" class="quiz-option" data-q="q8" data-opt="1"><span class="quiz-radio"></span>천천히 접근한다</button>
+                      <button type="button" class="quiz-option" data-q="q8" data-opt="2"><span class="quiz-radio"></span>멀리서 지켜본다</button>
+                      <button type="button" class="quiz-option" data-q="q8" data-opt="3"><span class="quiz-radio"></span>피하거나 숨는다</button>
                     </div>
                   </div>
                 </div>
+
                 <div class="actions">
                   <button class="cta secondary" data-nav="dogInfo" style="flex:1;">이전</button>
-                  <button class="cta" data-nav="home" style="flex:1;">완료하고 홈으로</button>
+                  <button class="cta" id="quizSubmitBtn" style="flex:1;" disabled>결과 보기</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- DOG INFO: 성격 결과 -->
+            <div class="view" data-view="dogInfoResult">
+              <div class="topbar">
+                <button class="iconbtn" id="resultBackBtn" data-nav="dogInfoTraits">←</button>
+                <span class="muted">결과</span>
+              </div>
+              <p class="h2"><span id="resultDogName">보리</span>의 성격 결과</p>
+              <p class="muted">8개의 답변을 분석했어요. 우리 아이의 유형을 확인해 보세요.</p>
+              <div class="progress" id="resultProgress"><span data-progress></span></div>
+              <div class="form">
+                <div class="result-hero">
+                  <div class="result-emoji" id="resultEmoji">🐶</div>
+                  <div class="result-badge">우리 아이 유형</div>
+                  <div class="result-name" id="resultName">사교왕 인싸형</div>
+                  <div class="result-tagline" id="resultTagline">사람도 강아지도 다 좋아하는 만능 인싸!</div>
+                </div>
+
+                <div class="result-card">
+                  <div class="result-card-title">📊 6가지 기질 점수</div>
+                  <div class="result-card-hint">막대가 높을수록 그 기질이 두드러져요.</div>
+                  <div class="result-axes" id="resultAxes">
+                    <div class="result-axis-row" data-axis="SOC">
+                      <span class="result-axis-label">사회성<span class="axis-code">SOC</span></span>
+                      <div class="result-axis-bar"><div class="result-axis-fill"></div></div>
+                      <span class="result-axis-val">0%</span>
+                    </div>
+                    <div class="result-axis-row" data-axis="EXP">
+                      <span class="result-axis-label">탐색성<span class="axis-code">EXP</span></span>
+                      <div class="result-axis-bar"><div class="result-axis-fill"></div></div>
+                      <span class="result-axis-val">0%</span>
+                    </div>
+                    <div class="result-axis-row" data-axis="REA">
+                      <span class="result-axis-label">반응성<span class="axis-code">REA</span></span>
+                      <div class="result-axis-bar"><div class="result-axis-fill"></div></div>
+                      <span class="result-axis-val">0%</span>
+                    </div>
+                    <div class="result-axis-row" data-axis="REC">
+                      <span class="result-axis-label">회복력<span class="axis-code">REC</span></span>
+                      <div class="result-axis-bar"><div class="result-axis-fill"></div></div>
+                      <span class="result-axis-val">0%</span>
+                    </div>
+                    <div class="result-axis-row" data-axis="DEF">
+                      <span class="result-axis-label">경계성<span class="axis-code">DEF</span></span>
+                      <div class="result-axis-bar"><div class="result-axis-fill"></div></div>
+                      <span class="result-axis-val">0%</span>
+                    </div>
+                    <div class="result-axis-row" data-axis="ATT">
+                      <span class="result-axis-label">의존성<span class="axis-code">ATT</span></span>
+                      <div class="result-axis-bar"><div class="result-axis-fill"></div></div>
+                      <span class="result-axis-val">0%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="result-card">
+                  <div class="result-card-title">💡 산책 추천 포인트</div>
+                  <div class="result-tags" id="resultTags"></div>
+                  <p class="result-desc" id="resultDesc" style="margin-top:12px;"></p>
+                </div>
+
+                <div class="actions" id="resultActions">
+                  <button class="cta secondary" data-nav="dogInfoTraits" style="flex:1;">다시 답하기</button>
+                  <button class="cta" id="resultHomeBtn" data-nav="home" style="flex:1;">완료하고 홈으로</button>
                 </div>
               </div>
             </div>
@@ -952,6 +1119,26 @@
                       <div class="petlog-stat-val">32h</div>
                       <div class="petlog-stat-label">총 시간</div>
                     </div>
+                  </div>
+                </div>
+
+                <div class="mypage-group" style="margin-top:4px;">
+                  <div class="mypage-group-title">성격 유형</div>
+                  <div class="petlog-personality-card" id="petPersonalityCard" data-nav="dogInfoResult" role="button" tabindex="0" style="display:none;">
+                    <div class="petlog-personality-emoji" id="petPersonalityEmoji">🐶</div>
+                    <div class="petlog-personality-info">
+                      <div class="petlog-personality-name" id="petPersonalityName">사교왕 인싸형</div>
+                      <div class="petlog-personality-tagline" id="petPersonalityTagline">사람도 강아지도 다 좋아하는 만능 인싸!</div>
+                    </div>
+                    <span class="petlog-personality-arrow">›</span>
+                  </div>
+                  <div class="petlog-personality-empty" id="petPersonalityEmpty" data-nav="dogInfoTraits" role="button" tabindex="0">
+                    <div class="petlog-personality-emoji">📋</div>
+                    <div class="petlog-personality-info">
+                      <div class="petlog-personality-name" style="color:var(--text);">기질 테스트가 아직이에요</div>
+                      <div class="petlog-personality-tagline">8개 질문으로 산책 성향을 분석해 드려요.</div>
+                    </div>
+                    <span class="petlog-personality-arrow">›</span>
                   </div>
                 </div>
 
@@ -2021,6 +2208,8 @@
       let rerouteTimer = null;
       const state = {
         dogName: "보리",
+        petPersonality: null,
+        resultEntryFrom: null,
       };
       const progressByView = new Map([
         ["login", 0],
@@ -2029,6 +2218,7 @@
         ["userInfo", 50],
         ["dogInfo", 75],
         ["dogInfoTraits", 100],
+        ["dogInfoResult", 100],
         ["home", 100],
         ["routes", 100],
         ["walk", 100],
@@ -2064,8 +2254,21 @@
         handleTabsVisibility(name);
         handleProgress(name);
         if (name === "home") syncHomeDogName();
-        if (name === "pet") syncPetDogName();
+        if (name === "pet") { syncPetDogName(); syncPetPersonality(); }
         if (name === "dogInfoTraits") syncTraitsDogName();
+        if (name === "dogInfoResult") { syncResultDogName(); renderResult(); applyResultLayout(); }
+      }
+
+      function applyResultLayout() {
+        const fromPet = state.resultEntryFrom === "pet";
+        const backBtn = document.getElementById("resultBackBtn");
+        const homeBtn = document.getElementById("resultHomeBtn");
+        const progress = document.getElementById("resultProgress");
+        const actions = document.getElementById("resultActions");
+        if (backBtn) backBtn.setAttribute("data-nav", fromPet ? "pet" : "dogInfoTraits");
+        if (homeBtn) homeBtn.style.display = fromPet ? "none" : "";
+        if (progress) progress.style.display = fromPet ? "none" : "";
+        if (actions) actions.style.justifyContent = fromPet ? "stretch" : "";
       }
 
       function syncHomeDogName() {
@@ -2089,6 +2292,13 @@
         el.textContent = safe;
       }
 
+      function syncResultDogName() {
+        const el = document.getElementById("resultDogName");
+        if (!el) return;
+        const safe = (state.dogName || "").trim() || "반려견";
+        el.textContent = safe;
+      }
+
       function handleProgress(viewName) {
         const value = progressByView.has(viewName) ? progressByView.get(viewName) : 100;
         progressEls.forEach(el => {
@@ -2100,7 +2310,7 @@
         const tabBar = document.getElementById("tabs");
         const screen = document.querySelector(".phone .screen");
         if (!tabBar) return;
-        const onboardingViews = new Set(["login", "signupMethod", "signup", "userInfo", "dogInfo", "dogInfoTraits"]);
+        const onboardingViews = new Set(["login", "signupMethod", "signup", "userInfo", "dogInfo", "dogInfoTraits", "dogInfoResult"]);
         const hide = onboardingViews.has(viewName);
         tabBar.classList.toggle("hidden", hide);
         if (screen) screen.classList.toggle("screen--tabs", !hide);
@@ -2145,6 +2355,9 @@
           const routeMeta = navTarget.getAttribute("data-route-meta");
           if (routeName) document.getElementById("walkRouteName").textContent = routeName;
           if (routeMeta) document.getElementById("walkRouteMeta").textContent = routeMeta;
+        }
+        if (navTarget && nav === "dogInfoResult") {
+          state.resultEntryFrom = navTarget.id === "petPersonalityCard" ? "pet" : "onboarding";
         }
         if (nav) setActiveView(nav);
 
@@ -2656,26 +2869,297 @@
         updatePriorityCount();
       }
 
-      // === dogInfoTraits: 5점 척도 ===
-      const dogTraitList = document.getElementById("dogTraitList");
-      if (dogTraitList) {
-        const SCORE_LABEL = {
-          "1": "전혀 아니다",
-          "2": "아니다",
-          "3": "보통이다",
-          "4": "그렇다",
-          "5": "매우 그렇다",
-        };
-        dogTraitList.querySelectorAll(".trait-card").forEach(card => {
-          const valueEl = card.querySelector("[data-trait-value]");
-          card.querySelectorAll(".trait-scale-btn").forEach(btn => {
-            btn.addEventListener("click", () => {
-              card.querySelectorAll(".trait-scale-btn").forEach(b => b.classList.remove("active"));
-              btn.classList.add("active");
-              const score = btn.dataset.score;
-              if (valueEl) valueEl.textContent = SCORE_LABEL[score] || "";
-            });
+      // === dogInfoTraits: 8문항 퀴즈 + 6축 점수 + 8유형 판정 ===
+      const quizList = document.getElementById("quizList");
+      const quizSubmitBtn = document.getElementById("quizSubmitBtn");
+      const quizProgressFill = document.getElementById("quizProgressFill");
+      const quizAnsweredCount = document.getElementById("quizAnsweredCount");
+
+      // 점수 매핑: SCORE_MAP[questionId][optionIndex] = { axis: delta, ... }
+      const SCORE_MAP = {
+        q1: [
+          { SOC: 3, DEF: 0 },
+          { SOC: 2, DEF: 1 },
+          { SOC: 0, DEF: 2 },
+          { SOC: 0, DEF: 3 },
+        ],
+        q2: [
+          { SOC: 3, DEF: 0 },
+          { SOC: 1, DEF: 1 },
+          { SOC: 0, DEF: 2 },
+          { SOC: 0, DEF: 3 },
+        ],
+        q3: [
+          { REA: 0, REC: 3 },
+          { REA: 1, REC: 2 },
+          { REA: 2, REC: 1 },
+          { REA: 3, REC: 0 },
+        ],
+        q4: [
+          { EXP: 3, ATT: 0 },
+          { EXP: 2, ATT: 1 },
+          { EXP: 1, ATT: 2 },
+          { EXP: 0, ATT: 3 },
+        ],
+        q5: [
+          { REA: 3, EXP: 2 },
+          { REA: 2, EXP: 1 },
+          { REA: 1, EXP: 0 },
+          { REA: 2, EXP: 0 },
+        ],
+        q6: [
+          { ATT: 0, EXP: 3 },
+          { ATT: 1, EXP: 2 },
+          { ATT: 2, EXP: 1 },
+          { ATT: 3, EXP: 0 },
+        ],
+        q7: [
+          { REC: 0, ATT: 0 },
+          { REC: 1, ATT: 1 },
+          { REC: 2, ATT: 1 },
+          { REC: 3, ATT: 2 },
+        ],
+        q8: [
+          { EXP: 3, DEF: 0 },
+          { EXP: 2, DEF: 1 },
+          { EXP: 1, DEF: 2 },
+          { EXP: 0, DEF: 3 },
+        ],
+      };
+
+      // 축별 최대 가능 점수 (정규화용)
+      const AXIS_MAX = { SOC: 6, EXP: 11, REA: 6, REC: 6, DEF: 9, ATT: 8 };
+      const AXIS_LABEL = {
+        SOC: "사회성", EXP: "탐색성", REA: "반응성",
+        REC: "회복력", DEF: "경계성", ATT: "의존성",
+      };
+
+      // 유형 정의
+      const TYPES = [
+        {
+          id: "observer", emoji: "🌿", name: "조심스러운 관찰자형",
+          tagline: "신중하게 세상을 살피는 똑똑한 관찰자.",
+          desc: "낯선 환경이나 자극에 신중하게 반응하는 타입이에요. 보호자 곁에서 안정감을 느낄 때 가장 편안해해요. 익숙한 코스를 천천히 함께 걷는 산책을 좋아할 수 있어요.",
+          tags: ["조용한 코스", "익숙한 길", "한적한 시간대"],
+          rules: [{ axis: "DEF", level: "high" }, { axis: "ATT", level: "high" }, { axis: "EXP", level: "low" }],
+        },
+        {
+          id: "explorer", emoji: "🔥", name: "용감한 탐험가형",
+          tagline: "새로운 길도 두려움 없이 척척!",
+          desc: "호기심이 강하고 새로운 환경에서도 위축되지 않는 타입이에요. 다양한 코스를 시도해보면 즐거워해요. 자극이 많아도 잘 회복하니, 모험적인 산책이 잘 맞아요.",
+          tags: ["새로운 코스", "변화 있는 산책", "넓은 공간"],
+          rules: [{ axis: "EXP", level: "high" }, { axis: "REA", level: "midlow" }, { axis: "REC", level: "high" }],
+        },
+        {
+          id: "social", emoji: "🐶", name: "사교왕 인싸형",
+          tagline: "사람도 강아지도 다 좋아하는 만능 인싸!",
+          desc: "사람과 다른 강아지를 만나는 걸 가장 좋아하는 타입이에요. 산책로에서 친구를 만나는 게 큰 즐거움이라, 강아지가 많이 다니는 공원이나 도그런이 잘 어울려요.",
+          tags: ["반려견 친구 만남", "도그런/공원", "활기찬 시간대"],
+          rules: [{ axis: "SOC", level: "veryhigh" }, { axis: "DEF", level: "low" }],
+        },
+        {
+          id: "guardian", emoji: "🛡️", name: "수호자형",
+          tagline: "보호자를 지키는 든든한 보디가드.",
+          desc: "낯선 사람·강아지·물체에 경계심이 강하고 자극에도 민감한 타입이에요. 산책로에서는 사람과 강아지가 적은 한적한 시간대를 추천드려요.",
+          tags: ["조용한 시간대", "한적한 코스", "넓은 시야"],
+          rules: [{ axis: "DEF", level: "high" }, { axis: "SOC", level: "low" }, { axis: "REA", level: "high" }],
+        },
+        {
+          id: "clingy", emoji: "🌙", name: "껌딱지형",
+          tagline: "보호자만 있으면 어디든 OK!",
+          desc: "보호자에게 의존도가 매우 높고 다른 자극보다 보호자와의 교감을 좋아하는 타입이에요. 함께 천천히 걷는 익숙한 코스가 편안해요.",
+          tags: ["보호자 중심 산책", "익숙한 코스", "짧은 거리도 OK"],
+          rules: [{ axis: "ATT", level: "veryhigh" }, { axis: "SOC", level: "midlow" }],
+        },
+        {
+          id: "sensitive", emoji: "⚡", name: "예민한 센서형",
+          tagline: "작은 자극도 놓치지 않는 섬세한 아이.",
+          desc: "주변 자극에 매우 민감하게 반응하고 회복은 다소 느린 타입이에요. 자극이 적은 길과 안정적인 시간대를 골라 부드럽게 산책하는 걸 추천해요.",
+          tags: ["저자극 코스", "조용한 시간대", "짧은 산책 자주"],
+          rules: [{ axis: "REA", level: "veryhigh" }, { axis: "REC", level: "low" }],
+        },
+        {
+          id: "peaceful", emoji: "🧘", name: "평화주의자형",
+          tagline: "어떤 상황에도 흔들리지 않는 평온한 영혼.",
+          desc: "자극에 거의 동요하지 않고 회복도 빠른 안정적인 타입이에요. 어떤 코스든 잘 적응하니, 다양한 산책을 시도해 봐도 좋아요.",
+          tags: ["다양한 코스", "긴 산책도 OK", "자유로운 시간대"],
+          rules: [{ axis: "REA", level: "low" }, { axis: "DEF", level: "low" }, { axis: "REC", level: "high" }],
+        },
+        {
+          id: "trainable", emoji: "🎯", name: "훈련천재형",
+          tagline: "보호자의 신호를 잘 알아채는 똑똑한 파트너.",
+          desc: "리드줄 통제에 잘 따르고 자극에도 차분한, 훈련에 적합한 타입이에요. 새로운 명령이나 행동을 익히기 좋은 시기이니 다양한 산책 환경을 시도해 보세요.",
+          tags: ["훈련 친화 코스", "다양한 환경", "보호자 교감"],
+          rules: [{ axis: "REC", level: "high" }, { axis: "ATT", level: "mid" }, { axis: "REA", level: "low" }],
+        },
+      ];
+
+      // 0~1 정규화 점수에 대해, 요구 level과의 적합도 (0~1)
+      function levelFit(norm, level) {
+        if (level === "veryhigh") {
+          if (norm >= 0.7) return 1;
+          if (norm >= 0.55) return 0.6;
+          return 0;
+        }
+        if (level === "high") {
+          if (norm >= 0.55) return 1;
+          if (norm >= 0.4) return 0.5;
+          return 0;
+        }
+        if (level === "mid") {
+          return Math.max(0, 1 - Math.abs(norm - 0.5) * 2.5);
+        }
+        if (level === "midlow") {
+          if (norm <= 0.55) return 1;
+          if (norm <= 0.7) return 0.4;
+          return 0;
+        }
+        if (level === "low") {
+          if (norm <= 0.35) return 1;
+          if (norm <= 0.5) return 0.5;
+          return 0;
+        }
+        return 0;
+      }
+
+      const quizState = {}; // { q1: 0~3, q2: ..., ... }
+
+      function calcScores() {
+        const totals = { SOC: 0, EXP: 0, REA: 0, REC: 0, DEF: 0, ATT: 0 };
+        Object.keys(quizState).forEach(q => {
+          const optIdx = quizState[q];
+          const map = SCORE_MAP[q] && SCORE_MAP[q][optIdx];
+          if (!map) return;
+          Object.keys(map).forEach(axis => {
+            totals[axis] = (totals[axis] || 0) + map[axis];
           });
+        });
+        const norm = {};
+        Object.keys(totals).forEach(axis => {
+          norm[axis] = AXIS_MAX[axis] ? totals[axis] / AXIS_MAX[axis] : 0;
+        });
+        return { totals, norm };
+      }
+
+      function pickType(norm) {
+        let best = null, bestScore = -Infinity;
+        TYPES.forEach(t => {
+          const sum = t.rules.reduce((acc, r) => acc + levelFit(norm[r.axis] || 0, r.level), 0);
+          const avg = sum / t.rules.length;
+          if (avg > bestScore) {
+            bestScore = avg;
+            best = t;
+          }
+        });
+        return best || TYPES[0];
+      }
+
+      function renderResult() {
+        let type, norm;
+        if (Object.keys(quizState).length >= 8) {
+          const calc = calcScores();
+          norm = calc.norm;
+          type = pickType(norm);
+          state.petPersonality = {
+            id: type.id,
+            emoji: type.emoji,
+            name: type.name,
+            tagline: type.tagline,
+            desc: type.desc,
+            tags: type.tags || [],
+            norm: norm,
+          };
+        } else if (state.petPersonality) {
+          const saved = state.petPersonality;
+          type = saved;
+          norm = saved.norm || {};
+        } else {
+          return;
+        }
+        const emojiEl = document.getElementById("resultEmoji");
+        const nameEl = document.getElementById("resultName");
+        const taglineEl = document.getElementById("resultTagline");
+        const descEl = document.getElementById("resultDesc");
+        const tagsEl = document.getElementById("resultTags");
+        const axesEl = document.getElementById("resultAxes");
+        if (emojiEl) emojiEl.textContent = type.emoji;
+        if (nameEl) nameEl.textContent = type.name;
+        if (taglineEl) taglineEl.textContent = type.tagline;
+        if (descEl) descEl.textContent = type.desc;
+        if (tagsEl) {
+          tagsEl.innerHTML = "";
+          (type.tags || []).forEach(t => {
+            const span = document.createElement("span");
+            span.className = "result-tag";
+            span.textContent = "#" + t;
+            tagsEl.appendChild(span);
+          });
+        }
+        if (axesEl) {
+          axesEl.querySelectorAll(".result-axis-row").forEach(row => {
+            const axis = row.dataset.axis;
+            const value = Math.round((norm[axis] || 0) * 100);
+            const fill = row.querySelector(".result-axis-fill");
+            const val = row.querySelector(".result-axis-val");
+            if (fill) fill.style.width = value + "%";
+            if (val) val.textContent = value + "%";
+          });
+        }
+      }
+
+      function syncPetPersonality() {
+        const card = document.getElementById("petPersonalityCard");
+        const empty = document.getElementById("petPersonalityEmpty");
+        const personality = state.petPersonality;
+        if (!card || !empty) return;
+        if (personality) {
+          card.style.display = "";
+          empty.style.display = "none";
+          const emojiEl = document.getElementById("petPersonalityEmoji");
+          const nameEl = document.getElementById("petPersonalityName");
+          const taglineEl = document.getElementById("petPersonalityTagline");
+          if (emojiEl) emojiEl.textContent = personality.emoji;
+          if (nameEl) nameEl.textContent = personality.name;
+          if (taglineEl) taglineEl.textContent = personality.tagline;
+        } else {
+          card.style.display = "none";
+          empty.style.display = "flex";
+        }
+      }
+
+      function updateQuizProgress() {
+        const answered = Object.keys(quizState).length;
+        if (quizAnsweredCount) quizAnsweredCount.textContent = String(answered);
+        if (quizProgressFill) quizProgressFill.style.width = (answered / 8 * 100) + "%";
+        if (quizSubmitBtn) {
+          quizSubmitBtn.disabled = answered < 8;
+          quizSubmitBtn.style.opacity = answered < 8 ? "0.55" : "1";
+          quizSubmitBtn.style.cursor = answered < 8 ? "not-allowed" : "pointer";
+        }
+      }
+
+      if (quizList) {
+        quizList.querySelectorAll(".quiz-option").forEach(opt => {
+          opt.addEventListener("click", () => {
+            const q = opt.dataset.q;
+            const idx = Number(opt.dataset.opt);
+            const card = opt.closest(".quiz-card");
+            if (!card) return;
+            card.querySelectorAll(".quiz-option").forEach(o => o.classList.remove("selected"));
+            opt.classList.add("selected");
+            card.classList.add("answered");
+            quizState[q] = idx;
+            updateQuizProgress();
+          });
+        });
+        updateQuizProgress();
+      }
+
+      if (quizSubmitBtn) {
+        quizSubmitBtn.addEventListener("click", () => {
+          if (Object.keys(quizState).length < 8) return;
+          renderResult();
+          setActiveView("dogInfoResult");
         });
       }
     })();
