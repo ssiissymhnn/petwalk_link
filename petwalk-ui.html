@@ -7,6 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet">
+  <!-- Leaflet (지도) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="" defer></script>
   <style>
     :root { --main:#19B23A; --point:#00E933; --soft-mint:#C9FAD4; --black:#1a1a1a; --white:#FFFFFF; --sub:#999999; --sep:#F2F3F5; --bg:#F7F8FA; --card:#FFFFFF; --text:#1a1a1a; --muted:var(--sub); --primary:var(--main); --primary-dark:#0fa34e; --line:rgba(0,0,0,.08); --shadow:0 8px 28px rgba(0,0,0,.08); --radius:16px; }
     *{box-sizing:border-box} body{margin:0;font-family:"Pretendard",sans-serif;background:var(--bg);color:var(--text)}
@@ -24,6 +27,33 @@
     .card.clickable:active{transform:translateY(0)}
     .map{height:134px;border-radius:16px;background:radial-gradient(circle at 20% 30%,rgba(25,178,58,.12) 0 9%,transparent 10%),radial-gradient(circle at 72% 68%,rgba(15,163,78,.1) 0 11%,transparent 12%),linear-gradient(130deg,var(--sep) 0%,#fff 100%);position:relative;overflow:hidden}
     .map:before,.map:after{content:"";position:absolute;border-radius:999px}.map:before{width:220px;height:220px;top:-94px;left:-70px;border:12px solid rgba(25,178,58,.08)}.map:after{width:220px;height:220px;bottom:-116px;right:-84px;border:10px dashed rgba(25,178,58,.06)}
+
+    /* === Leaflet 실제 지도 === */
+    .leaflet-container{font-family:"Pretendard",sans-serif !important;background:#F4F6F8 !important}
+    .leaflet-container a.leaflet-popup-close-button{font-family:inherit}
+    /* 타일 톤 다운: 채도/대비 낮춰 앱 UI에 어울리는 부드러운 톤으로 */
+    .leaflet-tile-pane{filter:saturate(.7) brightness(1.02) contrast(.95);opacity:.92}
+    .leaflet-control-attribution{font-size:9px !important;background:rgba(255,255,255,.6) !important;padding:0 4px !important}
+    /* Leaflet 컨테이너의 stacking context를 격리해서 외부 오버레이가 항상 위에 뜨도록 */
+    .walk-live-map-inner,.walkhome-mymap,.explore-leaflet{isolation:isolate}
+    .me-marker{position:relative;width:22px;height:22px}
+    .me-marker .me-pulse{position:absolute;inset:-10px;border-radius:50%;background:rgba(25,178,58,.25);animation:mePulse 2s ease-out infinite}
+    .me-marker .me-dot{position:absolute;inset:0;border-radius:50%;background:var(--main);border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+    @keyframes mePulse{0%{transform:scale(.6);opacity:.7}100%{transform:scale(1.6);opacity:0}}
+    .walkhome-mymap{position:relative;height:160px;border-radius:16px;overflow:hidden;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04);margin-bottom:12px}
+    .walkhome-mymap-overlay{position:absolute;left:10px;top:10px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.92);padding:6px 11px;border-radius:999px;font-size:11px;font-weight:800;color:var(--text);box-shadow:0 2px 6px rgba(0,0,0,.08);z-index:1000;backdrop-filter:blur(4px);pointer-events:none}
+    .walkhome-mymap-overlay .dot{width:8px;height:8px;border-radius:50%;background:var(--main);box-shadow:0 0 0 3px rgba(25,178,58,.25)}
+    .walk-live-map-inner{position:absolute !important;inset:0}
+    .walk-live-route-label{z-index:1100}
+    .explore-map{position:absolute}
+    .explore-leaflet{position:absolute;inset:0;z-index:0}
+    .explore-map .explore-map-zoom{z-index:1100}
+    .explore-marker-pin{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.2);font-size:14px;color:#fff;line-height:1}
+    /* 산책 루트 라벨 + 시작/끝 마커 */
+    .walk-route-endpoint{position:relative;width:18px;height:18px}
+    .walk-route-endpoint .ep-ring{position:absolute;inset:0;border-radius:50%;border:3px solid #fff;background:var(--main);box-shadow:0 2px 6px rgba(0,0,0,.25)}
+    .walk-route-endpoint.finish .ep-ring{background:#fff;border-color:var(--main);display:flex;align-items:center;justify-content:center}
+    .walk-route-endpoint.finish .ep-ring::after{content:"";display:block;width:8px;height:8px;border-radius:50%;background:var(--main)}
     .metric{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.metric .item{background:var(--bg);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:8px;text-align:center}
     .big{font-size:40px;font-weight:900;letter-spacing:1px;line-height:1.05;text-align:center;margin:8px 0 10px}
     .bar{background:var(--sep);border-radius:99px;height:8px;margin:6px 0;overflow:hidden;border:none}.bar>span{display:block;height:100%;width:62%;background:linear-gradient(90deg,var(--primary),var(--primary-dark));border-radius:99px}
@@ -38,7 +68,7 @@
     .tab-hit.active{color:var(--main)}
     .tab-hit.active .tab-ico{opacity:1}
     .view[data-view="walk"]{position:relative}
-    .reroute-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:20;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(2px)}
+    .reroute-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:1500;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(2px)}
     .reroute-overlay.show{display:flex}
     .reroute-modal{background:var(--white);border-radius:20px;border:1px solid rgba(0,0,0,.06);box-shadow:0 16px 40px rgba(0,0,0,.18);padding:24px 20px;width:100%;max-width:320px;text-align:center;animation:modalIn .25s ease}
     @keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
@@ -449,7 +479,7 @@
       transform-origin:center center;
     }
     .explore-river{position:absolute;left:10%;right:8%;top:42%;height:22%;background:rgba(106,168,220,.45);border-radius:999px;filter:blur(1px);transform:rotate(-8deg)}
-    .explore-marker{position:absolute;width:26px;height:26px;border-radius:50%;border:2px solid #FFFFFF;box-shadow:0 2px 8px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;font-size:13px;color:#FFFFFF}
+    .explore-marker{position:absolute;width:26px;height:26px;border-radius:50%;border:2px solid #FFFFFF;box-shadow:0 2px 8px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;font-size:13px;color:#FFFFFF;display:none}
     .explore-map-zoom{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px;z-index:2}
     .explore-zoom-btn{width:34px;height:34px;border:1px solid rgba(0,0,0,.08);background:#FFFFFF;border-radius:10px;font-size:18px;font-weight:800;color:var(--text);cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.06);transition:background .1s ease}
     .explore-zoom-btn:hover{background:var(--sep)}
@@ -687,9 +717,9 @@
                 <button type="button" class="auth-link-btn">비밀번호찾기</button>
               </div>
               <div class="auth-social-stack">
-                <button type="button" class="auth-social-btn naver"><span class="ico">N</span><span style="flex:1;text-align:center;">네이버로 로그인하기</span></button>
-                <button type="button" class="auth-social-btn google"><span class="ico">G</span><span style="flex:1;text-align:center;">구글로 로그인하기</span></button>
-                <button type="button" class="auth-social-btn facebook"><span class="ico">f</span><span style="flex:1;text-align:center;">페이스북으로 로그인하기</span></button>
+                <button type="button" class="auth-social-btn naver" data-nav="home"><span class="ico">N</span><span style="flex:1;text-align:center;">네이버로 로그인하기</span></button>
+                <button type="button" class="auth-social-btn google" data-nav="home"><span class="ico">G</span><span style="flex:1;text-align:center;">구글로 로그인하기</span></button>
+                <button type="button" class="auth-social-btn facebook" data-nav="home"><span class="ico">f</span><span style="flex:1;text-align:center;">페이스북으로 로그인하기</span></button>
               </div>
             </div>
 
@@ -698,9 +728,9 @@
               <button type="button" class="auth-back" data-nav="login" aria-label="뒤로">‹</button>
               <p class="auth-method-title">회원가입 방법을 선택하세요</p>
               <div class="auth-social-stack">
-                <button type="button" class="auth-social-btn naver"><span class="ico">N</span><span style="flex:1;text-align:center;">네이버로 회원가입</span></button>
-                <button type="button" class="auth-social-btn google"><span class="ico">G</span><span style="flex:1;text-align:center;">구글로 회원가입</span></button>
-                <button type="button" class="auth-social-btn facebook"><span class="ico">f</span><span style="flex:1;text-align:center;">페이스북으로 회원가입</span></button>
+                <button type="button" class="auth-social-btn naver" data-nav="userInfo"><span class="ico">N</span><span style="flex:1;text-align:center;">네이버로 회원가입</span></button>
+                <button type="button" class="auth-social-btn google" data-nav="userInfo"><span class="ico">G</span><span style="flex:1;text-align:center;">구글로 회원가입</span></button>
+                <button type="button" class="auth-social-btn facebook" data-nav="userInfo"><span class="ico">f</span><span style="flex:1;text-align:center;">페이스북으로 회원가입</span></button>
                 <button type="button" class="auth-social-btn email-signup" data-nav="signup"><span class="ico">✉</span><span style="flex:1;text-align:center;">이메일로 회원가입</span></button>
               </div>
               <p class="auth-footer-note">기존에 petwalk를 사용하셨나요? <button type="button" class="auth-inline-link" data-nav="login">로그인</button></p>
@@ -1150,15 +1180,15 @@
               <div class="home-screen">
                 <div class="home-hero">
                   <div class="home-hero-top">
-                    <span class="home-weather-chip"><span class="home-weather-ico">☀️</span><span>22°C 맑음</span></span>
+                    <span class="home-weather-chip" id="homeWeatherChip" title="실시간 날씨"><span class="home-weather-ico" id="homeWeatherIco">⏳</span><span id="homeWeatherText">불러오는 중…</span></span>
                   </div>
                   <div class="home-loc-chip-wrap">
-                    <button type="button" class="home-loc-chip"><span class="home-loc-ico">📍</span><span>현재 위치</span></button>
+                    <button type="button" class="home-loc-chip" id="homeLocChip"><span class="home-loc-ico">📍</span><span id="homeLocText">현재 위치</span></button>
                   </div>
                 </div>
 
                 <div class="home-greeting-card">
-                  <div class="home-greeting-title">좋은 오후예요, <span id="homeDogName">보리</span>!<span class="home-greeting-paw">🐾</span></div>
+                  <div class="home-greeting-title"><span id="homeGreetingPrefix">좋은 오후예요</span>, <span id="homeDogName">보리</span>!<span class="home-greeting-paw">🐾</span></div>
                   <div class="home-greeting-sub">오늘도 멋진 산책 떠나볼까요?</div>
                   <div class="home-greeting-stats">
                     <div class="home-stat">
@@ -1676,7 +1706,8 @@
                 </div>
                 <div class="explore-map-wrap">
                   <div class="explore-map" id="exploreMap">
-                    <div class="explore-map-grid" id="exploreMapGrid">
+                    <div class="explore-leaflet" id="exploreLeafletMap"></div>
+                    <div class="explore-map-grid" id="exploreMapGrid" style="display:none">
                       <div class="explore-river"></div>
                     </div>
                     <div class="explore-map-zoom">
@@ -1897,6 +1928,9 @@
             <!-- WALK HOME (산책 탭 피드) -->
             <div class="view" data-view="walkHome" data-tab-root="walk">
               <div class="walk-home">
+                <div class="walkhome-mymap" id="walkhomeMyMap">
+                  <div class="walkhome-mymap-overlay"><span class="dot"></span><span id="walkhomeMyMapLabel">내 위치 불러오는 중…</span></div>
+                </div>
                 <div class="walk-picked" id="walkPickedCard">
                   <div class="walk-picked-title" id="walkPickedTitle">산책로를 선택해 주세요</div>
                   <div class="walk-picked-meta" id="walkPickedMeta">카드를 누르면 상세 정보가 여기에 표시됩니다.</div>
@@ -2443,7 +2477,10 @@
         handleRerouteVisibility(name);
         handleTabsVisibility(name);
         handleProgress(name);
-        if (name === "home") { syncHomeDogName(); renderSchedules(); }
+        if (name === "home") { syncHomeDogName(); renderSchedules(); syncHomeGreeting(); ensureWeatherLoaded(); }
+        if (name === "walkHome") ensureWalkHomeMap();
+        if (name === "walk") ensureWalkLiveMap();
+        if (name === "explore") ensureExploreMap();
         if (name === "pet") { syncPetDogName(); syncPetPersonality(); }
         if (name === "dogInfoTraits") syncTraitsDogName();
         if (name === "dogInfoResult") { syncResultDogName(); renderResult(); applyResultLayout(); }
@@ -2466,6 +2503,384 @@
         if (!el) return;
         const safe = (state.dogName || "").trim() || "반려견";
         el.textContent = safe;
+      }
+
+      // === 시간대별 인사말 (좋은 아침/오후/저녁/밤) ===
+      function syncHomeGreeting() {
+        const el = document.getElementById("homeGreetingPrefix");
+        if (!el) return;
+        const h = new Date().getHours();
+        let label = "좋은 오후예요";
+        if (h >= 5 && h < 11) label = "좋은 아침이에요";
+        else if (h >= 11 && h < 17) label = "좋은 오후예요";
+        else if (h >= 17 && h < 21) label = "좋은 저녁이에요";
+        else label = "편안한 밤이에요";
+        el.textContent = label;
+      }
+
+      // === 실시간 날씨 (Open-Meteo, API 키 불필요) ===
+      const WEATHER_CODE_MAP = {
+        0:  { ico: "☀️", text: "맑음" },
+        1:  { ico: "🌤️", text: "대체로 맑음" },
+        2:  { ico: "⛅", text: "구름 조금" },
+        3:  { ico: "☁️", text: "흐림" },
+        45: { ico: "🌫️", text: "안개" },
+        48: { ico: "🌫️", text: "짙은 안개" },
+        51: { ico: "🌦️", text: "약한 이슬비" },
+        53: { ico: "🌦️", text: "이슬비" },
+        55: { ico: "🌦️", text: "강한 이슬비" },
+        56: { ico: "🌧️", text: "어는 이슬비" },
+        57: { ico: "🌧️", text: "어는 이슬비" },
+        61: { ico: "🌧️", text: "약한 비" },
+        63: { ico: "🌧️", text: "비" },
+        65: { ico: "🌧️", text: "강한 비" },
+        66: { ico: "🌧️", text: "어는 비" },
+        67: { ico: "🌧️", text: "어는 비" },
+        71: { ico: "🌨️", text: "약한 눈" },
+        73: { ico: "🌨️", text: "눈" },
+        75: { ico: "❄️", text: "강한 눈" },
+        77: { ico: "🌨️", text: "싸락눈" },
+        80: { ico: "🌦️", text: "소나기" },
+        81: { ico: "🌧️", text: "소나기" },
+        82: { ico: "⛈️", text: "강한 소나기" },
+        85: { ico: "🌨️", text: "눈 소나기" },
+        86: { ico: "❄️", text: "강한 눈 소나기" },
+        95: { ico: "⛈️", text: "천둥번개" },
+        96: { ico: "⛈️", text: "우박 동반 뇌우" },
+        99: { ico: "⛈️", text: "강한 뇌우" },
+      };
+
+      let weatherLoadedAt = 0;
+      function ensureWeatherLoaded() {
+        // 30분 캐시: 같은 세션에서 반복 호출 방지
+        if (weatherLoadedAt && Date.now() - weatherLoadedAt < 30 * 60 * 1000) return;
+        loadWeather();
+      }
+
+      function loadWeather() {
+        getUserLocation().then((loc) => {
+          fetchOpenMeteo(loc.lat, loc.lon).then((w) => updateWeatherChip(w));
+          if (loc.label) setLocationLabel(loc.label);
+          else fetchReverseGeocode(loc.lat, loc.lon).then((nm) => {
+            if (nm) {
+              setLocationLabel(nm);
+              userLocation.label = nm;
+            }
+          });
+        });
+      }
+
+      // 사용자 좌표 단일 캐시 (가중 + 폴백)
+      const FALLBACK_LOCATION = { lat: 37.5665, lon: 126.9780, label: "서울" };
+      const userLocation = { lat: null, lon: null, label: null };
+      let _locationPromise = null;
+      function getUserLocation() {
+        if (userLocation.lat != null) return Promise.resolve(userLocation);
+        if (_locationPromise) return _locationPromise;
+        _locationPromise = new Promise((resolve) => {
+          if (!navigator.geolocation) {
+            Object.assign(userLocation, FALLBACK_LOCATION);
+            resolve(userLocation);
+            return;
+          }
+          let done = false;
+          const timer = setTimeout(() => {
+            if (done) return;
+            done = true;
+            Object.assign(userLocation, FALLBACK_LOCATION);
+            resolve(userLocation);
+          }, 4000);
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              if (done) return;
+              done = true;
+              clearTimeout(timer);
+              userLocation.lat = pos.coords.latitude;
+              userLocation.lon = pos.coords.longitude;
+              userLocation.label = null;
+              resolve(userLocation);
+            },
+            () => {
+              if (done) return;
+              done = true;
+              clearTimeout(timer);
+              Object.assign(userLocation, FALLBACK_LOCATION);
+              resolve(userLocation);
+            },
+            { enableHighAccuracy: false, timeout: 3500, maximumAge: 10 * 60 * 1000 }
+          );
+        });
+        return _locationPromise;
+      }
+
+      function fetchOpenMeteo(lat, lon) {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`;
+        return fetch(url).then((r) => r.json()).then((data) => {
+          const cur = data && data.current ? data.current : {};
+          return { temp: cur.temperature_2m, code: cur.weather_code };
+        }).catch(() => ({ temp: null, code: null }));
+      }
+
+      function fetchReverseGeocode(lat, lon) {
+        const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=ko`;
+        return fetch(url).then((r) => r.json()).then((data) => {
+          if (!data) return null;
+          // localityInfo.administrative 에서 구/동 추출 시도 (한국 주소에 가장 정확)
+          const adm = (data.localityInfo && Array.isArray(data.localityInfo.administrative)) ? data.localityInfo.administrative : [];
+          let gu = null, dong = null;
+          adm.forEach((a) => {
+            const nm = (a && a.name) ? String(a.name) : "";
+            if (!nm) return;
+            if (!gu && /(구|군|시)$/.test(nm) && nm.length <= 5) gu = nm;
+            if (!dong && /(동|읍|면|로\d?가|로)$/.test(nm) && nm.length <= 8) dong = nm;
+          });
+          if (gu && dong) return `${gu} ${dong}`;
+          if (dong) return dong;
+          if (gu) return gu;
+          // 폴백: city + locality
+          const parts = [];
+          if (data.city) parts.push(data.city);
+          if (data.locality && data.locality !== data.city) parts.push(data.locality);
+          if (!parts.length && data.principalSubdivision) parts.push(data.principalSubdivision);
+          return parts.join(" ").trim() || null;
+        }).catch(() => null);
+      }
+
+      function updateWeatherChip(w) {
+        const ico = document.getElementById("homeWeatherIco");
+        const txt = document.getElementById("homeWeatherText");
+        if (!ico || !txt) return;
+        if (w.temp == null || w.code == null) {
+          ico.textContent = "🌡️";
+          txt.textContent = "날씨 정보 없음";
+          return;
+        }
+        const map = WEATHER_CODE_MAP[w.code] || { ico: "🌡️", text: "" };
+        ico.textContent = map.ico;
+        const t = Math.round(w.temp);
+        txt.textContent = map.text ? `${t}°C ${map.text}` : `${t}°C`;
+        weatherLoadedAt = Date.now();
+      }
+
+      function setLocationLabel(label) {
+        const el = document.getElementById("homeLocText");
+        if (el && label) el.textContent = label;
+      }
+
+      // === Leaflet 지도 (산책 시작/산책 중/탐색) ===
+      function leafletAvailable() { return typeof window.L !== "undefined" && window.L && window.L.map; }
+
+      function makeMeMarker() {
+        if (!leafletAvailable()) return null;
+        return L.divIcon({
+          className: "",
+          html: '<div class="me-marker"><div class="me-pulse"></div><div class="me-dot"></div></div>',
+          iconSize: [22, 22],
+          iconAnchor: [11, 11],
+        });
+      }
+
+      function tileLayer() {
+        // Carto Positron: 부드럽고 채도 낮은 라이트 테마 (앱 UI에 어울림)
+        return L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+          maxZoom: 19,
+          subdomains: "abcd",
+          attribution: "© OpenStreetMap, © CARTO",
+        });
+      }
+
+      // 자연스러운 산책 루트(타원 + 사인 노이즈) 좌표 배열 생성
+      function generateWalkRoute(lat, lon, seed) {
+        const a = 0.0014;   // 가로 반경 (~150m)
+        const b = 0.0011;   // 세로 반경 (~120m)
+        const tilt = 0.4;
+        const offsetT = (seed || 0) * 0.7;
+        const steps = 56;
+        const pts = [];
+        for (let i = 0; i <= steps; i++) {
+          const t = (i / steps) * Math.PI * 2 + offsetT;
+          const wobble = Math.sin(t * 3 + offsetT) * 0.00018;
+          const dx = (a + wobble) * Math.cos(t);
+          const dy = (b + wobble) * Math.sin(t);
+          const rx = dx * Math.cos(tilt) - dy * Math.sin(tilt);
+          const ry = dx * Math.sin(tilt) + dy * Math.cos(tilt);
+          pts.push([lat + ry, lon + rx]);
+        }
+        return pts;
+      }
+
+      // route 이름을 시드로 변환 → 같은 루트는 항상 같은 모양
+      function routeSeedFromName(name) {
+        const s = String(name || "");
+        let h = 0;
+        for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+        return (h % 360) * (Math.PI / 180);
+      }
+
+      function drawWalkRouteOnMap(map, lat, lon, opts) {
+        const o = Object.assign({ color: "#19B23A", weight: 5, opacity: .9, dashed: false, fit: true, seed: 0, showEndpoints: true }, opts || {});
+        const points = generateWalkRoute(lat, lon, o.seed);
+        const layer = L.layerGroup();
+        // 흰 외곽 (가독성)
+        L.polyline(points, { color: "#ffffff", weight: o.weight + 4, opacity: 0.9, lineCap: "round", lineJoin: "round" }).addTo(layer);
+        // 메인 라인
+        const mainOpts = { color: o.color, weight: o.weight, opacity: o.opacity, lineCap: "round", lineJoin: "round" };
+        if (o.dashed) mainOpts.dashArray = "6 8";
+        L.polyline(points, mainOpts).addTo(layer);
+        if (o.showEndpoints) {
+          const startEnd = points[0];
+          const finishPoint = points[Math.floor(points.length * 0.5)]; // 루프의 반대편 (도착지로 표시)
+          L.marker(startEnd, {
+            icon: L.divIcon({
+              className: "",
+              html: '<div class="walk-route-endpoint"><div class="ep-ring"></div></div>',
+              iconSize: [18, 18], iconAnchor: [9, 9],
+            }),
+            interactive: false,
+          }).addTo(layer);
+          L.marker(finishPoint, {
+            icon: L.divIcon({
+              className: "",
+              html: '<div class="walk-route-endpoint finish"><div class="ep-ring"></div></div>',
+              iconSize: [18, 18], iconAnchor: [9, 9],
+            }),
+            interactive: false,
+          }).addTo(layer);
+        }
+        layer.addTo(map);
+        if (o.fit) {
+          const bounds = L.latLngBounds(points);
+          map.fitBounds(bounds, { padding: [28, 28], maxZoom: 17 });
+        }
+        return layer;
+      }
+
+      // ---- WALK HOME 미니 지도 (점선 루트 미리보기) ----
+      let walkHomeMap = null, walkHomeMarker = null, walkHomeRouteLayer = null;
+      function ensureWalkHomeMap() {
+        const container = document.getElementById("walkhomeMyMap");
+        const labelEl = document.getElementById("walkhomeMyMapLabel");
+        if (!container) return;
+        getUserLocation().then((loc) => {
+          if (labelEl) labelEl.textContent = loc.label || "내 위치";
+          if (!leafletAvailable()) return;
+          if (!walkHomeMap) {
+            walkHomeMap = L.map(container, {
+              center: [loc.lat, loc.lon],
+              zoom: 16,
+              zoomControl: false,
+              attributionControl: false,
+              dragging: false,
+              doubleClickZoom: false,
+              scrollWheelZoom: false,
+              boxZoom: false,
+              keyboard: false,
+              touchZoom: false,
+            });
+            tileLayer().addTo(walkHomeMap);
+            walkHomeMarker = L.marker([loc.lat, loc.lon], { icon: makeMeMarker() }).addTo(walkHomeMap);
+          } else {
+            walkHomeMap.setView([loc.lat, loc.lon], 16);
+            if (walkHomeMarker) walkHomeMarker.setLatLng([loc.lat, loc.lon]);
+          }
+          if (walkHomeRouteLayer) { walkHomeRouteLayer.remove(); walkHomeRouteLayer = null; }
+          walkHomeRouteLayer = drawWalkRouteOnMap(walkHomeMap, loc.lat, loc.lon, {
+            color: "#19B23A", weight: 4, opacity: 0.65, dashed: true, fit: true, showEndpoints: false, seed: 0,
+          });
+          setTimeout(() => walkHomeMap && walkHomeMap.invalidateSize(), 50);
+          if (!loc.label) fetchReverseGeocode(loc.lat, loc.lon).then((nm) => {
+            if (nm) { loc.label = nm; if (labelEl) labelEl.textContent = nm; }
+          });
+        });
+      }
+
+      // ---- WALK 진행 지도 (실루트 + 시작/끝 마커) ----
+      let walkLiveMap = null, walkLiveMarker = null, walkLiveRouteLayer = null;
+      function ensureWalkLiveMap() {
+        const container = document.querySelector('.view[data-view="walk"] .walk-live-map-inner');
+        if (!container) return;
+        getUserLocation().then((loc) => {
+          if (!leafletAvailable()) return;
+          if (!walkLiveMap) {
+            walkLiveMap = L.map(container, {
+              center: [loc.lat, loc.lon],
+              zoom: 16,
+              zoomControl: false,
+              attributionControl: false,
+              dragging: true,
+              scrollWheelZoom: false,
+              touchZoom: true,
+              doubleClickZoom: true,
+            });
+            tileLayer().addTo(walkLiveMap);
+            walkLiveMarker = L.marker([loc.lat, loc.lon], { icon: makeMeMarker() }).addTo(walkLiveMap);
+          } else {
+            walkLiveMap.setView([loc.lat, loc.lon], 16);
+            if (walkLiveMarker) walkLiveMarker.setLatLng([loc.lat, loc.lon]);
+          }
+          // 산책 루트 그리기 (현재 선택된 루트 이름 기반 시드)
+          const routeNameEl = document.getElementById("walkRouteName");
+          const seed = routeSeedFromName(routeNameEl ? routeNameEl.textContent : "");
+          if (walkLiveRouteLayer) { walkLiveRouteLayer.remove(); walkLiveRouteLayer = null; }
+          walkLiveRouteLayer = drawWalkRouteOnMap(walkLiveMap, loc.lat, loc.lon, {
+            color: "#19B23A", weight: 5, opacity: 0.92, fit: true, showEndpoints: true, seed,
+          });
+          setTimeout(() => walkLiveMap && walkLiveMap.invalidateSize(), 80);
+        });
+      }
+
+      // ---- EXPLORE 지도 (실주변 + 카테고리 마커) ----
+      let exploreLeafletMap = null, exploreMeMarker = null, exploreSpotLayer = null;
+      function ensureExploreMap() {
+        const container = document.getElementById("exploreLeafletMap");
+        if (!container) return;
+        getUserLocation().then((loc) => {
+          if (!leafletAvailable()) return;
+          if (!exploreLeafletMap) {
+            exploreLeafletMap = L.map(container, {
+              center: [loc.lat, loc.lon],
+              zoom: 15,
+              zoomControl: false,
+              attributionControl: false,
+            });
+            tileLayer().addTo(exploreLeafletMap);
+            exploreMeMarker = L.marker([loc.lat, loc.lon], { icon: makeMeMarker() }).addTo(exploreLeafletMap);
+            exploreSpotLayer = L.layerGroup().addTo(exploreLeafletMap);
+            renderExploreLeafletMarkers();
+          } else {
+            exploreLeafletMap.setView([loc.lat, loc.lon], 15);
+            if (exploreMeMarker) exploreMeMarker.setLatLng([loc.lat, loc.lon]);
+            renderExploreLeafletMarkers();
+          }
+          setTimeout(() => exploreLeafletMap && exploreLeafletMap.invalidateSize(), 80);
+        });
+      }
+
+      function renderExploreLeafletMarkers() {
+        if (!exploreLeafletMap || !exploreSpotLayer) return;
+        if (typeof exploreSpots === "undefined") return;
+        exploreSpotLayer.clearLayers();
+        const center = exploreLeafletMap.getCenter();
+        const scale = 0.006; // 약 ±600m 범위에 흩뿌리기
+        const visible = (typeof exploreState !== "undefined" && exploreState.selectedCat)
+          ? exploreSpots.filter((s) => s.cat === exploreState.selectedCat)
+          : exploreSpots;
+        visible.forEach((spot) => {
+          const lat = center.lat + ((50 - spot.y) / 50) * scale;
+          const lon = center.lng + ((spot.x - 50) / 50) * scale;
+          const color = (typeof markerColors !== "undefined" && markerColors[spot.cat]) || "#19B23A";
+          const ico = (typeof categoryIcons !== "undefined" && categoryIcons[spot.cat]) || "📍";
+          const cname = (typeof categoryNames !== "undefined" && categoryNames[spot.cat]) || "";
+          const icon = L.divIcon({
+            className: "",
+            html: `<div class="explore-marker-pin" style="background:${color}">${ico}</div>`,
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+          });
+          L.marker([lat, lon], { icon, title: spot.name })
+            .addTo(exploreSpotLayer)
+            .bindPopup(`<strong>${spot.name}</strong><br><span style="color:#666;font-size:12px">${cname}</span>`);
+        });
       }
 
       function syncPetDogName() {
@@ -2548,6 +2963,20 @@
         const overlay = document.getElementById("scheduleOverlay");
         if (overlay) overlay.classList.remove("show");
       }
+
+      // 위치 칩 클릭 시 날씨 강제 새로고침
+      (function bindLocationRefresh() {
+        const locChip = document.getElementById("homeLocChip");
+        if (!locChip) return;
+        locChip.addEventListener("click", () => {
+          weatherLoadedAt = 0;
+          const ico = document.getElementById("homeWeatherIco");
+          const txt = document.getElementById("homeWeatherText");
+          if (ico) ico.textContent = "⏳";
+          if (txt) txt.textContent = "불러오는 중…";
+          loadWeather();
+        });
+      })();
 
       (function bindHomeSchedule() {
         const addBtn = document.getElementById("homeAddScheduleBtn");
@@ -2798,6 +3227,7 @@
           btn.classList.toggle("active", active);
         });
         renderExploreMarkers();
+        if (typeof renderExploreLeafletMarkers === "function") renderExploreLeafletMarkers();
       }
 
       if (exploreCategoryBar) {
@@ -2850,59 +3280,15 @@
       function changeExploreZoom(delta) {
         exploreState.zoom = Math.max(0.8, Math.min(2.2, exploreState.zoom + delta));
         setExploreTransform();
+        if (typeof exploreLeafletMap !== "undefined" && exploreLeafletMap) {
+          exploreLeafletMap.setZoom(exploreLeafletMap.getZoom() + (delta > 0 ? 1 : -1));
+        }
       }
 
       if (exploreZoomIn) exploreZoomIn.addEventListener("click", () => changeExploreZoom(0.1));
       if (exploreZoomOut) exploreZoomOut.addEventListener("click", () => changeExploreZoom(-0.1));
 
-      if (exploreMap) {
-        let isDragging = false;
-        let startX = 0;
-        let startY = 0;
-        let startPanX = 0;
-        let startPanY = 0;
-        let pinchStartDist = 0;
-        let pinchStartZoom = 1;
-
-        exploreMap.addEventListener("wheel", (e) => {
-          e.preventDefault();
-          changeExploreZoom(e.deltaY < 0 ? 0.08 : -0.08);
-        }, { passive: false });
-
-        exploreMap.addEventListener("pointerdown", (e) => {
-          isDragging = true;
-          startX = e.clientX;
-          startY = e.clientY;
-          startPanX = exploreState.panX;
-          startPanY = exploreState.panY;
-          exploreMap.setPointerCapture(e.pointerId);
-        });
-        exploreMap.addEventListener("pointermove", (e) => {
-          if (!isDragging) return;
-          exploreState.panX = startPanX + (e.clientX - startX);
-          exploreState.panY = startPanY + (e.clientY - startY);
-          setExploreTransform();
-        });
-        exploreMap.addEventListener("pointerup", () => { isDragging = false; });
-        exploreMap.addEventListener("pointercancel", () => { isDragging = false; });
-
-        exploreMap.addEventListener("touchstart", (e) => {
-          if (e.touches.length !== 2) return;
-          const dx = e.touches[0].clientX - e.touches[1].clientX;
-          const dy = e.touches[0].clientY - e.touches[1].clientY;
-          pinchStartDist = Math.hypot(dx, dy);
-          pinchStartZoom = exploreState.zoom;
-        }, { passive: true });
-        exploreMap.addEventListener("touchmove", (e) => {
-          if (e.touches.length !== 2 || !pinchStartDist) return;
-          const dx = e.touches[0].clientX - e.touches[1].clientX;
-          const dy = e.touches[0].clientY - e.touches[1].clientY;
-          const nowDist = Math.hypot(dx, dy);
-          const ratio = nowDist / pinchStartDist;
-          exploreState.zoom = Math.max(0.8, Math.min(2.2, pinchStartZoom * ratio));
-          setExploreTransform();
-        }, { passive: true });
-      }
+      // Leaflet 지도가 자체적으로 pan/zoom을 처리하므로 기존 transform 기반 핸들러는 비활성화
 
       setExploreCategory("all");
       setExploreTransform();
@@ -3016,7 +3402,20 @@
         if (rerouteTimer) { clearTimeout(rerouteTimer); rerouteTimer = null; }
       }
       document.getElementById("keepRoute").addEventListener("click", dismissReroute);
-      document.getElementById("changeRoute").addEventListener("click", dismissReroute);
+      document.getElementById("changeRoute").addEventListener("click", () => {
+        dismissReroute();
+        // 경로 변경 시 지도에 새 루트 그리기 (다른 시드)
+        if (walkLiveMap && walkLiveMarker) {
+          if (walkLiveRouteLayer) { walkLiveRouteLayer.remove(); walkLiveRouteLayer = null; }
+          const c = walkLiveMarker.getLatLng();
+          const newSeed = Math.random() * Math.PI * 2;
+          walkLiveRouteLayer = drawWalkRouteOnMap(walkLiveMap, c.lat, c.lng, {
+            color: "#19B23A", weight: 5, opacity: 0.92, fit: true, showEndpoints: true, seed: newSeed,
+          });
+          const nm = document.getElementById("walkRouteName");
+          if (nm) nm.textContent = "추천 변경 루트";
+        }
+      });
 
       // Night notification depends on walk recommendation toggle
       const toggleWalkReco = document.getElementById("toggleWalkReco");
