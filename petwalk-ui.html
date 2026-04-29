@@ -525,16 +525,22 @@
     .walk-picked-meta{font-size:11px;color:var(--sub);margin-top:5px}
     .walk-picked-cta{margin-top:8px;width:100%;border:none;border-radius:10px;padding:10px 0;background:linear-gradient(135deg,#19B23A,#0fa34e);color:#FFFFFF;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(25,178,58,.2);transition:transform .1s ease}
     .walk-picked-cta:hover{transform:translateY(-1px)}
-    .view[data-view="pet"] .chip,
+    .view[data-view="pet_monthly"] .chip,
     .view[data-view="home"] .chip{background:rgba(25,178,58,.1);color:var(--main)}
     /* Petlog */
-    .petlog-screen{padding:0;height:100%;overflow:auto}
+    .petlog-screen{padding:0;height:100%;overflow:auto;scrollbar-width:none;-ms-overflow-style:none}
+    .petlog-screen::-webkit-scrollbar{display:none;width:0;height:0}
     .petlog-profile-card{
       background:linear-gradient(135deg, #19B23A 0%, #0fa34e 40%, #00E933 100%);
       border-radius:20px;padding:22px 18px;margin-bottom:14px;position:relative;overflow:hidden;
     }
+    .petlog-profile-card-main{padding-top:22px}
+    .petlog-profile-head{display:flex;align-items:center;gap:12px;width:100%;position:relative;z-index:1}
+    .petlog-profile-inner{display:flex;align-items:center;gap:14px;position:relative;z-index:1;flex:1;min-width:0}
+    .petlog-profile-add-slot{flex-shrink:0;align-self:center;display:flex;align-items:center}
+    .petlog-card-corner-add{position:relative;top:auto;right:auto;left:auto;z-index:3;padding:6px 10px;font-size:10px;font-weight:800;cursor:pointer;font-family:inherit;line-height:1.2;background:rgba(255,255,255,.22);border:1.2px solid rgba(255,255,255,.45);color:#fff;border-radius:8px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+    .petlog-card-corner-add:active{background:rgba(255,255,255,.38)}
     .petlog-profile-card::before{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.08);top:-30px;right:-20px}
-    .petlog-profile-inner{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
     .petlog-avatar{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
     .petlog-profile-info{flex:1;color:#fff}
     .petlog-profile-name{font-size:18px;font-weight:800;letter-spacing:.02em}
@@ -545,6 +551,34 @@
     .petlog-stat{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:10px 6px;text-align:center;backdrop-filter:blur(4px)}
     .petlog-stat-val{font-size:18px;font-weight:900;color:#fff;line-height:1.1}
     .petlog-stat-label{font-size:10px;color:rgba(255,255,255,.82);margin-top:3px;font-weight:700;letter-spacing:.02em}
+    .petlog-root{padding:0 0 12px;overflow-x:hidden}
+    .petlog-root-topbar{display:flex;align-items:center;justify-content:center;padding:10px 14px 12px;position:sticky;top:0;background:var(--white);z-index:2}
+    .petlog-root-title{font-size:17px;font-weight:900;color:var(--text)}
+    .petlog-carousel-wrap{margin-bottom:4px}
+    .petlog-carousel-viewport{overflow:hidden;width:100%}
+    .petlog-carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:0;padding:0 4px 10px;-webkit-overflow-scrolling:touch;touch-action:pan-x;scrollbar-width:none;-ms-overflow-style:none}
+    .petlog-carousel-track::-webkit-scrollbar{display:none;width:0;height:0}
+    .petlog-carousel-slide{flex:0 0 100%;scroll-snap-align:start;min-width:100%;box-sizing:border-box}
+    .petlog-slide-add-inner{background:linear-gradient(145deg,#E8FDF0 0%,#C9FAD4 55%,#fff 100%);border:1.5px dashed rgba(25,178,58,.45);border-radius:20px;padding:28px 20px;text-align:center;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+    .petlog-slide-add-title{font-size:17px;font-weight:900;color:var(--text)}
+    .petlog-slide-add-hint{font-size:12px;color:var(--sub);font-weight:600;line-height:1.45}
+    .petlog-slide-add-cta{border:none;cursor:pointer;background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;font-weight:800;font-size:14px;padding:12px 28px;border-radius:999px;box-shadow:0 4px 14px rgba(25,178,58,.3);font-family:inherit}
+    .petlog-carousel-dots{display:flex;justify-content:center;gap:6px;margin-top:4px}
+    .petlog-carousel-dots.petlog-carousel-dots--empty{display:none !important;margin:0;height:0;overflow:hidden}
+    .petlog-carousel-dots .dot{width:6px;height:6px;border-radius:50%;background:var(--sep);transition:background .2s,transform .2s}
+    .petlog-carousel-dots .dot.active{background:var(--main);transform:scale(1.15)}
+    .petlog-dual{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;position:relative;z-index:1;align-items:stretch}
+    .petlog-dual-type-stack{align-self:stretch;min-width:0;width:100%;display:flex;flex-direction:column;gap:0}
+    .petlog-dual-cell{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.32);border-radius:14px;padding:10px 8px 10px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;min-height:88px;backdrop-filter:blur(4px)}
+    .petlog-dual-side{border:none;cursor:pointer;font-family:inherit;width:100%}
+    .petlog-dual-label{font-size:10px;font-weight:800;color:rgba(255,255,255,.86);letter-spacing:.03em;text-transform:none}
+    .petlog-dual-mini-emoji{font-size:22px;line-height:1;margin-top:2px}
+    .petlog-dual-mini-name{font-size:13px;font-weight:900;color:#fff;line-height:1.25}
+    .petlog-dual-mini-tag{font-size:10px;font-weight:600;color:rgba(255,255,255,.82);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .petlog-dual-analysis .petlog-dual-mini-name{font-size:13px}
+    .petlog-dual-analysis .petlog-dual-mini-tag{color:rgba(255,255,255,.88)}
+    /* 펫로그 월간: 단일 스크롤 영역(.petlog-screen), 중첩 세로 스크롤바 제거 */
+    .petlog-root > .petlog-cal-below.mypage-sub-screen{overflow:visible !important;height:auto !important;min-height:0 !important}
 
     /* Calendar */
     .cal-header{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:12px}
@@ -605,9 +639,35 @@
       background:linear-gradient(160deg,#e8f5e9 0%,#c8e6c9 30%,#a5d6a7 60%,#81c784 100%)}
     .walk-live-map-inner{position:absolute;inset:0;
       background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Cpath d='M30 160 Q80 140 120 100 Q160 60 200 50 Q240 40 270 30' stroke='white' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='270' cy='30' r='6' fill='white'/%3E%3Ccircle cx='30' cy='160' r='5' fill='%2319B23A'/%3E%3C/svg%3E") center/contain no-repeat}
-    .walk-live-route-label{position:absolute;bottom:12px;left:12px;right:12px;display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+    .walk-live-route-label{position:absolute;bottom:12px;left:12px;right:12px;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px}
     .walk-live-route-label span:first-child{font-size:14px;font-weight:800;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.3)}
     .walk-live-route-meta{font-size:11px;color:rgba(255,255,255,.85);font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.25)}
+    .walk-live-route-dogs{flex-basis:100%;font-size:10px;line-height:1.35;color:rgba(255,255,255,.92);font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.35);margin-top:2px}
+
+    /* 산책 시작 반려견 선택 팝업 */
+    .walk-dog-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:4000;display:none;align-items:center;justify-content:center;padding:20px 16px;backdrop-filter:blur(3px)}
+    .walk-dog-overlay.show{display:flex}
+    .walk-dog-modal{background:#fff;border-radius:20px;border:1px solid rgba(0,0,0,.06);padding:20px 16px 16px;width:100%;max-width:340px;max-height:min(82vh,520px);overflow-y:auto;box-shadow:0 18px 50px rgba(0,0,0,.22);animation:modalIn .25s ease}
+    .walk-dog-modal-title{font-size:17px;font-weight:900;color:var(--text);text-align:center;letter-spacing:-.02em}
+    .walk-dog-modal-hint{font-size:12px;color:var(--sub);text-align:center;margin:10px 0 4px;line-height:1.45;font-weight:600}
+    .walk-dog-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+    .walk-dog-card{
+      position:relative;border:2px solid var(--line);border-radius:16px;padding:12px 10px 11px;text-align:center;cursor:pointer;font-family:inherit;
+      background:var(--white);transition:border-color .15s ease,background .15s ease,transform .08s;-webkit-tap-highlight-color:transparent;
+    }
+    .walk-dog-card:hover{border-color:rgba(25,178,58,.35)}
+    .walk-dog-card:active{transform:scale(.98)}
+    .walk-dog-card.selected{border-color:var(--main);background:rgba(25,178,58,.07);box-shadow:0 2px 10px rgba(25,178,58,.14)}
+    .walk-dog-card-avatar{font-size:30px;line-height:1;display:block;margin-bottom:6px}
+    .walk-dog-card-name{font-size:13px;font-weight:800;color:var(--text);letter-spacing:-.015em;display:block;line-height:1.2}
+    .walk-dog-card-sub{font-size:9px;color:var(--sub);margin-top:5px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .walk-dog-card-badge{position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;border:2px solid var(--sep);background:var(--white);display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s}
+    .walk-dog-card.selected .walk-dog-card-badge{border-color:var(--main);background:var(--main)}
+    .walk-dog-card.selected .walk-dog-card-badge::before{content:'✓';color:#fff;font-size:10px;font-weight:900;line-height:1}
+    .walk-dog-modal-actions{display:flex;gap:10px;margin-top:16px;padding-top:4px}
+    .walk-dog-cancel{flex:1;border-radius:12px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;border:1px solid rgba(0,0,0,.1);background:var(--white);color:var(--sub);font-family:inherit}
+    .walk-dog-confirm{flex:1;border-radius:12px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;border:none;color:#fff;background:linear-gradient(135deg,#19B23A,#0fa34e);box-shadow:0 4px 12px rgba(25,178,58,.26);font-family:inherit}
+    .walk-dog-confirm:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
 
     .walk-live-stats{display:flex;align-items:center;justify-content:center;padding:18px 16px;background:#fff;border-bottom:1px solid rgba(0,0,0,.06)}
     .walk-live-stat{flex:1;text-align:center}
@@ -899,7 +959,7 @@
                 </div>
                 <div class="field">
                   <div class="label">나이</div>
-                  <select class="select">
+                  <select class="select" id="dogAgeSelect">
                     <option>1살</option>
                     <option selected>2살</option>
                     <option>3살</option>
@@ -925,10 +985,10 @@
                 </div>
                 <div class="field">
                   <div class="label">종</div>
-                  <select class="select">
+                  <select class="select" id="dogBreedSelect">
                     <option>믹스견</option>
                     <option>말티즈</option>
-                    <option>푸들</option>
+                    <option selected>푸들</option>
                     <option>포메라니안</option>
                     <option>치와와</option>
                     <option>시츄</option>
@@ -956,14 +1016,14 @@
                 </div>
                 <div class="field">
                   <div class="label">성별</div>
-                  <select class="select">
+                  <select class="select" id="dogSexSelect">
                     <option selected>암컷</option>
                     <option>수컷</option>
                   </select>
                 </div>
                 <div class="actions">
                   <button class="cta secondary" data-nav="userInfo" style="flex:1;">이전</button>
-                  <button class="cta" data-nav="dogInfoTraits" style="flex:1;">다음</button>
+                  <button type="button" class="cta" id="dogInfoToTraitsBtn" data-nav="dogInfoTraits" style="flex:1;">다음</button>
                 </div>
               </div>
             </div>
@@ -971,8 +1031,8 @@
             <!-- DOG INFO: 성격 (별도 페이지) -->
             <div class="view" data-view="dogInfoTraits">
               <div class="topbar">
-                <button class="iconbtn" data-nav="dogInfo">←</button>
-                <span class="muted">4/4</span>
+                <button class="iconbtn" type="button" id="traitsTopBackBtn" data-nav="dogInfo">←</button>
+                <span class="muted" id="traitsTopMuted">4/4</span>
               </div>
               <p class="h2"><span id="traitsDogName">보리</span>의 성격 알아보기</p>
               <p class="muted">8개의 질문에 답하면 우리 아이의 산책 성향 유형을 알려드려요.</p>
@@ -1105,8 +1165,8 @@
                 </div>
 
                 <div class="actions">
-                  <button class="cta secondary" data-nav="dogInfo" style="flex:1;">이전</button>
-                  <button class="cta" id="quizSubmitBtn" style="flex:1;" disabled>결과 보기</button>
+                  <button type="button" class="cta secondary" id="traitsPrevDogInfoBtn" data-nav="dogInfo" style="flex:1;">이전</button>
+                  <button type="button" class="cta" id="quizSubmitBtn" style="flex:1;" disabled>결과 보기</button>
                 </div>
               </div>
             </div>
@@ -1269,142 +1329,87 @@
               </div>
             </div>
 
-            <!-- PET (펫로그 메인) -->
-            <div class="view" data-view="pet" data-tab-root="pet">
-              <div class="petlog-screen">
-                <div class="petlog-profile-card">
-                  <div class="petlog-profile-inner">
-                    <div class="petlog-avatar">🐕</div>
-                    <div class="petlog-profile-info">
-                      <div class="petlog-profile-name" id="petDogName">보리</div>
-                      <div class="petlog-profile-sub">푸들 · 2살 · 암컷</div>
-                    </div>
-                    <button type="button" class="petlog-add-btn" data-nav="pet_add">+ 추가</button>
-                  </div>
-                  <div class="petlog-stats">
-                    <div class="petlog-stat">
-                      <div class="petlog-stat-val">47</div>
-                      <div class="petlog-stat-label">총 산책</div>
-                    </div>
-                    <div class="petlog-stat">
-                      <div class="petlog-stat-val">68km</div>
-                      <div class="petlog-stat-label">총 거리</div>
-                    </div>
-                    <div class="petlog-stat">
-                      <div class="petlog-stat-val">32h</div>
-                      <div class="petlog-stat-label">총 시간</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="mypage-group" style="margin-top:4px;">
-                  <div class="mypage-group-title">성격 유형</div>
-                  <div class="petlog-personality-card" id="petPersonalityCard" data-nav="dogInfoResult" role="button" tabindex="0" style="display:none;">
-                    <div class="petlog-personality-emoji" id="petPersonalityEmoji">🐶</div>
-                    <div class="petlog-personality-info">
-                      <div class="petlog-personality-name" id="petPersonalityName">사교왕 인싸형</div>
-                      <div class="petlog-personality-tagline" id="petPersonalityTagline">사람도 강아지도 다 좋아하는 만능 인싸!</div>
-                    </div>
-                    <span class="petlog-personality-arrow">›</span>
-                  </div>
-                  <div class="petlog-personality-empty" id="petPersonalityEmpty" data-nav="dogInfoTraits" role="button" tabindex="0">
-                    <div class="petlog-personality-emoji">📋</div>
-                    <div class="petlog-personality-info">
-                      <div class="petlog-personality-name" style="color:var(--text);">기질 테스트가 아직이에요</div>
-                      <div class="petlog-personality-tagline">8개 질문으로 산책 성향을 분석해 드려요.</div>
-                    </div>
-                    <span class="petlog-personality-arrow">›</span>
-                  </div>
-                </div>
-
-                <div class="mypage-group" style="margin-top:4px;">
-                  <div class="mypage-group-title">반려견 관리</div>
-                  <div class="mypage-group-card">
-                    <div class="mypage-list">
-                      <button type="button" class="mypage-row" data-nav="pet_add">
-                        <span class="mypage-row-ico green">➕</span>
-                        <span class="mypage-row-text">반려견 추가<span class="mypage-row-hint">새 반려견의 정보를 등록해요</span></span>
-                        <span class="mypage-row-arrow">›</span>
-                      </button>
-                      <button type="button" class="mypage-row" data-nav="pet_edit">
-                        <span class="mypage-row-ico blue">✏️</span>
-                        <span class="mypage-row-text">반려견 정보 수정<span class="mypage-row-hint">이름, 나이, 성격 등 수정</span></span>
-                        <span class="mypage-row-arrow">›</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="mypage-group">
-                  <div class="mypage-group-title">기록 & 분석</div>
-                  <div class="mypage-group-card">
-                    <div class="mypage-list">
-                      <button type="button" class="mypage-row" data-nav="pet_monthly">
-                        <span class="mypage-row-ico orange">📅</span>
-                        <span class="mypage-row-text">월간 산책 기록<span class="mypage-row-hint">날짜별 산책 이력을 확인해요</span></span>
-                        <span class="mypage-row-arrow">›</span>
-                      </button>
-                      <button type="button" class="mypage-row" data-nav="pet_analysis_select">
-                        <span class="mypage-row-ico purple">🧠</span>
-                        <span class="mypage-row-text">반려견 성향 분석<span class="mypage-row-hint">AI 기반 산책 성향 리포트</span></span>
-                        <span class="mypage-row-arrow">›</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- PET: 반려견 추가 (견 정보 입력) -->
+            <!-- PET: 반려견 추가 (회원가입 dogInfo와 동일 레이아웃) -->
             <div class="view" data-view="pet_add" data-tab-root="pet">
-              <div class="mypage-sub-screen">
-                <div class="topbar">
-                  <button class="iconbtn" data-nav="pet">←</button>
-                  <span class="muted">반려견 추가</span>
+              <div class="topbar">
+                <button class="iconbtn" data-nav="pet_monthly">←</button>
+                <span class="muted">반려견 추가</span>
+              </div>
+              <p class="h2">반려견 정보 입력</p>
+              <p class="muted">이름·나이·종·성별을 알려주세요. 성격은 다음 단계에서 입력해요.</p>
+              <div class="progress"><span data-progress></span></div>
+              <div class="form">
+                <div class="field">
+                  <div class="label">이름</div>
+                  <input class="input" id="petAddNameInput" type="text" placeholder="반려견 이름" />
                 </div>
-                <p class="mypage-subtitle">견 정보 입력</p>
-                <p class="stub-muted">반려견의 기본 정보를 입력해 주세요.</p>
-                <div class="form">
-                  <div class="field">
-                    <div class="label">이름 <span class="req">*</span></div>
-                    <input class="input" type="text" placeholder="반려견 이름" />
-                  </div>
-                  <div class="field">
-                    <div class="label">나이 <span class="req">*</span></div>
-                    <select class="select">
-                      <option value="">선택</option>
-                      <option>1살</option><option>2살</option><option>3살</option><option>4살</option><option>5살</option>
-                      <option>6살</option><option>7살</option><option>8살</option><option>9살</option><option>10살</option>
-                      <option>11살</option><option>12살</option><option>13살</option><option>14살</option><option>15살+</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <div class="label">견종 <span class="req">*</span></div>
-                    <select class="select">
-                      <option value="">선택</option>
-                      <option>믹스견</option><option>말티즈</option><option>푸들</option><option>포메라니안</option>
-                      <option>치와와</option><option>시츄</option><option>비숑프리제</option><option>골든리트리버</option>
-                      <option>진돗개</option><option>웰시코기</option><option>프렌치불도그</option><option>그 외</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <div class="label">성별</div>
-                    <select class="select">
-                      <option>암컷</option><option>수컷</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <div class="label">몸무게 (kg)</div>
-                    <input class="input" type="number" placeholder="예: 5.2" />
-                  </div>
-                  <div class="field">
-                    <div class="label">특이사항</div>
-                    <input class="input" type="text" placeholder="알레르기, 건강 이슈 등" />
-                  </div>
-                  <div class="actions" style="margin-top:18px;">
-                    <button class="cta secondary" data-nav="pet" style="flex:1;">취소</button>
-                    <button class="cta" data-nav="pet" style="flex:1;">등록하기</button>
-                  </div>
+                <div class="field">
+                  <div class="label">나이</div>
+                  <select class="select" id="petAddAgeSelect">
+                    <option>1살</option>
+                    <option selected>2살</option>
+                    <option>3살</option>
+                    <option>4살</option>
+                    <option>5살</option>
+                    <option>6살</option>
+                    <option>7살</option>
+                    <option>8살</option>
+                    <option>9살</option>
+                    <option>10살</option>
+                    <option>11살</option>
+                    <option>12살</option>
+                    <option>13살</option>
+                    <option>14살</option>
+                    <option>15살</option>
+                    <option>16살</option>
+                    <option>17살</option>
+                    <option>18살</option>
+                    <option>19살</option>
+                    <option>20살</option>
+                    <option>20+</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <div class="label">종</div>
+                  <select class="select" id="petAddBreedSelect">
+                    <option>믹스견</option>
+                    <option>말티즈</option>
+                    <option>푸들</option>
+                    <option>포메라니안</option>
+                    <option>치와와</option>
+                    <option>시츄</option>
+                    <option>비숑프리제</option>
+                    <option>요크셔테리어</option>
+                    <option>닥스훈트</option>
+                    <option>웰시코기</option>
+                    <option>비글</option>
+                    <option>프렌치불도그</option>
+                    <option>시바이누</option>
+                    <option>보더콜리</option>
+                    <option>코커스패니얼</option>
+                    <option>골든리트리버</option>
+                    <option>래브라도리트리버</option>
+                    <option>진돗개</option>
+                    <option>사모예드</option>
+                    <option>시베리안허스키</option>
+                    <option>도베르만</option>
+                    <option>로트와일러</option>
+                    <option>셰틀랜드쉽독</option>
+                    <option>미니어처핀셔</option>
+                    <option>퍼그</option>
+                    <option>그 외</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <div class="label">성별</div>
+                  <select class="select" id="petAddSexSelect">
+                    <option selected>암컷</option>
+                    <option>수컷</option>
+                  </select>
+                </div>
+                <div class="actions">
+                  <button type="button" class="cta secondary" data-nav="pet_monthly" style="flex:1;">이전</button>
+                  <button type="button" class="cta" id="petAddNextBtn" style="flex:1;">다음</button>
                 </div>
               </div>
             </div>
@@ -1413,7 +1418,7 @@
             <div class="view" data-view="pet_edit" data-tab-root="pet">
               <div class="mypage-sub-screen">
                 <div class="topbar">
-                  <button class="iconbtn" data-nav="pet">←</button>
+                  <button class="iconbtn" data-nav="pet_monthly">←</button>
                   <span class="muted">정보 수정</span>
                 </div>
                 <p class="mypage-subtitle">반려견 정보 수정</p>
@@ -1453,20 +1458,78 @@
                     <input class="input" type="text" value="활발하고 호기심 많음" />
                   </div>
                   <div class="actions" style="margin-top:18px;">
-                    <button class="cta secondary" data-nav="pet" style="flex:1;">취소</button>
-                    <button class="cta" data-nav="pet" style="flex:1;">저장하기</button>
+                    <button class="cta secondary" data-nav="pet_monthly" style="flex:1;">취소</button>
+                    <button class="cta" data-nav="pet_monthly" style="flex:1;">저장하기</button>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- PET: 월간 산책 기록 (캘린더) -->
+            <!-- PET: 월간 산책 기록 (탭 루트 — 상단 스와이프 카드) -->
             <div class="view" data-view="pet_monthly" data-tab-root="pet">
-              <div class="mypage-sub-screen">
-                <div class="topbar">
-                  <button class="iconbtn" data-nav="pet">←</button>
-                  <span class="muted">산책 기록</span>
+              <div class="petlog-screen petlog-root">
+                <div class="petlog-root-topbar"><span class="petlog-root-title">펫로그</span></div>
+
+                <div class="petlog-carousel-wrap">
+                  <div class="petlog-carousel-viewport">
+                    <div class="petlog-carousel-track" id="petlogCarouselTrack">
+                      <div class="petlog-carousel-slide petlog-carousel-slide--base">
+                        <div class="petlog-profile-card petlog-profile-card-main">
+                          <div class="petlog-profile-head">
+                            <div class="petlog-profile-inner">
+                              <div class="petlog-avatar">🐕</div>
+                              <div class="petlog-profile-info">
+                                <div class="petlog-profile-name" id="petDogName">반려견</div>
+                                <div class="petlog-profile-sub" id="petDogSub">견종 · 나이 · 성별</div>
+                              </div>
+                            </div>
+                            <div class="petlog-profile-add-slot"></div>
+                          </div>
+                          <div class="petlog-stats">
+                            <div class="petlog-stat">
+                              <div class="petlog-stat-val">47</div>
+                              <div class="petlog-stat-label">총 산책</div>
+                            </div>
+                            <div class="petlog-stat">
+                              <div class="petlog-stat-val">68km</div>
+                              <div class="petlog-stat-label">총 거리</div>
+                            </div>
+                            <div class="petlog-stat">
+                              <div class="petlog-stat-val">32h</div>
+                              <div class="petlog-stat-label">총 시간</div>
+                            </div>
+                          </div>
+                          <div class="petlog-dual">
+                            <div class="petlog-dual-type-stack">
+                              <button type="button" class="petlog-dual-cell petlog-dual-side" id="petPersonalityCard" data-nav="dogInfoResult" style="display:none;">
+                                <span class="petlog-dual-label">성격 유형</span>
+                                <span class="petlog-dual-mini-emoji" id="petPersonalityEmoji">🐶</span>
+                                <span class="petlog-dual-mini-name" id="petPersonalityName">사교왕 인싸형</span>
+                                <span class="petlog-dual-mini-tag" id="petPersonalityTagline">사람도 강아지도 다 좋아하는 만능 인싸!</span>
+                              </button>
+                              <button type="button" class="petlog-dual-cell petlog-dual-side" id="petPersonalityEmpty" data-nav="dogInfoTraits">
+                                <span class="petlog-dual-label">성격 유형</span>
+                                <span class="petlog-dual-mini-emoji">📋</span>
+                                <span class="petlog-dual-mini-name">기질 테스트</span>
+                                <span class="petlog-dual-mini-tag">8문항으로 산책 성향 유형을 확인해요.</span>
+                              </button>
+                            </div>
+                            <button type="button" class="petlog-dual-cell petlog-dual-side petlog-dual-analysis" data-nav="pet_analysis_select">
+                              <span class="petlog-dual-label">성향 분석</span>
+                              <span class="petlog-dual-mini-emoji">🧠</span>
+                              <span class="petlog-dual-mini-name">AI 산책 리포트</span>
+                              <span class="petlog-dual-mini-tag">패턴·스트레스·에너지 분석</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="petlog-carousel-dots petlog-carousel-dots--empty" id="petlogCarouselDots" aria-hidden="true"></div>
                 </div>
+
+                <div class="mypage-sub-screen petlog-cal-below" style="padding-top:8px;margin:0;background:transparent;box-shadow:none;border:none;">
                 <p class="mypage-subtitle">월간 산책 기록</p>
                 <p class="stub-muted">날짜를 눌러 상세 산책 기록을 확인하세요. 점 색깔은 각 반려견의 산책을 의미해요.</p>
 
@@ -1525,6 +1588,7 @@
                   </div>
                 </div>
               </div>
+              </div>
             </div>
 
             <!-- PET: 산책 일지 상세 -->
@@ -1579,7 +1643,7 @@
             <div class="view" data-view="pet_analysis_select" data-tab-root="pet">
               <div class="mypage-sub-screen">
                 <div class="topbar">
-                  <button class="iconbtn" data-nav="pet">←</button>
+                  <button class="iconbtn" data-nav="pet_monthly">←</button>
                   <span class="muted">성향 분석</span>
                 </div>
                 <p class="mypage-subtitle">반려견 성향 분석</p>
@@ -1777,6 +1841,7 @@
                   <div class="walk-live-route-label">
                     <span id="walkRouteName">강변 그늘 루프</span>
                     <span class="walk-live-route-meta" id="walkRouteMeta">2.4km · 34분</span>
+                    <div class="walk-live-route-dogs" id="walkRouteDogsWrap" hidden>함께하는 반려견 · <span id="walkRouteDogsNames">보리</span></div>
                   </div>
                 </div>
 
@@ -2043,7 +2108,7 @@
                       <div class="mypage-profile-name" id="mypageDogName">보리 보호자</div>
                       <div class="mypage-profile-sub">보리 · 푸들 · 2살</div>
                     </div>
-                    <button type="button" class="mypage-profile-edit" data-nav="mypage_edit">편집</button>
+                    <button type="button" class="mypage-profile-edit" data-nav="mypage_edit">수정</button>
                   </div>
                 </div>
 
@@ -2051,14 +2116,9 @@
                   <div class="mypage-group-title">계정</div>
                   <div class="mypage-group-card">
                     <div class="mypage-list">
-                      <button type="button" class="mypage-row" data-nav="mypage_edit">
-                        <span class="mypage-row-ico green">✏️</span>
-                        <span class="mypage-row-text">내 정보 수정<span class="mypage-row-hint">닉네임, 산책 선호 변경</span></span>
-                        <span class="mypage-row-arrow">›</span>
-                      </button>
                       <button type="button" class="mypage-row" data-nav="mypage_system">
                         <span class="mypage-row-ico blue">⚙️</span>
-                        <span class="mypage-row-text">시스템 설정<span class="mypage-row-hint">알림, 음성, 폰트</span></span>
+                        <span class="mypage-row-text">시스템 설정<span class="mypage-row-hint">알림, 음성, 폰트, 로그아웃·탈퇴</span></span>
                         <span class="mypage-row-arrow">›</span>
                       </button>
                     </div>
@@ -2087,23 +2147,6 @@
                     </div>
                   </div>
                 </div>
-
-                <div class="mypage-group">
-                  <div class="mypage-group-card">
-                    <div class="mypage-list">
-                      <button type="button" class="mypage-row mypage-row--danger" data-action="logout">
-                        <span class="mypage-row-ico red">🚪</span>
-                        <span class="mypage-row-text">로그아웃</span>
-                        <span class="mypage-row-arrow">›</span>
-                      </button>
-                      <button type="button" class="mypage-row mypage-row--danger" data-action="withdraw">
-                        <span class="mypage-row-ico red">⚠️</span>
-                        <span class="mypage-row-text">탈퇴하기</span>
-                        <span class="mypage-row-arrow">›</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -2114,7 +2157,7 @@
                   <span class="muted">설정</span>
                 </div>
                 <p class="mypage-subtitle">시스템 설정</p>
-                <p class="stub-muted">아래 항목을 눌러 세부 설정 화면으로 이동합니다.</p>
+                <p class="stub-muted">알림·음성·폰트 아래에서 로그아웃·회원 탈퇴까지 할 수 있어요.</p>
                 <div class="mypage-group-card">
                   <div class="mypage-list">
                     <button type="button" class="mypage-row mypage-row--sub" data-nav="mypage_setting_noti">
@@ -2130,6 +2173,20 @@
                     <button type="button" class="mypage-row mypage-row--sub" data-nav="mypage_setting_font">
                       <span class="mypage-row-ico purple">🔤</span>
                       <span class="mypage-row-text">폰트 크기 설정</span>
+                      <span class="mypage-row-arrow">›</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="mypage-group-card" style="margin-top:14px;">
+                  <div class="mypage-list">
+                    <button type="button" class="mypage-row mypage-row--danger" data-action="logout">
+                      <span class="mypage-row-ico red">🚪</span>
+                      <span class="mypage-row-text">로그아웃</span>
+                      <span class="mypage-row-arrow">›</span>
+                    </button>
+                    <button type="button" class="mypage-row mypage-row--danger" data-action="withdraw">
+                      <span class="mypage-row-ico red">⚠️</span>
+                      <span class="mypage-row-text">탈퇴하기</span>
                       <span class="mypage-row-arrow">›</span>
                     </button>
                   </div>
@@ -2391,6 +2448,19 @@
             </div>
           </div>
 
+          <!-- 산책 시작: 반려견 다중 선택 (등록 2마리 이상) -->
+          <div class="walk-dog-overlay" id="walkDogPickOverlay" aria-hidden="true">
+            <div class="walk-dog-modal">
+              <div class="walk-dog-modal-title">산책할 반려견 선택</div>
+              <p class="walk-dog-modal-hint">카드를 눌러 선택·해제할 수 있어요. 여러 마리를 함께 선택할 수 있어요.</p>
+              <div class="walk-dog-grid" id="walkDogPickGrid" role="list"></div>
+              <div class="walk-dog-modal-actions">
+                <button type="button" class="walk-dog-cancel" id="walkDogPickCancel">취소</button>
+                <button type="button" class="walk-dog-confirm" id="walkDogPickConfirm">산책 시작</button>
+              </div>
+            </div>
+          </div>
+
           <div class="tabs hidden" id="tabs">
             <div class="tabs-inner">
               <button class="tab-hit" data-tab="walk" type="button" aria-label="산책">
@@ -2427,7 +2497,10 @@
       let rerouteTimer = null;
       const state = {
         dogName: "보리",
+        primaryPetSub: "",
         petPersonality: null,
+        petAddQuizResult: null,
+        dogTraitsFrom: null,
         resultEntryFrom: null,
         schedules: [
           { id: 1, type: "walk", ico: "🐕", title: "저녁 산책", time: "18:30", when: "오늘", loc: "한강공원" },
@@ -2436,7 +2509,78 @@
         scheduleEditMode: false,
         scheduleSelectedType: "walk",
         scheduleSelectedIco: "🐕",
+        walkParticipantIds: ["primary"],
       };
+      const PETLOG_EXTRA_PETS_KEY = "petwalk_extra_pet_names";
+      const PRIMARY_PET_KEY = "petwalk_primary_pet";
+      let pendingWalkRoute = null;
+      let walkDogPickSelections = null;
+
+      function getDogInfoSubline() {
+        const breed = document.getElementById("dogBreedSelect");
+        const age = document.getElementById("dogAgeSelect");
+        const sex = document.getElementById("dogSexSelect");
+        const pb = breed && breed.selectedIndex >= 0 ? breed.options[breed.selectedIndex].text : "";
+        const pa = age && age.selectedIndex >= 0 ? age.options[age.selectedIndex].text : "";
+        const ps = sex && sex.selectedIndex >= 0 ? sex.options[sex.selectedIndex].text : "";
+        return [pb, pa, ps].filter(Boolean).join(" · ");
+      }
+
+      function savePrimaryPetProfileFromSignupForm() {
+        const nameIn = document.getElementById("dogNameInput");
+        const name = (nameIn && nameIn.value ? nameIn.value.trim() : "") || (state.dogName || "").trim() || "반려견";
+        state.dogName = name;
+        state.primaryPetSub = getDogInfoSubline();
+        try {
+          localStorage.setItem(PRIMARY_PET_KEY, JSON.stringify({ name: state.dogName, sub: state.primaryPetSub }));
+        } catch (_) {}
+      }
+
+      function loadPrimaryPetProfileFromStorage() {
+        try {
+          const raw = localStorage.getItem(PRIMARY_PET_KEY);
+          if (!raw) return;
+          const j = JSON.parse(raw);
+          if (j && typeof j.name === "string" && j.name.trim()) state.dogName = j.name.trim();
+          if (j && typeof j.sub === "string") state.primaryPetSub = j.sub;
+          const nameIn = document.getElementById("dogNameInput");
+          if (nameIn && state.dogName) nameIn.value = state.dogName;
+        } catch (_) {}
+      }
+
+      function normalizeLegacyExtraPetEntry(x) {
+        if (typeof x === "string") return { name: x, sub: "등록한 반려견 · 카드 스와이프로 전환", personality: null };
+        if (!x || typeof x !== "object") return null;
+        return {
+          name: typeof x.name === "string" ? x.name : "반려견",
+          sub: typeof x.sub === "string" ? x.sub : "등록한 반려견",
+          personality: x.personality && typeof x.personality === "object" ? x.personality : null,
+        };
+      }
+
+      function readPetlogExtras() {
+        try {
+          const j = JSON.parse(localStorage.getItem(PETLOG_EXTRA_PETS_KEY) || "[]");
+          if (!Array.isArray(j)) return [];
+          return j.map(normalizeLegacyExtraPetEntry).filter(Boolean);
+        } catch {
+          return [];
+        }
+      }
+
+      function writePetlogExtras(arr) {
+        localStorage.setItem(PETLOG_EXTRA_PETS_KEY, JSON.stringify(arr));
+      }
+
+      function getPetAddFormSubline() {
+        const breed = document.getElementById("petAddBreedSelect");
+        const age = document.getElementById("petAddAgeSelect");
+        const sex = document.getElementById("petAddSexSelect");
+        const pb = breed && breed.selectedIndex >= 0 ? breed.options[breed.selectedIndex].text : "";
+        const pa = age && age.selectedIndex >= 0 ? age.options[age.selectedIndex].text : "";
+        const ps = sex && sex.selectedIndex >= 0 ? sex.options[sex.selectedIndex].text : "";
+        return [pb, pa, ps].filter(Boolean).join(" · ");
+      }
       const progressByView = new Map([
         ["login", 0],
         ["signupMethod", 0],
@@ -2450,7 +2594,6 @@
         ["walk", 100],
         ["walkReview", 100],
         ["walkHome", 100],
-        ["pet", 100],
         ["explore", 100],
         ["mypage", 100],
         ["mypage_system", 100],
@@ -2483,8 +2626,8 @@
         if (name === "walkHome") ensureWalkHomeMap();
         if (name === "walk") ensureWalkLiveMap();
         if (name === "explore") ensureExploreMap();
-        if (name === "pet") { syncPetDogName(); syncPetPersonality(); }
-        if (name === "dogInfoTraits") syncTraitsDogName();
+        if (name === "pet_monthly") { syncPetDogName(); syncPetPersonality(); initPetlogCarousel(); }
+        if (name === "dogInfoTraits") { syncTraitsDogName(); syncDogInfoTraitsChrome(); }
         if (name === "dogInfoResult") { syncResultDogName(); renderResult(); applyResultLayout(); }
       }
 
@@ -2494,7 +2637,26 @@
         const homeBtn = document.getElementById("resultHomeBtn");
         const progress = document.getElementById("resultProgress");
         const actions = document.getElementById("resultActions");
-        if (backBtn) backBtn.setAttribute("data-nav", fromPet ? "pet" : "dogInfoTraits");
+
+        if (state.dogTraitsFrom === "pet_add") {
+          if (backBtn) backBtn.setAttribute("data-nav", "dogInfoTraits");
+          if (homeBtn) {
+            homeBtn.style.display = "";
+            homeBtn.textContent = "등록하고 펫로그로";
+            homeBtn.removeAttribute("data-nav");
+            homeBtn.setAttribute("data-action", "pet_add_finalize");
+          }
+          if (progress) progress.style.display = "";
+          if (actions) actions.style.justifyContent = "";
+          return;
+        }
+
+        if (homeBtn) {
+          homeBtn.removeAttribute("data-action");
+          homeBtn.textContent = "완료하고 홈으로";
+          homeBtn.setAttribute("data-nav", "home");
+        }
+        if (backBtn) backBtn.setAttribute("data-nav", fromPet ? "pet_monthly" : "dogInfoTraits");
         if (homeBtn) homeBtn.style.display = fromPet ? "none" : "";
         if (progress) progress.style.display = fromPet ? "none" : "";
         if (actions) actions.style.justifyContent = fromPet ? "stretch" : "";
@@ -2988,9 +3150,11 @@
 
       function syncPetDogName() {
         const el = document.getElementById("petDogName");
-        if (!el) return;
+        const subEl = document.getElementById("petDogSub");
         const safe = (state.dogName || "").trim() || "반려견";
-        el.textContent = safe;
+        if (el) el.textContent = safe;
+        const sub = (state.primaryPetSub || "").trim() || getDogInfoSubline();
+        if (subEl) subEl.textContent = sub || "견종 · 나이 · 성별";
       }
 
       // === 오늘의 일정 (Home) ===
@@ -3045,6 +3209,128 @@
 
       function escapeHtml(s) {
         return String(s).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+      }
+
+      function getRegisteredWalkDogs() {
+        const primaryName = (state.dogName || "").trim() || "반려견";
+        const primarySub = (state.primaryPetSub || "").trim() || getDogInfoSubline() || "";
+        const dogs = [
+          {
+            id: "primary",
+            name: primaryName,
+            sub: primarySub || "정보 추가 시 반영돼요",
+          },
+        ];
+        readPetlogExtras().forEach((p, i) => {
+          dogs.push({
+            id: "extra_" + i,
+            name: (typeof p.name === "string" && p.name.trim()) ? p.name.trim() : "반려견",
+            sub: typeof p.sub === "string" ? p.sub.trim() : "",
+          });
+        });
+        return dogs;
+      }
+
+      function beginWalkNavigationOrPicker(route) {
+        const dogs = getRegisteredWalkDogs();
+        if (dogs.length >= 2) {
+          pendingWalkRoute = route;
+          openWalkDogPickOverlay();
+          return;
+        }
+        state.walkParticipantIds = dogs.length ? dogs.map((d) => d.id) : ["primary"];
+        syncWalkRouteLabels(route.name, route.meta);
+        setActiveView("walk");
+      }
+
+      function syncWalkRouteLabels(name, meta) {
+        const nm = document.getElementById("walkRouteName");
+        const mt = document.getElementById("walkRouteMeta");
+        if (nm) nm.textContent = (name || "").trim() || "오늘의 산책";
+        if (mt) mt.textContent = (meta || "").trim();
+        syncWalkParticipantLine();
+      }
+
+      function syncWalkParticipantLine() {
+        const wrap = document.getElementById("walkRouteDogsWrap");
+        const namesEl = document.getElementById("walkRouteDogsNames");
+        if (!wrap || !namesEl) return;
+        const ids = state.walkParticipantIds || [];
+        if (!ids.length) {
+          wrap.hidden = true;
+          return;
+        }
+        const dogs = getRegisteredWalkDogs();
+        const labels = dogs.filter((d) => ids.includes(d.id)).map((d) => d.name);
+        if (!labels.length) {
+          wrap.hidden = true;
+          return;
+        }
+        namesEl.textContent = labels.join(", ");
+        wrap.hidden = false;
+      }
+
+      function openWalkDogPickOverlay() {
+        const overlay = document.getElementById("walkDogPickOverlay");
+        const grid = document.getElementById("walkDogPickGrid");
+        const confirmBtn = document.getElementById("walkDogPickConfirm");
+        if (!overlay || !grid) return;
+        const dogs = getRegisteredWalkDogs();
+        walkDogPickSelections = new Set(dogs.map((d) => d.id));
+        grid.innerHTML = dogs
+          .map(
+            (d) =>
+              `<button type="button" class="walk-dog-card selected" data-dog-id="${escapeHtml(d.id)}" role="listitem">
+            <span class="walk-dog-card-badge" aria-hidden="true"></span>
+            <span class="walk-dog-card-avatar" aria-hidden="true">🐕</span>
+            <span class="walk-dog-card-name">${escapeHtml(d.name)}</span>
+            <span class="walk-dog-card-sub">${escapeHtml(d.sub || "\u00a0")}</span>
+          </button>`
+          )
+          .join("");
+        overlay.classList.add("show");
+        overlay.setAttribute("aria-hidden", "false");
+
+        function syncConfirm() {
+          if (confirmBtn) confirmBtn.disabled = !walkDogPickSelections || walkDogPickSelections.size < 1;
+        }
+        syncConfirm();
+
+        grid.querySelectorAll(".walk-dog-card").forEach((card) => {
+          card.addEventListener("click", () => {
+            const id = card.getAttribute("data-dog-id");
+            if (!id || !walkDogPickSelections) return;
+            if (walkDogPickSelections.has(id)) walkDogPickSelections.delete(id);
+            else walkDogPickSelections.add(id);
+            card.classList.toggle("selected", walkDogPickSelections.has(id));
+            syncConfirm();
+          });
+        });
+      }
+
+      function closeWalkDogPickOverlay() {
+        const overlay = document.getElementById("walkDogPickOverlay");
+        if (overlay) {
+          overlay.classList.remove("show");
+          overlay.setAttribute("aria-hidden", "true");
+        }
+        pendingWalkRoute = null;
+        walkDogPickSelections = null;
+      }
+
+      function confirmWalkDogPickAndGo() {
+        if (!pendingWalkRoute || !walkDogPickSelections || walkDogPickSelections.size < 1) return;
+        state.walkParticipantIds = Array.from(walkDogPickSelections);
+        const r = pendingWalkRoute;
+        pendingWalkRoute = null;
+        walkDogPickSelections = null;
+        const overlay = document.getElementById("walkDogPickOverlay");
+        if (overlay) {
+          overlay.classList.remove("show");
+          overlay.setAttribute("aria-hidden", "true");
+        }
+        syncWalkRouteLabels(r.name, r.meta);
+        setActiveView("walk");
       }
 
       function openScheduleModal() {
@@ -3139,15 +3425,44 @@
       function syncTraitsDogName() {
         const el = document.getElementById("traitsDogName");
         if (!el) return;
-        const safe = (state.dogName || "").trim() || "반려견";
+        let safe;
+        if (state.dogTraitsFrom === "pet_add") {
+          const inp = document.getElementById("petAddNameInput");
+          const list = readPetlogExtras();
+          safe = (inp && inp.value || "").trim() || `새 반려견 ${list.length + 1}`;
+        } else {
+          safe = (state.dogName || "").trim() || "반려견";
+        }
         el.textContent = safe;
       }
 
       function syncResultDogName() {
         const el = document.getElementById("resultDogName");
         if (!el) return;
-        const safe = (state.dogName || "").trim() || "반려견";
+        let safe;
+        if (state.dogTraitsFrom === "pet_add") {
+          const inp = document.getElementById("petAddNameInput");
+          const list = readPetlogExtras();
+          safe = (inp && inp.value || "").trim() || `새 반려견 ${list.length + 1}`;
+        } else {
+          safe = (state.dogName || "").trim() || "반려견";
+        }
         el.textContent = safe;
+      }
+
+      function syncDogInfoTraitsChrome() {
+        const topBack = document.getElementById("traitsTopBackBtn");
+        const botPrev = document.getElementById("traitsPrevDogInfoBtn");
+        const muted = document.getElementById("traitsTopMuted");
+        if (state.dogTraitsFrom === "pet_add") {
+          if (topBack) topBack.setAttribute("data-nav", "pet_add");
+          if (botPrev) botPrev.setAttribute("data-nav", "pet_add");
+          if (muted) muted.textContent = "기질 테스트";
+        } else {
+          if (topBack) topBack.setAttribute("data-nav", "dogInfo");
+          if (botPrev) botPrev.setAttribute("data-nav", "dogInfo");
+          if (muted) muted.textContent = "4/4";
+        }
       }
 
       function handleProgress(viewName) {
@@ -3197,24 +3512,33 @@
             }
             return;
           }
+          if (action === "pet_add_finalize") {
+            finalizePetAddFromResult();
+            return;
+          }
         }
 
         const navTarget = e.target && e.target.closest ? e.target.closest("[data-nav]") : null;
         const nav = navTarget && navTarget.getAttribute ? navTarget.getAttribute("data-nav") : null;
-        if (navTarget && nav === "walk") {
-          const routeName = navTarget.getAttribute("data-route-name");
-          const routeMeta = navTarget.getAttribute("data-route-meta");
-          if (routeName) document.getElementById("walkRouteName").textContent = routeName;
-          if (routeMeta) document.getElementById("walkRouteMeta").textContent = routeMeta;
+        let skipDefaultNavForWalk = false;
+        if (navTarget && nav === "walk" && navTarget.hasAttribute("data-route-name")) {
+          const routeName = navTarget.getAttribute("data-route-name") || "";
+          const routeMeta = navTarget.getAttribute("data-route-meta") || "";
+          beginWalkNavigationOrPicker({ name: routeName, meta: routeMeta });
+          skipDefaultNavForWalk = true;
+        }
+        if (navTarget && nav === "home" && navTarget.id === "resultHomeBtn" && state.dogTraitsFrom !== "pet_add") {
+          savePrimaryPetProfileFromSignupForm();
+          writePetlogExtras([]);
         }
         if (navTarget && nav === "dogInfoResult") {
           state.resultEntryFrom = navTarget.id === "petPersonalityCard" ? "pet" : "onboarding";
         }
-        if (nav) setActiveView(nav);
+        if (!skipDefaultNavForWalk && nav) setActiveView(nav);
 
         const tabEl = e.target && e.target.closest ? e.target.closest("[data-tab]") : null;
         const tab = tabEl && tabEl.getAttribute ? tabEl.getAttribute("data-tab") : null;
-        if (tab) setActiveView(tab === "walk" ? "walkHome" : tab);
+        if (tab) setActiveView(tab === "walk" ? "walkHome" : tab === "pet" ? "pet_monthly" : tab);
       });
 
       // Keyboard navigation for clickable cards
@@ -3225,6 +3549,13 @@
         const nav = el.getAttribute("data-nav");
         if (!nav) return;
         e.preventDefault();
+        if (nav === "walk" && el.hasAttribute("data-route-name")) {
+          beginWalkNavigationOrPicker({
+            name: el.getAttribute("data-route-name") || "",
+            meta: el.getAttribute("data-route-meta") || "",
+          });
+          return;
+        }
         setActiveView(nav);
       });
 
@@ -3400,15 +3731,27 @@
       handleTabsVisibility("login");
       handleProgress("login");
 
-      // Dog name binding (dogInfo -> home)
+      // Dog name binding (dogInfo -> home) + primary pet subline (종·나이·성별)
+      loadPrimaryPetProfileFromStorage();
       const dogNameInput = document.getElementById("dogNameInput");
+      const dogAgeSelect = document.getElementById("dogAgeSelect");
+      const dogBreedSelect = document.getElementById("dogBreedSelect");
+      const dogSexSelect = document.getElementById("dogSexSelect");
       if (dogNameInput) {
         state.dogName = (dogNameInput.value || "").trim() || state.dogName;
         dogNameInput.addEventListener("input", () => {
           state.dogName = (dogNameInput.value || "").trim() || "반려견";
+          state.primaryPetSub = getDogInfoSubline();
           syncPetDogName();
         });
       }
+      function onPrimaryDogFieldChange() {
+        state.primaryPetSub = getDogInfoSubline();
+        syncPetDogName();
+      }
+      [dogAgeSelect, dogBreedSelect, dogSexSelect].forEach((sel) => {
+        if (sel) sel.addEventListener("change", onPrimaryDogFieldChange);
+      });
       syncHomeDogName();
       syncPetDogName();
 
@@ -3493,11 +3836,17 @@
       if (walkPickedStart) {
         walkPickedStart.addEventListener("click", () => {
           if (!selectedWalkRoute) return;
-          document.getElementById("walkRouteName").textContent = selectedWalkRoute.name;
-          document.getElementById("walkRouteMeta").textContent = selectedWalkRoute.meta;
-          setActiveView("walk");
+          beginWalkNavigationOrPicker({
+            name: selectedWalkRoute.name || "",
+            meta: selectedWalkRoute.meta || "",
+          });
         });
       }
+      document.getElementById("walkDogPickCancel")?.addEventListener("click", () => closeWalkDogPickOverlay());
+      document.getElementById("walkDogPickConfirm")?.addEventListener("click", () => confirmWalkDogPickAndGo());
+      document.getElementById("walkDogPickOverlay")?.addEventListener("click", (ev) => {
+        if (ev.target && ev.target.id === "walkDogPickOverlay") closeWalkDogPickOverlay();
+      });
 
       const rerouteOverlay = document.getElementById("rerouteOverlay");
       function dismissReroute() {
@@ -3883,7 +4232,7 @@
           const calc = calcScores();
           norm = calc.norm;
           type = pickType(norm);
-          state.petPersonality = {
+          const pers = {
             id: type.id,
             emoji: type.emoji,
             name: type.name,
@@ -3892,6 +4241,15 @@
             tags: type.tags || [],
             norm: norm,
           };
+          if (state.dogTraitsFrom === "pet_add") {
+            state.petAddQuizResult = pers;
+          } else {
+            state.petPersonality = pers;
+          }
+        } else if (state.dogTraitsFrom === "pet_add" && state.petAddQuizResult) {
+          const saved = state.petAddQuizResult;
+          type = saved;
+          norm = saved.norm || {};
         } else if (state.petPersonality) {
           const saved = state.petPersonality;
           type = saved;
@@ -3936,7 +4294,7 @@
         const personality = state.petPersonality;
         if (!card || !empty) return;
         if (personality) {
-          card.style.display = "";
+          card.style.display = "flex";
           empty.style.display = "none";
           const emojiEl = document.getElementById("petPersonalityEmoji");
           const nameEl = document.getElementById("petPersonalityName");
@@ -3949,6 +4307,179 @@
           empty.style.display = "flex";
         }
       }
+
+      function clearQuizStateAndUI() {
+        Object.keys(quizState).forEach((k) => { delete quizState[k]; });
+        const ql = document.getElementById("quizList");
+        if (ql) {
+          ql.querySelectorAll(".quiz-card").forEach((c) => {
+            c.classList.remove("answered");
+            c.querySelectorAll(".quiz-option").forEach((o) => o.classList.remove("selected"));
+          });
+        }
+        updateQuizProgress();
+      }
+
+      function placePetlogAddButtonOnLastSlide(track) {
+        if (!track) return;
+        track.querySelectorAll(".petlog-card-corner-add").forEach((el) => el.remove());
+        const slides = track.querySelectorAll(".petlog-carousel-slide");
+        const lastSlide = slides[slides.length - 1];
+        if (!lastSlide) return;
+        let slot = lastSlide.querySelector(".petlog-profile-add-slot");
+        const card = lastSlide.querySelector(".petlog-profile-card");
+        if (!card) return;
+        if (!slot) {
+          slot = document.createElement("div");
+          slot.className = "petlog-profile-add-slot";
+          const head = lastSlide.querySelector(".petlog-profile-head");
+          if (head) head.appendChild(slot);
+          else card.insertBefore(slot, card.firstChild);
+        } else slot.innerHTML = "";
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "petlog-card-corner-add";
+        btn.setAttribute("data-nav", "pet_add");
+        btn.setAttribute("aria-label", "반려견 추가");
+        btn.textContent = "＋ 추가";
+        slot.appendChild(btn);
+      }
+
+      function refreshPetlogExtraSlides() {
+        const track = document.getElementById("petlogCarouselTrack");
+        if (!track) return;
+        const extras = readPetlogExtras();
+        Array.from(track.querySelectorAll(".petlog-carousel-slide.petlog-carousel-slide--extra")).forEach((el) => el.remove());
+
+        const base = track.querySelector(".petlog-carousel-slide--base");
+        if (!base) return;
+
+        extras.forEach((pet) => {
+          const slide = base.cloneNode(true);
+          slide.classList.remove("petlog-carousel-slide--base");
+          slide.classList.add("petlog-carousel-slide--extra");
+          slide.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+          const nameEl = slide.querySelector(".petlog-profile-name");
+          if (nameEl) nameEl.textContent = pet.name;
+          const subEl = slide.querySelector(".petlog-profile-sub");
+          if (subEl) subEl.textContent = pet.sub || "등록한 반려견";
+          const stack = slide.querySelector(".petlog-dual-type-stack");
+          if (stack) {
+            const btns = stack.querySelectorAll(".petlog-dual-cell.petlog-dual-side");
+            const p = pet.personality;
+            if (p && p.name) {
+              if (btns[0]) {
+                btns[0].style.display = "flex";
+                const em = btns[0].querySelector(".petlog-dual-mini-emoji");
+                const nm = btns[0].querySelector(".petlog-dual-mini-name");
+                const tg = btns[0].querySelector(".petlog-dual-mini-tag");
+                if (em) em.textContent = p.emoji || "🐶";
+                if (nm) nm.textContent = p.name;
+                if (tg) tg.textContent = p.tagline || "";
+              }
+              if (btns[1]) btns[1].style.display = "none";
+            } else {
+              if (btns[0]) btns[0].style.display = "none";
+              if (btns[1]) btns[1].style.display = "flex";
+            }
+          }
+          slide.querySelectorAll("button[data-nav]").forEach((el) => el.removeAttribute("data-nav"));
+          track.appendChild(slide);
+        });
+        placePetlogAddButtonOnLastSlide(track);
+      }
+
+      function scrollPetlogToSlideIndex(idx) {
+        const tr = document.getElementById("petlogCarouselTrack");
+        if (!tr) return;
+        const w = tr.clientWidth || 1;
+        tr.scrollTo({ left: idx * w, behavior: "smooth" });
+      }
+
+      function finalizePetAddFromResult() {
+        const nameIn = document.getElementById("petAddNameInput");
+        const list = readPetlogExtras();
+        let raw = nameIn && typeof nameIn.value === "string" ? nameIn.value.trim() : "";
+        if (!raw) raw = `새 반려견 ${list.length + 1}`;
+        const sub = getPetAddFormSubline() || "등록한 반려견";
+        const personality = state.petAddQuizResult || null;
+        list.push({ name: raw, sub, personality });
+        writePetlogExtras(list);
+        state.dogTraitsFrom = null;
+        state.petAddQuizResult = null;
+        clearQuizStateAndUI();
+        setActiveView("pet_monthly");
+        setTimeout(() => {
+          const tr = document.getElementById("petlogCarouselTrack");
+          if (!tr) return;
+          const slides = tr.querySelectorAll(".petlog-carousel-slide");
+          const n = slides.length;
+          if (n >= 2) scrollPetlogToSlideIndex(n - 1);
+          else scrollPetlogToSlideIndex(0);
+        }, 80);
+      }
+
+      function rebuildPetlogCarouselDots() {
+        const track = document.getElementById("petlogCarouselTrack");
+        const dotsWrap = document.getElementById("petlogCarouselDots");
+        if (!track || !dotsWrap) return;
+        const slides = Array.from(track.querySelectorAll(".petlog-carousel-slide"));
+        if (slides.length <= 1) {
+          dotsWrap.innerHTML = "";
+          dotsWrap.classList.add("petlog-carousel-dots--empty");
+          dotsWrap.setAttribute("aria-hidden", "true");
+          return;
+        }
+        dotsWrap.classList.remove("petlog-carousel-dots--empty");
+        dotsWrap.removeAttribute("aria-hidden");
+        dotsWrap.innerHTML = slides.map(() => "<span class=\"dot\"></span>").join("");
+        dotsWrap.querySelector(".dot")?.classList.add("active");
+      }
+
+      let _petlogCarouselBound = false;
+      function initPetlogCarousel() {
+        refreshPetlogExtraSlides();
+        rebuildPetlogCarouselDots();
+
+        const track = document.getElementById("petlogCarouselTrack");
+        const dotsWrap = document.getElementById("petlogCarouselDots");
+        if (!track || !dotsWrap) return;
+
+        function updateDots() {
+          const slides = track.querySelectorAll(".petlog-carousel-slide");
+          const dots = dotsWrap.querySelectorAll(".dot");
+          if (slides.length <= 1 || dots.length === 0) return;
+          const w = track.clientWidth || 1;
+          const idx = Math.min(dots.length - 1, Math.max(0, Math.round(track.scrollLeft / w)));
+          dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+        }
+
+        if (!_petlogCarouselBound) {
+          _petlogCarouselBound = true;
+          track.addEventListener("scroll", updateDots, { passive: true });
+          window.addEventListener("resize", updateDots);
+        }
+
+        updateDots();
+        setTimeout(updateDots, 120);
+      }
+
+      (function bindPetAddFlow() {
+        const petAddNextBtn = document.getElementById("petAddNextBtn");
+        if (petAddNextBtn) {
+          petAddNextBtn.addEventListener("click", () => {
+            clearQuizStateAndUI();
+            state.dogTraitsFrom = "pet_add";
+            setActiveView("dogInfoTraits");
+          });
+        }
+        const dogInfoToTraitsBtn = document.getElementById("dogInfoToTraitsBtn");
+        if (dogInfoToTraitsBtn) {
+          dogInfoToTraitsBtn.addEventListener("click", () => {
+            state.dogTraitsFrom = null;
+          });
+        }
+      })();
 
       function updateQuizProgress() {
         const answered = Object.keys(quizState).length;
