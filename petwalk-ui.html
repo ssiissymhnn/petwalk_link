@@ -152,9 +152,16 @@
     .home-schedule-action:hover{background:rgba(25,178,58,.08)}
     .home-schedule-empty{text-align:center;padding:24px 16px;background:#fff;border:1.5px dashed var(--line);border-radius:14px;color:var(--sub);font-size:13px;font-weight:600}
     .home-schedule-empty strong{display:block;color:var(--text);font-weight:800;margin-bottom:4px;font-size:14px}
-    .home-add-schedule{display:flex;align-items:center;justify-content:center;gap:6px;background:#fff;border:1.5px dashed rgba(25,178,58,.4);color:var(--main);border-radius:14px;padding:13px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .15s ease;margin-top:2px}
-    .home-add-schedule:hover{background:rgba(25,178,58,.06);border-style:solid;border-color:var(--main)}
-    .home-add-schedule:active{transform:scale(.98)}
+    .home-schedule-empty--action{cursor:pointer;transition:background .15s ease,border-color .15s ease}
+    .home-schedule-empty--action:hover{background:rgba(25,178,58,.06);border-color:rgba(25,178,58,.45)}
+    .home-schedule-empty--action:active{transform:scale(.985)}
+    .home-schedule-swipe{position:relative;border-radius:14px;overflow:hidden;touch-action:pan-y}
+    .home-schedule-swipe-under{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:stretch;pointer-events:none}
+    .home-schedule-swipe-under button{pointer-events:auto}
+    .home-schedule-swipe-btn{flex:0 0 76px;border:none;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;color:#fff;display:flex;align-items:center;justify-content:center;padding:0}
+    .home-schedule-swipe-btn--done{background:linear-gradient(135deg,#19B23A,#0fa34e)}
+    .home-schedule-swipe-btn--del{background:linear-gradient(135deg,#ef4444,#dc2626)}
+    .home-schedule-swipe-pane{position:relative;display:flex;align-items:center;gap:12px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,0,0,.04);will-change:transform;transition:transform .22s cubic-bezier(.25,.8,.25,1);touch-action:none;user-select:none}
 
     /* === Schedule add modal === */
     .schedule-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:30;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(2px)}
@@ -519,6 +526,43 @@
     .hcard-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
     .tag{font-size:10px;font-weight:800;padding:4px 8px;border-radius:999px;background:var(--sep);color:var(--text)}
     .walk-reco .tag{background:rgba(25,178,58,.08);color:var(--main)}
+    .walk-frequent-stack{display:flex;flex-direction:column;gap:10px}
+    .walk-freq-card{
+      display:flex;align-items:center;gap:12px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:12px 14px;
+      box-shadow:0 2px 8px rgba(0,0,0,.06);
+    }
+    .walk-freq-thumb{
+      flex-shrink:0;width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--sep),#e8e9eb);
+      display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--sub);
+    }
+    .walk-freq-body{flex:1;min-width:0}
+    .walk-freq-title{font-size:13px;font-weight:800;color:var(--black);line-height:1.25}
+    .walk-freq-title .walk-freq-rank{color:var(--main);margin-right:6px}
+    .walk-freq-meta{font-size:11px;color:var(--sub);font-weight:600;margin-top:4px;line-height:1.35}
+    .walk-freq-start-btn{
+      flex-shrink:0;border:none;border-radius:999px;padding:9px 14px;font-size:11px;font-weight:800;font-family:inherit;
+      cursor:pointer;background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;box-shadow:0 2px 8px rgba(25,178,58,.25);white-space:nowrap;
+    }
+    .walk-freq-start-btn:active{transform:scale(.97)}
+    .walk-reco-stack{display:flex;flex-direction:column;gap:12px;padding-bottom:8px}
+    .walk-reco-card{
+      position:relative;border-radius:16px;overflow:hidden;min-height:148px;border:1px solid rgba(0,0,0,.08);
+      box-shadow:0 4px 14px rgba(0,0,0,.08);background:#2d2d2d center/cover no-repeat;
+    }
+    .walk-reco-card::before{
+      content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.55) 100%);pointer-events:none;
+    }
+    .walk-reco-card-inner{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;min-height:148px;padding:14px 14px 12px}
+    .walk-reco-card-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:auto}
+    .walk-reco-copy{flex:1;min-width:0;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+    .walk-reco-tagline{font-size:11px;font-weight:700;opacity:.92;line-height:1.35;margin-bottom:4px}
+    .walk-reco-name{font-size:14px;font-weight:900;line-height:1.25}
+    .walk-reco-sub{font-size:11px;font-weight:600;opacity:.88;margin-top:4px;line-height:1.35}
+    .walk-reco-start-btn{
+      flex-shrink:0;border:1.5px solid rgba(255,255,255,.9);background:rgba(255,255,255,.12);color:#fff;border-radius:999px;
+      padding:9px 14px;font-size:11px;font-weight:800;font-family:inherit;cursor:pointer;backdrop-filter:blur(6px);white-space:nowrap;
+    }
+    .walk-reco-start-btn:active{transform:scale(.97);background:rgba(255,255,255,.22)}
     .walk-picked{border:1px solid rgba(25,178,58,.2);border-radius:14px;padding:10px;background:#FFFFFF;margin:0 12px 12px;display:none;box-shadow:0 2px 8px rgba(25,178,58,.08)}
     .walk-picked.show{display:block}
     .walk-picked-title{font-size:13px;font-weight:800;color:var(--text)}
@@ -626,23 +670,69 @@
     .analysis-type{font-size:24px;font-weight:900;color:#fff;margin-bottom:8px;letter-spacing:.02em}
     .analysis-desc{font-size:13px;color:rgba(255,255,255,.88);line-height:1.6;font-weight:500}
 
-    /* Walk live screen */
-    .walk-live{height:100%;display:flex;flex-direction:column;background:var(--bg);border-radius:20px;overflow:hidden;position:relative}
-    .walk-live-topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;position:absolute;top:0;left:0;right:0;z-index:5}
+    /* Walk live screen — map + bottom sheet */
+    .walk-live{height:100%;display:grid;grid-template-rows:1fr auto;background:var(--bg);border-radius:20px;overflow:hidden;position:relative;min-height:0}
+    .walk-live-map-shell{position:relative;min-height:120px;min-width:0}
+    .walk-live-topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;position:absolute;top:0;left:0;right:0;z-index:5;pointer-events:none}
+    .walk-live-topbar > *{pointer-events:auto}
     .walk-live-back,.walk-live-more{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.85);border:none;font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.1);backdrop-filter:blur(4px)}
     .walk-live-back:hover,.walk-live-more:hover{background:rgba(255,255,255,.95)}
     .walk-live-badge{background:rgba(255,255,255,.85);backdrop-filter:blur(4px);padding:6px 14px;border-radius:999px;font-size:12px;font-weight:800;color:var(--main);box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;align-items:center;gap:6px}
     .walk-live-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--main);animation:pulse 1.5s infinite}
     @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 
-    .walk-live-map{flex-shrink:0;height:240px;position:relative;overflow:hidden;
-      background:linear-gradient(160deg,#e8f5e9 0%,#c8e6c9 30%,#a5d6a7 60%,#81c784 100%)}
+    .walk-live-map{position:absolute;inset:0;overflow:hidden;background:linear-gradient(160deg,#e8f5e9 0%,#c8e6c9 30%,#a5d6a7 60%,#81c784 100%)}
     .walk-live-map-inner{position:absolute;inset:0;
       background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Cpath d='M30 160 Q80 140 120 100 Q160 60 200 50 Q240 40 270 30' stroke='white' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='270' cy='30' r='6' fill='white'/%3E%3Ccircle cx='30' cy='160' r='5' fill='%2319B23A'/%3E%3C/svg%3E") center/contain no-repeat}
-    .walk-live-route-label{position:absolute;bottom:12px;left:12px;right:12px;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px}
-    .walk-live-route-label span:first-child{font-size:14px;font-weight:800;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.3)}
-    .walk-live-route-meta{font-size:11px;color:rgba(255,255,255,.85);font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.25)}
-    .walk-live-route-dogs{flex-basis:100%;font-size:10px;line-height:1.35;color:rgba(255,255,255,.92);font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.35);margin-top:2px}
+    .walk-live-hud-route{
+      position:absolute;top:52px;left:50%;transform:translateX(-50%);z-index:4;max-width:calc(100% - 24px);
+      background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-radius:14px;padding:8px 14px 10px;
+      box-shadow:0 2px 12px rgba(0,0,0,.1);text-align:center;border:1px solid rgba(0,0,0,.06);
+    }
+    .walk-live-hud-route #walkRouteName{display:block;font-size:13px;font-weight:900;color:var(--text);line-height:1.25}
+    .walk-live-hud-route #walkRouteMeta{display:block;font-size:11px;color:var(--sub);font-weight:600;margin-top:2px}
+    .walk-live-hud-bl{position:absolute;bottom:14px;left:12px;z-index:4;right:56px;max-width:min(240px,calc(100% - 68px))}
+    .walk-live-hud-stats{
+      display:flex;align-items:stretch;gap:0;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);
+      border-radius:14px;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 12px rgba(0,0,0,.1);overflow:hidden;
+    }
+    .walk-live-hud-stat{flex:1;text-align:center;padding:8px 6px;min-width:0}
+    .walk-live-hud-stat-val{font-size:15px;font-weight:900;color:var(--text);line-height:1.15;letter-spacing:-.3px}
+    .walk-live-hud-stat-unit{font-size:9px;color:var(--sub);font-weight:700;margin-top:2px}
+    .walk-live-hud-stat-weather .walk-live-hud-stat-val{font-size:14px;line-height:1.2}
+    .walk-live-hud-div{width:1px;background:rgba(0,0,0,.08);flex-shrink:0;align-self:stretch;margin:6px 0}
+    .walk-live-fab-voice{
+      position:absolute;bottom:14px;right:12px;z-index:4;width:44px;height:44px;border-radius:50%;border:none;
+      background:rgba(255,255,255,.94);box-shadow:0 2px 12px rgba(0,0,0,.12);cursor:pointer;font-size:20px;line-height:1;
+      display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.08);
+    }
+    .walk-live-fab-voice.voice-off{opacity:.55}
+    .walk-live-fab-voice:active{transform:scale(.96)}
+    .walk-live-menu{
+      position:absolute;top:52px;right:10px;z-index:6;min-width:160px;background:#fff;border-radius:14px;
+      box-shadow:0 8px 28px rgba(0,0,0,.15);border:1px solid rgba(0,0,0,.08);padding:6px;display:none;overflow:hidden;
+    }
+    .walk-live-menu.show{display:block}
+    .walk-live-menu-item{
+      width:100%;border:none;background:transparent;padding:12px 14px;font-size:14px;font-weight:800;font-family:inherit;
+      color:#dc2626;text-align:left;cursor:pointer;border-radius:10px;
+    }
+    .walk-live-menu-item:hover{background:rgba(239,68,68,.08)}
+    .walk-live-sheet{
+      flex-shrink:0;background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -8px 28px rgba(0,0,0,.12);
+      display:flex;flex-direction:column;max-height:min(52vh,420px);min-height:0;transition:max-height .32s cubic-bezier(.25,.8,.25,1);
+      border-top:1px solid rgba(0,0,0,.06);z-index:3;
+    }
+    .walk-live-sheet.is-collapsed{max-height:48px}
+    .walk-live-sheet.is-collapsed .walk-live-sheet-scroll{display:none}
+    .walk-live-sheet-handle{
+      flex-shrink:0;height:22px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;
+      padding-top:6px;
+    }
+    .walk-live-sheet-handle::before{content:"";width:40px;height:4px;border-radius:999px;background:#d8d8d8}
+    .walk-live-sheet-handle:active{cursor:grabbing}
+    .walk-live-sheet-scroll{flex:1;overflow:auto;min-height:0;display:flex;flex-direction:column;-webkit-overflow-scrolling:touch}
+    .walk-report-marker{font-size:20px;line-height:1;text-align:center;background:#fff;border-radius:12px;padding:2px 4px;box-shadow:0 2px 10px rgba(0,0,0,.2);border:2px solid rgba(25,178,58,.45)}
 
     /* 산책 시작 반려견 선택 팝업 */
     .walk-dog-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:4000;display:none;align-items:center;justify-content:center;padding:20px 16px;backdrop-filter:blur(3px)}
@@ -669,13 +759,7 @@
     .walk-dog-confirm{flex:1;border-radius:12px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;border:none;color:#fff;background:linear-gradient(135deg,#19B23A,#0fa34e);box-shadow:0 4px 12px rgba(25,178,58,.26);font-family:inherit}
     .walk-dog-confirm:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
 
-    .walk-live-stats{display:flex;align-items:center;justify-content:center;padding:18px 16px;background:#fff;border-bottom:1px solid rgba(0,0,0,.06)}
-    .walk-live-stat{flex:1;text-align:center}
-    .walk-live-stat-val{font-size:28px;font-weight:900;color:var(--text);line-height:1.1;letter-spacing:-.5px}
-    .walk-live-stat-unit{font-size:11px;color:var(--sub);font-weight:600;margin-top:2px}
-    .walk-live-stat-divider{width:1px;height:36px;background:rgba(0,0,0,.08);flex-shrink:0}
-
-    .walk-live-log{flex:1;overflow:auto;padding:14px 16px;background:#fff}
+    .walk-live-log{padding:12px 16px 8px;background:#fff;flex-shrink:0}
     .walk-live-log-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:12px}
     .walk-live-timeline{display:flex;flex-direction:column;gap:0;position:relative;padding-left:8px}
     .walk-live-entry{display:flex;align-items:center;gap:12px;padding:8px 0;position:relative}
@@ -687,15 +771,93 @@
     .walk-live-entry.active .walk-live-desc{color:var(--main);font-weight:800}
     .walk-live-entry.active .walk-live-time{color:var(--main)}
 
-    .walk-live-actions{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 14px;background:#fff;border-top:1px solid rgba(0,0,0,.06);gap:10px}
-    .walk-action-btn{display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;cursor:pointer;padding:8px 12px;border-radius:12px;font-size:11px;font-weight:700;color:var(--text);transition:background .12s ease;min-width:64px}
-    .walk-action-btn:hover{background:var(--sep)}
-    .walk-action-btn:active{background:rgba(25,178,58,.08)}
+    .walk-live-actions{padding:8px 12px 16px;background:#fff;border-top:1px solid rgba(0,0,0,.06);flex-shrink:0}
+    .walk-live-actions-poop{display:flex;justify-content:center;margin-bottom:10px}
+    .walk-action-btn{display:flex;flex-direction:column;align-items:center;gap:4px;background:rgba(25,178,58,.08);border:1px solid rgba(25,178,58,.2);cursor:pointer;padding:10px 20px;border-radius:14px;font-size:11px;font-weight:800;color:var(--text);transition:background .12s ease;font-family:inherit}
+    .walk-action-btn:hover{background:rgba(25,178,58,.14)}
+    .walk-action-btn:active{background:rgba(25,178,58,.2)}
     .walk-action-ico{font-size:22px;line-height:1}
-    .walk-action-btn.voice-off{color:var(--sub);opacity:.6}
-    .walk-action-end{flex:1;max-width:160px;border:none;border-radius:14px;padding:14px 8px;font-size:15px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%);color:#fff;box-shadow:0 4px 12px rgba(239,68,68,.25);transition:transform .1s ease,box-shadow .1s ease}
-    .walk-action-end:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(239,68,68,.3)}
-    .walk-action-end:active{transform:translateY(0)}
+    .walk-report-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .walk-report-btn{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:1px solid rgba(0,0,0,.08);
+      background:#fafafa;border-radius:12px;padding:8px 4px;font-size:9px;font-weight:800;color:var(--text);cursor:pointer;font-family:inherit;
+      min-height:64px;line-height:1.2;-webkit-tap-highlight-color:transparent;
+    }
+    .walk-report-btn:active{background:rgba(25,178,58,.1);border-color:rgba(25,178,58,.25)}
+    .walk-report-btn .e{font-size:18px;line-height:1}
+
+    /* Walk live v2 tweaks */
+    .view[data-view="walk"]{padding:0}
+    .walk-live{height:100%;border-radius:0}
+    .walk-live-map-shell{min-height:0}
+    .walk-live-map{bottom:0}
+    .walk-live-menu-item{color:var(--text)}
+    .walk-live-menu-item.danger{color:#dc2626}
+    .walk-live-menu-item:hover{background:var(--sep)}
+    .walk-live-menu-item.danger:hover{background:rgba(239,68,68,.08)}
+    .walk-live-hud-center{
+      position:absolute;top:50px;left:50%;transform:translateX(-50%);
+      max-width:calc(100% - 78px);z-index:4;background:rgba(255,255,255,.95);border:1px solid rgba(0,0,0,.08);
+      border-radius:10px;padding:7px 10px;font-size:11px;font-weight:800;color:#1f2937;line-height:1.3;text-align:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);backdrop-filter:blur(8px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .walk-live-hud-weather{
+      position:absolute;left:10px;top:33%;z-index:4;background:rgba(255,255,255,.92);border:1px solid rgba(0,0,0,.08);
+      border-radius:10px;padding:7px 9px;font-size:11px;line-height:1.25;color:#111827;box-shadow:0 2px 8px rgba(0,0,0,.08)
+    }
+    .walk-live-hud-weather #walkHudWeatherTemp{font-weight:900;font-size:12px}
+    .walk-live-hud-weather #walkHudWeatherDesc{font-weight:700;font-size:10px;color:#4b5563}
+    .walk-live-fab-loc{
+      position:absolute;left:10px;bottom:14px;z-index:4;width:42px;height:42px;border:none;border-radius:50%;
+      background:rgba(255,255,255,.95);box-shadow:0 2px 10px rgba(0,0,0,.12);font-size:19px;cursor:pointer
+    }
+    .walk-live-fab-stack{position:absolute;right:10px;bottom:14px;z-index:4;display:flex;align-items:center;justify-content:flex-end;min-height:44px}
+    .walk-live-fab-poop{
+      width:44px;height:44px;border:none;border-radius:50%;background:rgba(255,255,255,.95);
+      box-shadow:0 2px 12px rgba(0,0,0,.12);font-size:21px;cursor:pointer
+    }
+    .walk-live-fab-poop-menu{
+      position:absolute;right:50px;bottom:3px;display:none;flex-direction:row;gap:6px;align-items:center
+    }
+    .walk-live-fab-poop-menu.show{display:flex}
+    .walk-live-mini-fab{
+      width:38px;height:38px;border:none;border-radius:50%;background:#fff;box-shadow:0 2px 9px rgba(0,0,0,.11);font-size:19px;cursor:pointer
+    }
+    .walk-live-sheet{
+      background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -8px 28px rgba(0,0,0,.12);z-index:5;
+      display:flex;flex-direction:column;height:34%;min-height:130px;max-height:calc(100% - 56px);
+      transition:height .24s ease;
+    }
+    .walk-live-sheet.state-collapsed{height:104px}
+    .walk-live-sheet.state-mid{height:34%}
+    .walk-live-sheet.state-expanded{height:calc(100% - 56px)}
+    .walk-live-sheet-scroll{scrollbar-width:none;-ms-overflow-style:none}
+    .walk-live-sheet-scroll::-webkit-scrollbar{display:none}
+    .walk-sheet-top{display:flex;align-items:center;gap:8px;padding:4px 12px 10px}
+    .walk-sheet-stat-box{
+      flex:1;display:grid;grid-template-columns:1fr 1fr;gap:0;background:#F6FCF7;border:1px solid #A9E2B5;border-radius:10px;overflow:hidden
+    }
+    .walk-sheet-stat-cell{padding:9px 6px;text-align:center;color:#179833}
+    .walk-sheet-stat-cell + .walk-sheet-stat-cell{border-left:1px solid #d3efd9}
+    .walk-sheet-stat-num{font-size:23px;font-weight:900;line-height:1.05;color:#179833}
+    .walk-sheet-stat-unit{font-size:9px;font-weight:700;margin-top:3px}
+    .walk-sheet-ico-btn{
+      width:34px;height:34px;border-radius:50%;border:1px solid #e6e6e6;background:#fff;font-size:16px;cursor:pointer;flex-shrink:0
+    }
+    .walk-live-log{padding:0 14px 6px}
+    .walk-live-log-title{font-size:13px}
+    .walk-live-time{font-size:11px}
+    .walk-live-desc{font-size:12px}
+    .walk-live-actions{padding:8px 12px 14px;background:#F9F9F9;border-top:1px solid #F1F1F1}
+    .walk-report-grid{grid-template-columns:repeat(4,1fr);gap:7px}
+    .walk-report-btn{font-size:9px;min-height:58px;background:#fff}
+    .walk-sheet-end-btn{
+      margin-top:10px;width:100%;border:1px solid #F1F1F1;background:#F9F9F9;color:#179833;border-radius:12px;
+      padding:12px 8px;font-size:14px;font-weight:900;cursor:pointer;font-family:inherit
+    }
+    .tab-hit.walk-live-active span:last-child{
+      background:#E9F8EC;border:1px solid #A9E2B5;border-radius:999px;padding:2px 7px;color:#179833;font-weight:900
+    }
 
     /* Toggle switch */
     .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--sep)}
@@ -1319,12 +1481,11 @@
                 <div class="home-section">
                   <div class="home-section-head">
                     <div class="home-section-title">오늘의 일정</div>
-                    <button type="button" class="home-section-action" id="homeScheduleEditBtn">편집</button>
+                    <button type="button" class="home-section-action" id="homeScheduleEditBtn">＋ 일정 추가</button>
                   </div>
                   <div class="home-schedule" id="homeScheduleList">
                     <!-- 기본 일정 (JS에서 렌더링) -->
                   </div>
-                  <button type="button" class="home-add-schedule" id="homeAddScheduleBtn">＋ 일정 추가</button>
                 </div>
               </div>
             </div>
@@ -1828,79 +1989,91 @@
             <!-- WALK -->
             <div class="view" data-view="walk" data-tab-root="walk">
               <div class="walk-live">
-                <!-- Top bar -->
-                <div class="walk-live-topbar">
-                  <button class="walk-live-back" data-nav="routes" aria-label="뒤로">←</button>
-                  <span class="walk-live-badge" id="voiceChip">산책 중</span>
-                  <button class="walk-live-more" id="walkMoreBtn" type="button">⋯</button>
-                </div>
+                <div class="walk-live-map-shell">
+                  <div class="walk-live-topbar">
+                    <button class="walk-live-back" data-nav="routes" aria-label="뒤로">←</button>
+                    <span class="walk-live-badge" id="voiceChip">산책 중</span>
+                    <button class="walk-live-more" id="walkMoreBtn" type="button" aria-label="메뉴" aria-expanded="false">⋯</button>
+                  </div>
+                  <div class="walk-live-menu" id="walkMoreMenu" role="menu" aria-hidden="true">
+                    <button type="button" class="walk-live-menu-item" id="walkVoiceToggleMenu" role="menuitem">음성 안내 끄기</button>
+                    <button type="button" class="walk-live-menu-item" id="walkDogChangeMenu" role="menuitem">반려견 변경하기</button>
+                  </div>
 
-                <!-- Map area -->
-                <div class="walk-live-map">
-                  <div class="walk-live-map-inner"></div>
-                  <div class="walk-live-route-label">
-                    <span id="walkRouteName">강변 그늘 루프</span>
-                    <span class="walk-live-route-meta" id="walkRouteMeta">2.4km · 34분</span>
-                    <div class="walk-live-route-dogs" id="walkRouteDogsWrap" hidden>함께하는 반려견 · <span id="walkRouteDogsNames">보리</span></div>
-                  </div>
-                </div>
-
-                <!-- Stats panel -->
-                <div class="walk-live-stats">
-                  <div class="walk-live-stat">
-                    <div class="walk-live-stat-val">1.9</div>
-                    <div class="walk-live-stat-unit">km</div>
-                  </div>
-                  <div class="walk-live-stat-divider"></div>
-                  <div class="walk-live-stat">
-                    <div class="walk-live-stat-val">27:42</div>
-                    <div class="walk-live-stat-unit">시간</div>
-                  </div>
-                  <div class="walk-live-stat-divider"></div>
-                  <div class="walk-live-stat">
-                    <div class="walk-live-stat-val">4.2</div>
-                    <div class="walk-live-stat-unit">km/h</div>
-                  </div>
-                </div>
-
-                <!-- Walk log -->
-                <div class="walk-live-log">
-                  <div class="walk-live-log-title">산책 기록</div>
-                  <div class="walk-live-timeline">
-                    <div class="walk-live-entry">
-                      <span class="walk-live-time">18:14</span>
-                      <span class="walk-live-dot" style="background:var(--main)"></span>
-                      <span class="walk-live-desc">산책 시작 · 집 근처</span>
-                    </div>
-                    <div class="walk-live-entry">
-                      <span class="walk-live-time">18:22</span>
-                      <span class="walk-live-dot" style="background:#f97316"></span>
-                      <span class="walk-live-desc">배변 처리 완료</span>
-                    </div>
-                    <div class="walk-live-entry">
-                      <span class="walk-live-time">18:28</span>
-                      <span class="walk-live-dot" style="background:#3b82f6"></span>
-                      <span class="walk-live-desc">공놀이 2분</span>
-                    </div>
-                    <div class="walk-live-entry active">
-                      <span class="walk-live-time">18:42</span>
-                      <span class="walk-live-dot" style="background:var(--main)"></span>
-                      <span class="walk-live-desc">현재 위치</span>
+                  <div class="walk-live-map">
+                    <div class="walk-live-map-inner"></div>
+                    <div class="walk-live-hud-center" id="walkHudCenterBar">보리 | 강변 그늘 루프 | 2.4km · 34분 예상</div>
+                    <div class="walk-live-hud-weather" id="walkHudWeatherBox"><span id="walkHudWeatherTemp">--°C</span><br><span id="walkHudWeatherDesc">불러오는 중</span></div>
+                    <button type="button" class="walk-live-fab-loc" id="walkLocateBtn" aria-label="현재 위치 보기">📍</button>
+                    <div class="walk-live-fab-stack">
+                      <div class="walk-live-fab-poop-menu" id="walkPoopMenu">
+                        <button type="button" class="walk-live-mini-fab" data-poop-kind="💩">💩</button>
+                        <button type="button" class="walk-live-mini-fab" data-poop-kind="💧">💧</button>
+                      </div>
+                      <button type="button" class="walk-live-fab-poop" id="walkPoopFab" aria-label="배변 기록">💩</button>
                     </div>
                   </div>
                 </div>
 
-                <!-- Bottom action buttons -->
-                <div class="walk-live-actions">
-                  <button type="button" class="walk-action-btn" id="poopRecord">
-                    <span class="walk-action-ico">💩</span>
-                    <span>배변 기록</span>
-                  </button>
-                  <button type="button" class="walk-action-end" id="walkEndBtn">산책 종료</button>
-                  <button type="button" class="walk-action-btn" id="toggleVoice">
-                    <span class="walk-action-ico" id="voiceActionIco">🔊</span>
-                    <span id="voiceActionLabel">음성 안내</span>
-                  </button>
+                <div class="walk-live-sheet state-collapsed" id="walkLiveSheet">
+                  <div class="walk-live-sheet-handle" id="walkLiveSheetHandle" role="button" tabindex="0" aria-label="산책 패널 접기·펼치기"></div>
+                  <div class="walk-live-sheet-scroll">
+                    <div class="walk-sheet-top">
+                      <div class="walk-sheet-stat-box">
+                        <div class="walk-sheet-stat-cell">
+                          <div class="walk-sheet-stat-num" id="walkSheetKmNum">1.9</div>
+                          <div class="walk-sheet-stat-unit">거리(km)</div>
+                        </div>
+                        <div class="walk-sheet-stat-cell">
+                          <div class="walk-sheet-stat-num" id="walkSheetMinNum">20:12</div>
+                          <div class="walk-sheet-stat-unit">시간(분)</div>
+                        </div>
+                      </div>
+                      <button type="button" class="walk-sheet-ico-btn" id="walkMemoBtn" aria-label="메모">📝</button>
+                      <button type="button" class="walk-sheet-ico-btn" id="walkHeartBtn" aria-label="좋아요">💚</button>
+                    </div>
+
+                    <div class="walk-live-log">
+                      <div class="walk-live-log-title">산책 기록</div>
+                      <div class="walk-live-timeline">
+                        <div class="walk-live-entry">
+                          <span class="walk-live-time">18:14</span>
+                          <span class="walk-live-dot" style="background:var(--main)"></span>
+                          <span class="walk-live-desc">산책 시작 · 집 근처</span>
+                        </div>
+                        <div class="walk-live-entry">
+                          <span class="walk-live-time">18:22</span>
+                          <span class="walk-live-dot" style="background:#f97316"></span>
+                          <span class="walk-live-desc">배변 처리 완료</span>
+                        </div>
+                        <div class="walk-live-entry">
+                          <span class="walk-live-time">18:28</span>
+                          <span class="walk-live-dot" style="background:#3b82f6"></span>
+                          <span class="walk-live-desc">공놀이 2분</span>
+                        </div>
+                        <div class="walk-live-entry active">
+                          <span class="walk-live-time">18:42</span>
+                          <span class="walk-live-dot" style="background:var(--main)"></span>
+                          <span class="walk-live-desc">현재 위치</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="walk-live-actions">
+                      <div class="walk-live-log-title">상황 제보하기</div>
+                      <div class="walk-report-grid" id="walkReportGrid" aria-label="실시간 제보">
+                        <button type="button" class="walk-report-btn" data-report="사람 많아요" data-emoji="👥"><span class="e">👥</span>사람 많아요</button>
+                        <button type="button" class="walk-report-btn" data-report="한적해요" data-emoji="🍃"><span class="e">🍃</span>한적해요</button>
+                        <button type="button" class="walk-report-btn" data-report="행사 중" data-emoji="🎪"><span class="e">🎪</span>행사 중</button>
+                        <button type="button" class="walk-report-btn" data-report="공사 중" data-emoji="🚧"><span class="e">🚧</span>공사 중</button>
+                        <button type="button" class="walk-report-btn" data-report="길 막힘" data-emoji="🚫"><span class="e">🚫</span>길 막힘</button>
+                        <button type="button" class="walk-report-btn" data-report="이상한 냄새" data-emoji="🤢"><span class="e">🤢</span>이상한 냄새</button>
+                        <button type="button" class="walk-report-btn" data-report="공격견 있음" data-emoji="🐕‍🦺"><span class="e">🐕‍🦺</span>공격견 있음</button>
+                        <button type="button" class="walk-report-btn" data-report="기타 문제 O" data-emoji="⚠️"><span class="e">⚠️</span>기타 문제 O</button>
+                      </div>
+                      <button type="button" class="walk-sheet-end-btn" id="walkEndSheetBtn">산책 종료</button>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -1997,38 +2170,40 @@
 
             <!-- WALK HOME (산책 탭 피드) -->
             <div class="view" data-view="walkHome" data-tab-root="walk">
-              <div class="walk-home">
+              <div class="walk-home" id="walkHomeScroll">
                 <div class="walk-picked" id="walkPickedCard">
                   <div class="walk-picked-title" id="walkPickedTitle">산책로를 선택해 주세요</div>
-                  <div class="walk-picked-meta" id="walkPickedMeta">카드를 누르면 상세 정보가 여기에 표시됩니다.</div>
+                  <div class="walk-picked-meta" id="walkPickedMeta">경로 카드에서 산책을 시작하거나 아래에서 코스를 고를 수 있어요.</div>
                   <button type="button" class="walk-picked-cta" id="walkPickedStart">산책하기</button>
                 </div>
                 <div class="walk-section">
                   <div class="walk-section-head">
                     <div class="walk-section-title">자주 가는 길</div>
-                    <button type="button" class="walk-section-more">전체보기</button>
                   </div>
-                  <div class="hscroll" aria-label="자주 가는 길 목록">
-                    <div class="hcard" data-walk-route="집 근처 보리 최애 공원" data-walk-meta="1.5km · 24분 · 익숙한 코스">
-                      <div class="hcard-img"><div class="hcard-rank">1위</div></div>
-                      <div class="hcard-body">
-                        <div class="hcard-title">집 근처 보리 최애 공원</div>
-                        <div class="hcard-meta">이번달 11회 방문</div>
+                  <div class="walk-frequent-stack" aria-label="자주 가는 길 목록">
+                    <div class="walk-freq-card" data-walk-route="집 근처 보리 최애 공원" data-walk-meta="1.5km · 24분 · 익숙한 코스">
+                      <div class="walk-freq-thumb">사진</div>
+                      <div class="walk-freq-body">
+                        <div class="walk-freq-title"><span class="walk-freq-rank">1위</span>집 근처 보리 최애 공원</div>
+                        <div class="walk-freq-meta">이번 달 11회 방문 · 보리 좋아요 7회</div>
                       </div>
+                      <button type="button" class="walk-freq-start-btn">산책 시작</button>
                     </div>
-                    <div class="hcard" data-walk-route="동네 산책로" data-walk-meta="2.1km · 31분 · 나무 그늘 많음">
-                      <div class="hcard-img"><div class="hcard-rank">2위</div></div>
-                      <div class="hcard-body">
-                        <div class="hcard-title">동네 산책로</div>
-                        <div class="hcard-meta">이번달 9회 방문</div>
+                    <div class="walk-freq-card" data-walk-route="동네 산책로" data-walk-meta="2.1km · 31분 · 나무 그늘 많음">
+                      <div class="walk-freq-thumb">사진</div>
+                      <div class="walk-freq-body">
+                        <div class="walk-freq-title"><span class="walk-freq-rank">2위</span>동네 산책로</div>
+                        <div class="walk-freq-meta">이번 달 9회 방문 · 보리 좋아요 5회</div>
                       </div>
+                      <button type="button" class="walk-freq-start-btn">산책 시작</button>
                     </div>
-                    <div class="hcard" data-walk-route="백빈건널목" data-walk-meta="1.2km · 20분 · 짧은 루프">
-                      <div class="hcard-img"><div class="hcard-rank">3위</div></div>
-                      <div class="hcard-body">
-                        <div class="hcard-title">백빈건널목</div>
-                        <div class="hcard-meta">이번달 7회 방문</div>
+                    <div class="walk-freq-card" data-walk-route="백빈건널목" data-walk-meta="1.2km · 20분 · 짧은 루프">
+                      <div class="walk-freq-thumb">사진</div>
+                      <div class="walk-freq-body">
+                        <div class="walk-freq-title"><span class="walk-freq-rank">3위</span>백빈건널목</div>
+                        <div class="walk-freq-meta">이번 달 7회 방문 · 보리 좋아요 4회</div>
                       </div>
+                      <button type="button" class="walk-freq-start-btn">산책 시작</button>
                     </div>
                   </div>
                 </div>
@@ -2036,60 +2211,77 @@
                 <div class="walk-section walk-reco">
                   <div class="walk-section-head">
                     <div class="walk-section-title">추천 코스</div>
-                    <button type="button" class="walk-section-more">전체보기</button>
                   </div>
-                  <div class="hscroll" aria-label="추천 코스">
-                    <div class="hcard" data-walk-route="노들섬" data-walk-meta="2.4km · 34분 · 잔디/그늘 균형">
-                      <div class="hcard-img"></div>
-                      <div class="hcard-body">
-                        <div class="row"><div class="hcard-title">노들섬</div><div class="hcard-meta">만족도 79%</div></div>
-                        <div class="hcard-tags">
-                          <span class="tag">#풀밭많</span><span class="tag">#한강산책</span><span class="tag">#쾌적함</span>
+                  <div class="walk-reco-stack" aria-label="추천 코스">
+                    <div class="walk-reco-card" style="background-image:url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&amp;q=80')" data-walk-route="노들섬" data-walk-meta="2.4km · 34분 · 잔디/그늘 균형">
+                      <div class="walk-reco-card-inner">
+                        <div class="walk-reco-card-foot">
+                          <div class="walk-reco-copy">
+                            <div class="walk-reco-tagline">한강 바람과 잔디, 여유로운 산책</div>
+                            <div class="walk-reco-name">「노들섬」</div>
+                            <div class="walk-reco-sub">풀밭 · 그늘 균형 · 만족도 79%</div>
+                          </div>
+                          <button type="button" class="walk-reco-start-btn">산책 시작</button>
                         </div>
                       </div>
                     </div>
-                    <div class="hcard" data-walk-route="올림픽공원" data-walk-meta="2.8km · 39분 · 넓은 공간">
-                      <div class="hcard-img"></div>
-                      <div class="hcard-body">
-                        <div class="row"><div class="hcard-title">올림픽공원</div><div class="hcard-meta">만족도 84%</div></div>
-                        <div class="hcard-tags">
-                          <span class="tag">#잔잔함</span><span class="tag">#넓은공간</span><span class="tag">#그늘</span>
+                    <div class="walk-reco-card" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&amp;q=80')" data-walk-route="올림픽공원" data-walk-meta="2.8km · 39분 · 넓은 공간">
+                      <div class="walk-reco-card-inner">
+                        <div class="walk-reco-card-foot">
+                          <div class="walk-reco-copy">
+                            <div class="walk-reco-tagline">넓은 잔디와 산책로가 매력적인 공원</div>
+                            <div class="walk-reco-name">「올림픽공원」</div>
+                            <div class="walk-reco-sub">넓은 공간 · 그늘 · 만족도 84%</div>
+                          </div>
+                          <button type="button" class="walk-reco-start-btn">산책 시작</button>
                         </div>
                       </div>
                     </div>
-                    <div class="hcard" data-walk-route="용산공원" data-walk-meta="2.0km · 30분 · 차분한 분위기">
-                      <div class="hcard-img"></div>
-                      <div class="hcard-body">
-                        <div class="row"><div class="hcard-title">용산공원</div><div class="hcard-meta">만족도 81%</div></div>
-                        <div class="hcard-tags">
-                          <span class="tag">#잔잔함</span><span class="tag">#한강인근</span>
+                    <div class="walk-reco-card" style="background-image:url('https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200&amp;q=80')" data-walk-route="하남 신규 산책 공원" data-walk-meta="2.0km · 28분 · 신규 오픈">
+                      <div class="walk-reco-card-inner">
+                        <div class="walk-reco-card-foot">
+                          <div class="walk-reco-copy">
+                            <div class="walk-reco-tagline">서울 근교, 자연과 함께해요</div>
+                            <div class="walk-reco-name">「하남 신규 산책 공원」</div>
+                            <div class="walk-reco-sub">26년 봄 오픈 · 산책로 정비 완료</div>
+                          </div>
+                          <button type="button" class="walk-reco-start-btn">산책 시작</button>
                         </div>
                       </div>
                     </div>
-                    <div class="hcard" data-walk-route="그늘 많은 루프 코스" data-walk-meta="1.9km · 29분 · 체감 시원">
-                      <div class="hcard-img"></div>
-                      <div class="hcard-body">
-                        <div class="row"><div class="hcard-title">그늘 많은 루프 코스</div><div class="hcard-meta">혼잡도 낮음</div></div>
-                        <div class="hcard-tags">
-                          <span class="tag">#그늘많음</span><span class="tag">#시원함</span>
+                    <div class="walk-reco-card" style="background-image:url('https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=1200&amp;q=80')" data-walk-route="용산공원" data-walk-meta="2.0km · 30분 · 차분한 분위기">
+                      <div class="walk-reco-card-inner">
+                        <div class="walk-reco-card-foot">
+                          <div class="walk-reco-copy">
+                            <div class="walk-reco-tagline">한강 인근, 차분한 분위기 코스</div>
+                            <div class="walk-reco-name">「용산공원」</div>
+                            <div class="walk-reco-sub">잔잔함 · 한강 인근 · 만족도 81%</div>
+                          </div>
+                          <button type="button" class="walk-reco-start-btn">산책 시작</button>
                         </div>
                       </div>
                     </div>
-                    <div class="hcard" data-walk-route="강변 바람 코스" data-walk-meta="2.2km · 33분 · 바람 쾌적">
-                      <div class="hcard-img"></div>
-                      <div class="hcard-body">
-                        <div class="row"><div class="hcard-title">강변 바람 코스</div><div class="hcard-meta">체감 쾌적</div></div>
-                        <div class="hcard-tags">
-                          <span class="tag">#강변</span><span class="tag">#바람좋음</span>
+                    <div class="walk-reco-card" style="background-image:url('https://images.unsplash.com/photo-1511497584788-876760111969?w=1200&amp;q=80')" data-walk-route="그늘 많은 루프 코스" data-walk-meta="1.9km · 29분 · 체감 시원">
+                      <div class="walk-reco-card-inner">
+                        <div class="walk-reco-card-foot">
+                          <div class="walk-reco-copy">
+                            <div class="walk-reco-tagline">여름에도 시원한 나무 그늘 루프</div>
+                            <div class="walk-reco-name">「그늘 많은 루프 코스」</div>
+                            <div class="walk-reco-sub">혼잡도 낮음 · 시원한 그늘</div>
+                          </div>
+                          <button type="button" class="walk-reco-start-btn">산책 시작</button>
                         </div>
                       </div>
                     </div>
-                    <div class="hcard" data-walk-route="주거지 조용한 코스" data-walk-meta="1.6km · 25분 · 혼잡 낮음">
-                      <div class="hcard-img"></div>
-                      <div class="hcard-body">
-                        <div class="row"><div class="hcard-title">주거지 조용한 코스</div><div class="hcard-meta">소음 낮음</div></div>
-                        <div class="hcard-tags">
-                          <span class="tag">#조용함</span><span class="tag">#한적함</span>
+                    <div class="walk-reco-card" style="background-image:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&amp;q=80')" data-walk-route="강변 바람 코스" data-walk-meta="2.2km · 33분 · 바람 쾌적">
+                      <div class="walk-reco-card-inner">
+                        <div class="walk-reco-card-foot">
+                          <div class="walk-reco-copy">
+                            <div class="walk-reco-tagline">바람 좋은 강변 산책로</div>
+                            <div class="walk-reco-name">「강변 바람 코스」</div>
+                            <div class="walk-reco-sub">강변 · 체감 쾌적 · 바람 좋음</div>
+                          </div>
+                          <button type="button" class="walk-reco-start-btn">산책 시작</button>
                         </div>
                       </div>
                     </div>
@@ -2465,7 +2657,7 @@
             <div class="tabs-inner">
               <button class="tab-hit" data-tab="walk" type="button" aria-label="산책">
                 <span class="tab-ico" aria-hidden="true">🚶</span>
-                <span>산책</span>
+                <span id="walkTabLabel">산책</span>
               </button>
               <button class="tab-hit" data-tab="pet" type="button" aria-label="반려견">
                 <span class="tab-ico" aria-hidden="true">🐕</span>
@@ -2506,10 +2698,11 @@
           { id: 1, type: "walk", ico: "🐕", title: "저녁 산책", time: "18:30", when: "오늘", loc: "한강공원" },
           { id: 2, type: "medic", ico: "💉", title: "예방접종 예약", time: "10:00", when: "내일", loc: "행복동물병원" },
         ],
-        scheduleEditMode: false,
         scheduleSelectedType: "walk",
         scheduleSelectedIco: "🐕",
         walkParticipantIds: ["primary"],
+        walkMemos: [],
+        walkDogPickMode: "start",
       };
       const PETLOG_EXTRA_PETS_KEY = "petwalk_extra_pet_names";
       const PRIMARY_PET_KEY = "petwalk_primary_pet";
@@ -2619,12 +2812,17 @@
         const activeView = views.find(v => v.dataset.view === name);
         const tabKey = (activeView && activeView.dataset.tabRoot) || name;
         tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === tabKey));
+        const walkTab = document.querySelector('#tabs .tab-hit[data-tab="walk"]');
+        const walkTabLabel = document.getElementById("walkTabLabel");
+        const onWalkLive = name === "walk";
+        if (walkTab) walkTab.classList.toggle("walk-live-active", onWalkLive);
+        if (walkTabLabel) walkTabLabel.textContent = onWalkLive ? "산책중" : "산책";
         handleRerouteVisibility(name);
         handleTabsVisibility(name);
         handleProgress(name);
         if (name === "home") { syncHomeDogName(); renderSchedules(); syncHomeGreeting(); ensureWeatherLoaded(); ensureHomeMiniMap(); }
         if (name === "walkHome") ensureWalkHomeMap();
-        if (name === "walk") ensureWalkLiveMap();
+        if (name === "walk") { ensureWalkLiveMap(); ensureWeatherLoaded(); }
         if (name === "explore") ensureExploreMap();
         if (name === "pet_monthly") { syncPetDogName(); syncPetPersonality(); initPetlogCarousel(); }
         if (name === "dogInfoTraits") { syncTraitsDogName(); syncDogInfoTraitsChrome(); }
@@ -2813,16 +3011,22 @@
       function updateWeatherChip(w) {
         const ico = document.getElementById("homeWeatherIco");
         const txt = document.getElementById("homeWeatherText");
-        if (!ico || !txt) return;
+        const wTemp = document.getElementById("walkHudWeatherTemp");
+        const wTxt = document.getElementById("walkHudWeatherDesc");
         if (w.temp == null || w.code == null) {
-          ico.textContent = "🌡️";
-          txt.textContent = "날씨 정보 없음";
+          if (ico) ico.textContent = "🌡️";
+          if (txt) txt.textContent = "날씨 정보 없음";
+          if (wTemp) wTemp.textContent = "--°C";
+          if (wTxt) wTxt.textContent = "정보 없음";
           return;
         }
         const map = WEATHER_CODE_MAP[w.code] || { ico: "🌡️", text: "" };
-        ico.textContent = map.ico;
         const t = Math.round(w.temp);
-        txt.textContent = map.text ? `${t}°C ${map.text}` : `${t}°C`;
+        const line = map.text || "맑음";
+        if (ico) ico.textContent = map.ico;
+        if (txt) txt.textContent = map.text ? `${t}°C ${map.text}` : `${t}°C`;
+        if (wTemp) wTemp.textContent = `${t}°C`;
+        if (wTxt) wTxt.textContent = line;
         weatherLoadedAt = Date.now();
       }
 
@@ -3060,7 +3264,7 @@
       }
 
       // ---- WALK 진행 지도 (실루트 + 시작/끝 마커) ----
-      let walkLiveMap = null, walkLiveMarker = null, walkLiveRouteLayer = null;
+      let walkLiveMap = null, walkLiveMarker = null, walkLiveRouteLayer = null, walkReportLayer = null;
       function ensureWalkLiveMap() {
         const container = document.querySelector('.view[data-view="walk"] .walk-live-map-inner');
         if (!container) return;
@@ -3079,9 +3283,11 @@
             });
             tileLayer().addTo(walkLiveMap);
             walkLiveMarker = L.marker([loc.lat, loc.lon], { icon: makeMeMarker() }).addTo(walkLiveMap);
+            walkReportLayer = L.layerGroup().addTo(walkLiveMap);
           } else {
             walkLiveMap.setView([loc.lat, loc.lon], 16);
             if (walkLiveMarker) walkLiveMarker.setLatLng([loc.lat, loc.lon]);
+            if (!walkReportLayer) walkReportLayer = L.layerGroup().addTo(walkLiveMap);
           }
           // 산책 루트 그리기 (현재 선택된 루트 이름 기반 시드)
           const routeNameEl = document.getElementById("walkRouteName");
@@ -3092,6 +3298,22 @@
           });
           setTimeout(() => walkLiveMap && walkLiveMap.invalidateSize(), 80);
         });
+      }
+
+      function addWalkReportMarker(emoji, label, color) {
+        if (!leafletAvailable() || !walkLiveMap || !walkLiveMarker) return;
+        if (!walkReportLayer) walkReportLayer = L.layerGroup().addTo(walkLiveMap);
+        const ll = walkLiveMarker.getLatLng();
+        const safe = String(label || "").replace(/"/g, "&quot;");
+        const border = color ? `style="border-color:${color}"` : "";
+        L.marker(ll, {
+          icon: L.divIcon({
+            className: "",
+            html: '<div class="walk-report-marker" ' + border + ' title="' + safe + '">' + emoji + "</div>",
+            iconSize: [36, 36],
+            iconAnchor: [18, 34],
+          }),
+        }).addTo(walkReportLayer);
       }
 
       // ---- EXPLORE 지도 (실주변 + 카테고리 마커) ----
@@ -3158,43 +3380,111 @@
       }
 
       // === 오늘의 일정 (Home) ===
+      function attachHomeScheduleSwipe(rowEl, scheduleId) {
+        const pane = rowEl.querySelector(".home-schedule-swipe-pane");
+        const delBtn = rowEl.querySelector(".home-schedule-swipe-btn--del");
+        const doneBtn = rowEl.querySelector(".home-schedule-swipe-btn--done");
+        if (!pane || !delBtn || !doneBtn) return;
+        const OPEN = 76;
+        let tx = 0;
+        let dragging = false;
+        let startX = 0;
+        let startTx = 0;
+
+        function paint(instant) {
+          tx = Math.max(-OPEN, Math.min(OPEN, tx));
+          pane.style.transition = instant ? "none" : "";
+          pane.style.transform = "translateX(" + tx + "px)";
+        }
+
+        function snap() {
+          if (tx < -OPEN / 2) tx = -OPEN;
+          else if (tx > OPEN / 2) tx = OPEN;
+          else tx = 0;
+          paint(false);
+        }
+
+        function removeOne() {
+          state.schedules = state.schedules.filter((x) => x.id !== scheduleId);
+          renderSchedules();
+        }
+
+        pane.addEventListener("pointerdown", (e) => {
+          if (e.pointerType === "mouse" && e.button !== 0) return;
+          dragging = true;
+          startX = e.clientX;
+          startTx = tx;
+          paint(true);
+          try {
+            pane.setPointerCapture(e.pointerId);
+          } catch (_) {}
+        });
+        pane.addEventListener("pointermove", (e) => {
+          if (!dragging) return;
+          tx = startTx + (e.clientX - startX);
+          paint(true);
+        });
+        function endDrag() {
+          if (!dragging) return;
+          dragging = false;
+          snap();
+        }
+        pane.addEventListener("pointerup", endDrag);
+        pane.addEventListener("pointercancel", endDrag);
+
+        delBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          removeOne();
+        });
+        doneBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          removeOne();
+        });
+      }
+
       function renderSchedules() {
         const list = document.getElementById("homeScheduleList");
         if (!list) return;
-        const editBtn = document.getElementById("homeScheduleEditBtn");
-        if (editBtn) editBtn.textContent = state.scheduleEditMode ? "완료" : "편집";
 
         if (!state.schedules.length) {
           list.innerHTML =
-            '<div class="home-schedule-empty"><strong>등록된 일정이 없어요</strong>아래 버튼으로 오늘의 일정을 추가해 보세요</div>';
+            '<div class="home-schedule-empty home-schedule-empty--action" role="button" tabindex="0"><strong>등록된 일정이 없어요</strong>이 박스를 눌러 오늘의 일정을 추가해 보세요</div>';
+          const tap = list.querySelector(".home-schedule-empty--action");
+          if (tap) {
+            tap.addEventListener("click", () => openScheduleModal());
+            tap.addEventListener("keydown", (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openScheduleModal();
+              }
+            });
+          }
           return;
         }
+
         list.innerHTML = state.schedules
           .map((s) => {
             const meta = `${s.when} ${formatTime(s.time)}${s.loc ? " · " + escapeHtml(s.loc) : ""}`;
-            const actionLabel = s.type === "walk" ? "시작" : "보기";
-            const actionHtml = state.scheduleEditMode
-              ? `<button type="button" class="home-schedule-action" data-del="${s.id}" style="color:#ef4444">삭제</button>`
-              : `<button type="button" class="home-schedule-action">${actionLabel} →</button>`;
-            return `
-              <div class="home-schedule-item" data-id="${s.id}">
-                <div class="home-schedule-ico ${s.type}">${s.ico}</div>
-                <div class="home-schedule-info">
-                  <div class="home-schedule-title">${escapeHtml(s.title)}</div>
-                  <div class="home-schedule-meta">${meta}</div>
+            return (
+              `<div class="home-schedule-swipe" data-schedule-id="${s.id}">
+                <div class="home-schedule-swipe-under">
+                  <button type="button" class="home-schedule-swipe-btn home-schedule-swipe-btn--del">삭제</button>
+                  <button type="button" class="home-schedule-swipe-btn home-schedule-swipe-btn--done">완료</button>
                 </div>
-                ${actionHtml}
-              </div>`;
+                <div class="home-schedule-swipe-pane">
+                  <div class="home-schedule-ico ${s.type}">${s.ico}</div>
+                  <div class="home-schedule-info">
+                    <div class="home-schedule-title">${escapeHtml(s.title)}</div>
+                    <div class="home-schedule-meta">${meta}</div>
+                  </div>
+                </div>
+              </div>`
+            );
           })
           .join("");
 
-        list.querySelectorAll("[data-del]").forEach((btn) => {
-          btn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const id = Number(btn.getAttribute("data-del"));
-            state.schedules = state.schedules.filter((x) => x.id !== id);
-            renderSchedules();
-          });
+        list.querySelectorAll(".home-schedule-swipe").forEach((row) => {
+          attachHomeScheduleSwipe(row, Number(row.getAttribute("data-schedule-id")));
         });
       }
 
@@ -3234,6 +3524,7 @@
       function beginWalkNavigationOrPicker(route) {
         const dogs = getRegisteredWalkDogs();
         if (dogs.length >= 2) {
+          state.walkDogPickMode = "start";
           pendingWalkRoute = route;
           openWalkDogPickOverlay();
           return;
@@ -3249,38 +3540,45 @@
         if (nm) nm.textContent = (name || "").trim() || "오늘의 산책";
         if (mt) mt.textContent = (meta || "").trim();
         syncWalkParticipantLine();
+        const bar = document.getElementById("walkHudCenterBar");
+        if (bar) {
+          const dogs = getRegisteredWalkDogs()
+            .filter((d) => (state.walkParticipantIds || []).includes(d.id))
+            .map((d) => d.name)
+            .join(", ") || ((state.dogName || "").trim() || "반려견");
+          bar.textContent = `${dogs} | ${(name || "").trim() || "오늘의 산책"} | ${(meta || "").trim() || "거리 정보" } 예상`;
+        }
+        const kmMatch = String(meta || "").match(/(\d+(\.\d+)?)km/i);
+        const minMatch = String(meta || "").match(/(\d+)\s*분/);
+        const km = kmMatch ? kmMatch[1] : "1.9";
+        const mins = minMatch ? minMatch[1] : "20";
+        const hudKm = document.getElementById("walkSheetKmNum");
+        const hudMin = document.getElementById("walkSheetMinNum");
+        if (hudKm) hudKm.textContent = km;
+        if (hudMin) hudMin.textContent = `${mins}:00`;
       }
 
       function syncWalkParticipantLine() {
-        const wrap = document.getElementById("walkRouteDogsWrap");
-        const namesEl = document.getElementById("walkRouteDogsNames");
-        if (!wrap || !namesEl) return;
-        const ids = state.walkParticipantIds || [];
-        if (!ids.length) {
-          wrap.hidden = true;
-          return;
-        }
-        const dogs = getRegisteredWalkDogs();
-        const labels = dogs.filter((d) => ids.includes(d.id)).map((d) => d.name);
-        if (!labels.length) {
-          wrap.hidden = true;
-          return;
-        }
-        namesEl.textContent = labels.join(", ");
-        wrap.hidden = false;
+        // v2 layout uses center HUD bar instead of separate companion line.
       }
 
-      function openWalkDogPickOverlay() {
+      function openWalkDogPickOverlay(preselectedIds) {
         const overlay = document.getElementById("walkDogPickOverlay");
         const grid = document.getElementById("walkDogPickGrid");
         const confirmBtn = document.getElementById("walkDogPickConfirm");
+        const title = document.querySelector("#walkDogPickOverlay .walk-dog-modal-title");
+        const hint = document.querySelector("#walkDogPickOverlay .walk-dog-modal-hint");
         if (!overlay || !grid) return;
         const dogs = getRegisteredWalkDogs();
-        walkDogPickSelections = new Set(dogs.map((d) => d.id));
+        const base = Array.isArray(preselectedIds) && preselectedIds.length ? preselectedIds : dogs.map((d) => d.id);
+        walkDogPickSelections = new Set(base);
+        if (title) title.textContent = state.walkDogPickMode === "change" ? "산책 반려견 변경" : "산책할 반려견 선택";
+        if (hint) hint.textContent = state.walkDogPickMode === "change" ? "현재 산책에 함께할 반려견을 선택하세요." : "한 마리 이상 선택해야 산책을 시작할 수 있어요.";
+        if (confirmBtn) confirmBtn.textContent = state.walkDogPickMode === "change" ? "변경 적용" : "산책 시작";
         grid.innerHTML = dogs
           .map(
             (d) =>
-              `<button type="button" class="walk-dog-card selected" data-dog-id="${escapeHtml(d.id)}" role="listitem">
+              `<button type="button" class="walk-dog-card ${walkDogPickSelections.has(d.id) ? "selected" : ""}" data-dog-id="${escapeHtml(d.id)}" role="listitem">
             <span class="walk-dog-card-badge" aria-hidden="true"></span>
             <span class="walk-dog-card-avatar" aria-hidden="true">🐕</span>
             <span class="walk-dog-card-name">${escapeHtml(d.name)}</span>
@@ -3314,15 +3612,31 @@
           overlay.classList.remove("show");
           overlay.setAttribute("aria-hidden", "true");
         }
-        pendingWalkRoute = null;
+        if (state.walkDogPickMode !== "change") pendingWalkRoute = null;
+        state.walkDogPickMode = "start";
         walkDogPickSelections = null;
       }
 
       function confirmWalkDogPickAndGo() {
-        if (!pendingWalkRoute || !walkDogPickSelections || walkDogPickSelections.size < 1) return;
+        if (!walkDogPickSelections || walkDogPickSelections.size < 1) return;
         state.walkParticipantIds = Array.from(walkDogPickSelections);
+        if (state.walkDogPickMode === "change") {
+          const curName = (document.getElementById("walkRouteName") || {}).textContent || "";
+          const curMeta = (document.getElementById("walkRouteMeta") || {}).textContent || "";
+          const overlay = document.getElementById("walkDogPickOverlay");
+          if (overlay) {
+            overlay.classList.remove("show");
+            overlay.setAttribute("aria-hidden", "true");
+          }
+          state.walkDogPickMode = "start";
+          walkDogPickSelections = null;
+          syncWalkRouteLabels(curName, curMeta);
+          return;
+        }
+        if (!pendingWalkRoute) return;
         const r = pendingWalkRoute;
         pendingWalkRoute = null;
+        state.walkDogPickMode = "start";
         walkDogPickSelections = null;
         const overlay = document.getElementById("walkDogPickOverlay");
         if (overlay) {
@@ -3368,7 +3682,6 @@
       })();
 
       (function bindHomeSchedule() {
-        const addBtn = document.getElementById("homeAddScheduleBtn");
         const editBtn = document.getElementById("homeScheduleEditBtn");
         const overlay = document.getElementById("scheduleOverlay");
         const cancelBtn = document.getElementById("scheduleCancelBtn");
@@ -3376,11 +3689,7 @@
         const typeGrid = document.getElementById("scheduleTypeGrid");
         const titleInput = document.getElementById("scheduleTitleInput");
 
-        if (addBtn) addBtn.addEventListener("click", openScheduleModal);
-        if (editBtn) editBtn.addEventListener("click", () => {
-          state.scheduleEditMode = !state.scheduleEditMode;
-          renderSchedules();
-        });
+        if (editBtn) editBtn.addEventListener("click", openScheduleModal);
         if (cancelBtn) cancelBtn.addEventListener("click", closeScheduleModal);
         if (overlay) overlay.addEventListener("click", (e) => {
           if (e.target === overlay) closeScheduleModal();
@@ -3782,43 +4091,192 @@
       });
 
       // Walk interactions
-      const toggleVoice = document.getElementById("toggleVoice");
       const voiceActionIco = document.getElementById("voiceActionIco");
-      const voiceActionLabel = document.getElementById("voiceActionLabel");
       const walkPickedCard = document.getElementById("walkPickedCard");
       const walkPickedTitle = document.getElementById("walkPickedTitle");
       const walkPickedMeta = document.getElementById("walkPickedMeta");
       const walkPickedStart = document.getElementById("walkPickedStart");
-      const walkEndBtn = document.getElementById("walkEndBtn");
-      const poopRecord = document.getElementById("poopRecord");
+      const walkEndSheetBtn = document.getElementById("walkEndSheetBtn");
+      const walkMoreBtn = document.getElementById("walkMoreBtn");
+      const walkMoreMenu = document.getElementById("walkMoreMenu");
+      const walkLiveSheet = document.getElementById("walkLiveSheet");
+      const walkLiveSheetHandle = document.getElementById("walkLiveSheetHandle");
+      const walkReportGrid = document.getElementById("walkReportGrid");
+      const walkPoopFab = document.getElementById("walkPoopFab");
+      const walkPoopMenu = document.getElementById("walkPoopMenu");
+      const walkLocateBtn = document.getElementById("walkLocateBtn");
+      const walkMemoBtn = document.getElementById("walkMemoBtn");
+      const walkHeartBtn = document.getElementById("walkHeartBtn");
+      const walkVoiceToggleMenu = document.getElementById("walkVoiceToggleMenu");
+      const walkDogChangeMenu = document.getElementById("walkDogChangeMenu");
       let selectedWalkRoute = null;
       let voiceOn = true;
-      if (toggleVoice) toggleVoice.addEventListener("click", () => {
-        voiceOn = !voiceOn;
-        toggleVoice.classList.toggle("voice-off", !voiceOn);
-        if (voiceActionIco) voiceActionIco.textContent = voiceOn ? "🔊" : "🔇";
-        if (voiceActionLabel) voiceActionLabel.textContent = voiceOn ? "음성 안내" : "음성 꺼짐";
-      });
-      if (walkEndBtn) walkEndBtn.addEventListener("click", () => {
+      let sheetState = "mid";
+
+      function closeWalkMoreMenu() {
+        if (walkMoreMenu) {
+          walkMoreMenu.classList.remove("show");
+          walkMoreMenu.setAttribute("aria-hidden", "true");
+        }
+        if (walkMoreBtn) walkMoreBtn.setAttribute("aria-expanded", "false");
+      }
+      function closePoopMenu() {
+        if (walkPoopMenu) walkPoopMenu.classList.remove("show");
+        if (walkPoopFab) {
+          walkPoopFab.textContent = "💩";
+          walkPoopFab.setAttribute("aria-label", "배변 기록");
+        }
+      }
+      function addWalkTimelineEntry(text, color) {
+        const logTimeline = document.querySelector(".walk-live-timeline");
+        if (!logTimeline) return;
+        const activeEntry = logTimeline.querySelector(".walk-live-entry.active");
+        const now = new Date();
+        const timeStr = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+        const newEntry = document.createElement("div");
+        newEntry.className = "walk-live-entry";
+        newEntry.innerHTML = '<span class="walk-live-time">' + timeStr + '</span><span class="walk-live-dot" style="background:' + (color || "#8b5cf6") + '"></span><span class="walk-live-desc">' + text + "</span>";
+        if (activeEntry) logTimeline.insertBefore(newEntry, activeEntry);
+        else logTimeline.appendChild(newEntry);
+      }
+      function goWalkReviewFromEnd() {
         const routeNameEl = document.getElementById("walkRouteName");
         const reviewRouteEl = document.getElementById("reviewRouteName");
         if (routeNameEl && reviewRouteEl) {
           reviewRouteEl.textContent = (routeNameEl.textContent || "").trim() || "오늘의 산책";
         }
+        const reviewMemoEl = document.getElementById("reviewMemo");
+        if (reviewMemoEl && state.walkMemos && state.walkMemos.length) {
+          reviewMemoEl.value = state.walkMemos.map((m, i) => `${i + 1}. ${m}`).join("\n");
+        }
+        closeWalkMoreMenu();
+        closePoopMenu();
         setActiveView("walkReview");
-      });
-      if (poopRecord) poopRecord.addEventListener("click", () => {
-        const logTimeline = document.querySelector(".walk-live-timeline");
-        if (!logTimeline) return;
-        const activeEntry = logTimeline.querySelector(".walk-live-entry.active");
-        const now = new Date();
-        const timeStr = String(now.getHours()).padStart(2,"0") + ":" + String(now.getMinutes()).padStart(2,"0");
-        const newEntry = document.createElement("div");
-        newEntry.className = "walk-live-entry";
-        newEntry.innerHTML = '<span class="walk-live-time">' + timeStr + '</span><span class="walk-live-dot" style="background:#f97316"></span><span class="walk-live-desc">배변 기록</span>';
-        if (activeEntry) logTimeline.insertBefore(newEntry, activeEntry);
-        else logTimeline.appendChild(newEntry);
-      });
+      }
+      function syncVoiceUi() {
+        if (voiceActionIco) voiceActionIco.textContent = voiceOn ? "🔊" : "🔇";
+        if (walkVoiceToggleMenu) walkVoiceToggleMenu.textContent = voiceOn ? "음성 안내 끄기" : "음성 안내 켜기";
+      }
+      function setSheetState(next) {
+        sheetState = next;
+        if (!walkLiveSheet) return;
+        walkLiveSheet.classList.remove("state-collapsed", "state-mid", "state-expanded");
+        walkLiveSheet.classList.add(next === "expanded" ? "state-expanded" : next === "collapsed" ? "state-collapsed" : "state-mid");
+        setTimeout(() => walkLiveMap && walkLiveMap.invalidateSize(), 220);
+      }
+
+      if (walkMoreBtn && walkMoreMenu) {
+        walkMoreBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const open = !walkMoreMenu.classList.contains("show");
+          walkMoreMenu.classList.toggle("show", open);
+          walkMoreBtn.setAttribute("aria-expanded", open ? "true" : "false");
+          walkMoreMenu.setAttribute("aria-hidden", open ? "false" : "true");
+        });
+      }
+      if (walkEndSheetBtn) walkEndSheetBtn.addEventListener("click", goWalkReviewFromEnd);
+      if (walkMoreMenu) walkMoreMenu.addEventListener("click", (e) => e.stopPropagation());
+      document.addEventListener("click", () => { closeWalkMoreMenu(); closePoopMenu(); });
+
+      if (walkVoiceToggleMenu) {
+        walkVoiceToggleMenu.addEventListener("click", (e) => {
+          e.stopPropagation();
+          voiceOn = !voiceOn;
+          syncVoiceUi();
+          closeWalkMoreMenu();
+        });
+      }
+      if (walkDogChangeMenu) {
+        walkDogChangeMenu.addEventListener("click", (e) => {
+          e.stopPropagation();
+          closeWalkMoreMenu();
+          state.walkDogPickMode = "change";
+          openWalkDogPickOverlay(state.walkParticipantIds || []);
+        });
+      }
+      if (walkLiveSheetHandle && walkLiveSheet) {
+        let touchY0 = null;
+        function onDragEnd(y1) {
+          if (touchY0 == null) return;
+          const dy = y1 - touchY0;
+          touchY0 = null;
+          if (Math.abs(dy) < 24) return;
+          if (dy > 0) setSheetState(sheetState === "expanded" ? "mid" : "collapsed");
+          else setSheetState(sheetState === "collapsed" ? "mid" : "expanded");
+        }
+        walkLiveSheetHandle.addEventListener("touchstart", (e) => { touchY0 = e.touches[0].clientY; }, { passive: true });
+        walkLiveSheetHandle.addEventListener("touchend", (e) => onDragEnd(e.changedTouches[0].clientY));
+        walkLiveSheetHandle.addEventListener("pointerdown", (e) => { touchY0 = e.clientY; });
+        walkLiveSheetHandle.addEventListener("pointerup", (e) => onDragEnd(e.clientY));
+      }
+      if (walkLocateBtn) {
+        walkLocateBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (walkLiveMap && walkLiveMarker) walkLiveMap.setView(walkLiveMarker.getLatLng(), 17);
+        });
+      }
+      if (walkPoopFab && walkPoopMenu) {
+        walkPoopFab.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const open = !walkPoopMenu.classList.contains("show");
+          walkPoopMenu.classList.toggle("show", open);
+          walkPoopFab.textContent = open ? "✕" : "💩";
+          walkPoopFab.setAttribute("aria-label", open ? "배변 기록 닫기" : "배변 기록");
+        });
+        walkPoopMenu.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const btn = e.target.closest("[data-poop-kind]");
+          if (!btn) return;
+          const kind = btn.getAttribute("data-poop-kind") || "💩";
+          addWalkReportMarker(kind, kind === "💩" ? "배변 기록" : "소변 기록");
+          addWalkTimelineEntry(kind + " 기록", "#f97316");
+          closePoopMenu();
+          walkPoopFab.textContent = "💩";
+          walkPoopFab.setAttribute("aria-label", "배변 기록");
+        });
+      }
+      if (walkMemoBtn) {
+        walkMemoBtn.addEventListener("click", () => {
+          const memo = window.prompt("현재 위치 메모를 남겨주세요");
+          if (!memo || !memo.trim()) return;
+          const txt = memo.trim();
+          state.walkMemos.push(txt);
+          addWalkReportMarker("📝", txt);
+          addWalkTimelineEntry("📝 메모 · " + txt, "#2563eb");
+        });
+      }
+      if (walkHeartBtn) {
+        walkHeartBtn.addEventListener("click", () => {
+          const dogs = getRegisteredWalkDogs().filter((d) => (state.walkParticipantIds || []).includes(d.id));
+          if (dogs.length <= 1) {
+            addWalkReportMarker("💚", "좋아한 장소");
+            addWalkTimelineEntry("💚 좋아한 장소", "#16a34a");
+            return;
+          }
+          const picked = window.prompt("좋아한 반려견 번호를 입력하세요 (복수: 1,2)\n" + dogs.map((d, i) => `${i + 1}. ${d.name}`).join("\n"));
+          if (!picked) return;
+          const idxs = picked.split(",").map((x) => Number(x.trim()) - 1).filter((n) => !Number.isNaN(n) && dogs[n]);
+          if (!idxs.length) return;
+          const dogColors = ["#ef4444", "#0ea5e9", "#a855f7", "#f59e0b"];
+          idxs.forEach((idx) => {
+            const d = dogs[idx];
+            addWalkReportMarker("💚", d.name + " 좋아함", dogColors[idx % dogColors.length]);
+            addWalkTimelineEntry("💚 " + d.name + " 좋아한 장소", dogColors[idx % dogColors.length]);
+          });
+        });
+      }
+      if (walkReportGrid) {
+        walkReportGrid.addEventListener("click", (e) => {
+          const btn = e.target.closest(".walk-report-btn");
+          if (!btn) return;
+          const label = btn.getAttribute("data-report") || "";
+          const emoji = btn.getAttribute("data-emoji") || "📍";
+          addWalkReportMarker(emoji, label);
+          addWalkTimelineEntry(emoji + " 제보 · " + label, "#8b5cf6");
+        });
+      }
+      syncVoiceUi();
+      setSheetState("collapsed");
 
       document.querySelectorAll(".hcard[data-walk-route]").forEach((card) => {
         card.style.cursor = "pointer";
@@ -3833,6 +4291,23 @@
           walkPickedCard.classList.add("show");
         });
       });
+
+      const walkHomeScroll = document.getElementById("walkHomeScroll");
+      if (walkHomeScroll) {
+        walkHomeScroll.addEventListener("click", (e) => {
+          const startBtn = e.target.closest(".walk-freq-start-btn, .walk-reco-start-btn");
+          if (!startBtn) return;
+          const card = startBtn.closest("[data-walk-route]");
+          if (!card) return;
+          const routeName = card.getAttribute("data-walk-route") || "";
+          const routeMeta = card.getAttribute("data-walk-meta") || "거리/시간 정보 준비 중";
+          selectedWalkRoute = { name: routeName, meta: routeMeta };
+          if (walkPickedTitle) walkPickedTitle.textContent = routeName;
+          if (walkPickedMeta) walkPickedMeta.textContent = routeMeta;
+          if (walkPickedCard) walkPickedCard.classList.add("show");
+          beginWalkNavigationOrPicker({ name: routeName, meta: routeMeta });
+        });
+      }
       if (walkPickedStart) {
         walkPickedStart.addEventListener("click", () => {
           if (!selectedWalkRoute) return;
