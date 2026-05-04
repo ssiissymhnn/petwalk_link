@@ -89,6 +89,8 @@
     .btns{display:flex;gap:8px;margin-top:8px}.btn{flex:1;border-radius:10px;padding:9px 0;font-size:12px;font-weight:700;border:1px solid rgba(0,0,0,.08);background:var(--white);color:var(--text);transition:background .1s ease}.btn:hover{background:var(--sep)}.btn.primary{background:linear-gradient(135deg,#19B23A,#0fa34e);color:var(--white);border-color:transparent;box-shadow:0 2px 8px rgba(25,178,58,.2)}
     .views{height:100%;padding-top:42px;position:relative}
     .screen--tabs .views{padding-bottom:74px}
+    .screen--walk-fullbleed .app-header{display:none}
+    .screen--walk-fullbleed .views{padding-top:0}
     .view{display:none;height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none}
     .view::-webkit-scrollbar{display:none;width:0;height:0}
     .hscroll{scrollbar-width:none;-ms-overflow-style:none}
@@ -107,13 +109,19 @@
     .home-hero-top{display:flex;justify-content:flex-end;align-items:center;position:relative;z-index:2;flex-shrink:0;padding:50px 18px 0 18px;margin-bottom:0}
     .home-weather-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid rgba(0,0,0,.05);border-radius:999px;padding:6px 12px;font-size:12px;font-weight:800;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.06)}
     .home-weather-chip .home-weather-ico{font-size:14px;line-height:1}
-    .home-loc-chip-wrap{display:flex;justify-content:center;position:relative;z-index:2;flex-shrink:0;padding:0 18px 22px}
+    .home-loc-chip-wrap{display:flex;justify-content:center;position:relative;z-index:2;flex-shrink:0;margin-top:auto;padding:0 18px 16px}
     .home-loc-chip{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid rgba(0,0,0,.05);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:800;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease}
     .home-loc-chip:hover{transform:translateY(-1px)}
     .home-loc-chip .home-loc-ico{font-size:13px;color:#ef4444}
 
     .home-greeting-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:18px 18px 16px;box-shadow:0 4px 14px rgba(0,0,0,.05);margin:-10px 4px 0;position:relative;z-index:2}
-    .home-greeting-title{font-size:19px;font-weight:900;color:var(--text);letter-spacing:-.01em;line-height:1.25;display:flex;align-items:center;gap:6px}
+    .home-greeting-title{font-size:19px;font-weight:900;color:var(--text);letter-spacing:-.01em;line-height:1.25;display:flex;align-items:center;gap:6px;justify-content:space-between}
+    .home-greeting-title-left{display:flex;align-items:center;gap:6px;min-width:0}
+    .home-quick-start-btn{
+      flex-shrink:0;border:none;border-radius:999px;cursor:pointer;padding:8px 14px;font-size:12px;font-weight:800;
+      background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;white-space:nowrap;font-family:inherit;
+      display:inline-flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(25,178,58,.25)
+    }
     .home-greeting-paw{font-size:18px;line-height:1}
     .home-greeting-sub{font-size:12px;color:var(--sub);font-weight:600;margin-top:6px}
     .home-greeting-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
@@ -520,6 +528,10 @@
     .hcard:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(25,178,58,.1);border-color:rgba(25,178,58,.2)}
     .hcard-img{height:110px;background:linear-gradient(135deg,rgba(25,178,58,.06) 0%, var(--sep) 60%);position:relative}
     .hcard-rank{position:absolute;left:10px;bottom:8px;background:var(--main);color:#fff;font-size:12px;font-weight:900;border-radius:999px;padding:4px 8px}
+    .hcard-start-btn{
+      position:absolute;right:10px;bottom:8px;border:none;border-radius:999px;padding:7px 11px;cursor:pointer;
+      background:rgba(255,255,255,.95);color:#179833;font-size:11px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.12);backdrop-filter:blur(4px)
+    }
     .hcard-body{padding:10px}
     .hcard-title{font-size:13px;font-weight:800;color:var(--black);line-height:1.2}
     .hcard-meta{font-size:11px;color:var(--sub);margin-top:6px}
@@ -538,7 +550,7 @@
     .walk-freq-body{flex:1;min-width:0}
     .walk-freq-title{font-size:13px;font-weight:800;color:var(--black);line-height:1.25}
     .walk-freq-title .walk-freq-rank{color:var(--main);margin-right:6px}
-    .walk-freq-meta{font-size:11px;color:var(--sub);font-weight:600;margin-top:4px;line-height:1.35}
+    .walk-freq-meta{font-size:10px;color:var(--sub);font-weight:500;margin-top:4px;line-height:1.35}
     .walk-freq-start-btn{
       flex-shrink:0;border:none;border-radius:999px;padding:9px 14px;font-size:11px;font-weight:800;font-family:inherit;
       cursor:pointer;background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;box-shadow:0 2px 8px rgba(25,178,58,.25);white-space:nowrap;
@@ -563,12 +575,6 @@
       padding:9px 14px;font-size:11px;font-weight:800;font-family:inherit;cursor:pointer;backdrop-filter:blur(6px);white-space:nowrap;
     }
     .walk-reco-start-btn:active{transform:scale(.97);background:rgba(255,255,255,.22)}
-    .walk-picked{border:1px solid rgba(25,178,58,.2);border-radius:14px;padding:10px;background:#FFFFFF;margin:0 12px 12px;display:none;box-shadow:0 2px 8px rgba(25,178,58,.08)}
-    .walk-picked.show{display:block}
-    .walk-picked-title{font-size:13px;font-weight:800;color:var(--text)}
-    .walk-picked-meta{font-size:11px;color:var(--sub);margin-top:5px}
-    .walk-picked-cta{margin-top:8px;width:100%;border:none;border-radius:10px;padding:10px 0;background:linear-gradient(135deg,#19B23A,#0fa34e);color:#FFFFFF;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(25,178,58,.2);transition:transform .1s ease}
-    .walk-picked-cta:hover{transform:translateY(-1px)}
     .view[data-view="pet_monthly"] .chip,
     .view[data-view="home"] .chip{background:rgba(25,178,58,.1);color:var(--main)}
     /* Petlog */
@@ -787,10 +793,11 @@
     .walk-report-btn .e{font-size:18px;line-height:1}
 
     /* Walk live v2 tweaks */
+    .screen--tabs .view[data-view="walk"]{padding-bottom:0}
     .view[data-view="walk"]{padding:0}
-    .walk-live{height:100%;border-radius:0}
-    .walk-live-map-shell{min-height:0}
-    .walk-live-map{bottom:0}
+    .walk-live{height:100%;border-radius:0;position:relative;overflow:hidden}
+    .walk-live-map-shell{position:absolute;inset:0;min-height:0}
+    .walk-live-map{inset:0}
     .walk-live-menu-item{color:var(--text)}
     .walk-live-menu-item.danger{color:#dc2626}
     .walk-live-menu-item:hover{background:var(--sep)}
@@ -798,20 +805,25 @@
     .walk-live-hud-center{
       position:absolute;top:50px;left:50%;transform:translateX(-50%);
       max-width:calc(100% - 78px);z-index:4;background:rgba(255,255,255,.95);border:1px solid rgba(0,0,0,.08);
-      border-radius:10px;padding:7px 10px;font-size:11px;font-weight:800;color:#1f2937;line-height:1.3;text-align:center;
+      border-radius:10px;padding:7px 10px;line-height:1.3;text-align:center;
       box-shadow:0 2px 8px rgba(0,0,0,.08);backdrop-filter:blur(8px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+      display:flex;align-items:center;gap:7px;
     }
+    .walk-hud-dog{font-size:10px;font-weight:600;color:#525252}
+    .walk-hud-sep{display:inline-block;width:1px;height:11px;background:#9E9E9E;opacity:.95}
+    .walk-hud-route{font-size:12px;font-weight:600;color:#525252}
+    .walk-hud-meta{font-size:9px;font-weight:500;color:#A3A3A3}
     .walk-live-hud-weather{
-      position:absolute;left:10px;top:33%;z-index:4;background:rgba(255,255,255,.92);border:1px solid rgba(0,0,0,.08);
-      border-radius:10px;padding:7px 9px;font-size:11px;line-height:1.25;color:#111827;box-shadow:0 2px 8px rgba(0,0,0,.08)
+      position:absolute;left:10px;top:33%;z-index:4;background:transparent;border:none;border-radius:0;padding:0;
+      font-size:11px;line-height:1.25;color:#8D8D8D;box-shadow:none;backdrop-filter:none
     }
-    .walk-live-hud-weather #walkHudWeatherTemp{font-weight:900;font-size:12px}
-    .walk-live-hud-weather #walkHudWeatherDesc{font-weight:700;font-size:10px;color:#4b5563}
+    .walk-live-hud-weather #walkHudWeatherTemp{font-weight:800;font-size:12px;color:#8D8D8D}
+    .walk-live-hud-weather #walkHudWeatherDesc{font-weight:600;font-size:10px;color:#8D8D8D}
     .walk-live-fab-loc{
-      position:absolute;left:10px;bottom:14px;z-index:4;width:42px;height:42px;border:none;border-radius:50%;
+      position:absolute;left:10px;bottom:132px;z-index:4;width:42px;height:42px;border:none;border-radius:50%;
       background:rgba(255,255,255,.95);box-shadow:0 2px 10px rgba(0,0,0,.12);font-size:19px;cursor:pointer
     }
-    .walk-live-fab-stack{position:absolute;right:10px;bottom:14px;z-index:4;display:flex;align-items:center;justify-content:flex-end;min-height:44px}
+    .walk-live-fab-stack{position:absolute;right:10px;bottom:132px;z-index:4;display:flex;align-items:center;justify-content:flex-end;min-height:44px}
     .walk-live-fab-poop{
       width:44px;height:44px;border:none;border-radius:50%;background:rgba(255,255,255,.95);
       box-shadow:0 2px 12px rgba(0,0,0,.12);font-size:21px;cursor:pointer
@@ -824,6 +836,7 @@
       width:38px;height:38px;border:none;border-radius:50%;background:#fff;box-shadow:0 2px 9px rgba(0,0,0,.11);font-size:19px;cursor:pointer
     }
     .walk-live-sheet{
+      position:absolute;left:0;right:0;bottom:0;
       background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -8px 28px rgba(0,0,0,.12);z-index:5;
       display:flex;flex-direction:column;height:34%;min-height:130px;max-height:calc(100% - 56px);
       transition:height .24s ease;
@@ -833,30 +846,33 @@
     .walk-live-sheet.state-expanded{height:calc(100% - 56px)}
     .walk-live-sheet-scroll{scrollbar-width:none;-ms-overflow-style:none}
     .walk-live-sheet-scroll::-webkit-scrollbar{display:none}
-    .walk-sheet-top{display:flex;align-items:center;gap:8px;padding:4px 12px 10px}
+    .walk-sheet-top{display:flex;align-items:center;gap:8px;padding:12px 12px 18px}
     .walk-sheet-stat-box{
       flex:1;display:grid;grid-template-columns:1fr 1fr;gap:0;background:#F6FCF7;border:1px solid #A9E2B5;border-radius:10px;overflow:hidden
     }
     .walk-sheet-stat-cell{padding:9px 6px;text-align:center;color:#179833}
     .walk-sheet-stat-cell + .walk-sheet-stat-cell{border-left:1px solid #d3efd9}
-    .walk-sheet-stat-num{font-size:23px;font-weight:900;line-height:1.05;color:#179833}
-    .walk-sheet-stat-unit{font-size:9px;font-weight:700;margin-top:3px}
+    .walk-sheet-stat-num{font-size:23px;font-weight:800;line-height:1.05;color:#179833}
+    .walk-sheet-stat-unit{font-size:9px;font-weight:600;margin-top:3px}
     .walk-sheet-ico-btn{
       width:34px;height:34px;border-radius:50%;border:1px solid #e6e6e6;background:#fff;font-size:16px;cursor:pointer;flex-shrink:0
     }
-    .walk-live-log{padding:0 14px 6px}
-    .walk-live-log-title{font-size:13px}
+    .walk-live-log{padding:4px 14px 16px}
+    .walk-live-log-head{display:flex;align-items:baseline;justify-content:flex-start;gap:6px;margin-bottom:12px}
+    .walk-live-log-title{font-size:13px;font-weight:800}
+    .walk-live-log-sub{font-size:8px;font-weight:500;color:#909090;line-height:1.2}
     .walk-live-time{font-size:11px}
     .walk-live-desc{font-size:12px}
-    .walk-live-actions{padding:8px 12px 14px;background:#F9F9F9;border-top:1px solid #F1F1F1}
-    .walk-report-grid{grid-template-columns:repeat(4,1fr);gap:7px}
+    .walk-live-actions{padding:18px 12px 22px;background:#FFFFFF;border-top:1px solid #F1F1F1}
+    .walk-live-actions .walk-live-log-head{margin-bottom:14px}
+    .walk-report-grid{grid-template-columns:repeat(4,1fr);gap:7px;margin-top:2px}
     .walk-report-btn{font-size:9px;min-height:58px;background:#fff}
     .walk-sheet-end-btn{
-      margin-top:10px;width:100%;border:1px solid #F1F1F1;background:#F9F9F9;color:#179833;border-radius:12px;
+      margin-top:18px;width:100%;border:1px solid #F1F1F1;background:#FFFFFF;color:#179833;border-radius:12px;
       padding:12px 8px;font-size:14px;font-weight:900;cursor:pointer;font-family:inherit
     }
     .tab-hit.walk-live-active span:last-child{
-      background:#E9F8EC;border:1px solid #A9E2B5;border-radius:999px;padding:2px 7px;color:#179833;font-weight:900
+      background:#E0FDE5;border:none;border-radius:999px;padding:2px 7px;color:#179833;font-weight:700
     }
 
     /* Toggle switch */
@@ -930,8 +946,8 @@
             <!-- LOGIN (app entry) -->
             <div class="view active" data-view="login">
               <h1 class="auth-login-title">LOGIN</h1>
-              <input class="auth-input" type="text" placeholder="아이디 또는 이메일" autocomplete="username" />
-              <input class="auth-input" type="password" placeholder="비밀번호" autocomplete="current-password" />
+              <input class="auth-input" id="loginIdField" type="text" placeholder="아이디 또는 이메일" autocomplete="username" />
+              <input class="auth-input" id="loginPwField" type="password" placeholder="비밀번호" autocomplete="current-password" />
               <label class="auth-checkrow"><input type="checkbox" /> 로그인 상태 유지</label>
               <button type="button" class="auth-btn-black">LOGIN</button>
               <div class="auth-links">
@@ -1005,7 +1021,6 @@
                   />
                 </div>
                 <div class="field">
-                  <div class="label">“약관 동의”</div>
                   <div class="card" style="margin-top:0;">
                     <div class="checkrow">
                       <input class="check" id="tosRequired" type="checkbox" />
@@ -1415,7 +1430,10 @@
                 </div>
 
                 <div class="home-greeting-card" id="homeGreetingCard">
-                  <div class="home-greeting-title"><span id="homeGreetingPrefix">좋은 오후예요</span>, <span id="homeDogName">보리</span>!<span class="home-greeting-paw">🐾</span></div>
+                  <div class="home-greeting-title">
+                    <span class="home-greeting-title-left"><span id="homeGreetingPrefix">좋은 오후예요</span>, <span id="homeDogName">보리</span>!<span class="home-greeting-paw">🐾</span></span>
+                    <button type="button" class="home-quick-start-btn" id="homeQuickWalkStart">바로 산책 시작</button>
+                  </div>
                   <div class="home-greeting-sub">오늘도 멋진 산책 떠나볼까요?</div>
                   <div class="home-greeting-stats">
                     <div class="home-stat">
@@ -1440,7 +1458,7 @@
                   </div>
                   <div class="hscroll" aria-label="AI 추천 루트">
                     <div class="hcard" data-walk-route="노들섬" data-walk-meta="2.4km · 34분 · 잔디/그늘 균형">
-                      <div class="hcard-img"><div class="hcard-rank">AI</div></div>
+                      <div class="hcard-img"><button type="button" class="hcard-start-btn">산책 시작</button></div>
                       <div class="hcard-body">
                         <div class="row"><div class="hcard-title">노들섬</div><div class="hcard-meta">만족도 79%</div></div>
                         <div class="hcard-tags">
@@ -1449,7 +1467,7 @@
                       </div>
                     </div>
                     <div class="hcard" data-walk-route="올림픽공원" data-walk-meta="2.8km · 39분 · 넓은 공간">
-                      <div class="hcard-img"><div class="hcard-rank">AI</div></div>
+                      <div class="hcard-img"><button type="button" class="hcard-start-btn">산책 시작</button></div>
                       <div class="hcard-body">
                         <div class="row"><div class="hcard-title">올림픽공원</div><div class="hcard-meta">만족도 84%</div></div>
                         <div class="hcard-tags">
@@ -1458,7 +1476,7 @@
                       </div>
                     </div>
                     <div class="hcard" data-walk-route="용산공원" data-walk-meta="2.0km · 30분 · 차분한 분위기">
-                      <div class="hcard-img"><div class="hcard-rank">AI</div></div>
+                      <div class="hcard-img"><button type="button" class="hcard-start-btn">산책 시작</button></div>
                       <div class="hcard-body">
                         <div class="row"><div class="hcard-title">용산공원</div><div class="hcard-meta">만족도 81%</div></div>
                         <div class="hcard-tags">
@@ -1467,7 +1485,7 @@
                       </div>
                     </div>
                     <div class="hcard" data-walk-route="그늘 많은 루프 코스" data-walk-meta="1.9km · 29분 · 체감 시원">
-                      <div class="hcard-img"><div class="hcard-rank">AI</div></div>
+                      <div class="hcard-img"><button type="button" class="hcard-start-btn">산책 시작</button></div>
                       <div class="hcard-body">
                         <div class="row"><div class="hcard-title">그늘 많은 루프 코스</div><div class="hcard-meta">혼잡도 낮음</div></div>
                         <div class="hcard-tags">
@@ -1932,6 +1950,7 @@
                     <button type="button" class="explore-cat-btn" data-cat="hospital"><span class="ico" style="background:rgba(0,233,51,.12);color:#0fa34e;">🏥</span><span>병원</span></button>
                     <button type="button" class="explore-cat-btn" data-cat="tour"><span class="ico" style="background:rgba(25,178,58,.12);color:#19B23A;">📍</span><span>관광지</span></button>
                     <button type="button" class="explore-cat-btn" data-cat="petshop"><span class="ico" style="background:rgba(0,233,51,.12);color:#0fa34e;">🦴</span><span>펫용품</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="dogpark"><span class="ico" style="background:rgba(25,178,58,.12);color:#19B23A;">🐕‍🦺</span><span>반려견 놀이터</span></button>
                   </div>
                 </div>
                 <div class="explore-map-wrap">
@@ -2002,7 +2021,7 @@
 
                   <div class="walk-live-map">
                     <div class="walk-live-map-inner"></div>
-                    <div class="walk-live-hud-center" id="walkHudCenterBar">보리 | 강변 그늘 루프 | 2.4km · 34분 예상</div>
+                    <div class="walk-live-hud-center" id="walkHudCenterBar"><span class="walk-hud-dog">보리</span><span class="walk-hud-sep"></span><span class="walk-hud-route">백빈건널목</span><span class="walk-hud-meta">1.2km · 20분</span></div>
                     <div class="walk-live-hud-weather" id="walkHudWeatherBox"><span id="walkHudWeatherTemp">--°C</span><br><span id="walkHudWeatherDesc">불러오는 중</span></div>
                     <button type="button" class="walk-live-fab-loc" id="walkLocateBtn" aria-label="현재 위치 보기">📍</button>
                     <div class="walk-live-fab-stack">
@@ -2034,7 +2053,7 @@
                     </div>
 
                     <div class="walk-live-log">
-                      <div class="walk-live-log-title">산책 기록</div>
+                      <div class="walk-live-log-head"><div class="walk-live-log-title">산책 기록</div><div class="walk-live-log-sub">자동 기록 중</div></div>
                       <div class="walk-live-timeline">
                         <div class="walk-live-entry">
                           <span class="walk-live-time">18:14</span>
@@ -2060,7 +2079,7 @@
                     </div>
 
                     <div class="walk-live-actions">
-                      <div class="walk-live-log-title">상황 제보하기</div>
+                      <div class="walk-live-log-head"><div class="walk-live-log-title">상황 제보하기</div><div class="walk-live-log-sub">이 구간 어때요?</div></div>
                       <div class="walk-report-grid" id="walkReportGrid" aria-label="실시간 제보">
                         <button type="button" class="walk-report-btn" data-report="사람 많아요" data-emoji="👥"><span class="e">👥</span>사람 많아요</button>
                         <button type="button" class="walk-report-btn" data-report="한적해요" data-emoji="🍃"><span class="e">🍃</span>한적해요</button>
@@ -2171,11 +2190,6 @@
             <!-- WALK HOME (산책 탭 피드) -->
             <div class="view" data-view="walkHome" data-tab-root="walk">
               <div class="walk-home" id="walkHomeScroll">
-                <div class="walk-picked" id="walkPickedCard">
-                  <div class="walk-picked-title" id="walkPickedTitle">산책로를 선택해 주세요</div>
-                  <div class="walk-picked-meta" id="walkPickedMeta">경로 카드에서 산책을 시작하거나 아래에서 코스를 고를 수 있어요.</div>
-                  <button type="button" class="walk-picked-cta" id="walkPickedStart">산책하기</button>
-                </div>
                 <div class="walk-section">
                   <div class="walk-section-head">
                     <div class="walk-section-title">자주 가는 길</div>
@@ -2185,7 +2199,7 @@
                       <div class="walk-freq-thumb">사진</div>
                       <div class="walk-freq-body">
                         <div class="walk-freq-title"><span class="walk-freq-rank">1위</span>집 근처 보리 최애 공원</div>
-                        <div class="walk-freq-meta">이번 달 11회 방문 · 보리 좋아요 7회</div>
+                        <div class="walk-freq-meta">이번 달 11회 방문<br>보리 좋아요 7회</div>
                       </div>
                       <button type="button" class="walk-freq-start-btn">산책 시작</button>
                     </div>
@@ -2193,7 +2207,7 @@
                       <div class="walk-freq-thumb">사진</div>
                       <div class="walk-freq-body">
                         <div class="walk-freq-title"><span class="walk-freq-rank">2위</span>동네 산책로</div>
-                        <div class="walk-freq-meta">이번 달 9회 방문 · 보리 좋아요 5회</div>
+                        <div class="walk-freq-meta">이번 달 9회 방문<br>보리 좋아요 5회</div>
                       </div>
                       <button type="button" class="walk-freq-start-btn">산책 시작</button>
                     </div>
@@ -2201,7 +2215,7 @@
                       <div class="walk-freq-thumb">사진</div>
                       <div class="walk-freq-body">
                         <div class="walk-freq-title"><span class="walk-freq-rank">3위</span>백빈건널목</div>
-                        <div class="walk-freq-meta">이번 달 7회 방문 · 보리 좋아요 4회</div>
+                        <div class="walk-freq-meta">이번 달 7회 방문<br>보리 좋아요 4회</div>
                       </div>
                       <button type="button" class="walk-freq-start-btn">산책 시작</button>
                     </div>
@@ -2217,9 +2231,9 @@
                       <div class="walk-reco-card-inner">
                         <div class="walk-reco-card-foot">
                           <div class="walk-reco-copy">
-                            <div class="walk-reco-tagline">한강 바람과 잔디, 여유로운 산책</div>
-                            <div class="walk-reco-name">「노들섬」</div>
-                            <div class="walk-reco-sub">풀밭 · 그늘 균형 · 만족도 79%</div>
+                            <div class="walk-reco-tagline">오늘 같은 날, 가볍게 걸어볼까요?</div>
+                            <div class="walk-reco-name">선선한 바람이 매력적인 「강변 힐링 코스」</div>
+                            <div class="walk-reco-sub">잠원 한강공원 산책 추천</div>
                           </div>
                           <button type="button" class="walk-reco-start-btn">산책 시작</button>
                         </div>
@@ -2229,9 +2243,9 @@
                       <div class="walk-reco-card-inner">
                         <div class="walk-reco-card-foot">
                           <div class="walk-reco-copy">
-                            <div class="walk-reco-tagline">넓은 잔디와 산책로가 매력적인 공원</div>
-                            <div class="walk-reco-name">「올림픽공원」</div>
-                            <div class="walk-reco-sub">넓은 공간 · 그늘 · 만족도 84%</div>
+                            <div class="walk-reco-tagline">바쁜 하루 속, 잠깐의 쉼이 필요하다면</div>
+                            <div class="walk-reco-name">도심 속 여유를 즐기는 「숲길 산책 코스」</div>
+                            <div class="walk-reco-sub">서울 도심 공원 산책 명소</div>
                           </div>
                           <button type="button" class="walk-reco-start-btn">산책 시작</button>
                         </div>
@@ -2242,8 +2256,8 @@
                         <div class="walk-reco-card-foot">
                           <div class="walk-reco-copy">
                             <div class="walk-reco-tagline">서울 근교, 자연과 함께해요</div>
-                            <div class="walk-reco-name">「하남 신규 산책 공원」</div>
-                            <div class="walk-reco-sub">26년 봄 오픈 · 산책로 정비 완료</div>
+                            <div class="walk-reco-name">사람 없고 한적한 「하남 둘레길」</div>
+                            <div class="walk-reco-sub">하남 신규 공원 26년 4월 오픈!</div>
                           </div>
                           <button type="button" class="walk-reco-start-btn">산책 시작</button>
                         </div>
@@ -2253,9 +2267,9 @@
                       <div class="walk-reco-card-inner">
                         <div class="walk-reco-card-foot">
                           <div class="walk-reco-copy">
-                            <div class="walk-reco-tagline">한강 인근, 차분한 분위기 코스</div>
-                            <div class="walk-reco-name">「용산공원」</div>
-                            <div class="walk-reco-sub">잔잔함 · 한강 인근 · 만족도 81%</div>
+                            <div class="walk-reco-tagline">가까운 곳에서 기분 전환해보세요</div>
+                            <div class="walk-reco-name">햇살과 바람이 좋은 「한강 따라 걷기 코스」</div>
+                            <div class="walk-reco-sub">여의도 한강공원 산책</div>
                           </div>
                           <button type="button" class="walk-reco-start-btn">산책 시작</button>
                         </div>
@@ -2265,9 +2279,9 @@
                       <div class="walk-reco-card-inner">
                         <div class="walk-reco-card-foot">
                           <div class="walk-reco-copy">
-                            <div class="walk-reco-tagline">여름에도 시원한 나무 그늘 루프</div>
-                            <div class="walk-reco-name">「그늘 많은 루프 코스」</div>
-                            <div class="walk-reco-sub">혼잡도 낮음 · 시원한 그늘</div>
+                            <div class="walk-reco-tagline">이번 주말엔 여유롭게 떠나보세요</div>
+                            <div class="walk-reco-name">자연을 온전히 느끼는 「하남 둘레길」</div>
+                            <div class="walk-reco-sub">하남 신규 공원 2026년 4월 개장</div>
                           </div>
                           <button type="button" class="walk-reco-start-btn">산책 시작</button>
                         </div>
@@ -2277,9 +2291,9 @@
                       <div class="walk-reco-card-inner">
                         <div class="walk-reco-card-foot">
                           <div class="walk-reco-copy">
-                            <div class="walk-reco-tagline">바람 좋은 강변 산책로</div>
-                            <div class="walk-reco-name">「강변 바람 코스」</div>
-                            <div class="walk-reco-sub">강변 · 체감 쾌적 · 바람 좋음</div>
+                            <div class="walk-reco-tagline">혼자서도, 함께여도 좋은 시간</div>
+                            <div class="walk-reco-name">한적하게 걷기 좋은 「숨은 산책 코스」</div>
+                            <div class="walk-reco-sub">서울 근교 힐링 산책로 추천</div>
                           </div>
                           <button type="button" class="walk-reco-start-btn">산책 시작</button>
                         </div>
@@ -2706,6 +2720,8 @@
       };
       const PETLOG_EXTRA_PETS_KEY = "petwalk_extra_pet_names";
       const PRIMARY_PET_KEY = "petwalk_primary_pet";
+      let currentWalkRouteName = "백빈건널목";
+      let currentWalkRouteMeta = "1.2km · 20분";
       let pendingWalkRoute = null;
       let walkDogPickSelections = null;
 
@@ -2812,6 +2828,8 @@
         const activeView = views.find(v => v.dataset.view === name);
         const tabKey = (activeView && activeView.dataset.tabRoot) || name;
         tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === tabKey));
+        const phoneScreen = document.querySelector(".phone .screen");
+        if (phoneScreen) phoneScreen.classList.toggle("screen--walk-fullbleed", name === "walk");
         const walkTab = document.querySelector('#tabs .tab-hit[data-tab="walk"]');
         const walkTabLabel = document.getElementById("walkTabLabel");
         const onWalkLive = name === "walk";
@@ -3057,17 +3075,17 @@
         });
       }
 
-      // 자연스러운 산책 루트(타원 + 사인 노이즈) 좌표 배열 생성
+      // 자연스러운 산책 루트(시작-도착이 보이는 열린 경로)
       function generateWalkRoute(lat, lon, seed) {
-        const a = 0.0014;   // 가로 반경 (~150m)
-        const b = 0.0011;   // 세로 반경 (~120m)
-        const tilt = 0.4;
-        const offsetT = (seed || 0) * 0.7;
-        const steps = 56;
+        const a = 0.0017;
+        const b = 0.0012;
+        const tilt = 0.38;
+        const offsetT = (seed || 0) * 0.6;
+        const steps = 34;
         const pts = [];
-        for (let i = 0; i <= steps; i++) {
-          const t = (i / steps) * Math.PI * 2 + offsetT;
-          const wobble = Math.sin(t * 3 + offsetT) * 0.00018;
+        for (let i = 0; i < steps; i++) {
+          const t = (i / (steps - 1)) * Math.PI * 1.05 - Math.PI * 0.52 + offsetT;
+          const wobble = Math.sin(t * 2.4 + offsetT) * 0.00011;
           const dx = (a + wobble) * Math.cos(t);
           const dy = (b + wobble) * Math.sin(t);
           const rx = dx * Math.cos(tilt) - dy * Math.sin(tilt);
@@ -3097,7 +3115,7 @@
         L.polyline(points, mainOpts).addTo(layer);
         if (o.showEndpoints) {
           const startEnd = points[0];
-          const finishPoint = points[Math.floor(points.length * 0.5)]; // 루프의 반대편 (도착지로 표시)
+          const finishPoint = points[points.length - 1];
           L.marker(startEnd, {
             icon: L.divIcon({
               className: "",
@@ -3277,8 +3295,9 @@
               zoomControl: false,
               attributionControl: false,
               dragging: true,
-              scrollWheelZoom: false,
+              scrollWheelZoom: true,
               touchZoom: true,
+              pinchZoom: true,
               doubleClickZoom: true,
             });
             tileLayer().addTo(walkLiveMap);
@@ -3290,8 +3309,7 @@
             if (!walkReportLayer) walkReportLayer = L.layerGroup().addTo(walkLiveMap);
           }
           // 산책 루트 그리기 (현재 선택된 루트 이름 기반 시드)
-          const routeNameEl = document.getElementById("walkRouteName");
-          const seed = routeSeedFromName(routeNameEl ? routeNameEl.textContent : "");
+          const seed = routeSeedFromName(currentWalkRouteName || "");
           if (walkLiveRouteLayer) { walkLiveRouteLayer.remove(); walkLiveRouteLayer = null; }
           walkLiveRouteLayer = drawWalkRouteOnMap(walkLiveMap, loc.lat, loc.lon, {
             color: "#19B23A", weight: 5, opacity: 0.92, fit: true, showEndpoints: true, seed,
@@ -3501,6 +3519,18 @@
         return String(s).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
       }
 
+      /** 상단 HUD: 거리(km) · 예상 시간(분)만 표시 (그 외 부가 설명 제거) */
+      function formatWalkHudMeta(meta) {
+        const s = String(meta || "");
+        const kmM = s.match(/(\d+(?:\.\d+)?)\s*km/i);
+        const minM = s.match(/(\d+)\s*분/);
+        const parts = [];
+        if (kmM) parts.push(kmM[1] + "km");
+        if (minM) parts.push(minM[1] + "분");
+        if (parts.length) return parts.join(" · ");
+        return "1.2km · 20분";
+      }
+
       function getRegisteredWalkDogs() {
         const primaryName = (state.dogName || "").trim() || "반려견";
         const primarySub = (state.primaryPetSub || "").trim() || getDogInfoSubline() || "";
@@ -3535,10 +3565,14 @@
       }
 
       function syncWalkRouteLabels(name, meta) {
+        const routeName = (name || "").trim() || "백빈건널목";
+        const routeMeta = (meta || "").trim() || "1.2km · 20분";
+        currentWalkRouteName = routeName;
+        currentWalkRouteMeta = routeMeta;
         const nm = document.getElementById("walkRouteName");
         const mt = document.getElementById("walkRouteMeta");
-        if (nm) nm.textContent = (name || "").trim() || "오늘의 산책";
-        if (mt) mt.textContent = (meta || "").trim();
+        if (nm) nm.textContent = routeName;
+        if (mt) mt.textContent = routeMeta;
         syncWalkParticipantLine();
         const bar = document.getElementById("walkHudCenterBar");
         if (bar) {
@@ -3546,10 +3580,15 @@
             .filter((d) => (state.walkParticipantIds || []).includes(d.id))
             .map((d) => d.name)
             .join(", ") || ((state.dogName || "").trim() || "반려견");
-          bar.textContent = `${dogs} | ${(name || "").trim() || "오늘의 산책"} | ${(meta || "").trim() || "거리 정보" } 예상`;
+          const dog = String(dogs.split(",")[0] || dogs).trim() || "보리";
+          const hudMetaShort = formatWalkHudMeta(routeMeta);
+          bar.innerHTML = '<span class="walk-hud-dog">' + escapeHtml(dog) + '</span>'
+            + '<span class="walk-hud-sep"></span>'
+            + '<span class="walk-hud-route">' + escapeHtml(routeName) + '</span>'
+            + '<span class="walk-hud-meta">' + escapeHtml(hudMetaShort) + '</span>';
         }
-        const kmMatch = String(meta || "").match(/(\d+(\.\d+)?)km/i);
-        const minMatch = String(meta || "").match(/(\d+)\s*분/);
+        const kmMatch = String(routeMeta).match(/(\d+(\.\d+)?)km/i);
+        const minMatch = String(routeMeta).match(/(\d+)\s*분/);
         const km = kmMatch ? kmMatch[1] : "1.9";
         const mins = minMatch ? minMatch[1] : "20";
         const hudKm = document.getElementById("walkSheetKmNum");
@@ -3892,6 +3931,7 @@
         hospital: "#00E933",
         tour: "#19B23A",
         petshop: "#00E933",
+        dogpark: "#19B23A",
       };
       const categoryNames = {
         stay: "숙소",
@@ -3902,6 +3942,7 @@
         hospital: "병원",
         tour: "관광지",
         petshop: "펫용품판매소",
+        dogpark: "반려견 놀이터",
       };
       const categoryIcons = {
         stay: "🏨",
@@ -3912,6 +3953,7 @@
         hospital: "🏥",
         tour: "📍",
         petshop: "🦴",
+        dogpark: "🐕‍🦺",
       };
       const exploreSpots = [
         { name: "한강 펫스테이", cat: "stay", x: 20, y: 22 },
@@ -3930,6 +3972,8 @@
         { name: "노들섬", cat: "tour", x: 76, y: 54 },
         { name: "멍멍 펫샵", cat: "petshop", x: 33, y: 25 },
         { name: "한강 펫용품점", cat: "petshop", x: 52, y: 62 },
+        { name: "한강 반려견 운동장", cat: "dogpark", x: 58, y: 44 },
+        { name: "댕댕 운동장 · 마포", cat: "dogpark", x: 24, y: 58 },
       ];
       const exploreState = { selectedCat: null, zoom: 1, panX: 0, panY: 0, sheetOpen: false };
 
@@ -4064,6 +4108,29 @@
       syncHomeDogName();
       syncPetDogName();
 
+      // 개발자 바로가기: 아이디·비밀번호 모두 "." 입력 후 LOGIN
+      (function bindDevLoginShortcut() {
+        const loginBtn = document.querySelector('.view[data-view="login"] .auth-btn-black');
+        const idEl = document.getElementById("loginIdField");
+        const pwEl = document.getElementById("loginPwField");
+        const devDogPool = ["초코", "몽이", "두부", "바둑이", "루이", "코코", "뭉치", "해피", "쿠키", "별이"];
+        if (!loginBtn || !idEl || !pwEl) return;
+        loginBtn.addEventListener("click", () => {
+          if (idEl.value !== "." || pwEl.value !== ".") return;
+          const pick = devDogPool[Math.floor(Math.random() * devDogPool.length)];
+          state.dogName = pick;
+          state.primaryPetSub = "개발 모드 · 임의 반려견";
+          try {
+            localStorage.setItem(PRIMARY_PET_KEY, JSON.stringify({ name: pick, sub: state.primaryPetSub }));
+          } catch (_) {}
+          const dn = document.getElementById("dogNameInput");
+          if (dn) dn.value = pick;
+          syncHomeDogName();
+          syncPetDogName();
+          setActiveView("home");
+        });
+      })();
+
       // Signup checkbox interaction
       const tosRequired = document.getElementById("tosRequired");
       const tosChip = document.getElementById("tosChip");
@@ -4092,10 +4159,6 @@
 
       // Walk interactions
       const voiceActionIco = document.getElementById("voiceActionIco");
-      const walkPickedCard = document.getElementById("walkPickedCard");
-      const walkPickedTitle = document.getElementById("walkPickedTitle");
-      const walkPickedMeta = document.getElementById("walkPickedMeta");
-      const walkPickedStart = document.getElementById("walkPickedStart");
       const walkEndSheetBtn = document.getElementById("walkEndSheetBtn");
       const walkMoreBtn = document.getElementById("walkMoreBtn");
       const walkMoreMenu = document.getElementById("walkMoreMenu");
@@ -4109,7 +4172,6 @@
       const walkHeartBtn = document.getElementById("walkHeartBtn");
       const walkVoiceToggleMenu = document.getElementById("walkVoiceToggleMenu");
       const walkDogChangeMenu = document.getElementById("walkDogChangeMenu");
-      let selectedWalkRoute = null;
       let voiceOn = true;
       let sheetState = "mid";
 
@@ -4140,10 +4202,9 @@
         else logTimeline.appendChild(newEntry);
       }
       function goWalkReviewFromEnd() {
-        const routeNameEl = document.getElementById("walkRouteName");
         const reviewRouteEl = document.getElementById("reviewRouteName");
-        if (routeNameEl && reviewRouteEl) {
-          reviewRouteEl.textContent = (routeNameEl.textContent || "").trim() || "오늘의 산책";
+        if (reviewRouteEl) {
+          reviewRouteEl.textContent = (currentWalkRouteName || "").trim() || "오늘의 산책";
         }
         const reviewMemoEl = document.getElementById("reviewMemo");
         if (reviewMemoEl && state.walkMemos && state.walkMemos.length) {
@@ -4195,19 +4256,48 @@
         });
       }
       if (walkLiveSheetHandle && walkLiveSheet) {
-        let touchY0 = null;
-        function onDragEnd(y1) {
-          if (touchY0 == null) return;
-          const dy = y1 - touchY0;
-          touchY0 = null;
+        let startY = null;
+        let pointerId = null;
+        let moved = false;
+        function applyByDrag(dy) {
           if (Math.abs(dy) < 24) return;
           if (dy > 0) setSheetState(sheetState === "expanded" ? "mid" : "collapsed");
           else setSheetState(sheetState === "collapsed" ? "mid" : "expanded");
         }
-        walkLiveSheetHandle.addEventListener("touchstart", (e) => { touchY0 = e.touches[0].clientY; }, { passive: true });
-        walkLiveSheetHandle.addEventListener("touchend", (e) => onDragEnd(e.changedTouches[0].clientY));
-        walkLiveSheetHandle.addEventListener("pointerdown", (e) => { touchY0 = e.clientY; });
-        walkLiveSheetHandle.addEventListener("pointerup", (e) => onDragEnd(e.clientY));
+        walkLiveSheetHandle.addEventListener("touchstart", (e) => { startY = e.touches[0].clientY; moved = false; }, { passive: true });
+        walkLiveSheetHandle.addEventListener("touchmove", (e) => {
+          if (startY == null) return;
+          moved = true;
+          const dy = e.touches[0].clientY - startY;
+          applyByDrag(dy);
+          startY = null;
+        }, { passive: true });
+        walkLiveSheetHandle.addEventListener("touchend", (e) => {
+          if (startY == null || moved) { startY = null; return; }
+          applyByDrag(e.changedTouches[0].clientY - startY);
+          startY = null;
+        });
+        walkLiveSheetHandle.addEventListener("pointerdown", (e) => {
+          startY = e.clientY;
+          pointerId = e.pointerId;
+          moved = false;
+          walkLiveSheetHandle.setPointerCapture(e.pointerId);
+        });
+        walkLiveSheetHandle.addEventListener("pointermove", (e) => {
+          if (startY == null || pointerId !== e.pointerId) return;
+          const dy = e.clientY - startY;
+          if (Math.abs(dy) < 18) return;
+          moved = true;
+          applyByDrag(dy);
+          startY = e.clientY;
+        });
+        walkLiveSheetHandle.addEventListener("pointerup", (e) => {
+          if (pointerId !== e.pointerId) return;
+          if (!moved && startY != null) applyByDrag(e.clientY - startY);
+          startY = null;
+          pointerId = null;
+          moved = false;
+        });
       }
       if (walkLocateBtn) {
         walkLocateBtn.addEventListener("click", (e) => {
@@ -4280,17 +4370,25 @@
 
       document.querySelectorAll(".hcard[data-walk-route]").forEach((card) => {
         card.style.cursor = "pointer";
-        card.addEventListener("click", () => {
-          const routeName = card.getAttribute("data-walk-route");
-          const routeMeta = card.getAttribute("data-walk-meta") || "거리/시간 정보 준비 중";
-          selectedWalkRoute = { name: routeName, meta: routeMeta };
-          walkPickedTitle.textContent = routeName;
-          walkPickedMeta.textContent = routeMeta;
+        card.addEventListener("click", (e) => {
+          const startBtn = e.target.closest(".hcard-start-btn");
+          if (startBtn) {
+            const routeName = card.getAttribute("data-walk-route") || "";
+            const routeMeta = card.getAttribute("data-walk-meta") || "거리/시간 정보 준비 중";
+            beginWalkNavigationOrPicker({ name: routeName, meta: routeMeta });
+            return;
+          }
           const fromHome = card.closest('.view[data-view="home"]');
           if (fromHome) setActiveView("walkHome");
-          walkPickedCard.classList.add("show");
         });
       });
+
+      const homeQuickWalkStart = document.getElementById("homeQuickWalkStart");
+      if (homeQuickWalkStart) {
+        homeQuickWalkStart.addEventListener("click", () => {
+          beginWalkNavigationOrPicker({ name: "즉시 산책", meta: "1.2km · 20분" });
+        });
+      }
 
       const walkHomeScroll = document.getElementById("walkHomeScroll");
       if (walkHomeScroll) {
@@ -4301,20 +4399,7 @@
           if (!card) return;
           const routeName = card.getAttribute("data-walk-route") || "";
           const routeMeta = card.getAttribute("data-walk-meta") || "거리/시간 정보 준비 중";
-          selectedWalkRoute = { name: routeName, meta: routeMeta };
-          if (walkPickedTitle) walkPickedTitle.textContent = routeName;
-          if (walkPickedMeta) walkPickedMeta.textContent = routeMeta;
-          if (walkPickedCard) walkPickedCard.classList.add("show");
           beginWalkNavigationOrPicker({ name: routeName, meta: routeMeta });
-        });
-      }
-      if (walkPickedStart) {
-        walkPickedStart.addEventListener("click", () => {
-          if (!selectedWalkRoute) return;
-          beginWalkNavigationOrPicker({
-            name: selectedWalkRoute.name || "",
-            meta: selectedWalkRoute.meta || "",
-          });
         });
       }
       document.getElementById("walkDogPickCancel")?.addEventListener("click", () => closeWalkDogPickOverlay());
