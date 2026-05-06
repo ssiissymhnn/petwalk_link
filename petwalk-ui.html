@@ -575,6 +575,12 @@
       padding:9px 14px;font-size:11px;font-weight:800;font-family:inherit;cursor:pointer;backdrop-filter:blur(6px);white-space:nowrap;
     }
     .walk-reco-start-btn:active{transform:scale(.97);background:rgba(255,255,255,.22)}
+    .walk-reco-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;-ms-overflow-style:none}
+    .walk-reco-tabs::-webkit-scrollbar{display:none;width:0;height:0}
+    .walk-reco-tab{flex-shrink:0;padding:7px 14px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-size:12px;font-weight:700;color:var(--sub);cursor:pointer;font-family:inherit;transition:all .15s ease;white-space:nowrap}
+    .walk-reco-tab.active{background:var(--main);border-color:var(--main);color:#fff;box-shadow:0 2px 8px rgba(25,178,58,.2)}
+    .walk-reco-tab:not(.active):active{transform:scale(.96)}
+    .walk-reco-card[hidden]{display:none}
     .view[data-view="pet_monthly"] .chip,
     .view[data-view="home"] .chip{background:rgba(25,178,58,.1);color:var(--main)}
     /* Petlog */
@@ -838,12 +844,11 @@
     .walk-live-sheet{
       position:absolute;left:0;right:0;bottom:0;
       background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -8px 28px rgba(0,0,0,.12);z-index:5;
-      display:flex;flex-direction:column;height:34%;min-height:130px;max-height:calc(100% - 56px);
-      transition:height .24s ease;
+      display:flex;flex-direction:column;max-height:calc(100% - 56px);
+      transition:height .24s ease;overflow:hidden;
     }
     .walk-live-sheet.state-collapsed{height:104px}
-    .walk-live-sheet.state-mid{height:34%}
-    .walk-live-sheet.state-expanded{height:calc(100% - 56px)}
+    .walk-live-sheet.state-expanded{height:70%;min-height:320px;max-height:calc(100% - 56px)}
     .walk-live-sheet-scroll{scrollbar-width:none;-ms-overflow-style:none}
     .walk-live-sheet-scroll::-webkit-scrollbar{display:none}
     .walk-sheet-top{display:flex;align-items:center;gap:8px;padding:12px 12px 18px}
@@ -867,6 +872,13 @@
     .walk-live-actions .walk-live-log-head{margin-bottom:14px}
     .walk-report-grid{grid-template-columns:repeat(4,1fr);gap:7px;margin-top:2px}
     .walk-report-btn{font-size:9px;min-height:58px;background:#fff}
+    .walk-report-accordion{border:1px solid rgba(0,0,0,.06);border-radius:14px;overflow:hidden;background:#fafafa}
+    .walk-report-accordion-toggle{display:flex;align-items:center;gap:8px;width:100%;padding:12px 14px;border:none;background:transparent;cursor:pointer;font-family:inherit;text-align:left}
+    .walk-report-accordion-title{font-size:13px;font-weight:800;color:var(--text)}
+    .walk-report-accordion-sub{font-size:11px;color:var(--sub);font-weight:600;flex:1}
+    .walk-report-accordion-arrow{font-size:16px;font-weight:800;color:var(--sub);transition:transform .2s ease;display:inline-block}
+    .walk-report-accordion-arrow.open{transform:rotate(90deg)}
+    .walk-report-accordion-body{padding:0 12px 12px}
     .walk-sheet-end-btn{
       margin-top:18px;width:100%;border:1px solid #F1F1F1;background:#FFFFFF;color:#179833;border-radius:12px;
       padding:12px 8px;font-size:14px;font-weight:900;cursor:pointer;font-family:inherit
@@ -1712,14 +1724,7 @@
                 <p class="mypage-subtitle">월간 산책 기록</p>
                 <p class="stub-muted">날짜를 눌러 상세 산책 기록을 확인하세요. 점 색깔은 각 반려견의 산책을 의미해요.</p>
 
-                <div class="cal-dog-filter" id="calDogFilter">
-                  <button type="button" class="cal-dog-chip active" data-dog="bori" style="--dog-color:#19B23A;">
-                    <span class="cal-dog-swatch"></span>보리
-                  </button>
-                  <button type="button" class="cal-dog-chip active" data-dog="kongi" style="--dog-color:#F59E0B;">
-                    <span class="cal-dog-swatch"></span>콩이
-                  </button>
-                </div>
+                <div class="cal-dog-filter" id="calDogFilter"></div>
 
                 <div class="cal-header">
                   <button type="button" class="cal-nav" id="calPrev">‹</button>
@@ -1732,22 +1737,22 @@
                   <div class="cal-day">1</div>
                   <div class="cal-day">2</div>
                   <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori">3<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span></span></div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="kongi">4<span class="cal-dots"><span class="cal-dot" data-dog="kongi" style="background:#F59E0B;"></span></span></div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori,kongi">5<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="kongi" style="background:#F59E0B;"></span></span></div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="extra_0">4<span class="cal-dots"><span class="cal-dot" data-dog="extra_0" style="background:#F59E0B;"></span></span></div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori,extra_0">5<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="extra_0" style="background:#F59E0B;"></span></span></div>
                   <div class="cal-day">6</div>
                   <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori">7<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span></span></div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori,kongi">8<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="kongi" style="background:#F59E0B;"></span></span></div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori,extra_0">8<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="extra_0" style="background:#F59E0B;"></span></span></div>
                   <div class="cal-day">9</div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="kongi">10<span class="cal-dots"><span class="cal-dot" data-dog="kongi" style="background:#F59E0B;"></span></span></div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="extra_0">10<span class="cal-dots"><span class="cal-dot" data-dog="extra_0" style="background:#F59E0B;"></span></span></div>
                   <div class="cal-day">11</div>
                   <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori">12<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span></span></div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori,kongi">13<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="kongi" style="background:#F59E0B;"></span></span></div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori,extra_0">13<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="extra_0" style="background:#F59E0B;"></span></span></div>
                   <div class="cal-day">14</div>
                   <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori">15<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span></span></div>
                   <div class="cal-day">16</div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="kongi">17<span class="cal-dots"><span class="cal-dot" data-dog="kongi" style="background:#F59E0B;"></span></span></div>
+                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="extra_0">17<span class="cal-dots"><span class="cal-dot" data-dog="extra_0" style="background:#F59E0B;"></span></span></div>
                   <div class="cal-day">18</div>
-                  <div class="cal-day today walked" data-nav="pet_journal" data-dogs="bori,kongi">19<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="kongi" style="background:#F59E0B;"></span></span></div>
+                  <div class="cal-day today walked" data-nav="pet_journal" data-dogs="bori,extra_0">19<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="extra_0" style="background:#F59E0B;"></span></span></div>
                   <div class="cal-day">20</div><div class="cal-day">21</div><div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div>
                   <div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div><div class="cal-day">29</div><div class="cal-day">30</div>
                 </div>
@@ -2079,16 +2084,24 @@
                     </div>
 
                     <div class="walk-live-actions">
-                      <div class="walk-live-log-head"><div class="walk-live-log-title">상황 제보하기</div><div class="walk-live-log-sub">이 구간 어때요?</div></div>
-                      <div class="walk-report-grid" id="walkReportGrid" aria-label="실시간 제보">
-                        <button type="button" class="walk-report-btn" data-report="사람 많아요" data-emoji="👥"><span class="e">👥</span>사람 많아요</button>
-                        <button type="button" class="walk-report-btn" data-report="한적해요" data-emoji="🍃"><span class="e">🍃</span>한적해요</button>
-                        <button type="button" class="walk-report-btn" data-report="행사 중" data-emoji="🎪"><span class="e">🎪</span>행사 중</button>
-                        <button type="button" class="walk-report-btn" data-report="공사 중" data-emoji="🚧"><span class="e">🚧</span>공사 중</button>
-                        <button type="button" class="walk-report-btn" data-report="길 막힘" data-emoji="🚫"><span class="e">🚫</span>길 막힘</button>
-                        <button type="button" class="walk-report-btn" data-report="이상한 냄새" data-emoji="🤢"><span class="e">🤢</span>이상한 냄새</button>
-                        <button type="button" class="walk-report-btn" data-report="공격견 있음" data-emoji="🐕‍🦺"><span class="e">🐕‍🦺</span>공격견 있음</button>
-                        <button type="button" class="walk-report-btn" data-report="기타 문제 O" data-emoji="⚠️"><span class="e">⚠️</span>기타 문제 O</button>
+                      <div class="walk-report-accordion" id="walkReportAccordion">
+                        <button type="button" class="walk-report-accordion-toggle" id="walkReportToggle">
+                          <span class="walk-report-accordion-title">상황 제보하기</span>
+                          <span class="walk-report-accordion-sub">이 구간 어때요?</span>
+                          <span class="walk-report-accordion-arrow" id="walkReportArrow">›</span>
+                        </button>
+                        <div class="walk-report-accordion-body" id="walkReportBody" style="display:none;">
+                          <div class="walk-report-grid" id="walkReportGrid" aria-label="실시간 제보">
+                            <button type="button" class="walk-report-btn" data-report="사람 많아요" data-emoji="👥"><span class="e">👥</span>사람 많아요</button>
+                            <button type="button" class="walk-report-btn" data-report="한적해요" data-emoji="🍃"><span class="e">🍃</span>한적해요</button>
+                            <button type="button" class="walk-report-btn" data-report="행사 중" data-emoji="🎪"><span class="e">🎪</span>행사 중</button>
+                            <button type="button" class="walk-report-btn" data-report="공사 중" data-emoji="🚧"><span class="e">🚧</span>공사 중</button>
+                            <button type="button" class="walk-report-btn" data-report="길 막힘" data-emoji="🚫"><span class="e">🚫</span>길 막힘</button>
+                            <button type="button" class="walk-report-btn" data-report="이상한 냄새" data-emoji="🤢"><span class="e">🤢</span>이상한 냄새</button>
+                            <button type="button" class="walk-report-btn" data-report="공격견 있음" data-emoji="🐕‍🦺"><span class="e">🐕‍🦺</span>공격견 있음</button>
+                            <button type="button" class="walk-report-btn" data-report="기타 문제 O" data-emoji="⚠️"><span class="e">⚠️</span>기타 문제 O</button>
+                          </div>
+                        </div>
                       </div>
                       <button type="button" class="walk-sheet-end-btn" id="walkEndSheetBtn">산책 종료</button>
                     </div>
@@ -2226,8 +2239,15 @@
                   <div class="walk-section-head">
                     <div class="walk-section-title">추천 코스</div>
                   </div>
-                  <div class="walk-reco-stack" aria-label="추천 코스">
-                    <div class="walk-reco-card" style="background-image:url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&amp;q=80')" data-walk-route="노들섬" data-walk-meta="2.4km · 34분 · 잔디/그늘 균형">
+                  <div class="walk-reco-tabs" id="walkRecoTabs">
+                    <button type="button" class="walk-reco-tab active" data-reco-cat="all">전체보기</button>
+                    <button type="button" class="walk-reco-tab" data-reco-cat="river">강변</button>
+                    <button type="button" class="walk-reco-tab" data-reco-cat="park">공원</button>
+                    <button type="button" class="walk-reco-tab" data-reco-cat="forest">숲길·그늘</button>
+                    <button type="button" class="walk-reco-tab" data-reco-cat="suburb">근교</button>
+                  </div>
+                  <div class="walk-reco-stack" id="walkRecoStack" aria-label="추천 코스">
+                    <div class="walk-reco-card" data-category="river" style="background-image:url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&amp;q=80')" data-walk-route="노들섬" data-walk-meta="2.4km · 34분 · 잔디/그늘 균형">
                       <div class="walk-reco-card-inner">
                         <div class="walk-reco-card-foot">
                           <div class="walk-reco-copy">
@@ -2239,7 +2259,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="walk-reco-card" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&amp;q=80')" data-walk-route="올림픽공원" data-walk-meta="2.8km · 39분 · 넓은 공간">
+                    <div class="walk-reco-card" data-category="park" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&amp;q=80')" data-walk-route="올림픽공원" data-walk-meta="2.8km · 39분 · 넓은 공간">
                       <div class="walk-reco-card-inner">
                         <div class="walk-reco-card-foot">
                           <div class="walk-reco-copy">
@@ -2251,7 +2271,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="walk-reco-card" style="background-image:url('https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200&amp;q=80')" data-walk-route="하남 신규 산책 공원" data-walk-meta="2.0km · 28분 · 신규 오픈">
+                    <div class="walk-reco-card" data-category="suburb" style="background-image:url('https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200&amp;q=80')" data-walk-route="하남 신규 산책 공원" data-walk-meta="2.0km · 28분 · 신규 오픈">
                       <div class="walk-reco-card-inner">
                         <div class="walk-reco-card-foot">
                           <div class="walk-reco-copy">
@@ -2263,7 +2283,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="walk-reco-card" style="background-image:url('https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=1200&amp;q=80')" data-walk-route="용산공원" data-walk-meta="2.0km · 30분 · 차분한 분위기">
+                    <div class="walk-reco-card" data-category="river" style="background-image:url('https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=1200&amp;q=80')" data-walk-route="용산공원" data-walk-meta="2.0km · 30분 · 차분한 분위기">
                       <div class="walk-reco-card-inner">
                         <div class="walk-reco-card-foot">
                           <div class="walk-reco-copy">
@@ -2275,7 +2295,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="walk-reco-card" style="background-image:url('https://images.unsplash.com/photo-1511497584788-876760111969?w=1200&amp;q=80')" data-walk-route="그늘 많은 루프 코스" data-walk-meta="1.9km · 29분 · 체감 시원">
+                    <div class="walk-reco-card" data-category="forest" style="background-image:url('https://images.unsplash.com/photo-1511497584788-876760111969?w=1200&amp;q=80')" data-walk-route="그늘 많은 루프 코스" data-walk-meta="1.9km · 29분 · 체감 시원">
                       <div class="walk-reco-card-inner">
                         <div class="walk-reco-card-foot">
                           <div class="walk-reco-copy">
@@ -2287,7 +2307,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="walk-reco-card" style="background-image:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&amp;q=80')" data-walk-route="강변 바람 코스" data-walk-meta="2.2km · 33분 · 바람 쾌적">
+                    <div class="walk-reco-card" data-category="river" style="background-image:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&amp;q=80')" data-walk-route="강변 바람 코스" data-walk-meta="2.2km · 33분 · 바람 쾌적">
                       <div class="walk-reco-card-inner">
                         <div class="walk-reco-card-foot">
                           <div class="walk-reco-copy">
@@ -2717,7 +2737,12 @@
         walkParticipantIds: ["primary"],
         walkMemos: [],
         walkDogPickMode: "start",
+        freeWalk: false,
       };
+      let walkTimerInterval = null;
+      let walkStartTime = null;
+      let walkElapsedSec = 0;
+      let walkDistanceKm = 0;
       const PETLOG_EXTRA_PETS_KEY = "petwalk_extra_pet_names";
       const PRIMARY_PET_KEY = "petwalk_primary_pet";
       let currentWalkRouteName = "백빈건널목";
@@ -2838,6 +2863,9 @@
         handleRerouteVisibility(name);
         handleTabsVisibility(name);
         handleProgress(name);
+        if (activeView && ["pet_add", "dogInfoTraits", "dogInfoResult"].includes(name)) {
+          activeView.scrollTop = 0;
+        }
         if (name === "home") { syncHomeDogName(); renderSchedules(); syncHomeGreeting(); ensureWeatherLoaded(); ensureHomeMiniMap(); }
         if (name === "walkHome") ensureWalkHomeMap();
         if (name === "walk") { ensureWalkLiveMap(); ensureWeatherLoaded(); }
@@ -3308,12 +3336,13 @@
             if (walkLiveMarker) walkLiveMarker.setLatLng([loc.lat, loc.lon]);
             if (!walkReportLayer) walkReportLayer = L.layerGroup().addTo(walkLiveMap);
           }
-          // 산책 루트 그리기 (현재 선택된 루트 이름 기반 시드)
-          const seed = routeSeedFromName(currentWalkRouteName || "");
           if (walkLiveRouteLayer) { walkLiveRouteLayer.remove(); walkLiveRouteLayer = null; }
-          walkLiveRouteLayer = drawWalkRouteOnMap(walkLiveMap, loc.lat, loc.lon, {
-            color: "#19B23A", weight: 5, opacity: 0.92, fit: true, showEndpoints: true, seed,
-          });
+          if (!state.freeWalk) {
+            const seed = routeSeedFromName(currentWalkRouteName || "");
+            walkLiveRouteLayer = drawWalkRouteOnMap(walkLiveMap, loc.lat, loc.lon, {
+              color: "#19B23A", weight: 5, opacity: 0.92, fit: true, showEndpoints: true, seed,
+            });
+          }
           setTimeout(() => walkLiveMap && walkLiveMap.invalidateSize(), 80);
         });
       }
@@ -3395,6 +3424,7 @@
         if (el) el.textContent = safe;
         const sub = (state.primaryPetSub || "").trim() || getDogInfoSubline();
         if (subEl) subEl.textContent = sub || "견종 · 나이 · 성별";
+        if (renderCalDogChips) renderCalDogChips();
       }
 
       // === 오늘의 일정 (Home) ===
@@ -3552,6 +3582,7 @@
       }
 
       function beginWalkNavigationOrPicker(route) {
+        if (!route.free) state.freeWalk = false;
         const dogs = getRegisteredWalkDogs();
         if (dogs.length >= 2) {
           state.walkDogPickMode = "start";
@@ -3581,20 +3612,43 @@
             .map((d) => d.name)
             .join(", ") || ((state.dogName || "").trim() || "반려견");
           const dog = String(dogs.split(",")[0] || dogs).trim() || "보리";
-          const hudMetaShort = formatWalkHudMeta(routeMeta);
+          const displayRoute = state.freeWalk ? "자유 산책" : routeName;
           bar.innerHTML = '<span class="walk-hud-dog">' + escapeHtml(dog) + '</span>'
             + '<span class="walk-hud-sep"></span>'
-            + '<span class="walk-hud-route">' + escapeHtml(routeName) + '</span>'
-            + '<span class="walk-hud-meta">' + escapeHtml(hudMetaShort) + '</span>';
+            + '<span class="walk-hud-route">' + escapeHtml(displayRoute) + '</span>'
+            + '<span class="walk-hud-meta" id="walkHudMetaLive">0.0km · 00:00</span>';
         }
-        const kmMatch = String(routeMeta).match(/(\d+(\.\d+)?)km/i);
-        const minMatch = String(routeMeta).match(/(\d+)\s*분/);
-        const km = kmMatch ? kmMatch[1] : "1.9";
-        const mins = minMatch ? minMatch[1] : "20";
-        const hudKm = document.getElementById("walkSheetKmNum");
-        const hudMin = document.getElementById("walkSheetMinNum");
-        if (hudKm) hudKm.textContent = km;
-        if (hudMin) hudMin.textContent = `${mins}:00`;
+        startWalkTimer();
+      }
+
+      function startWalkTimer() {
+        stopWalkTimer();
+        walkStartTime = Date.now();
+        walkElapsedSec = 0;
+        walkDistanceKm = 0;
+        updateWalkTimerDisplay();
+        walkTimerInterval = setInterval(() => {
+          walkElapsedSec = Math.floor((Date.now() - walkStartTime) / 1000);
+          walkDistanceKm += 0.002 + Math.random() * 0.003;
+          updateWalkTimerDisplay();
+        }, 1000);
+      }
+
+      function stopWalkTimer() {
+        if (walkTimerInterval) { clearInterval(walkTimerInterval); walkTimerInterval = null; }
+      }
+
+      function updateWalkTimerDisplay() {
+        const mins = Math.floor(walkElapsedSec / 60);
+        const secs = walkElapsedSec % 60;
+        const timeStr = String(mins).padStart(2, "0") + ":" + String(secs).padStart(2, "0");
+        const distStr = walkDistanceKm.toFixed(1);
+        const hudMeta = document.getElementById("walkHudMetaLive");
+        if (hudMeta) hudMeta.textContent = distStr + "km · " + timeStr;
+        const sheetKm = document.getElementById("walkSheetKmNum");
+        const sheetMin = document.getElementById("walkSheetMinNum");
+        if (sheetKm) sheetKm.textContent = distStr;
+        if (sheetMin) sheetMin.textContent = timeStr;
       }
 
       function syncWalkParticipantLine() {
@@ -3838,7 +3892,7 @@
           clearTimeout(rerouteTimer);
           rerouteTimer = null;
         }
-        if (viewName === "walk") {
+        if (viewName === "walk" && !state.freeWalk) {
           rerouteTimer = setTimeout(() => {
             overlay.classList.add("show");
           }, 2200);
@@ -4202,6 +4256,7 @@
         else logTimeline.appendChild(newEntry);
       }
       function goWalkReviewFromEnd() {
+        stopWalkTimer();
         const reviewRouteEl = document.getElementById("reviewRouteName");
         if (reviewRouteEl) {
           reviewRouteEl.textContent = (currentWalkRouteName || "").trim() || "오늘의 산책";
@@ -4219,10 +4274,10 @@
         if (walkVoiceToggleMenu) walkVoiceToggleMenu.textContent = voiceOn ? "음성 안내 끄기" : "음성 안내 켜기";
       }
       function setSheetState(next) {
-        sheetState = next;
+        sheetState = (next === "expanded") ? "expanded" : "collapsed";
         if (!walkLiveSheet) return;
-        walkLiveSheet.classList.remove("state-collapsed", "state-mid", "state-expanded");
-        walkLiveSheet.classList.add(next === "expanded" ? "state-expanded" : next === "collapsed" ? "state-collapsed" : "state-mid");
+        walkLiveSheet.classList.remove("state-collapsed", "state-expanded");
+        walkLiveSheet.classList.add(sheetState === "expanded" ? "state-expanded" : "state-collapsed");
         setTimeout(() => walkLiveMap && walkLiveMap.invalidateSize(), 220);
       }
 
@@ -4259,10 +4314,12 @@
         let startY = null;
         let pointerId = null;
         let moved = false;
+        function toggleSheet() {
+          setSheetState(sheetState === "collapsed" ? "expanded" : "collapsed");
+        }
         function applyByDrag(dy) {
           if (Math.abs(dy) < 24) return;
-          if (dy > 0) setSheetState(sheetState === "expanded" ? "mid" : "collapsed");
-          else setSheetState(sheetState === "collapsed" ? "mid" : "expanded");
+          setSheetState(dy > 0 ? "collapsed" : "expanded");
         }
         walkLiveSheetHandle.addEventListener("touchstart", (e) => { startY = e.touches[0].clientY; moved = false; }, { passive: true });
         walkLiveSheetHandle.addEventListener("touchmove", (e) => {
@@ -4273,8 +4330,8 @@
           startY = null;
         }, { passive: true });
         walkLiveSheetHandle.addEventListener("touchend", (e) => {
-          if (startY == null || moved) { startY = null; return; }
-          applyByDrag(e.changedTouches[0].clientY - startY);
+          if (startY == null) return;
+          if (!moved) toggleSheet();
           startY = null;
         });
         walkLiveSheetHandle.addEventListener("pointerdown", (e) => {
@@ -4293,10 +4350,57 @@
         });
         walkLiveSheetHandle.addEventListener("pointerup", (e) => {
           if (pointerId !== e.pointerId) return;
-          if (!moved && startY != null) applyByDrag(e.clientY - startY);
+          if (!moved) toggleSheet();
           startY = null;
           pointerId = null;
           moved = false;
+        });
+        function isSheetInteractiveTarget(target) {
+          return !!(target && target.closest("button, a, input, textarea, select, .walk-live-sheet-handle"));
+        }
+        let sheetStartY = null;
+        let sheetPointerId = null;
+        let sheetMoved = false;
+        walkLiveSheet.addEventListener("touchstart", (e) => {
+          if (isSheetInteractiveTarget(e.target)) return;
+          sheetStartY = e.touches[0].clientY;
+          sheetMoved = false;
+        }, { passive: true });
+        walkLiveSheet.addEventListener("touchmove", (e) => {
+          if (sheetStartY == null) return;
+          const dy = e.touches[0].clientY - sheetStartY;
+          if (Math.abs(dy) < 16) return;
+          sheetMoved = true;
+          applyByDrag(dy);
+          sheetStartY = null;
+        }, { passive: true });
+        walkLiveSheet.addEventListener("touchend", () => {
+          if (sheetStartY == null) return;
+          if (!sheetMoved) toggleSheet();
+          sheetStartY = null;
+          sheetMoved = false;
+        });
+        walkLiveSheet.addEventListener("pointerdown", (e) => {
+          if (isSheetInteractiveTarget(e.target)) return;
+          sheetStartY = e.clientY;
+          sheetPointerId = e.pointerId;
+          sheetMoved = false;
+          walkLiveSheet.setPointerCapture(e.pointerId);
+        });
+        walkLiveSheet.addEventListener("pointermove", (e) => {
+          if (sheetStartY == null || sheetPointerId !== e.pointerId) return;
+          const dy = e.clientY - sheetStartY;
+          if (Math.abs(dy) < 16) return;
+          sheetMoved = true;
+          applyByDrag(dy);
+          sheetStartY = null;
+        });
+        walkLiveSheet.addEventListener("pointerup", (e) => {
+          if (sheetPointerId !== e.pointerId) return;
+          if (!sheetMoved && sheetStartY != null) toggleSheet();
+          sheetStartY = null;
+          sheetPointerId = null;
+          sheetMoved = false;
         });
       }
       if (walkLocateBtn) {
@@ -4365,6 +4469,20 @@
           addWalkTimelineEntry(emoji + " 제보 · " + label, "#8b5cf6");
         });
       }
+
+      // 상황 제보하기 아코디언
+      (function initReportAccordion() {
+        const toggle = document.getElementById("walkReportToggle");
+        const body = document.getElementById("walkReportBody");
+        const arrow = document.getElementById("walkReportArrow");
+        if (!toggle || !body) return;
+        toggle.addEventListener("click", () => {
+          const open = body.style.display === "none";
+          body.style.display = open ? "" : "none";
+          if (arrow) arrow.classList.toggle("open", open);
+        });
+      })();
+
       syncVoiceUi();
       setSheetState("collapsed");
 
@@ -4386,7 +4504,8 @@
       const homeQuickWalkStart = document.getElementById("homeQuickWalkStart");
       if (homeQuickWalkStart) {
         homeQuickWalkStart.addEventListener("click", () => {
-          beginWalkNavigationOrPicker({ name: "즉시 산책", meta: "1.2km · 20분" });
+          state.freeWalk = true;
+          beginWalkNavigationOrPicker({ name: "자유 산책", meta: "0.0km · 0분", free: true });
         });
       }
 
@@ -4402,6 +4521,27 @@
           beginWalkNavigationOrPicker({ name: routeName, meta: routeMeta });
         });
       }
+
+      // === 추천 코스 카테고리 탭 필터 ===
+      (function initRecoTabs() {
+        const tabsWrap = document.getElementById("walkRecoTabs");
+        const stack = document.getElementById("walkRecoStack");
+        if (!tabsWrap || !stack) return;
+        tabsWrap.addEventListener("click", function(e) {
+          const tab = e.target.closest(".walk-reco-tab");
+          if (!tab) return;
+          tabsWrap.querySelectorAll(".walk-reco-tab").forEach(t => t.classList.remove("active"));
+          tab.classList.add("active");
+          const cat = tab.dataset.recoCat;
+          stack.querySelectorAll(".walk-reco-card").forEach(card => {
+            if (cat === "all" || card.dataset.category === cat) {
+              card.removeAttribute("hidden");
+            } else {
+              card.setAttribute("hidden", "");
+            }
+          });
+        });
+      })();
       document.getElementById("walkDogPickCancel")?.addEventListener("click", () => closeWalkDogPickOverlay());
       document.getElementById("walkDogPickConfirm")?.addEventListener("click", () => confirmWalkDogPickAndGo());
       document.getElementById("walkDogPickOverlay")?.addEventListener("click", (ev) => {
@@ -4521,6 +4661,8 @@
       // === pet_monthly: 반려견별 색 필터 ===
       const calDogFilter = document.getElementById("calDogFilter");
       const calGrid = document.getElementById("calGrid");
+      const CAL_DOG_COLORS = ["#19B23A", "#F59E0B", "#6366F1", "#EC4899", "#14B8A6", "#F97316"];
+      var renderCalDogChips = null;
       if (calDogFilter && calGrid) {
         function applyCalFilter() {
           const activeDogs = Array.from(calDogFilter.querySelectorAll(".cal-dog-chip.active")).map(c => c.dataset.dog);
@@ -4540,16 +4682,33 @@
             else day.setAttribute("data-nav", "pet_journal");
           });
         }
-        calDogFilter.querySelectorAll(".cal-dog-chip").forEach(chip => {
-          chip.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const activeChips = calDogFilter.querySelectorAll(".cal-dog-chip.active");
-            if (chip.classList.contains("active") && activeChips.length === 1) return;
-            chip.classList.toggle("active");
-            applyCalFilter();
+
+        renderCalDogChips = function() {
+          const primaryName = (state.dogName || "").trim() || "반려견";
+          const extras = readPetlogExtras();
+          let html = '<button type="button" class="cal-dog-chip active" data-dog="bori" style="--dog-color:' + CAL_DOG_COLORS[0] + ';">'
+            + '<span class="cal-dog-swatch"></span>' + escapeHtml(primaryName) + '</button>';
+          extras.forEach(function(pet, i) {
+            const name = (pet.name || "").trim() || "반려견";
+            const color = CAL_DOG_COLORS[(i + 1) % CAL_DOG_COLORS.length];
+            const dogId = "extra_" + i;
+            html += '<button type="button" class="cal-dog-chip active" data-dog="' + dogId + '" style="--dog-color:' + color + ';">'
+              + '<span class="cal-dog-swatch"></span>' + escapeHtml(name) + '</button>';
           });
-        });
-        applyCalFilter();
+          calDogFilter.innerHTML = html;
+          calDogFilter.querySelectorAll(".cal-dog-chip").forEach(chip => {
+            chip.addEventListener("click", (e) => {
+              e.stopPropagation();
+              const activeChips = calDogFilter.querySelectorAll(".cal-dog-chip.active");
+              if (chip.classList.contains("active") && activeChips.length === 1) return;
+              chip.classList.toggle("active");
+              applyCalFilter();
+            });
+          });
+          applyCalFilter();
+        };
+
+        renderCalDogChips();
       }
 
       // === userInfo: 시간대 chip + day tab ===
@@ -4969,6 +5128,8 @@
         state.petAddQuizResult = null;
         clearQuizStateAndUI();
         setActiveView("pet_monthly");
+        const petView = document.querySelector('.view[data-view="pet_monthly"]');
+        if (petView) petView.scrollTop = 0;
         setTimeout(() => {
           const tr = document.getElementById("petlogCarouselTrack");
           if (!tr) return;
