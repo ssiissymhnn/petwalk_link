@@ -44,7 +44,7 @@
     .walkhome-mymap-overlay{position:absolute;left:10px;top:10px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.92);padding:6px 11px;border-radius:999px;font-size:11px;font-weight:800;color:var(--text);box-shadow:0 2px 6px rgba(0,0,0,.08);z-index:1000;backdrop-filter:blur(4px);pointer-events:none}
     .walkhome-mymap-overlay .dot{width:8px;height:8px;border-radius:50%;background:var(--main);box-shadow:0 0 0 3px rgba(25,178,58,.25)}
 
-    .home-hero-gradient{position:absolute;inset:0;background:linear-gradient(180deg,rgba(201,250,212,.85) 0%,rgba(168,230,185,.5) 40%,rgba(168,230,185,0) 100%);z-index:1;pointer-events:none;border-radius:0 0 28px 28px}
+    .home-hero-gradient{display:none}
 
     .walk-live-map-inner{position:absolute !important;inset:0}
     .walk-live-route-label{z-index:1100}
@@ -103,32 +103,36 @@
 
     /* === Home v2 (참고 이미지 기반 재설계) === */
     .home-screen{display:flex;flex-direction:column;gap:14px;padding:0 0 12px}
-    .home-hero{position:relative;box-sizing:border-box;border-radius:0 0 28px 28px;margin:-42px -12px 0;padding:0;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;height:170px;transition:height .42s cubic-bezier(.4,0,.2,1)}
-    .home-hero.home-hero-expanded{height:min(58vh,380px)}
-    .home-hero-map-bg{position:absolute !important;inset:0;z-index:0}
-    .home-hero-top{display:flex;justify-content:flex-end;align-items:center;position:relative;z-index:2;flex-shrink:0;padding:50px 18px 0 18px;margin-bottom:0}
+    .home-hero{position:relative;box-sizing:border-box;border-radius:0 0 28px 28px;margin:-42px -12px 0;padding:0;display:flex;flex-direction:column;overflow:hidden;height:80px;background:linear-gradient(180deg,#C9FAD4 0%,#A8E6B9 100%)}
+    .home-hero-top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;flex-shrink:0;padding:50px 18px 0 18px;margin-bottom:0}
     .home-weather-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid rgba(0,0,0,.05);border-radius:999px;padding:6px 12px;font-size:12px;font-weight:800;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.06)}
     .home-weather-chip .home-weather-ico{font-size:14px;line-height:1}
-    .home-loc-chip-wrap{display:flex;justify-content:center;position:relative;z-index:2;flex-shrink:0;margin-top:auto;padding:0 18px 16px}
-    .home-loc-chip{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid rgba(0,0,0,.05);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:800;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease}
-    .home-loc-chip:hover{transform:translateY(-1px)}
+    .home-loc-chip{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid rgba(0,0,0,.05);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:800;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.06)}
     .home-loc-chip .home-loc-ico{font-size:13px;color:#ef4444}
+    .home-hero-character{display:none}
 
-    .home-greeting-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:18px 18px 16px;box-shadow:0 4px 14px rgba(0,0,0,.05);margin:-10px 4px 0;position:relative;z-index:2}
-    .home-greeting-title{font-size:19px;font-weight:900;color:var(--text);letter-spacing:-.01em;line-height:1.25;display:flex;align-items:center;gap:6px;justify-content:space-between}
+    .home-greeting-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:20px 18px 18px;box-shadow:0 4px 14px rgba(0,0,0,.05);margin:8px 4px 0;position:relative;z-index:2}
+    .home-greeting-top-row{display:flex;align-items:center;gap:10px}
+    .home-greeting-left{flex:1;min-width:0}
+    .home-greeting-right{flex-shrink:0;display:flex;align-items:center;justify-content:center}
+    .home-greeting-right img{height:80px;object-fit:contain;filter:drop-shadow(0 3px 8px rgba(0,0,0,.10))}
+    .home-greeting-title{font-size:19px;font-weight:900;color:var(--text);letter-spacing:-.01em;line-height:1.25;display:flex;align-items:center;gap:6px}
     .home-greeting-title-left{display:flex;align-items:center;gap:6px;min-width:0}
-    .home-quick-start-btn{
-      flex-shrink:0;border:none;border-radius:999px;cursor:pointer;padding:8px 14px;font-size:12px;font-weight:800;
-      background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;white-space:nowrap;font-family:inherit;
-      display:inline-flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(25,178,58,.25)
-    }
     .home-greeting-paw{font-size:18px;line-height:1}
     .home-greeting-sub{font-size:12px;color:var(--sub);font-weight:600;margin-top:6px}
-    .home-greeting-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+    .home-greeting-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
     .home-stat{background:linear-gradient(135deg,rgba(25,178,58,.06) 0%,rgba(0,233,51,.04) 100%);border:1px solid rgba(25,178,58,.14);border-radius:14px;padding:10px 6px;text-align:center}
     .home-stat-val{font-size:18px;font-weight:900;color:var(--main);line-height:1.1}
     .home-stat-val .home-stat-unit{font-size:11px;font-weight:800;color:var(--main);margin-left:1px}
     .home-stat-label{font-size:10px;color:var(--sub);font-weight:700;margin-top:3px;letter-spacing:.02em}
+    .home-quick-start-btn{
+      width:100%;border:none;border-radius:14px;cursor:pointer;padding:15px;font-size:16px;font-weight:900;
+      background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;font-family:inherit;
+      display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 4px 14px rgba(25,178,58,.3);
+      margin-top:10px;transition:transform .1s ease,box-shadow .1s ease;letter-spacing:-.01em
+    }
+    .home-quick-start-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(25,178,58,.35)}
+    .home-quick-start-btn:active{transform:translateY(0);box-shadow:0 2px 8px rgba(25,178,58,.2)}
 
     .home-section{padding:0 4px}
     .home-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 2px}
@@ -720,6 +724,9 @@
     }
     .walk-live-fab-voice.voice-off{opacity:.55}
     .walk-live-fab-voice:active{transform:scale(.96)}
+    .walk-live-fab-voice .voice-pulse{position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--main);animation:voicePulseRing 1.8s ease-out infinite;pointer-events:none;display:none}
+    .walk-live-fab-voice:not(.voice-off) .voice-pulse{display:block}
+    @keyframes voicePulseRing{0%{transform:scale(.85);opacity:.7}100%{transform:scale(1.35);opacity:0}}
     .walk-live-menu{
       position:absolute;top:52px;right:10px;z-index:6;min-width:160px;background:#fff;border-radius:14px;
       box-shadow:0 8px 28px rgba(0,0,0,.15);border:1px solid rgba(0,0,0,.08);padding:6px;display:none;overflow:hidden;
@@ -1431,22 +1438,27 @@
             <div class="view" data-view="home" data-tab-root="home">
               <div class="home-screen">
                 <div class="home-hero" id="homeHero">
-                  <div class="home-hero-map-bg" id="homeHeroMapBg"></div>
-                  <div class="home-hero-gradient"></div>
                   <div class="home-hero-top">
+                    <span class="home-loc-chip" id="homeLocChip"><span class="home-loc-ico">📍</span><span id="homeLocText">서울</span></span>
                     <span class="home-weather-chip" id="homeWeatherChip" title="실시간 날씨"><span class="home-weather-ico" id="homeWeatherIco">⏳</span><span id="homeWeatherText">불러오는 중…</span></span>
                   </div>
-                  <div class="home-loc-chip-wrap">
-                    <button type="button" class="home-loc-chip" id="homeLocChip"><span class="home-loc-ico">📍</span><span id="homeLocText">현재 위치</span></button>
+                  <div class="home-hero-character">
+                    <img src="petwalk-mascot.png" alt="보리 캐릭터" />
                   </div>
                 </div>
 
                 <div class="home-greeting-card" id="homeGreetingCard">
-                  <div class="home-greeting-title">
-                    <span class="home-greeting-title-left"><span id="homeGreetingPrefix">좋은 오후예요</span>, <span id="homeDogName">보리</span>!<span class="home-greeting-paw">🐾</span></span>
-                    <button type="button" class="home-quick-start-btn" id="homeQuickWalkStart">바로 산책 시작</button>
+                  <div class="home-greeting-top-row">
+                    <div class="home-greeting-left">
+                      <div class="home-greeting-title">
+                        <span class="home-greeting-title-left"><span id="homeGreetingPrefix">좋은 오후예요</span>, <span id="homeDogName">보리</span>!<span class="home-greeting-paw">🐾</span></span>
+                      </div>
+                      <div class="home-greeting-sub">오늘도 멋진 산책 떠나볼까요?</div>
+                    </div>
+                    <div class="home-greeting-right">
+                      <img src="petwalk-mascot.png" alt="보리 캐릭터" />
+                    </div>
                   </div>
-                  <div class="home-greeting-sub">오늘도 멋진 산책 떠나볼까요?</div>
                   <div class="home-greeting-stats">
                     <div class="home-stat">
                       <div class="home-stat-val">4.2<span class="home-stat-unit"> km</span></div>
@@ -1461,6 +1473,7 @@
                       <div class="home-stat-label">연속 일수</div>
                     </div>
                   </div>
+                  <button type="button" class="home-quick-start-btn" id="homeQuickWalkStart">🐾 바로 산책 시작</button>
                 </div>
 
                 <div class="home-section">
@@ -2028,6 +2041,7 @@
                     <div class="walk-live-map-inner"></div>
                     <div class="walk-live-hud-center" id="walkHudCenterBar"><span class="walk-hud-dog">보리</span><span class="walk-hud-sep"></span><span class="walk-hud-route">백빈건널목</span><span class="walk-hud-meta">1.2km · 20분</span></div>
                     <div class="walk-live-hud-weather" id="walkHudWeatherBox"><span id="walkHudWeatherTemp">--°C</span><br><span id="walkHudWeatherDesc">불러오는 중</span></div>
+                    <button type="button" class="walk-live-fab-voice" id="voiceActionBtn" aria-label="음성 안내 토글"><span class="voice-pulse"></span><span id="voiceActionIco">🔊</span></button>
                     <button type="button" class="walk-live-fab-loc" id="walkLocateBtn" aria-label="현재 위치 보기">📍</button>
                     <div class="walk-live-fab-stack">
                       <div class="walk-live-fab-poop-menu" id="walkPoopMenu">
@@ -3238,6 +3252,7 @@
       }
 
       function ensureHomeMiniMap() {
+        return;
         const container = document.getElementById("homeHeroMapBg");
         if (!container) return;
         getUserLocation().then((loc) => {
@@ -3619,6 +3634,9 @@
             + '<span class="walk-hud-meta" id="walkHudMetaLive">0.0km · 00:00</span>';
         }
         startWalkTimer();
+        voiceOn = !!(document.getElementById("toggleVoiceDefault") || {}).checked;
+        syncVoiceUi();
+        startVoiceGuidance(routeName, routeMeta, !!state.freeWalk);
       }
 
       function startWalkTimer() {
@@ -3895,6 +3913,7 @@
         if (viewName === "walk" && !state.freeWalk) {
           rerouteTimer = setTimeout(() => {
             overlay.classList.add("show");
+            speak("더 좋은 경로가 발견되었습니다. 경로를 변경하시겠어요?");
           }, 2200);
         }
       }
@@ -4228,6 +4247,87 @@
       const walkDogChangeMenu = document.getElementById("walkDogChangeMenu");
       let voiceOn = true;
       let sheetState = "mid";
+      let voiceGuidanceTimer = null;
+      let voiceGuidanceStep = 0;
+      const synth = window.speechSynthesis;
+      if (synth && synth.onvoiceschanged !== undefined) {
+        synth.onvoiceschanged = () => { synth.getVoices(); };
+      }
+
+      function speak(text) {
+        if (!voiceOn || !synth) return;
+        synth.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = "ko-KR";
+        utter.rate = 0.95;
+        utter.pitch = 1.05;
+        utter.volume = 1;
+        const voices = synth.getVoices();
+        const koVoice = voices.find(v => v.lang.startsWith("ko"));
+        if (koVoice) utter.voice = koVoice;
+        synth.speak(utter);
+      }
+
+      function buildGuidanceScript(routeName, routeMeta) {
+        const name = routeName || "산책 경로";
+        const meta = routeMeta || "";
+        const kmMatch = meta.match(/(\d+(?:\.\d+)?)\s*km/i);
+        const minMatch = meta.match(/(\d+)\s*분/);
+        const dist = kmMatch ? kmMatch[1] + "킬로미터" : "";
+        const dur = minMatch ? minMatch[1] + "분" : "";
+        const metaStr = [dist, dur].filter(Boolean).join(", ");
+        const intro = metaStr
+          ? `${name} 경로로 산책을 시작합니다. 총 거리 ${metaStr}입니다.`
+          : `${name} 경로로 산책을 시작합니다.`;
+        return [
+          intro,
+          "직진해 주세요. 경로를 따라 걸어가고 있습니다.",
+          "잘하고 있어요. 잠시 후 오른쪽으로 방향을 틀어 주세요.",
+          "좋아요! 지금 오른쪽으로 돌아 주세요.",
+          "경로의 절반을 지났어요. 이 길을 따라 계속 직진합니다.",
+          "왼쪽에 그늘진 구간이 있어요. 잠시 쉬어가도 좋겠네요.",
+          "다시 출발합니다. 앞쪽 갈림길에서 왼쪽으로 가세요.",
+          "거의 다 왔어요! 100미터 앞에서 우회전 후 도착입니다.",
+          "산책이 거의 끝나갑니다. 수고했어요!",
+        ];
+      }
+
+      function startVoiceGuidance(routeName, routeMeta, isFreeWalk) {
+        stopVoiceGuidance();
+        voiceGuidanceStep = 0;
+        if (isFreeWalk) {
+          speak("자유 산책을 시작합니다. 원하는 길을 자유롭게 걸어보세요!");
+          voiceGuidanceTimer = setInterval(() => {
+            voiceGuidanceStep++;
+            const freeMessages = [
+              "좋은 페이스로 걷고 있어요!",
+              "주변을 살펴보세요. 좋은 경치가 보일 수 있어요.",
+              "지금까지 잘 걷고 있어요. 계속 화이팅!",
+              "수분 보충 잊지 마세요.",
+              "반려견의 컨디션도 체크해 주세요.",
+            ];
+            const msg = freeMessages[(voiceGuidanceStep - 1) % freeMessages.length];
+            speak(msg);
+          }, 45000);
+          return;
+        }
+        const script = buildGuidanceScript(routeName, routeMeta);
+        speak(script[0]);
+        voiceGuidanceTimer = setInterval(() => {
+          voiceGuidanceStep++;
+          if (voiceGuidanceStep < script.length) {
+            speak(script[voiceGuidanceStep]);
+          } else {
+            stopVoiceGuidance();
+          }
+        }, 30000);
+      }
+
+      function stopVoiceGuidance() {
+        if (voiceGuidanceTimer) { clearInterval(voiceGuidanceTimer); voiceGuidanceTimer = null; }
+        if (synth) synth.cancel();
+        voiceGuidanceStep = 0;
+      }
 
       function closeWalkMoreMenu() {
         if (walkMoreMenu) {
@@ -4257,6 +4357,8 @@
       }
       function goWalkReviewFromEnd() {
         stopWalkTimer();
+        stopVoiceGuidance();
+        speak("산책이 종료되었습니다. 수고하셨어요!");
         const reviewRouteEl = document.getElementById("reviewRouteName");
         if (reviewRouteEl) {
           reviewRouteEl.textContent = (currentWalkRouteName || "").trim() || "오늘의 산책";
@@ -4271,7 +4373,12 @@
       }
       function syncVoiceUi() {
         if (voiceActionIco) voiceActionIco.textContent = voiceOn ? "🔊" : "🔇";
+        const voiceBtn = document.getElementById("voiceActionBtn");
+        if (voiceBtn) voiceBtn.classList.toggle("voice-off", !voiceOn);
         if (walkVoiceToggleMenu) walkVoiceToggleMenu.textContent = voiceOn ? "음성 안내 끄기" : "음성 안내 켜기";
+        const chip = document.getElementById("voiceChip");
+        if (chip) chip.textContent = voiceOn ? "🔊 음성 안내 중" : "산책 중";
+        if (!voiceOn && synth) synth.cancel();
       }
       function setSheetState(next) {
         sheetState = (next === "expanded") ? "expanded" : "collapsed";
@@ -4300,6 +4407,16 @@
           voiceOn = !voiceOn;
           syncVoiceUi();
           closeWalkMoreMenu();
+          if (voiceOn) speak("음성 안내를 켰습니다.");
+        });
+      }
+      const voiceActionBtn = document.getElementById("voiceActionBtn");
+      if (voiceActionBtn) {
+        voiceActionBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          voiceOn = !voiceOn;
+          syncVoiceUi();
+          if (voiceOn) speak("음성 안내를 켰습니다.");
         });
       }
       if (walkDogChangeMenu) {
@@ -4553,10 +4670,12 @@
         if (rerouteOverlay) rerouteOverlay.classList.remove("show");
         if (rerouteTimer) { clearTimeout(rerouteTimer); rerouteTimer = null; }
       }
-      document.getElementById("keepRoute").addEventListener("click", dismissReroute);
+      document.getElementById("keepRoute").addEventListener("click", () => {
+        dismissReroute();
+        speak("현재 경로를 유지합니다. 계속 직진해 주세요.");
+      });
       document.getElementById("changeRoute").addEventListener("click", () => {
         dismissReroute();
-        // 경로 변경 시 지도에 새 루트 그리기 (다른 시드)
         if (walkLiveMap && walkLiveMarker) {
           if (walkLiveRouteLayer) { walkLiveRouteLayer.remove(); walkLiveRouteLayer = null; }
           const c = walkLiveMarker.getLatLng();
@@ -4567,6 +4686,7 @@
           const nm = document.getElementById("walkRouteName");
           if (nm) nm.textContent = "추천 변경 루트";
         }
+        speak("경로가 변경되었습니다. 새로운 경로를 안내합니다. 직진해 주세요.");
       });
 
       // Night notification depends on walk recommendation toggle
