@@ -13,13 +13,11 @@
   <style>
     :root { --main:#19B23A; --point:#00E933; --soft-mint:#C9FAD4; --black:#1a1a1a; --white:#FFFFFF; --sub:#999999; --sep:#F2F3F5; --bg:#F7F8FA; --card:#FFFFFF; --text:#1a1a1a; --muted:var(--sub); --primary:var(--main); --primary-dark:#0fa34e; --line:rgba(0,0,0,.08); --shadow:0 8px 28px rgba(0,0,0,.08); --radius:16px; }
     *{box-sizing:border-box} body{margin:0;font-family:"Pretendard",sans-serif;background:var(--bg);color:var(--text)}
-    .wrap{max-width:1320px;margin:0 auto;padding:28px 22px 40px}.title{font-size:24px;font-weight:800;margin:8px 0 22px}
+    .wrap{max-width:1320px;margin:0 auto;padding:18px 22px 32px}.title{display:none}
     .phones{display:grid;grid-template-columns:minmax(320px, 420px);justify-content:center}
     .phone{background:var(--card);border-radius:34px;padding:18px 14px 16px;width:100%;height:760px;box-shadow:0 12px 40px rgba(0,0,0,.10);border:1px solid rgba(0,0,0,.06);position:relative;overflow:hidden;flex-shrink:0}
     .screen{border-radius:28px;background:var(--bg);height:100%;padding:12px;position:relative;overflow:hidden}
     .row{display:flex;align-items:center;justify-content:space-between}.muted{color:var(--muted);font-size:12px}.h2{font-size:20px;font-weight:800;margin:0}
-    .app-header{position:absolute;left:12px;right:12px;top:10px;z-index:8;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
-    .app-logo{font-family:"Madimi One", system-ui, sans-serif;font-size:22px;letter-spacing:.02em;color:var(--main);pointer-events:none}
     .chip{font-size:12px;background:rgba(25,178,58,.1);color:var(--main);padding:7px 10px;border-radius:999px;font-weight:700}
     .card{background:var(--white);border:1px solid rgba(0,0,0,.06);border-radius:var(--radius);box-shadow:0 2px 8px rgba(0,0,0,.04);padding:12px;margin-top:10px}
     .card.clickable{cursor:pointer;transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease}
@@ -87,9 +85,8 @@
     .reroute-btn.secondary{background:var(--white);color:var(--text);border:1px solid rgba(0,0,0,.1)}
     .reroute-btn.secondary:hover{background:var(--sep)}
     .btns{display:flex;gap:8px;margin-top:8px}.btn{flex:1;border-radius:10px;padding:9px 0;font-size:12px;font-weight:700;border:1px solid rgba(0,0,0,.08);background:var(--white);color:var(--text);transition:background .1s ease}.btn:hover{background:var(--sep)}.btn.primary{background:linear-gradient(135deg,#19B23A,#0fa34e);color:var(--white);border-color:transparent;box-shadow:0 2px 8px rgba(25,178,58,.2)}
-    .views{height:100%;padding-top:42px;position:relative}
+    .views{height:100%;padding-top:0;position:relative}
     .screen--tabs .views{padding-bottom:74px}
-    .screen--walk-fullbleed .app-header{display:none}
     .screen--walk-fullbleed .views{padding-top:0}
     .view{display:none;height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none}
     .view::-webkit-scrollbar{display:none;width:0;height:0}
@@ -103,15 +100,46 @@
 
     /* === Home v2 (참고 이미지 기반 재설계) === */
     .home-screen{display:flex;flex-direction:column;gap:14px;padding:0 0 12px}
-    .home-hero{position:relative;box-sizing:border-box;border-radius:0 0 28px 28px;margin:-42px -12px 0;padding:0;display:flex;flex-direction:column;overflow:hidden;height:80px;background:linear-gradient(180deg,#C9FAD4 0%,#A8E6B9 100%)}
-    .home-hero-top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;flex-shrink:0;padding:50px 18px 0 18px;margin-bottom:0}
-    .home-weather-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid rgba(0,0,0,.05);border-radius:999px;padding:6px 12px;font-size:12px;font-weight:800;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.06)}
-    .home-weather-chip .home-weather-ico{font-size:14px;line-height:1}
-    .home-loc-chip{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid rgba(0,0,0,.05);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:800;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.06)}
-    .home-loc-chip .home-loc-ico{font-size:13px;color:#ef4444}
+    .home-hero{position:relative;box-sizing:border-box;margin:0 -12px 0;padding:15px 26px 7px;background:#FFFFFF;border-bottom:1px solid rgba(0,0,0,.035);box-shadow:0 1px 0 rgba(255,255,255,.8)}
+    .home-hero-top{display:flex;justify-content:space-between;align-items:center;gap:14px;position:relative;z-index:2}
+    .home-location-switcher{display:flex;align-items:center;gap:7px;min-width:0;flex:1;border:none;background:transparent;padding:0;cursor:pointer;font-family:inherit;text-align:left;-webkit-tap-highlight-color:transparent}
+    .home-location-pin{position:relative;width:18px;height:22px;line-height:1;flex-shrink:0;font-size:0;transform:translateY(1px)}
+    .home-location-pin::before{content:"";position:absolute;left:2px;top:1px;width:14px;height:14px;border-radius:50% 50% 50% 0;background:#000000;transform:rotate(-45deg)}
+    .home-location-pin::after{content:"";position:absolute;left:7px;top:6px;width:4px;height:4px;border-radius:50%;background:#fff}
+    .home-location-names{display:flex;align-items:baseline;gap:12px;min-width:0;transition:opacity .18s ease,transform .18s ease}
+    .home-location-name{border:none;background:transparent;padding:0;font-family:inherit;font-weight:900;line-height:1.15;max-width:112px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;transition:color .18s ease,font-size .18s ease,opacity .18s ease}
+    .home-location-name.active{font-size:22px;color:#000000;letter-spacing:-.045em}
+    .home-location-name.inactive{font-size:18px;color:#BFC0C3;letter-spacing:-.035em}
+    .home-weather-chip{display:inline-flex;align-items:center;gap:7px;background:transparent;border:none;border-radius:999px;padding:0;font-size:21px;font-weight:900;color:#111;box-shadow:none;white-space:nowrap;flex-shrink:0;letter-spacing:-.025em}
+    .home-weather-chip .home-weather-ico{font-size:26px;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.08))}
+    .home-loc-chip{display:none}
     .home-hero-character{display:none}
+    .home-location-overlay{position:absolute;left:0;right:0;top:0;bottom:74px;z-index:4200;display:none;align-items:flex-end;background:rgba(0,0,0,.22);backdrop-filter:blur(2px)}
+    .home-location-overlay.show{display:flex}
+    .home-location-sheet{width:100%;background:#fff;border-radius:22px 22px 0 0;padding:12px 22px 22px;box-shadow:0 -14px 36px rgba(0,0,0,.18);animation:sheetUp .22s ease}
+    .home-location-sheet-handle{width:42px;height:4px;border-radius:999px;background:#DADDE2;margin:0 auto 18px}
+    .home-location-sheet-title{font-size:18px;font-weight:900;color:#16181C;letter-spacing:-.02em}
+    .home-location-sheet-sub{font-size:11px;color:#7C818A;font-weight:700;margin-top:6px}
+    .home-location-list{display:flex;flex-direction:column;gap:2px;margin:20px 0 14px}
+    .home-location-row{display:flex;align-items:center;gap:12px;width:100%;border:none;background:transparent;padding:12px 0;font-family:inherit;text-align:left;color:#16181C}
+    .home-location-radio{width:16px;height:16px;border-radius:50%;border:1.5px solid #D9DDE3;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+    .home-location-row.active .home-location-radio{border-color:#222;background:#222}
+    .home-location-row.active .home-location-radio::after{content:"";width:5px;height:5px;border-radius:50%;background:#fff}
+    .home-location-row-name{font-size:13px;font-weight:900;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .home-location-delete{border:none;background:transparent;color:#737780;font-size:18px;line-height:1;padding:4px 0 4px 8px;cursor:pointer}
+    .home-location-add{width:100%;border:none;background:#F3F4F6;border-radius:6px;padding:11px 12px;font-size:13px;font-weight:900;color:#20242A;font-family:inherit;cursor:pointer}
+    .home-location-help{display:flex;align-items:center;justify-content:center;gap:5px;color:#707780;font-size:11px;font-weight:700;margin-top:16px}
+    .home-location-toast{position:absolute;left:50%;top:132px;z-index:4300;transform:translateX(-50%) translateY(-8px);background:#252A32;color:#fff;border-radius:6px;padding:10px 16px;font-size:11px;font-weight:800;box-shadow:0 6px 20px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;white-space:nowrap}
+    .home-location-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-    .home-greeting-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:20px 18px 18px;box-shadow:0 4px 14px rgba(0,0,0,.05);margin:8px 4px 0;position:relative;z-index:2}
+    .home-greeting-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:20px 18px 18px;box-shadow:0 4px 14px rgba(0,0,0,.05);margin:0 4px 0;position:relative;z-index:2}
+    @media (prefers-color-scheme: dark){
+      .home-hero{background:#FFFFFF;border-bottom-color:rgba(0,0,0,.035)}
+      .home-location-pin,.home-location-name.active,.home-weather-chip{color:#000000}
+      .home-location-pin::before{background:#000000}
+      .home-location-pin::after{background:#FFFFFF}
+      .home-location-name.inactive{color:#737373}
+    }
     .home-greeting-top-row{display:flex;align-items:center;gap:10px}
     .home-greeting-left{flex:1;min-width:0}
     .home-greeting-right{flex-shrink:0;display:flex;align-items:center;justify-content:center}
@@ -597,7 +625,7 @@
     .petlog-profile-card-main{padding-top:22px}
     .petlog-profile-head{display:flex;align-items:center;gap:12px;width:100%;position:relative;z-index:1}
     .petlog-profile-inner{display:flex;align-items:center;gap:14px;position:relative;z-index:1;flex:1;min-width:0}
-    .petlog-profile-add-slot{flex-shrink:0;align-self:center;display:flex;align-items:center}
+    .petlog-profile-add-slot{flex-shrink:0;align-self:center;display:flex;align-items:center;gap:8px;margin-left:auto}
     .petlog-card-corner-add{position:relative;top:auto;right:auto;left:auto;z-index:3;padding:6px 10px;font-size:10px;font-weight:800;cursor:pointer;font-family:inherit;line-height:1.2;background:rgba(255,255,255,.22);border:1.2px solid rgba(255,255,255,.45);color:#fff;border-radius:8px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.08)}
     .petlog-card-corner-add:active{background:rgba(255,255,255,.38)}
     .petlog-profile-card::before{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.08);top:-30px;right:-20px}
@@ -639,6 +667,36 @@
     .petlog-dual-analysis .petlog-dual-mini-tag{color:rgba(255,255,255,.88)}
     /* 펫로그 월간: 단일 스크롤 영역(.petlog-screen), 중첩 세로 스크롤바 제거 */
     .petlog-root > .petlog-cal-below.mypage-sub-screen{overflow:visible !important;height:auto !important;min-height:0 !important}
+    .petlog-cal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+    .petlog-cal-title-wrap{min-width:0;flex:1}
+    .petlog-add-record-btn{border:1px solid rgba(16,166,74,.22);background:#FFFFFF;color:#10A64A;font-size:12px;font-weight:900;padding:8px 15px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.04);cursor:pointer;font-family:inherit;white-space:nowrap;line-height:1.2;margin-top:2px}
+    .petlog-add-record-btn:active{transform:scale(.97)}
+    .petlog-record-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+    .petlog-record-item{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:11px 12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+    .petlog-record-ico{width:34px;height:34px;border-radius:12px;background:rgba(25,178,58,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .petlog-record-main{flex:1;min-width:0}
+    .petlog-record-title{font-size:13px;font-weight:900;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .petlog-record-sub{font-size:11px;color:var(--sub);font-weight:600;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .manual-record-overlay,.walk-poop-dog-overlay{position:absolute;inset:0;z-index:4100;background:rgba(0,0,0,.28);display:none;align-items:flex-end;justify-content:center;padding:0 12px 12px;backdrop-filter:blur(2px)}
+    .manual-record-overlay.show,.walk-poop-dog-overlay.show{display:flex}
+    .manual-record-sheet,.walk-poop-dog-sheet{width:100%;max-height:86%;overflow:auto;background:#fff;border-radius:24px;padding:18px 16px 16px;box-shadow:0 -14px 40px rgba(0,0,0,.18);animation:sheetUp .22s ease;scrollbar-width:none}
+    .manual-record-sheet::-webkit-scrollbar,.walk-poop-dog-sheet::-webkit-scrollbar{display:none}
+    @keyframes sheetUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    .manual-record-head,.walk-poop-dog-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .manual-record-title,.walk-poop-dog-title{font-size:17px;font-weight:900;color:var(--text)}
+    .manual-record-close,.walk-poop-dog-close{width:30px;height:30px;border-radius:50%;border:none;background:#F2F3F5;font-size:16px;font-weight:900;cursor:pointer}
+    .manual-record-form{display:flex;flex-direction:column;gap:12px}
+    .manual-record-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .manual-record-field{display:flex;flex-direction:column;gap:6px}
+    .manual-record-label{font-size:11px;font-weight:900;color:#6b7280}
+    .manual-record-input,.manual-record-textarea{width:100%;border:1px solid rgba(0,0,0,.08);border-radius:14px;background:#F8F9FA;padding:12px 13px;font-size:13px;font-weight:700;font-family:inherit;color:var(--text)}
+    .manual-record-textarea{min-height:72px;resize:none}
+    .dog-chip-grid,.walk-poop-dog-list{display:flex;flex-wrap:wrap;gap:8px}
+    .dog-select-chip,.walk-poop-dog-chip{border:1px solid rgba(0,0,0,.08);background:#F8F9FA;color:var(--text);border-radius:999px;padding:9px 12px;font-size:12px;font-weight:900;cursor:pointer;font-family:inherit}
+    .dog-select-chip.selected,.walk-poop-dog-chip.selected{background:rgba(25,178,58,.12);border-color:rgba(25,178,58,.45);color:#12922d}
+    .manual-record-checks{display:flex;gap:8px;flex-wrap:wrap}
+    .manual-record-check{display:inline-flex;align-items:center;gap:6px;background:#F8F9FA;border:1px solid rgba(0,0,0,.08);border-radius:999px;padding:9px 12px;font-size:12px;font-weight:800;color:var(--text)}
+    .manual-record-submit,.walk-poop-dog-submit{width:100%;border:none;border-radius:16px;background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;font-size:15px;font-weight:900;padding:14px;font-family:inherit;cursor:pointer;box-shadow:0 5px 14px rgba(25,178,58,.24);margin-top:4px}
 
     /* Calendar */
     .cal-header{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:12px}
@@ -823,17 +881,41 @@
       display:flex;align-items:center;gap:7px;
     }
     .walk-hud-dog{font-size:10px;font-weight:600;color:#525252}
+    .walk-live-hud-center .walk-hud-dog{min-width:0;max-width:108px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .walk-hud-sep{display:inline-block;width:1px;height:11px;background:#9E9E9E;opacity:.95}
     .walk-hud-route{font-size:12px;font-weight:600;color:#525252}
     .walk-hud-meta{font-size:9px;font-weight:500;color:#A3A3A3}
     .walk-live-hud-weather{
-      position:absolute;left:10px;top:33%;z-index:4;background:transparent;border:none;border-radius:0;padding:0;
-      font-size:11px;line-height:1.25;color:#8D8D8D;box-shadow:none;backdrop-filter:none
+      position:absolute;left:18px;bottom:188px;z-index:4;width:45px;min-height:92px;padding:9px 7px 8px;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;pointer-events:none;
+      background:rgba(255,255,255,.93);border:1px solid rgba(255,255,255,.76);border-radius:20px;
+      box-shadow:0 7px 19px rgba(27,50,74,.15),0 1px 5px rgba(0,0,0,.07);backdrop-filter:blur(10px);
     }
-    .walk-live-hud-weather #walkHudWeatherTemp{font-weight:800;font-size:12px;color:#8D8D8D}
-    .walk-live-hud-weather #walkHudWeatherDesc{font-weight:600;font-size:10px;color:#8D8D8D}
+    .walk-weather-art{position:relative;width:28px;height:24px;flex:0 0 auto}
+    .walk-weather-sky{
+      position:absolute;top:0;left:5px;width:17px;height:17px;border-radius:50%;
+      background:linear-gradient(145deg,#82D7FF 0%,#3BAAF7 100%);box-shadow:0 3px 8px rgba(59,170,247,.25);
+    }
+    .walk-weather-sky::after{
+      content:"";position:absolute;right:-1px;top:3px;width:7px;height:7px;border-radius:50%;
+      background:#FFE27A;box-shadow:0 0 10px rgba(255,226,122,.65);
+    }
+    .walk-weather-art.night .walk-weather-sky{background:linear-gradient(145deg,#5C83D6 0%,#2E4C9F 100%)}
+    .walk-weather-art.night .walk-weather-sky::after{
+      right:3px;top:3px;width:8px;height:8px;background:#FFF3B0;box-shadow:-3px 0 0 #5C83D6,0 0 7px rgba(255,243,176,.62);
+    }
+    .walk-weather-cloud{
+      position:absolute;bottom:2px;background:#fff;border-radius:999px;box-shadow:0 3px 6px rgba(44,102,154,.12);
+    }
+    .walk-weather-cloud.cloud-a{left:1px;width:21px;height:11px}
+    .walk-weather-cloud.cloud-a::before{content:"";position:absolute;left:5px;bottom:5px;width:10px;height:10px;border-radius:50%;background:#fff}
+    .walk-weather-cloud.cloud-b{right:0;bottom:1px;width:17px;height:9px;opacity:.94}
+    .walk-weather-cloud.cloud-b::before{content:"";position:absolute;left:3px;bottom:4px;width:8px;height:8px;border-radius:50%;background:#fff}
+    .walk-live-hud-weather #walkHudWeatherTemp{font-weight:900;font-size:16px;line-height:1;color:#171717;letter-spacing:-.06em}
+    .walk-weather-divider{width:29px;height:5px;border-radius:999px;background:linear-gradient(90deg,#45B7FF,#2F8BFF);box-shadow:0 2px 5px rgba(47,139,255,.24)}
+    .walk-live-hud-weather #walkHudWeatherDesc{font-weight:800;font-size:8px;color:#8A8F98;line-height:1}
     .walk-live-fab-loc{
-      position:absolute;left:10px;bottom:132px;z-index:4;width:42px;height:42px;border:none;border-radius:50%;
+      position:absolute;left:18px;bottom:132px;z-index:4;width:42px;height:42px;border:none;border-radius:50%;
       background:rgba(255,255,255,.95);box-shadow:0 2px 10px rgba(0,0,0,.12);font-size:19px;cursor:pointer
     }
     .walk-live-fab-stack{position:absolute;right:10px;bottom:132px;z-index:4;display:flex;align-items:center;justify-content:flex-end;min-height:44px}
@@ -953,14 +1035,9 @@
 </head>
 <body>
   <div class="wrap">
-    <div class="title">PetWalk MVP UI (연결된 화면 프로토타입)</div>
     <div class="phones">
       <section class="phone">
         <div class="screen">
-          <div class="app-header" aria-hidden="true">
-            <div class="app-logo">PetWalk</div>
-            <div></div>
-          </div>
           <div class="views" id="views">
             <!-- LOGIN (app entry) -->
             <div class="view active" data-view="login">
@@ -1439,11 +1516,28 @@
               <div class="home-screen">
                 <div class="home-hero" id="homeHero">
                   <div class="home-hero-top">
-                    <span class="home-loc-chip" id="homeLocChip"><span class="home-loc-ico">📍</span><span id="homeLocText">서울</span></span>
-                    <span class="home-weather-chip" id="homeWeatherChip" title="실시간 날씨"><span class="home-weather-ico" id="homeWeatherIco">⏳</span><span id="homeWeatherText">불러오는 중…</span></span>
+                    <button type="button" class="home-location-switcher" id="homeLocationSwitcher" aria-label="동네 전환">
+                      <span class="home-location-pin" aria-hidden="true">⌖</span>
+                      <span class="home-location-names" id="homeLocationNames">
+                        <span class="home-location-name active" id="homeLocText">청파동</span>
+                        <span class="home-location-name inactive" id="homeSubLocText">송파1동</span>
+                      </span>
+                    </button>
+                    <span class="home-weather-chip" id="homeWeatherChip" title="실시간 날씨"><span class="home-weather-ico" id="homeWeatherIco">⏳</span><span id="homeWeatherText">--°</span></span>
                   </div>
                   <div class="home-hero-character">
                     <img src="petwalk-mascot.png" alt="보리 캐릭터" />
+                  </div>
+                </div>
+                <div class="home-location-toast" id="homeLocationToast" role="status" aria-live="polite"></div>
+                <div class="home-location-overlay" id="homeLocationOverlay" aria-hidden="true">
+                  <div class="home-location-sheet" role="dialog" aria-modal="true" aria-labelledby="homeLocationSheetTitle">
+                    <div class="home-location-sheet-handle" aria-hidden="true"></div>
+                    <div class="home-location-sheet-title" id="homeLocationSheetTitle">내 동네 설정</div>
+                    <div class="home-location-sheet-sub">최대 2개의 동네를 선택할 수 있어요.</div>
+                    <div class="home-location-list" id="homeLocationList"></div>
+                    <button type="button" class="home-location-add" id="homeLocationAddBtn">+ 동네 추가</button>
+                    <div class="home-location-help">ⓘ 내 동네 설정이 무엇인가요?</div>
                   </div>
                 </div>
 
@@ -1718,7 +1812,7 @@
                                 <span class="petlog-dual-mini-tag">8문항으로 산책 성향 유형을 확인해요.</span>
                               </button>
                             </div>
-                            <button type="button" class="petlog-dual-cell petlog-dual-side petlog-dual-analysis" data-nav="pet_analysis_select">
+                            <button type="button" class="petlog-dual-cell petlog-dual-side petlog-dual-analysis" data-nav="pet_analysis_period">
                               <span class="petlog-dual-label">성향 분석</span>
                               <span class="petlog-dual-mini-emoji">🧠</span>
                               <span class="petlog-dual-mini-name">AI 산책 리포트</span>
@@ -1734,8 +1828,13 @@
                 </div>
 
                 <div class="mypage-sub-screen petlog-cal-below" style="padding-top:8px;margin:0;background:transparent;box-shadow:none;border:none;">
-                <p class="mypage-subtitle">월간 산책 기록</p>
-                <p class="stub-muted">날짜를 눌러 상세 산책 기록을 확인하세요. 점 색깔은 각 반려견의 산책을 의미해요.</p>
+                <div class="petlog-cal-head">
+                  <div class="petlog-cal-title-wrap">
+                    <p class="mypage-subtitle">월간 산책 기록</p>
+                    <p class="stub-muted">날짜를 눌러 상세 산책 기록을 확인하세요. 점 색깔은 각 반려견의 산책을 의미해요.</p>
+                  </div>
+                  <button type="button" class="petlog-add-record-btn">+ 기록 추가</button>
+                </div>
 
                 <div class="cal-dog-filter" id="calDogFilter"></div>
 
@@ -1784,6 +1883,7 @@
                     <span class="cal-summary-label">총 시간</span>
                   </div>
                 </div>
+                <div class="petlog-record-list" id="petlogRecordList"></div>
               </div>
               </div>
             </div>
@@ -1836,38 +1936,15 @@
               </div>
             </div>
 
-            <!-- PET: 반려견 성향 분석 - 반려견 선택 -->
-            <div class="view" data-view="pet_analysis_select" data-tab-root="pet">
-              <div class="mypage-sub-screen">
-                <div class="topbar">
-                  <button class="iconbtn" data-nav="pet_monthly">←</button>
-                  <span class="muted">성향 분석</span>
-                </div>
-                <p class="mypage-subtitle">반려견 성향 분석</p>
-                <p class="stub-muted">분석할 반려견을 선택하세요.</p>
-
-                <div class="mypage-group-card">
-                  <div class="mypage-list">
-                    <button type="button" class="mypage-row" data-nav="pet_analysis_period">
-                      <span class="mypage-row-ico green">🐕</span>
-                      <span class="mypage-row-text">보리<span class="mypage-row-hint">푸들 · 2살 · 암컷</span></span>
-                      <span class="mypage-row-arrow">›</span>
-                    </button>
-                  </div>
-                </div>
-                <p class="hint" style="margin-top:12px;">반려견 추가 후 여기에 목록이 표시됩니다.</p>
-              </div>
-            </div>
-
             <!-- PET: 반려견 성향 분석 - 기간 설정 -->
             <div class="view" data-view="pet_analysis_period" data-tab-root="pet">
               <div class="mypage-sub-screen">
                 <div class="topbar">
-                  <button class="iconbtn" data-nav="pet_analysis_select">←</button>
+                  <button class="iconbtn" data-nav="pet_monthly">←</button>
                   <span class="muted">기간 설정</span>
                 </div>
                 <p class="mypage-subtitle">분석 기간 설정</p>
-                <p class="stub-muted">보리의 산책 데이터를 분석할 기간을 선택하세요.</p>
+                <p class="stub-muted" id="analysisPeriodDogHint">보리의 산책 데이터를 분석할 기간을 선택하세요.</p>
 
                 <div class="mypage-group-card" id="analysisPeriodGroup">
                   <div class="mypage-list">
@@ -1902,12 +1979,12 @@
                   <span class="muted">분석 결과</span>
                 </div>
                 <p class="mypage-subtitle">AI 성향 분석 결과</p>
-                <p class="stub-muted">보리 · 최근 1개월 데이터 기반</p>
+                <p class="stub-muted" id="analysisResultDogHint">보리 · 최근 1개월 데이터 기반</p>
 
                 <div class="analysis-result-card">
                   <div class="analysis-badge">🧠 AI 분석 완료</div>
                   <div class="analysis-type">탐험가 타입</div>
-                  <div class="analysis-desc">보리는 새로운 경로에 대한 호기심이 높고,<br>활동량이 많은 탐험가 성향이에요.</div>
+                  <div class="analysis-desc" id="analysisResultDesc">보리는 새로운 경로에 대한 호기심이 높고,<br>활동량이 많은 탐험가 성향이에요.</div>
                 </div>
 
                 <div class="mypage-group-card" style="margin-top:12px;">
@@ -2040,7 +2117,16 @@
                   <div class="walk-live-map">
                     <div class="walk-live-map-inner"></div>
                     <div class="walk-live-hud-center" id="walkHudCenterBar"><span class="walk-hud-dog">보리</span><span class="walk-hud-sep"></span><span class="walk-hud-route">백빈건널목</span><span class="walk-hud-meta">1.2km · 20분</span></div>
-                    <div class="walk-live-hud-weather" id="walkHudWeatherBox"><span id="walkHudWeatherTemp">--°C</span><br><span id="walkHudWeatherDesc">불러오는 중</span></div>
+                    <div class="walk-live-hud-weather" id="walkHudWeatherBox" aria-label="현재 날씨와 미세먼지">
+                      <div class="walk-weather-art" id="walkHudWeatherIcon" aria-hidden="true">
+                        <span class="walk-weather-sky"></span>
+                        <span class="walk-weather-cloud cloud-a"></span>
+                        <span class="walk-weather-cloud cloud-b"></span>
+                      </div>
+                      <span id="walkHudWeatherTemp">--°</span>
+                      <span class="walk-weather-divider" aria-hidden="true"></span>
+                      <span id="walkHudWeatherDesc">미세</span>
+                    </div>
                     <button type="button" class="walk-live-fab-voice" id="voiceActionBtn" aria-label="음성 안내 토글"><span class="voice-pulse"></span><span id="voiceActionIco">🔊</span></button>
                     <button type="button" class="walk-live-fab-loc" id="walkLocateBtn" aria-label="현재 위치 보기">📍</button>
                     <div class="walk-live-fab-stack">
@@ -2049,6 +2135,16 @@
                         <button type="button" class="walk-live-mini-fab" data-poop-kind="💧">💧</button>
                       </div>
                       <button type="button" class="walk-live-fab-poop" id="walkPoopFab" aria-label="배변 기록">💩</button>
+                    </div>
+                    <div class="walk-poop-dog-overlay" id="walkPoopDogOverlay" aria-hidden="true">
+                      <div class="walk-poop-dog-sheet" role="dialog" aria-modal="true" aria-labelledby="walkPoopDogTitle">
+                        <div class="walk-poop-dog-head">
+                          <div class="walk-poop-dog-title" id="walkPoopDogTitle">반려견 선택</div>
+                          <button type="button" class="walk-poop-dog-close" id="walkPoopDogClose" aria-label="닫기">×</button>
+                        </div>
+                        <div class="walk-poop-dog-list" id="walkPoopDogList"></div>
+                        <button type="button" class="walk-poop-dog-submit" id="walkPoopDogSubmit">기록 저장</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2134,6 +2230,48 @@
                     <button class="reroute-btn secondary" id="keepRoute">현재 경로 유지</button>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div class="manual-record-overlay" id="manualRecordOverlay" aria-hidden="true">
+              <div class="manual-record-sheet" role="dialog" aria-modal="true" aria-labelledby="manualRecordTitle">
+                <div class="manual-record-head">
+                  <div class="manual-record-title" id="manualRecordTitle">산책 기록 추가</div>
+                  <button type="button" class="manual-record-close" id="manualRecordClose" aria-label="닫기">×</button>
+                </div>
+                <form class="manual-record-form" id="manualRecordForm">
+                  <div class="manual-record-field">
+                    <div class="manual-record-label">반려견 선택</div>
+                    <div class="dog-chip-grid" id="manualRecordDogChips"></div>
+                  </div>
+                  <div class="manual-record-row">
+                    <label class="manual-record-field">
+                      <span class="manual-record-label">날짜</span>
+                      <input class="manual-record-input" id="manualRecordDate" type="date" />
+                    </label>
+                    <label class="manual-record-field">
+                      <span class="manual-record-label">시간</span>
+                      <input class="manual-record-input" id="manualRecordTime" type="time" />
+                    </label>
+                  </div>
+                  <label class="manual-record-field">
+                    <span class="manual-record-label">거리(km)</span>
+                    <input class="manual-record-input" id="manualRecordDistance" type="number" min="0" step="0.1" placeholder="2.4" />
+                  </label>
+                  <label class="manual-record-field">
+                    <span class="manual-record-label">메모 (선택)</span>
+                    <textarea class="manual-record-textarea" id="manualRecordMemo" placeholder="산책 중 기억할 내용을 남겨주세요"></textarea>
+                  </label>
+                  <label class="manual-record-field">
+                    <span class="manual-record-label">사진 (선택)</span>
+                    <input class="manual-record-input" id="manualRecordPhoto" type="file" accept="image/*" />
+                  </label>
+                  <div class="manual-record-checks">
+                    <label class="manual-record-check"><input id="manualRecordPee" type="checkbox" /> 소변</label>
+                    <label class="manual-record-check"><input id="manualRecordPoop" type="checkbox" /> 대변</label>
+                  </div>
+                  <button type="submit" class="manual-record-submit">저장하기</button>
+                </form>
               </div>
             </div>
 
@@ -2750,8 +2888,14 @@
         scheduleSelectedIco: "🐕",
         walkParticipantIds: ["primary"],
         walkMemos: [],
+        walkPottyRecords: [],
+        manualWalkRecords: [],
         walkDogPickMode: "start",
         freeWalk: false,
+        activePetlogDogId: "primary",
+        dogTraitsTargetId: "primary",
+        homeLocations: ["청파동", "송파1동"],
+        activeHomeLocationIndex: 0,
       };
       let walkTimerInterval = null;
       let walkStartTime = null;
@@ -2759,8 +2903,10 @@
       let walkDistanceKm = 0;
       const PETLOG_EXTRA_PETS_KEY = "petwalk_extra_pet_names";
       const PRIMARY_PET_KEY = "petwalk_primary_pet";
+      const MANUAL_WALK_RECORDS_KEY = "petwalk_manual_walk_records";
       let currentWalkRouteName = "백빈건널목";
       let currentWalkRouteMeta = "1.2km · 20분";
+      let currentWalkRouteInfo = { totalDistance: 1.2, estimatedDuration: 20 };
       let pendingWalkRoute = null;
       let walkDogPickSelections = null;
 
@@ -2820,6 +2966,22 @@
         localStorage.setItem(PETLOG_EXTRA_PETS_KEY, JSON.stringify(arr));
       }
 
+      function readManualWalkRecords() {
+        try {
+          const j = JSON.parse(localStorage.getItem(MANUAL_WALK_RECORDS_KEY) || "[]");
+          return Array.isArray(j) ? j : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function writeManualWalkRecords(arr) {
+        state.manualWalkRecords = Array.isArray(arr) ? arr : [];
+        try {
+          localStorage.setItem(MANUAL_WALK_RECORDS_KEY, JSON.stringify(state.manualWalkRecords));
+        } catch (_) {}
+      }
+
       function getPetAddFormSubline() {
         const breed = document.getElementById("petAddBreedSelect");
         const age = document.getElementById("petAddAgeSelect");
@@ -2853,7 +3015,6 @@
         ["pet_edit", 100],
         ["pet_monthly", 100],
         ["pet_journal", 100],
-        ["pet_analysis_select", 100],
         ["pet_analysis_period", 100],
         ["pet_analysis_result", 100],
         ["mypage_setting_noti", 100],
@@ -2884,7 +3045,8 @@
         if (name === "walkHome") ensureWalkHomeMap();
         if (name === "walk") { ensureWalkLiveMap(); ensureWeatherLoaded(); }
         if (name === "explore") ensureExploreMap();
-        if (name === "pet_monthly") { syncPetDogName(); syncPetPersonality(); initPetlogCarousel(); }
+        if (name === "pet_monthly") { syncPetDogName(); syncPetPersonality(); initPetlogCarousel(); renderManualWalkRecords(); }
+        if (name === "pet_analysis_period" || name === "pet_analysis_result") syncPetAnalysisDogText();
         if (name === "dogInfoTraits") { syncTraitsDogName(); syncDogInfoTraitsChrome(); }
         if (name === "dogInfoResult") { syncResultDogName(); renderResult(); applyResultLayout(); }
       }
@@ -2993,7 +3155,7 @@
       }
 
       // 사용자 좌표 단일 캐시 (가중 + 폴백)
-      const FALLBACK_LOCATION = { lat: 37.5665, lon: 126.9780, label: "서울" };
+      const FALLBACK_LOCATION = { lat: 37.5665, lon: 126.9780, label: "청파동" };
       const userLocation = { lat: null, lon: null, label: null };
       let _locationPromise = null;
       function getUserLocation() {
@@ -3073,26 +3235,169 @@
         const txt = document.getElementById("homeWeatherText");
         const wTemp = document.getElementById("walkHudWeatherTemp");
         const wTxt = document.getElementById("walkHudWeatherDesc");
+        const wArt = document.getElementById("walkHudWeatherIcon");
+        if (wArt) {
+          const h = new Date().getHours();
+          wArt.classList.toggle("night", h < 6 || h >= 19);
+        }
         if (w.temp == null || w.code == null) {
           if (ico) ico.textContent = "🌡️";
-          if (txt) txt.textContent = "날씨 정보 없음";
-          if (wTemp) wTemp.textContent = "--°C";
-          if (wTxt) wTxt.textContent = "정보 없음";
+          if (txt) txt.textContent = "--°";
+          if (wTemp) wTemp.textContent = "--°";
+          if (wTxt) wTxt.textContent = "미세";
           return;
         }
         const map = WEATHER_CODE_MAP[w.code] || { ico: "🌡️", text: "" };
         const t = Math.round(w.temp);
-        const line = map.text || "맑음";
         if (ico) ico.textContent = map.ico;
-        if (txt) txt.textContent = map.text ? `${t}°C ${map.text}` : `${t}°C`;
-        if (wTemp) wTemp.textContent = `${t}°C`;
-        if (wTxt) wTxt.textContent = line;
+        if (txt) txt.textContent = `${t}°`;
+        if (wTemp) wTemp.textContent = `${t}°`;
+        if (wTxt) wTxt.textContent = "미세";
         weatherLoadedAt = Date.now();
       }
 
       function setLocationLabel(label) {
         const el = document.getElementById("homeLocText");
-        if (el && label) el.textContent = label;
+        if (label) state.homeLocations[state.activeHomeLocationIndex || 0] = label;
+        syncHomeLocationHeader();
+      }
+
+      function formatDongName(label) {
+        const parts = String(label || "").trim().split(/\s+/).filter(Boolean);
+        const dong = [...parts].reverse().find((part) => /(동|읍|면|가)$/.test(part));
+        return dong || parts[parts.length - 1] || "서울";
+      }
+
+      function syncHomeLocationHeader() {
+        const primary = document.getElementById("homeLocText");
+        const secondary = document.getElementById("homeSubLocText");
+        const names = document.getElementById("homeLocationNames");
+        state.homeLocations = state.homeLocations.slice(0, 2).map(formatDongName).filter(Boolean);
+        if (!state.homeLocations.length) state.homeLocations = ["청파동"];
+        if (state.activeHomeLocationIndex >= state.homeLocations.length) state.activeHomeLocationIndex = 0;
+        const activeIdx = state.activeHomeLocationIndex || 0;
+        const active = formatDongName(state.homeLocations[activeIdx] || "서울");
+        const inactiveIdx = activeIdx === 0 ? 1 : 0;
+        const inactive = state.homeLocations[inactiveIdx] ? formatDongName(state.homeLocations[inactiveIdx]) : "";
+        if (names) {
+          names.style.opacity = "0.65";
+          names.style.transform = "translateY(1px)";
+          setTimeout(() => {
+            if (primary) primary.textContent = active;
+            if (secondary) secondary.textContent = inactive;
+            if (secondary) secondary.style.display = inactive ? "" : "none";
+            names.style.opacity = "1";
+            names.style.transform = "translateY(0)";
+          }, 90);
+        } else {
+          if (primary) primary.textContent = active;
+          if (secondary) secondary.textContent = inactive;
+          if (secondary) secondary.style.display = inactive ? "" : "none";
+        }
+        updateHomeRecommendationForLocation(active);
+      }
+
+      function showHomeLocationToast(text) {
+        const toast = document.getElementById("homeLocationToast");
+        if (!toast) return;
+        toast.textContent = text;
+        toast.classList.add("show");
+        clearTimeout(showHomeLocationToast._timer);
+        showHomeLocationToast._timer = setTimeout(() => toast.classList.remove("show"), 1600);
+      }
+
+      function switchHomeLocationTo(index, showToast) {
+        state.homeLocations = state.homeLocations.slice(0, 2).map(formatDongName).filter(Boolean);
+        if (index < 0 || index >= state.homeLocations.length) return;
+        const current = state.activeHomeLocationIndex || 0;
+        if (index !== current) {
+          const nextMain = state.homeLocations[index];
+          state.homeLocations[index] = state.homeLocations[current];
+          state.homeLocations[current] = nextMain;
+        } else if (current !== 0) {
+          const nextMain = state.homeLocations[current];
+          state.homeLocations[current] = state.homeLocations[0];
+          state.homeLocations[0] = nextMain;
+        }
+        state.activeHomeLocationIndex = 0;
+        syncHomeLocationHeader();
+        weatherLoadedAt = 0;
+        ensureWeatherLoaded();
+        if (showToast) showHomeLocationToast("동네를 '" + formatDongName(state.homeLocations[0]) + "'으로 변경했어요.");
+      }
+
+      function renderHomeLocationSheet() {
+        const list = document.getElementById("homeLocationList");
+        const addBtn = document.getElementById("homeLocationAddBtn");
+        if (!list) return;
+        const activeIdx = state.activeHomeLocationIndex || 0;
+        list.innerHTML = state.homeLocations.map((loc, idx) => (
+          '<div class="home-location-row ' + (idx === activeIdx ? "active" : "") + '" data-location-index="' + idx + '">'
+            + '<span class="home-location-radio" aria-hidden="true"></span>'
+            + '<span class="home-location-row-name">' + escapeHtml(formatDongName(loc)) + '</span>'
+            + '<button type="button" class="home-location-delete" data-location-delete="' + idx + '" aria-label="동네 삭제">×</button>'
+          + '</div>'
+        )).join("");
+        if (addBtn) addBtn.style.display = state.homeLocations.length < 2 ? "" : "none";
+      }
+
+      function openHomeLocationSheet() {
+        renderHomeLocationSheet();
+        const overlay = document.getElementById("homeLocationOverlay");
+        if (overlay) {
+          overlay.classList.add("show");
+          overlay.setAttribute("aria-hidden", "false");
+        }
+      }
+
+      function closeHomeLocationSheet() {
+        const overlay = document.getElementById("homeLocationOverlay");
+        if (overlay) {
+          overlay.classList.remove("show");
+          overlay.setAttribute("aria-hidden", "true");
+        }
+      }
+
+      function addHomeLocation() {
+        if (state.homeLocations.length >= 2) return;
+        const next = window.prompt("추가할 동네를 입력하세요.");
+        if (!next || !next.trim()) return;
+        state.homeLocations.push(formatDongName(next.trim()));
+        renderHomeLocationSheet();
+        syncHomeLocationHeader();
+      }
+
+      function deleteHomeLocation(index) {
+        if (state.homeLocations.length <= 1) return;
+        const target = formatDongName(state.homeLocations[index]);
+        if (!window.confirm("'" + target + "'을 삭제할까요?")) return;
+        state.homeLocations.splice(index, 1);
+        if (state.activeHomeLocationIndex === index) state.activeHomeLocationIndex = 0;
+        else if (state.activeHomeLocationIndex > index) state.activeHomeLocationIndex -= 1;
+        renderHomeLocationSheet();
+        syncHomeLocationHeader();
+      }
+
+      function updateHomeRecommendationForLocation(locationName) {
+        const presets = String(locationName || "").includes("청파")
+          ? [
+              ["효창공원 루프", "1.8km · 27분 · 언덕 적음", "만족도 86%"],
+              ["용산가족공원", "2.0km · 30분 · 차분한 분위기", "만족도 82%"],
+            ]
+          : [
+              ["석촌호수 산책길", "2.4km · 34분 · 물가 산책", "만족도 88%"],
+              ["올림픽공원", "2.8km · 39분 · 넓은 공간", "만족도 84%"],
+            ];
+        document.querySelectorAll('.view[data-view="home"] .hcard[data-walk-route]').forEach((card, i) => {
+          const p = presets[i];
+          if (!p) return;
+          card.setAttribute("data-walk-route", p[0]);
+          card.setAttribute("data-walk-meta", p[1]);
+          const title = card.querySelector(".hcard-title");
+          const meta = card.querySelector(".hcard-meta");
+          if (title) title.textContent = p[0];
+          if (meta) meta.textContent = p[2];
+        });
       }
 
       // === Leaflet 지도 (산책 시작/산책 중/탐색) ===
@@ -3564,18 +3869,6 @@
         return String(s).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
       }
 
-      /** 상단 HUD: 거리(km) · 예상 시간(분)만 표시 (그 외 부가 설명 제거) */
-      function formatWalkHudMeta(meta) {
-        const s = String(meta || "");
-        const kmM = s.match(/(\d+(?:\.\d+)?)\s*km/i);
-        const minM = s.match(/(\d+)\s*분/);
-        const parts = [];
-        if (kmM) parts.push(kmM[1] + "km");
-        if (minM) parts.push(minM[1] + "분");
-        if (parts.length) return parts.join(" · ");
-        return "1.2km · 20분";
-      }
-
       function getRegisteredWalkDogs() {
         const primaryName = (state.dogName || "").trim() || "반려견";
         const primarySub = (state.primaryPetSub || "").trim() || getDogInfoSubline() || "";
@@ -3584,6 +3877,7 @@
             id: "primary",
             name: primaryName,
             sub: primarySub || "정보 추가 시 반영돼요",
+            personality: state.petPersonality || null,
           },
         ];
         readPetlogExtras().forEach((p, i) => {
@@ -3591,9 +3885,74 @@
             id: "extra_" + i,
             name: (typeof p.name === "string" && p.name.trim()) ? p.name.trim() : "반려견",
             sub: typeof p.sub === "string" ? p.sub.trim() : "",
+            personality: p.personality || null,
           });
         });
         return dogs;
+      }
+
+      function getDogColorById(id) {
+        if (id === "primary" || id === "bori") return CAL_DOG_COLORS[0];
+        const idx = Number(String(id || "").replace("extra_", ""));
+        return CAL_DOG_COLORS[((Number.isFinite(idx) ? idx : 0) + 1) % CAL_DOG_COLORS.length];
+      }
+
+      function getDogById(id) {
+        const normalized = id === "bori" ? "primary" : id;
+        return getRegisteredWalkDogs().find((d) => d.id === normalized) || getRegisteredWalkDogs()[0];
+      }
+
+      function getSelectedWalkDogs() {
+        const selected = state.walkParticipantIds || ["primary"];
+        return getRegisteredWalkDogs().filter((d) => selected.includes(d.id));
+      }
+
+      function syncPetAnalysisDogText() {
+        const dog = getDogById(state.activePetlogDogId || "primary") || {};
+        const name = dog.name || "반려견";
+        const periodHint = document.getElementById("analysisPeriodDogHint");
+        const resultHint = document.getElementById("analysisResultDogHint");
+        const desc = document.getElementById("analysisResultDesc");
+        if (periodHint) periodHint.textContent = name + "의 산책 데이터를 분석할 기간을 선택하세요.";
+        if (resultHint) resultHint.textContent = name + " · 최근 1개월 데이터 기반";
+        if (desc) desc.innerHTML = escapeHtml(name) + "는 새로운 경로에 대한 호기심이 높고,<br>활동량이 많은 탐험가 성향이에요.";
+      }
+
+      function parseRouteMeta(meta) {
+        const text = String(meta || "");
+        const distMatch = text.match(/(\d+(?:\.\d+)?)\s*km/i);
+        const hourMatch = text.match(/(\d+)\s*시간/);
+        const minMatch = text.match(/(\d+)\s*분/);
+        const totalDistance = distMatch ? Number(distMatch[1]) : 0;
+        const estimatedDuration = (hourMatch ? Number(hourMatch[1]) * 60 : 0) + (minMatch ? Number(minMatch[1]) : 0);
+        return { totalDistance, estimatedDuration };
+      }
+
+      function getRouteInfo(route) {
+        const parsed = parseRouteMeta(route && route.meta);
+        const totalDistance = Number(route && route.totalDistance);
+        const estimatedDuration = Number(route && route.estimatedDuration);
+        return {
+          totalDistance: Number.isFinite(totalDistance) && totalDistance >= 0 ? totalDistance : parsed.totalDistance,
+          estimatedDuration: Number.isFinite(estimatedDuration) && estimatedDuration >= 0 ? estimatedDuration : parsed.estimatedDuration,
+        };
+      }
+
+      function formatRouteDistance(km) {
+        const n = Number(km);
+        return (Number.isFinite(n) ? n : 0).toFixed(1) + "km";
+      }
+
+      function formatRouteDuration(minutes) {
+        const total = Math.max(0, Math.round(Number(minutes) || 0));
+        if (total < 60) return total + "분";
+        const hours = Math.floor(total / 60);
+        const mins = total % 60;
+        return mins ? hours + "시간 " + mins + "분" : hours + "시간";
+      }
+
+      function formatRouteMeta(info) {
+        return formatRouteDistance(info.totalDistance) + " · " + formatRouteDuration(info.estimatedDuration);
       }
 
       function beginWalkNavigationOrPicker(route) {
@@ -3606,15 +3965,18 @@
           return;
         }
         state.walkParticipantIds = dogs.length ? dogs.map((d) => d.id) : ["primary"];
-        syncWalkRouteLabels(route.name, route.meta);
+        syncWalkRouteLabels(route.name, route.meta, route);
         setActiveView("walk");
       }
 
-      function syncWalkRouteLabels(name, meta) {
+      function syncWalkRouteLabels(name, meta, route) {
         const routeName = (name || "").trim() || "백빈건널목";
         const routeMeta = (meta || "").trim() || "1.2km · 20분";
+        const routeInfo = route ? getRouteInfo(route) : currentWalkRouteInfo;
+        const fixedMeta = formatRouteMeta(routeInfo);
         currentWalkRouteName = routeName;
         currentWalkRouteMeta = routeMeta;
+        currentWalkRouteInfo = routeInfo;
         const nm = document.getElementById("walkRouteName");
         const mt = document.getElementById("walkRouteMeta");
         if (nm) nm.textContent = routeName;
@@ -3625,13 +3987,13 @@
           const dogs = getRegisteredWalkDogs()
             .filter((d) => (state.walkParticipantIds || []).includes(d.id))
             .map((d) => d.name)
-            .join(", ") || ((state.dogName || "").trim() || "반려견");
-          const dog = String(dogs.split(",")[0] || dogs).trim() || "보리";
+            .join("•") || ((state.dogName || "").trim() || "반려견");
+          const dog = String(dogs).trim() || "보리";
           const displayRoute = state.freeWalk ? "자유 산책" : routeName;
           bar.innerHTML = '<span class="walk-hud-dog">' + escapeHtml(dog) + '</span>'
             + '<span class="walk-hud-sep"></span>'
             + '<span class="walk-hud-route">' + escapeHtml(displayRoute) + '</span>'
-            + '<span class="walk-hud-meta" id="walkHudMetaLive">0.0km · 00:00</span>';
+            + '<span class="walk-hud-meta" id="walkHudMetaLive">' + escapeHtml(fixedMeta) + '</span>';
         }
         startWalkTimer();
         voiceOn = !!(document.getElementById("toggleVoiceDefault") || {}).checked;
@@ -3661,8 +4023,6 @@
         const secs = walkElapsedSec % 60;
         const timeStr = String(mins).padStart(2, "0") + ":" + String(secs).padStart(2, "0");
         const distStr = walkDistanceKm.toFixed(1);
-        const hudMeta = document.getElementById("walkHudMetaLive");
-        if (hudMeta) hudMeta.textContent = distStr + "km · " + timeStr;
         const sheetKm = document.getElementById("walkSheetKmNum");
         const sheetMin = document.getElementById("walkSheetMinNum");
         if (sheetKm) sheetKm.textContent = distStr;
@@ -3754,7 +4114,7 @@
           overlay.classList.remove("show");
           overlay.setAttribute("aria-hidden", "true");
         }
-        syncWalkRouteLabels(r.name, r.meta);
+          syncWalkRouteLabels(r.name, r.meta, r);
         setActiveView("walk");
       }
 
@@ -3850,6 +4210,8 @@
           const inp = document.getElementById("petAddNameInput");
           const list = readPetlogExtras();
           safe = (inp && inp.value || "").trim() || `새 반려견 ${list.length + 1}`;
+        } else if (state.dogTraitsFrom === "pet_existing") {
+          safe = (getDogById(state.dogTraitsTargetId || "primary") || {}).name || "반려견";
         } else {
           safe = (state.dogName || "").trim() || "반려견";
         }
@@ -3864,6 +4226,10 @@
           const inp = document.getElementById("petAddNameInput");
           const list = readPetlogExtras();
           safe = (inp && inp.value || "").trim() || `새 반려견 ${list.length + 1}`;
+        } else if (state.dogTraitsFrom === "pet_existing") {
+          safe = (getDogById(state.dogTraitsTargetId || state.activePetlogDogId || "primary") || {}).name || "반려견";
+        } else if (state.resultEntryFrom === "pet") {
+          safe = (getDogById(state.activePetlogDogId || "primary") || {}).name || "반려견";
         } else {
           safe = (state.dogName || "").trim() || "반려견";
         }
@@ -3953,7 +4319,18 @@
           writePetlogExtras([]);
         }
         if (navTarget && nav === "dogInfoResult") {
-          state.resultEntryFrom = navTarget.id === "petPersonalityCard" ? "pet" : "onboarding";
+          state.activePetlogDogId = navTarget.getAttribute("data-dog-id") || "primary";
+          state.resultEntryFrom = navTarget.closest(".petlog-profile-card") ? "pet" : "onboarding";
+          if (state.resultEntryFrom === "pet") state.dogTraitsFrom = null;
+        }
+        if (navTarget && nav === "dogInfoTraits" && navTarget.closest(".petlog-profile-card")) {
+          state.dogTraitsFrom = "pet_existing";
+          state.dogTraitsTargetId = navTarget.getAttribute("data-dog-id") || "primary";
+          state.resultEntryFrom = "pet";
+          clearQuizStateAndUI();
+        }
+        if (navTarget && nav === "pet_analysis_period") {
+          state.activePetlogDogId = navTarget.getAttribute("data-dog-id") || state.activePetlogDogId || "primary";
         }
         if (!skipDefaultNavForWalk && nav) setActiveView(nav);
 
@@ -4180,6 +4557,31 @@
       });
       syncHomeDogName();
       syncPetDogName();
+      syncHomeLocationHeader();
+      document.getElementById("homeLocationSwitcher")?.addEventListener("click", (e) => {
+        if (e.target.closest(".home-location-name.active")) {
+          openHomeLocationSheet();
+          return;
+        }
+        if (!e.target.closest(".home-location-name.inactive")) return;
+        const inactiveIndex = (state.activeHomeLocationIndex || 0) === 0 ? 1 : 0;
+        switchHomeLocationTo(inactiveIndex, true);
+      });
+      document.getElementById("homeLocationOverlay")?.addEventListener("click", (e) => {
+        if (e.target.id === "homeLocationOverlay") closeHomeLocationSheet();
+        const del = e.target.closest("[data-location-delete]");
+        if (del) {
+          e.stopPropagation();
+          deleteHomeLocation(Number(del.getAttribute("data-location-delete")));
+          return;
+        }
+        const row = e.target.closest(".home-location-row");
+        if (row) {
+          switchHomeLocationTo(Number(row.getAttribute("data-location-index")), true);
+          renderHomeLocationSheet();
+        }
+      });
+      document.getElementById("homeLocationAddBtn")?.addEventListener("click", addHomeLocation);
 
       // 개발자 바로가기: 아이디·비밀번호 모두 "." 입력 후 LOGIN
       (function bindDevLoginShortcut() {
@@ -4526,6 +4928,68 @@
           if (walkLiveMap && walkLiveMarker) walkLiveMap.setView(walkLiveMarker.getLatLng(), 17);
         });
       }
+      let pendingPottyKind = null;
+      let pendingPottyDogId = null;
+      const walkPoopDogOverlay = document.getElementById("walkPoopDogOverlay");
+      const walkPoopDogList = document.getElementById("walkPoopDogList");
+      const walkPoopDogClose = document.getElementById("walkPoopDogClose");
+      const walkPoopDogSubmit = document.getElementById("walkPoopDogSubmit");
+
+      function saveWalkPottyRecord(kind, dog) {
+        const label = kind === "💩" ? "대변" : "소변";
+        const dogName = dog && dog.name ? dog.name : "반려견";
+        const color = getDogColorById(dog && dog.id);
+        state.walkPottyRecords.push({ dogId: dog && dog.id, dogName, kind, label, at: Date.now() });
+        addWalkReportMarker(kind, dogName + " " + label + " 기록", color);
+        addWalkTimelineEntry(kind + " " + dogName + " " + label + " 기록", color);
+      }
+
+      function closeWalkPoopDogPicker() {
+        pendingPottyKind = null;
+        pendingPottyDogId = null;
+        if (walkPoopDogOverlay) {
+          walkPoopDogOverlay.classList.remove("show");
+          walkPoopDogOverlay.setAttribute("aria-hidden", "true");
+        }
+      }
+
+      function openWalkPoopDogPicker(kind) {
+        const dogs = getSelectedWalkDogs();
+        if (dogs.length <= 1) {
+          saveWalkPottyRecord(kind, dogs[0] || getRegisteredWalkDogs()[0]);
+          return;
+        }
+        pendingPottyKind = kind;
+        pendingPottyDogId = dogs[0].id;
+        if (walkPoopDogList) {
+          walkPoopDogList.innerHTML = dogs.map((d, i) =>
+            '<button type="button" class="walk-poop-dog-chip ' + (i === 0 ? "selected" : "") + '" data-dog-id="' + escapeHtml(d.id) + '">' + escapeHtml(d.name) + '</button>'
+          ).join("");
+        }
+        if (walkPoopDogOverlay) {
+          walkPoopDogOverlay.classList.add("show");
+          walkPoopDogOverlay.setAttribute("aria-hidden", "false");
+        }
+      }
+
+      if (walkPoopDogList) {
+        walkPoopDogList.addEventListener("click", (e) => {
+          const chip = e.target.closest(".walk-poop-dog-chip");
+          if (!chip) return;
+          pendingPottyDogId = chip.getAttribute("data-dog-id");
+          walkPoopDogList.querySelectorAll(".walk-poop-dog-chip").forEach((el) => el.classList.toggle("selected", el === chip));
+        });
+      }
+      if (walkPoopDogClose) walkPoopDogClose.addEventListener("click", closeWalkPoopDogPicker);
+      if (walkPoopDogOverlay) walkPoopDogOverlay.addEventListener("click", (e) => { if (e.target === walkPoopDogOverlay) closeWalkPoopDogPicker(); });
+      if (walkPoopDogSubmit) {
+        walkPoopDogSubmit.addEventListener("click", () => {
+          const dog = getDogById(pendingPottyDogId);
+          if (pendingPottyKind && dog) saveWalkPottyRecord(pendingPottyKind, dog);
+          closeWalkPoopDogPicker();
+          closePoopMenu();
+        });
+      }
       if (walkPoopFab && walkPoopMenu) {
         walkPoopFab.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -4539,8 +5003,7 @@
           const btn = e.target.closest("[data-poop-kind]");
           if (!btn) return;
           const kind = btn.getAttribute("data-poop-kind") || "💩";
-          addWalkReportMarker(kind, kind === "💩" ? "배변 기록" : "소변 기록");
-          addWalkTimelineEntry(kind + " 기록", "#f97316");
+          openWalkPoopDogPicker(kind);
           closePoopMenu();
           walkPoopFab.textContent = "💩";
           walkPoopFab.setAttribute("aria-label", "배변 기록");
@@ -4781,8 +5244,61 @@
       // === pet_monthly: 반려견별 색 필터 ===
       const calDogFilter = document.getElementById("calDogFilter");
       const calGrid = document.getElementById("calGrid");
+      const petlogRecordList = document.getElementById("petlogRecordList");
       const CAL_DOG_COLORS = ["#19B23A", "#F59E0B", "#6366F1", "#EC4899", "#14B8A6", "#F97316"];
       var renderCalDogChips = null;
+      function normalizeDogIdForCalendar(id) {
+        return id === "primary" ? "bori" : id;
+      }
+      function renderManualWalkRecords() {
+        state.manualWalkRecords = readManualWalkRecords();
+        if (calGrid) {
+          calGrid.querySelectorAll(".cal-day.manual-walked").forEach((day) => {
+            day.classList.remove("manual-walked");
+            day.querySelectorAll(".cal-dot.manual-dot").forEach((dot) => dot.remove());
+          });
+          state.manualWalkRecords.forEach((rec) => {
+            const date = new Date(rec.date + "T00:00:00");
+            const dayNum = date.getDate();
+            const day = Array.from(calGrid.querySelectorAll(".cal-day")).find((el) => el.childNodes[0] && String(el.childNodes[0].textContent).trim() === String(dayNum));
+            if (!day) return;
+            const dogs = (rec.dogIds || []).map(normalizeDogIdForCalendar);
+            const prevDogs = (day.dataset.dogs || "").split(",").map((s) => s.trim()).filter(Boolean);
+            day.dataset.dogs = Array.from(new Set(prevDogs.concat(dogs))).join(",");
+            day.classList.add("walked", "manual-walked");
+            day.setAttribute("data-nav", "pet_journal");
+            let dots = day.querySelector(".cal-dots");
+            if (!dots) {
+              dots = document.createElement("span");
+              dots.className = "cal-dots";
+              day.appendChild(dots);
+            }
+            dogs.forEach((dogId) => {
+              const dot = document.createElement("span");
+              dot.className = "cal-dot manual-dot";
+              dot.dataset.dog = dogId;
+              dot.style.background = getDogColorById(dogId);
+              dots.appendChild(dot);
+            });
+          });
+        }
+        if (petlogRecordList) {
+          petlogRecordList.innerHTML = state.manualWalkRecords.slice(-4).reverse().map((rec) => {
+            const dogNames = (rec.dogIds || []).map((id) => (getDogById(id) || {}).name).filter(Boolean).join("•") || "반려견";
+            const potty = [rec.pee ? "소변" : "", rec.poop ? "대변" : ""].filter(Boolean).join(" · ");
+            const sub = [rec.date, rec.time, Number(rec.distance || 0).toFixed(1) + "km", potty].filter(Boolean).join(" · ");
+            return '<div class="petlog-record-item"><span class="petlog-record-ico">🚶</span><span class="petlog-record-main"><span class="petlog-record-title">' + escapeHtml(dogNames) + ' 산책</span><span class="petlog-record-sub">' + escapeHtml(sub) + '</span></span></div>';
+          }).join("");
+        }
+        const summaryVals = document.querySelectorAll(".cal-summary .cal-summary-val");
+        if (summaryVals.length >= 3) {
+          const manualCount = state.manualWalkRecords.length;
+          const manualKm = state.manualWalkRecords.reduce((sum, r) => sum + (Number(r.distance) || 0), 0);
+          summaryVals[0].textContent = (12 + manualCount) + "회";
+          summaryVals[1].textContent = (18.4 + manualKm).toFixed(1) + "km";
+          summaryVals[2].textContent = (4.8 + manualCount * 0.5).toFixed(1) + "h";
+        }
+      }
       if (calDogFilter && calGrid) {
         function applyCalFilter() {
           const activeDogs = Array.from(calDogFilter.querySelectorAll(".cal-dog-chip.active")).map(c => c.dataset.dog);
@@ -4825,10 +5341,101 @@
               applyCalFilter();
             });
           });
+          renderManualWalkRecords();
           applyCalFilter();
         };
 
         renderCalDogChips();
+      }
+
+      const manualRecordOverlay = document.getElementById("manualRecordOverlay");
+      const manualRecordForm = document.getElementById("manualRecordForm");
+      const manualRecordDogChips = document.getElementById("manualRecordDogChips");
+      const manualRecordClose = document.getElementById("manualRecordClose");
+      const manualSelectedDogs = new Set(["primary"]);
+
+      function setManualRecordDefaults() {
+        const now = new Date();
+        const dateEl = document.getElementById("manualRecordDate");
+        const timeEl = document.getElementById("manualRecordTime");
+        if (dateEl) dateEl.value = now.toISOString().slice(0, 10);
+        if (timeEl) timeEl.value = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+      }
+
+      function renderManualRecordDogChips() {
+        if (!manualRecordDogChips) return;
+        const dogs = getRegisteredWalkDogs();
+        if (!manualSelectedDogs.size && dogs[0]) manualSelectedDogs.add(dogs[0].id);
+        manualRecordDogChips.innerHTML = dogs.map((d) =>
+          '<button type="button" class="dog-select-chip ' + (manualSelectedDogs.has(d.id) ? "selected" : "") + '" data-dog-id="' + escapeHtml(d.id) + '">' + escapeHtml(d.name) + '</button>'
+        ).join("");
+      }
+
+      function openManualRecordModal() {
+        manualSelectedDogs.clear();
+        const first = getRegisteredWalkDogs()[0];
+        if (first) manualSelectedDogs.add(first.id);
+        renderManualRecordDogChips();
+        setManualRecordDefaults();
+        if (manualRecordForm) manualRecordForm.reset();
+        setManualRecordDefaults();
+        if (manualRecordOverlay) {
+          manualRecordOverlay.classList.add("show");
+          manualRecordOverlay.setAttribute("aria-hidden", "false");
+        }
+      }
+
+      function closeManualRecordModal() {
+        if (manualRecordOverlay) {
+          manualRecordOverlay.classList.remove("show");
+          manualRecordOverlay.setAttribute("aria-hidden", "true");
+        }
+      }
+
+      document.addEventListener("click", (e) => {
+        if (e.target && e.target.closest && e.target.closest(".petlog-add-record-btn")) {
+          e.preventDefault();
+          e.stopPropagation();
+          openManualRecordModal();
+        }
+      });
+      if (manualRecordClose) manualRecordClose.addEventListener("click", closeManualRecordModal);
+      if (manualRecordOverlay) manualRecordOverlay.addEventListener("click", (e) => { if (e.target === manualRecordOverlay) closeManualRecordModal(); });
+      if (manualRecordDogChips) {
+        manualRecordDogChips.addEventListener("click", (e) => {
+          const chip = e.target.closest(".dog-select-chip");
+          if (!chip) return;
+          const id = chip.getAttribute("data-dog-id");
+          if (manualSelectedDogs.has(id) && manualSelectedDogs.size === 1) return;
+          if (manualSelectedDogs.has(id)) manualSelectedDogs.delete(id);
+          else manualSelectedDogs.add(id);
+          renderManualRecordDogChips();
+        });
+      }
+      if (manualRecordForm) {
+        manualRecordForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const date = (document.getElementById("manualRecordDate") || {}).value || new Date().toISOString().slice(0, 10);
+          const time = (document.getElementById("manualRecordTime") || {}).value || "18:00";
+          const distance = Number((document.getElementById("manualRecordDistance") || {}).value || 0);
+          const memo = ((document.getElementById("manualRecordMemo") || {}).value || "").trim();
+          const rec = {
+            id: "manual_" + Date.now(),
+            source: "manual",
+            dogIds: Array.from(manualSelectedDogs),
+            date,
+            time,
+            distance: Number.isFinite(distance) ? distance : 0,
+            memo,
+            hasPhoto: !!((document.getElementById("manualRecordPhoto") || {}).value),
+            pee: !!((document.getElementById("manualRecordPee") || {}).checked),
+            poop: !!((document.getElementById("manualRecordPoop") || {}).checked),
+          };
+          writeManualWalkRecords(readManualWalkRecords().concat(rec));
+          renderManualWalkRecords();
+          if (renderCalDogChips) renderCalDogChips();
+          closeManualRecordModal();
+        });
       }
 
       // === userInfo: 시간대 chip + day tab ===
@@ -5082,11 +5689,35 @@
           };
           if (state.dogTraitsFrom === "pet_add") {
             state.petAddQuizResult = pers;
+          } else if (state.dogTraitsFrom === "pet_existing") {
+            const targetId = state.dogTraitsTargetId || "primary";
+            if (targetId === "primary") {
+              state.petPersonality = pers;
+            } else {
+              const list = readPetlogExtras();
+              const idx = Number(String(targetId).replace("extra_", ""));
+              if (Number.isFinite(idx) && list[idx]) {
+                list[idx].personality = pers;
+                writePetlogExtras(list);
+              }
+            }
           } else {
             state.petPersonality = pers;
           }
         } else if (state.dogTraitsFrom === "pet_add" && state.petAddQuizResult) {
           const saved = state.petAddQuizResult;
+          type = saved;
+          norm = saved.norm || {};
+        } else if (state.dogTraitsFrom === "pet_existing") {
+          const target = getDogById(state.dogTraitsTargetId || "primary");
+          const saved = target && target.personality ? target.personality : state.petPersonality;
+          if (!saved) return;
+          type = saved;
+          norm = saved.norm || {};
+        } else if (state.resultEntryFrom === "pet") {
+          const target = getDogById(state.activePetlogDogId || "primary");
+          const saved = target && target.personality;
+          if (!saved) return;
           type = saved;
           norm = saved.norm || {};
         } else if (state.petPersonality) {
@@ -5132,6 +5763,9 @@
         const empty = document.getElementById("petPersonalityEmpty");
         const personality = state.petPersonality;
         if (!card || !empty) return;
+        card.dataset.dogId = "primary";
+        empty.dataset.dogId = "primary";
+        document.querySelector(".petlog-dual-analysis")?.setAttribute("data-dog-id", "primary");
         if (personality) {
           card.style.display = "flex";
           empty.style.display = "none";
@@ -5174,14 +5808,18 @@
           const head = lastSlide.querySelector(".petlog-profile-head");
           if (head) head.appendChild(slot);
           else card.insertBefore(slot, card.firstChild);
-        } else slot.innerHTML = "";
+        } else {
+          slot.querySelectorAll(".petlog-card-corner-add").forEach((el) => el.remove());
+        }
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "petlog-card-corner-add";
         btn.setAttribute("data-nav", "pet_add");
         btn.setAttribute("aria-label", "반려견 추가");
-        btn.textContent = "＋ 추가";
-        slot.appendChild(btn);
+        btn.textContent = "+ 반려견";
+        const recordBtn = slot.querySelector(".petlog-add-record-btn");
+        if (recordBtn) slot.insertBefore(btn, recordBtn);
+        else slot.appendChild(btn);
       }
 
       function refreshPetlogExtraSlides() {
@@ -5193,11 +5831,13 @@
         const base = track.querySelector(".petlog-carousel-slide--base");
         if (!base) return;
 
-        extras.forEach((pet) => {
+        extras.forEach((pet, i) => {
           const slide = base.cloneNode(true);
           slide.classList.remove("petlog-carousel-slide--base");
           slide.classList.add("petlog-carousel-slide--extra");
           slide.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+          const dogId = "extra_" + i;
+          slide.dataset.dogId = dogId;
           const nameEl = slide.querySelector(".petlog-profile-name");
           if (nameEl) nameEl.textContent = pet.name;
           const subEl = slide.querySelector(".petlog-profile-sub");
@@ -5208,6 +5848,8 @@
             const p = pet.personality;
             if (p && p.name) {
               if (btns[0]) {
+                btns[0].setAttribute("data-nav", "dogInfoResult");
+                btns[0].setAttribute("data-dog-id", dogId);
                 btns[0].style.display = "flex";
                 const em = btns[0].querySelector(".petlog-dual-mini-emoji");
                 const nm = btns[0].querySelector(".petlog-dual-mini-name");
@@ -5219,10 +5861,17 @@
               if (btns[1]) btns[1].style.display = "none";
             } else {
               if (btns[0]) btns[0].style.display = "none";
-              if (btns[1]) btns[1].style.display = "flex";
+              if (btns[1]) {
+                btns[1].setAttribute("data-nav", "dogInfoTraits");
+                btns[1].setAttribute("data-dog-id", dogId);
+                btns[1].style.display = "flex";
+              }
             }
           }
-          slide.querySelectorAll("button[data-nav]").forEach((el) => el.removeAttribute("data-nav"));
+          slide.querySelectorAll(".petlog-dual-analysis").forEach((el) => {
+            el.setAttribute("data-nav", "pet_analysis_period");
+            el.setAttribute("data-dog-id", dogId);
+          });
           track.appendChild(slide);
         });
         placePetlogAddButtonOnLastSlide(track);
