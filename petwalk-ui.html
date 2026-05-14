@@ -677,6 +677,12 @@
     .petlog-record-main{flex:1;min-width:0}
     .petlog-record-title{font-size:13px;font-weight:900;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .petlog-record-sub{font-size:11px;color:var(--sub);font-weight:600;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .petlog-share-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:18px;padding:14px 0;background:#fff;border:1.5px solid var(--line);border-radius:14px;font-size:14px;font-weight:800;color:var(--text);cursor:pointer;font-family:inherit;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .15s ease}
+    .petlog-share-btn:hover{border-color:rgba(25,178,58,.35);color:var(--main);background:rgba(25,178,58,.04)}
+    .petlog-share-btn:active{transform:scale(.97)}
+    .petlog-share-ico{font-size:18px;line-height:1}
+    .petlog-share-toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%) translateY(8px);background:#252A32;color:#fff;border-radius:10px;padding:12px 22px;font-size:13px;font-weight:800;box-shadow:0 6px 24px rgba(0,0,0,.22);opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;white-space:nowrap;z-index:9999}
+    .petlog-share-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     .manual-record-overlay,.walk-poop-dog-overlay{position:absolute;inset:0;z-index:4100;background:rgba(0,0,0,.28);display:none;align-items:flex-end;justify-content:center;padding:0 12px 12px;backdrop-filter:blur(2px)}
     .manual-record-overlay.show,.walk-poop-dog-overlay.show{display:flex}
     .manual-record-sheet,.walk-poop-dog-sheet{width:100%;max-height:86%;overflow:auto;background:#fff;border-radius:24px;padding:18px 16px 16px;box-shadow:0 -14px 40px rgba(0,0,0,.18);animation:sheetUp .22s ease;scrollbar-width:none}
@@ -918,7 +924,83 @@
       position:absolute;left:18px;bottom:132px;z-index:4;width:42px;height:42px;border:none;border-radius:50%;
       background:rgba(255,255,255,.95);box-shadow:0 2px 10px rgba(0,0,0,.12);font-size:19px;cursor:pointer
     }
-    .walk-live-fab-stack{position:absolute;right:10px;bottom:132px;z-index:4;display:flex;align-items:center;justify-content:flex-end;min-height:44px}
+    .walk-live-fab-stack{position:absolute;right:10px;bottom:132px;z-index:4;display:flex;flex-direction:column;align-items:center;gap:10px;min-height:44px}
+    .walk-live-fab-end{
+      width:44px;height:44px;border:none;border-radius:50%;background:rgba(255,255,255,.95);
+      box-shadow:0 2px 12px rgba(0,0,0,.12);font-size:18px;cursor:pointer;color:#EF4444;
+      display:flex;align-items:center;justify-content:center;transition:transform .12s ease,box-shadow .12s ease
+    }
+    .walk-live-fab-end:active{transform:scale(.92);box-shadow:0 1px 6px rgba(0,0,0,.1)}
+    .walk-end-confirm-overlay{position:absolute;inset:0;z-index:9000;background:rgba(0,0,0,.38);display:none;align-items:center;justify-content:center;padding:0 28px;backdrop-filter:blur(2px)}
+    .walk-end-confirm-overlay.show{display:flex}
+    .walk-end-confirm-box{background:#fff;border-radius:20px;padding:24px 20px 18px;width:100%;max-width:300px;box-shadow:0 12px 40px rgba(0,0,0,.18);text-align:center}
+    .walk-end-confirm-title{font-size:16px;font-weight:900;color:var(--text);margin-bottom:6px}
+    .walk-end-confirm-desc{font-size:13px;color:var(--sub);font-weight:600;line-height:1.45;margin-bottom:20px}
+    .walk-end-confirm-actions{display:flex;gap:8px}
+    .walk-end-confirm-actions button{flex:1;border:none;border-radius:12px;padding:13px 0;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit}
+    .walk-end-confirm-cancel{background:#F2F3F5;color:var(--text)}
+    .walk-end-confirm-cancel:active{background:#E5E7EB}
+    .walk-end-confirm-ok{background:#EF4444;color:#fff;box-shadow:0 3px 10px rgba(239,68,68,.25)}
+    .walk-end-confirm-ok:active{background:#DC2626}
+
+    /* Walk mode picker modal */
+    .walk-mode-overlay{position:absolute;inset:0;z-index:4200;background:rgba(0,0,0,.32);display:none;align-items:flex-end;justify-content:center;padding:0 12px 12px;backdrop-filter:blur(2px)}
+    .walk-mode-overlay.show{display:flex}
+    .walk-mode-sheet{width:100%;background:#fff;border-radius:24px;padding:22px 18px 18px;box-shadow:0 -14px 40px rgba(0,0,0,.18);animation:sheetUp .22s ease}
+    .walk-mode-title{font-size:18px;font-weight:900;color:var(--text);margin-bottom:4px}
+    .walk-mode-desc{font-size:12px;color:var(--sub);font-weight:600;margin-bottom:16px}
+    .walk-mode-options{display:flex;flex-direction:column;gap:10px}
+    .walk-mode-option{display:flex;align-items:center;gap:14px;border:1.5px solid rgba(0,0,0,.08);background:#fff;border-radius:16px;padding:16px 14px;cursor:pointer;transition:all .15s ease;font-family:inherit;text-align:left;width:100%}
+    .walk-mode-option:hover{border-color:rgba(25,178,58,.3);background:rgba(25,178,58,.03)}
+    .walk-mode-option:active{transform:scale(.98)}
+    .walk-mode-ico{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+    .walk-mode-ico.ai{background:linear-gradient(135deg,rgba(25,178,58,.15),rgba(0,233,51,.08))}
+    .walk-mode-ico.free{background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(96,165,250,.08))}
+    .walk-mode-info{flex:1;min-width:0}
+    .walk-mode-name{font-size:15px;font-weight:900;color:var(--text);margin-bottom:2px}
+    .walk-mode-hint{font-size:11px;color:var(--sub);font-weight:600;line-height:1.4}
+    .walk-mode-arrow{color:var(--sub);font-size:18px;font-weight:800;flex-shrink:0}
+    .walk-mode-cancel{width:100%;border:none;background:#F2F3F5;border-radius:14px;padding:14px;font-size:14px;font-weight:800;color:var(--text);cursor:pointer;font-family:inherit;margin-top:10px}
+    .walk-mode-cancel:active{background:#E5E7EB}
+
+    /* Explore place detail */
+    .place-detail-screen{padding:0;height:100%;overflow:auto;scrollbar-width:none;-ms-overflow-style:none}
+    .place-detail-screen::-webkit-scrollbar{display:none}
+    .place-detail-hero{height:180px;background:linear-gradient(135deg,#e8fdf0 0%,#c9fad4 50%,#b8f5c0 100%);display:flex;align-items:center;justify-content:center;font-size:64px;position:relative}
+    .place-detail-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,.08) 100%)}
+    .place-detail-body{padding:18px 16px 28px}
+    .place-detail-name{font-size:20px;font-weight:900;color:var(--text);margin-bottom:4px}
+    .place-detail-meta{font-size:12px;color:var(--sub);font-weight:600;margin-bottom:16px}
+    .place-detail-section{margin-bottom:20px}
+    .place-detail-section-title{font-size:14px;font-weight:900;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .place-route-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.04);margin-bottom:8px}
+    .place-route-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .place-route-name{font-size:14px;font-weight:800;color:var(--text)}
+    .place-route-chip{background:rgba(25,178,58,.1);color:var(--main);font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px}
+    .place-route-stats{display:flex;gap:16px}
+    .place-route-stat{font-size:12px;color:var(--sub);font-weight:700}
+    .place-route-stat strong{color:var(--text);font-weight:900}
+    .place-review-summary{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.04);margin-bottom:14px}
+    .place-review-avg{text-align:center;min-width:60px}
+    .place-review-avg-num{font-size:28px;font-weight:900;color:var(--text);line-height:1.1}
+    .place-review-avg-stars{font-size:14px;letter-spacing:1px;margin-top:2px}
+    .place-review-avg-count{font-size:11px;color:var(--sub);font-weight:600;margin-top:2px}
+    .place-review-bars{flex:1;display:flex;flex-direction:column;gap:4px}
+    .place-review-bar-row{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--sub)}
+    .place-review-bar-row span:first-child{width:14px;text-align:right}
+    .place-review-bar-track{flex:1;height:6px;background:var(--sep);border-radius:999px;overflow:hidden}
+    .place-review-bar-fill{height:100%;background:var(--main);border-radius:999px}
+    .place-review-bar-row span:last-child{width:22px;text-align:right;font-size:10px}
+    .place-review-item{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.04);margin-bottom:8px}
+    .place-review-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+    .place-review-user{display:flex;align-items:center;gap:8px}
+    .place-review-avatar{width:30px;height:30px;border-radius:50%;background:var(--sep);display:flex;align-items:center;justify-content:center;font-size:14px}
+    .place-review-username{font-size:13px;font-weight:800;color:var(--text)}
+    .place-review-date{font-size:11px;color:var(--sub);font-weight:600}
+    .place-review-stars{font-size:12px;letter-spacing:1px;margin-bottom:6px}
+    .place-review-text{font-size:13px;color:var(--text);font-weight:600;line-height:1.55}
+    .place-review-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+    .place-review-tag{font-size:10px;font-weight:800;padding:4px 8px;border-radius:999px;background:var(--sep);color:var(--sub)}
     .walk-live-fab-poop{
       width:44px;height:44px;border:none;border-radius:50%;background:rgba(255,255,255,.95);
       box-shadow:0 2px 12px rgba(0,0,0,.12);font-size:21px;cursor:pointer
@@ -1572,12 +1654,12 @@
 
                 <div class="home-section">
                   <div class="home-section-head">
-                    <div class="home-section-title">AI 추천 루트</div>
+                    <div class="home-section-title">AI 추천 코스</div>
                     <button type="button" class="home-section-action" data-nav="walkHome">자세히 보기</button>
                   </div>
-                  <div class="hscroll" aria-label="AI 추천 루트">
+                  <div class="hscroll" aria-label="AI 추천 코스">
                     <div class="hcard" data-walk-route="노들섬" data-walk-meta="2.4km · 34분 · 잔디/그늘 균형">
-                      <div class="hcard-img"><button type="button" class="hcard-start-btn">산책 시작</button></div>
+                      <div class="hcard-img"></div>
                       <div class="hcard-body">
                         <div class="row"><div class="hcard-title">노들섬</div><div class="hcard-meta">만족도 79%</div></div>
                         <div class="hcard-tags">
@@ -1586,7 +1668,7 @@
                       </div>
                     </div>
                     <div class="hcard" data-walk-route="올림픽공원" data-walk-meta="2.8km · 39분 · 넓은 공간">
-                      <div class="hcard-img"><button type="button" class="hcard-start-btn">산책 시작</button></div>
+                      <div class="hcard-img"></div>
                       <div class="hcard-body">
                         <div class="row"><div class="hcard-title">올림픽공원</div><div class="hcard-meta">만족도 84%</div></div>
                         <div class="hcard-tags">
@@ -1595,7 +1677,7 @@
                       </div>
                     </div>
                     <div class="hcard" data-walk-route="용산공원" data-walk-meta="2.0km · 30분 · 차분한 분위기">
-                      <div class="hcard-img"><button type="button" class="hcard-start-btn">산책 시작</button></div>
+                      <div class="hcard-img"></div>
                       <div class="hcard-body">
                         <div class="row"><div class="hcard-title">용산공원</div><div class="hcard-meta">만족도 81%</div></div>
                         <div class="hcard-tags">
@@ -1604,7 +1686,7 @@
                       </div>
                     </div>
                     <div class="hcard" data-walk-route="그늘 많은 루프 코스" data-walk-meta="1.9km · 29분 · 체감 시원">
-                      <div class="hcard-img"><button type="button" class="hcard-start-btn">산책 시작</button></div>
+                      <div class="hcard-img"></div>
                       <div class="hcard-body">
                         <div class="row"><div class="hcard-title">그늘 많은 루프 코스</div><div class="hcard-meta">혼잡도 낮음</div></div>
                         <div class="hcard-tags">
@@ -1623,6 +1705,31 @@
                   <div class="home-schedule" id="homeScheduleList">
                     <!-- 기본 일정 (JS에서 렌더링) -->
                   </div>
+                </div>
+              </div>
+              <div class="walk-mode-overlay" id="walkModeOverlay" aria-hidden="true">
+                <div class="walk-mode-sheet">
+                  <div class="walk-mode-title">산책 방식 선택</div>
+                  <div class="walk-mode-desc">어떤 방식으로 산책을 시작할까요?</div>
+                  <div class="walk-mode-options">
+                    <button type="button" class="walk-mode-option" id="walkModeAi">
+                      <div class="walk-mode-ico ai">🤖</div>
+                      <div class="walk-mode-info">
+                        <div class="walk-mode-name">AI 추천 코스</div>
+                        <div class="walk-mode-hint">날씨·성향·컨디션에 맞는 최적 코스를 추천받아요</div>
+                      </div>
+                      <span class="walk-mode-arrow">›</span>
+                    </button>
+                    <button type="button" class="walk-mode-option" id="walkModeFree">
+                      <div class="walk-mode-ico free">🐾</div>
+                      <div class="walk-mode-info">
+                        <div class="walk-mode-name">자유 산책</div>
+                        <div class="walk-mode-hint">코스 없이 자유롭게 걸으며 기록해요</div>
+                      </div>
+                      <span class="walk-mode-arrow">›</span>
+                    </button>
+                  </div>
+                  <button type="button" class="walk-mode-cancel" id="walkModeCancel">취소</button>
                 </div>
               </div>
             </div>
@@ -1933,6 +2040,12 @@
                     </div>
                   </div>
                 </div>
+
+                <button type="button" class="petlog-share-btn" id="petJournalShareBtn">
+                  <span class="petlog-share-ico">🔗</span>
+                  <span>이 기록 공유하기</span>
+                </button>
+                <div class="petlog-share-toast" id="petJournalShareToast">링크가 복사되었습니다!</div>
               </div>
             </div>
 
@@ -2013,7 +2126,7 @@
                 </div>
 
                 <div class="card" style="margin-top:12px;">
-                  <div class="row"><strong>AI 추천</strong><span class="chip">맞춤 제안</span></div>
+                  <div class="row"><strong>AI 추천 코스</strong><span class="chip">맞춤 제안</span></div>
                   <p class="muted" style="margin:8px 0 0;">보리는 새로운 루트를 좋아해요. 주 2~3회 새로운 코스를 섞어주면 산책 만족도가 높아질 거예요.</p>
                 </div>
               </div>
@@ -2066,6 +2179,118 @@
                     <span class="right" id="exploreListCount">전체 0개</span>
                   </button>
                   <div class="explore-sheet-list" id="exploreList"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- EXPLORE PLACE DETAIL -->
+            <div class="view" data-view="explore_place" data-tab-root="explore">
+              <div class="place-detail-screen">
+                <div class="topbar" style="position:sticky;top:0;z-index:2;background:var(--white);">
+                  <button class="iconbtn" data-nav="explore">←</button>
+                  <span class="muted" id="placeDetailTopName">장소 상세</span>
+                </div>
+                <div class="place-detail-hero" id="placeDetailHero">
+                  <div class="place-detail-hero-overlay"></div>
+                  <span id="placeDetailHeroIco">📍</span>
+                </div>
+                <div class="place-detail-body">
+                  <div class="place-detail-name" id="placeDetailName">한강 테라스 카페</div>
+                  <div class="place-detail-meta" id="placeDetailMeta">카페 · 용산구 한강로3가</div>
+
+                  <div class="place-detail-section">
+                    <div class="place-detail-section-title">🚶 산책 루트</div>
+                    <div id="placeDetailRoutes">
+                      <div class="place-route-card">
+                        <div class="place-route-top">
+                          <span class="place-route-name">강변 산책 코스</span>
+                          <span class="place-route-chip">인기</span>
+                        </div>
+                        <div class="place-route-stats">
+                          <span class="place-route-stat"><strong>2.1km</strong> 거리</span>
+                          <span class="place-route-stat"><strong>28분</strong> 소요</span>
+                          <span class="place-route-stat"><strong>그늘 많음</strong></span>
+                        </div>
+                      </div>
+                      <div class="place-route-card">
+                        <div class="place-route-top">
+                          <span class="place-route-name">공원 순환 코스</span>
+                          <span class="place-route-chip">짧은 산책</span>
+                        </div>
+                        <div class="place-route-stats">
+                          <span class="place-route-stat"><strong>1.3km</strong> 거리</span>
+                          <span class="place-route-stat"><strong>18분</strong> 소요</span>
+                          <span class="place-route-stat"><strong>평탄한 길</strong></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="place-detail-section">
+                    <div class="place-detail-section-title">⭐ 리뷰 <span id="placeReviewTotalCount" style="font-size:12px;font-weight:700;color:var(--sub);">(24)</span></div>
+                    <div class="place-review-summary" id="placeReviewSummary">
+                      <div class="place-review-avg">
+                        <div class="place-review-avg-num" id="placeAvgScore">4.2</div>
+                        <div class="place-review-avg-stars">★★★★☆</div>
+                        <div class="place-review-avg-count">24개 리뷰</div>
+                      </div>
+                      <div class="place-review-bars">
+                        <div class="place-review-bar-row"><span>5</span><div class="place-review-bar-track"><div class="place-review-bar-fill" style="width:54%"></div></div><span>13</span></div>
+                        <div class="place-review-bar-row"><span>4</span><div class="place-review-bar-track"><div class="place-review-bar-fill" style="width:25%"></div></div><span>6</span></div>
+                        <div class="place-review-bar-row"><span>3</span><div class="place-review-bar-track"><div class="place-review-bar-fill" style="width:12%"></div></div><span>3</span></div>
+                        <div class="place-review-bar-row"><span>2</span><div class="place-review-bar-track"><div class="place-review-bar-fill" style="width:4%"></div></div><span>1</span></div>
+                        <div class="place-review-bar-row"><span>1</span><div class="place-review-bar-track"><div class="place-review-bar-fill" style="width:4%"></div></div><span>1</span></div>
+                      </div>
+                    </div>
+
+                    <div id="placeReviewList">
+                      <div class="place-review-item">
+                        <div class="place-review-head">
+                          <div class="place-review-user"><div class="place-review-avatar">🐕</div><span class="place-review-username">보리맘</span></div>
+                          <span class="place-review-date">2일 전</span>
+                        </div>
+                        <div class="place-review-stars">★★★★★</div>
+                        <div class="place-review-text">강변 뷰가 너무 좋고 반려견 동반 가능해서 자주 와요! 산책로도 잘 정비되어 있어서 강아지가 편하게 걸어요.</div>
+                        <div class="place-review-tags"><span class="place-review-tag">🐾 반려견 친화</span><span class="place-review-tag">🌳 그늘 많음</span></div>
+                      </div>
+                      <div class="place-review-item">
+                        <div class="place-review-head">
+                          <div class="place-review-user"><div class="place-review-avatar">🐩</div><span class="place-review-username">콩이아빠</span></div>
+                          <span class="place-review-date">5일 전</span>
+                        </div>
+                        <div class="place-review-stars">★★★★☆</div>
+                        <div class="place-review-text">산책로가 넓어서 다른 강아지랑 마주쳐도 안전해요. 다만 주말에는 사람이 좀 많아서 평일 추천!</div>
+                        <div class="place-review-tags"><span class="place-review-tag">🛤️ 넓은 길</span><span class="place-review-tag">⚠️ 주말 혼잡</span></div>
+                      </div>
+                      <div class="place-review-item">
+                        <div class="place-review-head">
+                          <div class="place-review-user"><div class="place-review-avatar">🦮</div><span class="place-review-username">초코러버</span></div>
+                          <span class="place-review-date">1주 전</span>
+                        </div>
+                        <div class="place-review-stars">★★★★★</div>
+                        <div class="place-review-text">물 마시는 곳도 있고 배변봉투함도 설치돼 있어요. 강아지한테 최고의 산책 코스!</div>
+                        <div class="place-review-tags"><span class="place-review-tag">💧 급수대</span><span class="place-review-tag">🚮 배변봉투함</span></div>
+                      </div>
+                      <div class="place-review-item">
+                        <div class="place-review-head">
+                          <div class="place-review-user"><div class="place-review-avatar">🐶</div><span class="place-review-username">두부엄마</span></div>
+                          <span class="place-review-date">2주 전</span>
+                        </div>
+                        <div class="place-review-stars">★★★☆☆</div>
+                        <div class="place-review-text">길은 예쁜데 자전거가 많이 다녀서 소형견은 조심해야 해요. 리드줄 꼭 짧게 잡으세요.</div>
+                        <div class="place-review-tags"><span class="place-review-tag">🚲 자전거 주의</span><span class="place-review-tag">🐕 소형견 주의</span></div>
+                      </div>
+                      <div class="place-review-item">
+                        <div class="place-review-head">
+                          <div class="place-review-user"><div class="place-review-avatar">🐾</div><span class="place-review-username">해피집사</span></div>
+                          <span class="place-review-date">3주 전</span>
+                        </div>
+                        <div class="place-review-stars">★★☆☆☆</div>
+                        <div class="place-review-text">야간 조명이 부족해서 저녁 산책은 좀 불안해요. 낮에는 괜찮습니다.</div>
+                        <div class="place-review-tags"><span class="place-review-tag">🌙 야간 조명 부족</span></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2130,6 +2355,7 @@
                     <button type="button" class="walk-live-fab-voice" id="voiceActionBtn" aria-label="음성 안내 토글"><span class="voice-pulse"></span><span id="voiceActionIco">🔊</span></button>
                     <button type="button" class="walk-live-fab-loc" id="walkLocateBtn" aria-label="현재 위치 보기">📍</button>
                     <div class="walk-live-fab-stack">
+                      <button type="button" class="walk-live-fab-end" id="walkEndFab" aria-label="산책 종료">⏹</button>
                       <div class="walk-live-fab-poop-menu" id="walkPoopMenu">
                         <button type="button" class="walk-live-mini-fab" data-poop-kind="💩">💩</button>
                         <button type="button" class="walk-live-mini-fab" data-poop-kind="💧">💧</button>
@@ -2145,6 +2371,17 @@
                         <div class="walk-poop-dog-list" id="walkPoopDogList"></div>
                         <button type="button" class="walk-poop-dog-submit" id="walkPoopDogSubmit">기록 저장</button>
                       </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="walk-end-confirm-overlay" id="walkEndConfirmOverlay" aria-hidden="true">
+                  <div class="walk-end-confirm-box" role="dialog" aria-modal="true">
+                    <div class="walk-end-confirm-title">산책을 종료하시겠습니까?</div>
+                    <div class="walk-end-confirm-desc">종료하면 산책 기록이 저장되고<br>리뷰 화면으로 이동합니다.</div>
+                    <div class="walk-end-confirm-actions">
+                      <button type="button" class="walk-end-confirm-cancel" id="walkEndConfirmCancel">계속 산책</button>
+                      <button type="button" class="walk-end-confirm-ok" id="walkEndConfirmOk">종료하기</button>
                     </div>
                   </div>
                 </div>
@@ -2389,7 +2626,7 @@
 
                 <div class="walk-section walk-reco">
                   <div class="walk-section-head">
-                    <div class="walk-section-title">추천 코스</div>
+                    <div class="walk-section-title">AI 추천 코스</div>
                   </div>
                   <div class="walk-reco-tabs" id="walkRecoTabs">
                     <button type="button" class="walk-reco-tab active" data-reco-cat="all">전체보기</button>
@@ -3017,6 +3254,7 @@
         ["pet_journal", 100],
         ["pet_analysis_period", 100],
         ["pet_analysis_result", 100],
+        ["explore_place", 100],
         ["mypage_setting_noti", 100],
         ["mypage_setting_voice", 100],
         ["mypage_setting_font", 100],
@@ -3731,9 +3969,9 @@
             iconSize: [30, 30],
             iconAnchor: [15, 15],
           });
-          L.marker([lat, lon], { icon, title: spot.name })
-            .addTo(exploreSpotLayer)
-            .bindPopup(`<strong>${spot.name}</strong><br><span style="color:#666;font-size:12px">${cname}</span>`);
+          var m = L.marker([lat, lon], { icon, title: spot.name }).addTo(exploreSpotLayer);
+          m.bindPopup(`<strong>${spot.name}</strong><br><span style="color:#666;font-size:12px">${cname}</span>`);
+          (function(s) { m.on("click", function() { openPlaceDetail(s); }); })(spot);
         });
       }
 
@@ -4280,7 +4518,7 @@
           rerouteTimer = setTimeout(() => {
             overlay.classList.add("show");
             speak("더 좋은 경로가 발견되었습니다. 경로를 변경하시겠어요?");
-          }, 2200);
+          }, 60000);
         }
       }
 
@@ -4444,11 +4682,64 @@
 
           const item = document.createElement("div");
           item.className = "explore-list-item";
+          item.style.cursor = "pointer";
           item.innerHTML = `<div class="name">${spot.name}</div><div class="meta">${categoryNames[spot.cat]} · ${exploreCurrentLocation.textContent}</div>`;
+          item.addEventListener("click", function() { openPlaceDetail(spot); });
           exploreList.appendChild(item);
         });
         const label = exploreState.selectedCat ? categoryNames[exploreState.selectedCat] : "전체";
         exploreListCount.textContent = `${label} ${visible.length}개`;
+      }
+
+      var placeRouteData = {
+        stay: [
+          { name: "숙소 주변 산책 코스", chip: "추천", dist: "1.8km", time: "25분", note: "잔디밭 구간" },
+          { name: "아침 산책 코스", chip: "짧은 산책", dist: "0.9km", time: "12분", note: "평탄한 길" }
+        ],
+        food: [
+          { name: "식후 소화 코스", chip: "인기", dist: "1.2km", time: "16분", note: "그늘 많음" },
+          { name: "맛집 탐방 루트", chip: "여유 산책", dist: "2.0km", time: "28분", note: "골목길 포함" }
+        ],
+        cafe: [
+          { name: "강변 산책 코스", chip: "인기", dist: "2.1km", time: "28분", note: "그늘 많음" },
+          { name: "공원 순환 코스", chip: "짧은 산책", dist: "1.3km", time: "18분", note: "평탄한 길" }
+        ],
+        trail: [
+          { name: "전체 순환 코스", chip: "인기", dist: "3.2km", time: "42분", note: "풍경 좋음" },
+          { name: "숲길 단축 코스", chip: "짧은 산책", dist: "1.5km", time: "20분", note: "그늘 구간" }
+        ],
+        _default: [
+          { name: "주변 산책 코스", chip: "추천", dist: "1.6km", time: "22분", note: "쾌적한 길" },
+          { name: "짧은 순환 코스", chip: "짧은 산책", dist: "0.8km", time: "11분", note: "평탄한 길" }
+        ]
+      };
+      var placeReviewData = [
+        { avatar: "🐕", user: "보리맘", date: "2일 전", stars: 5, text: "강변 뷰가 너무 좋고 반려견 동반 가능해서 자주 와요! 산책로도 잘 정비되어 있어서 강아지가 편하게 걸어요.", tags: ["🐾 반려견 친화", "🌳 그늘 많음"] },
+        { avatar: "🐩", user: "콩이아빠", date: "5일 전", stars: 4, text: "산책로가 넓어서 다른 강아지랑 마주쳐도 안전해요. 다만 주말에는 사람이 좀 많아서 평일 추천!", tags: ["🛤️ 넓은 길", "⚠️ 주말 혼잡"] },
+        { avatar: "🦮", user: "초코러버", date: "1주 전", stars: 5, text: "물 마시는 곳도 있고 배변봉투함도 설치돼 있어요. 강아지한테 최고의 산책 코스!", tags: ["💧 급수대", "🚮 배변봉투함"] },
+        { avatar: "🐶", user: "두부엄마", date: "2주 전", stars: 3, text: "길은 예쁜데 자전거가 많이 다녀서 소형견은 조심해야 해요. 리드줄 꼭 짧게 잡으세요.", tags: ["🚲 자전거 주의", "🐕 소형견 주의"] },
+        { avatar: "🐾", user: "해피집사", date: "3주 전", stars: 2, text: "야간 조명이 부족해서 저녁 산책은 좀 불안해요. 낮에는 괜찮습니다.", tags: ["🌙 야간 조명 부족"] }
+      ];
+      function openPlaceDetail(spot) {
+        var heroIco = document.getElementById("placeDetailHeroIco");
+        var topName = document.getElementById("placeDetailTopName");
+        var nameEl = document.getElementById("placeDetailName");
+        var metaEl = document.getElementById("placeDetailMeta");
+        var routesEl = document.getElementById("placeDetailRoutes");
+        var ico = categoryIcons[spot.cat] || "📍";
+        var catName = categoryNames[spot.cat] || "";
+        var loc = exploreCurrentLocation ? exploreCurrentLocation.textContent : "";
+        if (heroIco) heroIco.textContent = ico;
+        if (topName) topName.textContent = spot.name;
+        if (nameEl) nameEl.textContent = spot.name;
+        if (metaEl) metaEl.textContent = catName + " · " + loc;
+        var routes = placeRouteData[spot.cat] || placeRouteData._default;
+        if (routesEl) {
+          routesEl.innerHTML = routes.map(function(r) {
+            return '<div class="place-route-card"><div class="place-route-top"><span class="place-route-name">' + r.name + '</span><span class="place-route-chip">' + r.chip + '</span></div><div class="place-route-stats"><span class="place-route-stat"><strong>' + r.dist + '</strong> 거리</span><span class="place-route-stat"><strong>' + r.time + '</strong> 소요</span><span class="place-route-stat"><strong>' + r.note + '</strong></span></div></div>';
+          }).join("");
+        }
+        setActiveView("explore_place");
       }
 
       function setExploreTransform() {
@@ -4799,7 +5090,21 @@
           walkMoreMenu.setAttribute("aria-hidden", open ? "false" : "true");
         });
       }
-      if (walkEndSheetBtn) walkEndSheetBtn.addEventListener("click", goWalkReviewFromEnd);
+      var walkEndConfirmOverlay = document.getElementById("walkEndConfirmOverlay");
+      var walkEndConfirmCancel = document.getElementById("walkEndConfirmCancel");
+      var walkEndConfirmOk = document.getElementById("walkEndConfirmOk");
+      function showWalkEndConfirm() {
+        if (walkEndConfirmOverlay) { walkEndConfirmOverlay.classList.add("show"); walkEndConfirmOverlay.setAttribute("aria-hidden","false"); }
+      }
+      function hideWalkEndConfirm() {
+        if (walkEndConfirmOverlay) { walkEndConfirmOverlay.classList.remove("show"); walkEndConfirmOverlay.setAttribute("aria-hidden","true"); }
+      }
+      if (walkEndSheetBtn) walkEndSheetBtn.addEventListener("click", showWalkEndConfirm);
+      var walkEndFab = document.getElementById("walkEndFab");
+      if (walkEndFab) walkEndFab.addEventListener("click", showWalkEndConfirm);
+      if (walkEndConfirmCancel) walkEndConfirmCancel.addEventListener("click", hideWalkEndConfirm);
+      if (walkEndConfirmOk) walkEndConfirmOk.addEventListener("click", function() { hideWalkEndConfirm(); goWalkReviewFromEnd(); });
+      if (walkEndConfirmOverlay) walkEndConfirmOverlay.addEventListener("click", function(e) { if (e.target === walkEndConfirmOverlay) hideWalkEndConfirm(); });
       if (walkMoreMenu) walkMoreMenu.addEventListener("click", (e) => e.stopPropagation());
       document.addEventListener("click", () => { closeWalkMoreMenu(); closePoopMenu(); });
 
@@ -5082,11 +5387,39 @@
       });
 
       const homeQuickWalkStart = document.getElementById("homeQuickWalkStart");
+      var walkModeOverlay = document.getElementById("walkModeOverlay");
+      var walkModeAi = document.getElementById("walkModeAi");
+      var walkModeFree = document.getElementById("walkModeFree");
+      var walkModeCancel = document.getElementById("walkModeCancel");
+
+      function showWalkModePicker() {
+        if (walkModeOverlay) { walkModeOverlay.classList.add("show"); walkModeOverlay.setAttribute("aria-hidden","false"); }
+      }
+      function hideWalkModePicker() {
+        if (walkModeOverlay) { walkModeOverlay.classList.remove("show"); walkModeOverlay.setAttribute("aria-hidden","true"); }
+      }
+
       if (homeQuickWalkStart) {
-        homeQuickWalkStart.addEventListener("click", () => {
+        homeQuickWalkStart.addEventListener("click", showWalkModePicker);
+      }
+      if (walkModeAi) {
+        walkModeAi.addEventListener("click", function() {
+          hideWalkModePicker();
+          setActiveView("walkHome");
+        });
+      }
+      if (walkModeFree) {
+        walkModeFree.addEventListener("click", function() {
+          hideWalkModePicker();
           state.freeWalk = true;
           beginWalkNavigationOrPicker({ name: "자유 산책", meta: "0.0km · 0분", free: true });
         });
+      }
+      if (walkModeCancel) {
+        walkModeCancel.addEventListener("click", hideWalkModePicker);
+      }
+      if (walkModeOverlay) {
+        walkModeOverlay.addEventListener("click", function(e) { if (e.target === walkModeOverlay) hideWalkModePicker(); });
       }
 
       const walkHomeScroll = document.getElementById("walkHomeScroll");
@@ -5165,6 +5498,16 @@
       }
 
       // Font size selection
+      var analysisPeriodGroup = document.getElementById("analysisPeriodGroup");
+      if (analysisPeriodGroup) {
+        analysisPeriodGroup.addEventListener("click", function(e) {
+          var btn = e.target.closest(".font-opt");
+          if (!btn) return;
+          analysisPeriodGroup.querySelectorAll(".font-opt").forEach(function(b) { b.classList.remove("selected"); });
+          btn.classList.add("selected");
+        });
+      }
+
       const fontSizeGroup = document.getElementById("fontSizeGroup");
       if (fontSizeGroup) {
         fontSizeGroup.addEventListener("click", (e) => {
@@ -5347,6 +5690,35 @@
 
         renderCalDogChips();
       }
+
+      (function initPetJournalShare() {
+        var shareBtn = document.getElementById("petJournalShareBtn");
+        var shareToast = document.getElementById("petJournalShareToast");
+        if (!shareBtn) return;
+        shareBtn.addEventListener("click", function() {
+          var url = window.location.href;
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(function() { showShareToast(); }).catch(function() { fallbackCopy(url); });
+          } else {
+            fallbackCopy(url);
+          }
+        });
+        function fallbackCopy(text) {
+          var ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.cssText = "position:fixed;left:-9999px;top:-9999px;opacity:0";
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand("copy"); showShareToast(); } catch(e) {}
+          document.body.removeChild(ta);
+        }
+        function showShareToast() {
+          if (!shareToast) return;
+          shareToast.classList.add("show");
+          clearTimeout(showShareToast._t);
+          showShareToast._t = setTimeout(function() { shareToast.classList.remove("show"); }, 1800);
+        }
+      })();
 
       const manualRecordOverlay = document.getElementById("manualRecordOverlay");
       const manualRecordForm = document.getElementById("manualRecordForm");
