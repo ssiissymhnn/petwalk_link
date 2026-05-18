@@ -11,12 +11,12 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="" defer></script>
   <style>
-    :root { --main:#19B23A; --point:#00E933; --soft-mint:#C9FAD4; --black:#1a1a1a; --white:#FFFFFF; --sub:#999999; --sep:#F2F3F5; --bg:#F7F8FA; --card:#FFFFFF; --text:#1a1a1a; --muted:var(--sub); --primary:var(--main); --primary-dark:#0fa34e; --line:rgba(0,0,0,.08); --shadow:0 8px 28px rgba(0,0,0,.08); --radius:16px; }
+    :root { --main:#19B23A; --point:#00E933; --soft-mint:#C9FAD4; --black:#1a1a1a; --white:#FFFFFF; --sub:#999999; --sep:#F2F3F5; --bg:#F7F8FA; --card:#FFFFFF; --text:#1a1a1a; --muted:var(--sub); --primary:var(--main); --primary-dark:#0fa34e; --line:rgba(0,0,0,.08); --shadow:0 8px 28px rgba(0,0,0,.08); --radius:16px; --device-w:393px; --device-h:852px; }
     *{box-sizing:border-box} body{margin:0;font-family:"Pretendard",sans-serif;background:var(--bg);color:var(--text)}
     .wrap{max-width:1320px;margin:0 auto;padding:18px 22px 32px}.title{display:none}
-    .phones{display:grid;grid-template-columns:minmax(320px, 420px);justify-content:center}
-    .phone{background:var(--card);border-radius:34px;padding:18px 14px 16px;width:100%;height:760px;box-shadow:0 12px 40px rgba(0,0,0,.10);border:1px solid rgba(0,0,0,.06);position:relative;overflow:hidden;flex-shrink:0}
-    .screen{border-radius:28px;background:var(--bg);height:100%;padding:12px;position:relative;overflow:hidden}
+    .phones{display:grid;grid-template-columns:max-content;justify-content:center}
+    .phone{background:var(--card);border-radius:34px;padding:18px 14px 16px;width:max-content;height:max-content;box-shadow:0 12px 40px rgba(0,0,0,.10);border:1px solid rgba(0,0,0,.06);position:relative;overflow:hidden;flex-shrink:0}
+    .screen{border-radius:28px;background:var(--bg);width:var(--device-w);height:var(--device-h);padding:12px;position:relative;overflow:hidden;box-sizing:border-box}
     .row{display:flex;align-items:center;justify-content:space-between}.muted{color:var(--muted);font-size:12px}.h2{font-size:20px;font-weight:800;margin:0}
     .chip{font-size:12px;background:rgba(25,178,58,.1);color:var(--main);padding:7px 10px;border-radius:999px;font-weight:700}
     .card{background:var(--white);border:1px solid rgba(0,0,0,.06);border-radius:var(--radius);box-shadow:0 2px 8px rgba(0,0,0,.04);padding:12px;margin-top:10px}
@@ -100,18 +100,22 @@
 
     /* === Home v2 (참고 이미지 기반 재설계) === */
     .home-screen{display:flex;flex-direction:column;gap:14px;padding:0 0 12px}
-    .home-hero{position:relative;box-sizing:border-box;margin:0 -12px 0;padding:15px 26px 7px;background:#FFFFFF;border-bottom:1px solid rgba(0,0,0,.035);box-shadow:0 1px 0 rgba(255,255,255,.8)}
+    .home-hero{
+      position:relative;box-sizing:border-box;margin:0 4px 0;padding:14px 18px;
+      background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;
+      box-shadow:0 4px 14px rgba(0,0,0,.05);
+    }
     .home-hero-top{display:flex;justify-content:space-between;align-items:center;gap:14px;position:relative;z-index:2}
     .home-location-switcher{display:flex;align-items:center;gap:7px;min-width:0;flex:1;border:none;background:transparent;padding:0;cursor:pointer;font-family:inherit;text-align:left;-webkit-tap-highlight-color:transparent}
     .home-location-pin{position:relative;width:18px;height:22px;line-height:1;flex-shrink:0;font-size:0;transform:translateY(1px)}
     .home-location-pin::before{content:"";position:absolute;left:2px;top:1px;width:14px;height:14px;border-radius:50% 50% 50% 0;background:#000000;transform:rotate(-45deg)}
     .home-location-pin::after{content:"";position:absolute;left:7px;top:6px;width:4px;height:4px;border-radius:50%;background:#fff}
     .home-location-names{display:flex;align-items:baseline;gap:12px;min-width:0;transition:opacity .18s ease,transform .18s ease}
-    .home-location-name{border:none;background:transparent;padding:0;font-family:inherit;font-weight:900;line-height:1.15;max-width:112px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;transition:color .18s ease,font-size .18s ease,opacity .18s ease}
-    .home-location-name.active{font-size:22px;color:#000000;letter-spacing:-.045em}
-    .home-location-name.inactive{font-size:18px;color:#BFC0C3;letter-spacing:-.035em}
-    .home-weather-chip{display:inline-flex;align-items:center;gap:7px;background:transparent;border:none;border-radius:999px;padding:0;font-size:21px;font-weight:900;color:#111;box-shadow:none;white-space:nowrap;flex-shrink:0;letter-spacing:-.025em}
-    .home-weather-chip .home-weather-ico{font-size:26px;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.08))}
+    .home-location-name{border:none;background:transparent;padding:0;font-family:inherit;font-weight:800;line-height:1.15;max-width:112px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;transition:color .18s ease,font-size .18s ease,opacity .18s ease}
+    .home-location-name.active{font-size:18px;color:var(--text);letter-spacing:-1%}
+    .home-location-name.inactive{font-size:15px;color:#D4D4D4;letter-spacing:-1%}
+    .home-weather-chip{display:inline-flex;align-items:center;gap:7px;background:transparent;border:none;border-radius:999px;padding:0;font-size:18px;font-weight:800;color:#6A6A6A;box-shadow:none;white-space:nowrap;flex-shrink:0;letter-spacing:-.025em}
+    .home-weather-chip .home-weather-ico{font-size:22px;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.08))}
     .home-loc-chip{display:none}
     .home-hero-character{display:none}
     .home-location-overlay{position:absolute;left:0;right:0;top:0;bottom:74px;z-index:4200;display:none;align-items:flex-end;background:rgba(0,0,0,.22);backdrop-filter:blur(2px)}
@@ -134,27 +138,39 @@
 
     .home-greeting-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:20px 18px 18px;box-shadow:0 4px 14px rgba(0,0,0,.05);margin:0 4px 0;position:relative;z-index:2}
     @media (prefers-color-scheme: dark){
-      .home-hero{background:#FFFFFF;border-bottom-color:rgba(0,0,0,.035)}
-      .home-location-pin,.home-location-name.active,.home-weather-chip{color:#000000}
+      .home-hero{background:#fff;border-color:rgba(0,0,0,.06)}
+      .home-location-pin,.home-weather-chip{color:#6A6A6A}
+      .home-location-name.active{color:var(--text)}
       .home-location-pin::before{background:#000000}
       .home-location-pin::after{background:#FFFFFF}
-      .home-location-name.inactive{color:#737373}
+      .home-location-name.inactive{color:#D4D4D4}
     }
-    .home-greeting-top-row{display:flex;align-items:center;gap:10px}
-    .home-greeting-left{flex:1;min-width:0}
-    .home-greeting-right{flex-shrink:0;display:flex;align-items:center;justify-content:center}
-    .home-greeting-right img{height:80px;object-fit:contain;filter:drop-shadow(0 3px 8px rgba(0,0,0,.10))}
-    .home-greeting-title{font-size:19px;font-weight:900;color:var(--text);letter-spacing:-.01em;line-height:1.25;display:flex;align-items:center;gap:6px}
+    .home-greeting-top-row{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+    }
+    .home-greeting-left{
+      flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;
+      padding-top:23px;padding-right:4px;
+    }
+    .home-greeting-right{
+      flex-shrink:0;display:flex;align-items:flex-start;justify-content:flex-end;
+      margin-top:-2px;margin-right:-4px;
+    }
+    .home-greeting-right img{
+      height:88px;width:auto;max-width:104px;object-fit:contain;object-position:right top;
+      display:block;filter:drop-shadow(0 3px 8px rgba(0,0,0,.10));
+    }
+    .home-greeting-title{font-size:17px;font-weight:800;color:var(--text);letter-spacing:-.01em;line-height:1.25;display:flex;align-items:center;gap:6px}
     .home-greeting-title-left{display:flex;align-items:center;gap:6px;min-width:0}
     .home-greeting-paw{font-size:18px;line-height:1}
-    .home-greeting-sub{font-size:12px;color:var(--sub);font-weight:600;margin-top:6px}
+    .home-greeting-sub{font-size:14px;color:var(--text);font-weight:600;margin-top:0;line-height:2}
     .home-greeting-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
     .home-stat{background:linear-gradient(135deg,rgba(25,178,58,.06) 0%,rgba(0,233,51,.04) 100%);border:1px solid rgba(25,178,58,.14);border-radius:14px;padding:10px 6px;text-align:center}
     .home-stat-val{font-size:18px;font-weight:900;color:var(--main);line-height:1.1}
     .home-stat-val .home-stat-unit{font-size:11px;font-weight:800;color:var(--main);margin-left:1px}
     .home-stat-label{font-size:10px;color:var(--sub);font-weight:700;margin-top:3px;letter-spacing:.02em}
     .home-quick-start-btn{
-      width:100%;border:none;border-radius:14px;cursor:pointer;padding:15px;font-size:16px;font-weight:900;
+      width:100%;border:none;border-radius:14px;cursor:pointer;padding:15px;font-size:16px;font-weight:800;
       background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;font-family:inherit;
       display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 4px 14px rgba(25,178,58,.3);
       margin-top:10px;transition:transform .1s ease,box-shadow .1s ease;letter-spacing:-.01em
@@ -164,8 +180,8 @@
 
     .home-section{padding:0 4px}
     .home-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 2px}
-    .home-section-title{font-size:15px;font-weight:900;color:var(--text);letter-spacing:-.01em}
-    .home-section-action{background:none;border:none;cursor:pointer;font-size:12px;color:var(--main);font-weight:800;font-family:inherit;padding:4px 6px;border-radius:8px;transition:background .12s}
+    .home-section-title{font-size:14px;font-weight:800;color:var(--black);letter-spacing:-2%}
+    .home-section-action{background:none;border:none;cursor:pointer;font-size:12px;color:var(--main);font-weight:600;font-family:inherit;padding:4px 6px;border-radius:8px;transition:background .12s}
     .home-section-action:hover{background:rgba(25,178,58,.08)}
 
     .home-route-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -186,8 +202,8 @@
     .home-schedule-ico.bath{background:rgba(6,182,212,.12)}
     .home-schedule-ico.play{background:rgba(236,72,153,.12)}
     .home-schedule-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-    .home-schedule-title{font-size:14px;font-weight:800;color:var(--text);letter-spacing:-.005em}
-    .home-schedule-meta{font-size:11px;color:var(--sub);font-weight:600;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .home-schedule-title{font-size:13px;font-weight:800;color:var(--black);line-height:1.2}
+    .home-schedule-meta{font-size:10px;color:var(--sub);font-weight:500;margin-top:4px;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .home-schedule-action{background:none;border:none;color:var(--main);font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;padding:6px 10px;border-radius:8px;transition:background .12s;flex-shrink:0;display:inline-flex;align-items:center;gap:2px}
     .home-schedule-action:hover{background:rgba(25,178,58,.08)}
     .home-schedule-empty{text-align:center;padding:24px 16px;background:#fff;border:1.5px dashed var(--line);border-radius:14px;color:var(--sub);font-size:13px;font-weight:600}
@@ -500,15 +516,15 @@
     .mypage-row--danger:hover{background:rgba(170,170,170,.04)}
 
     .mypage-row--sub{font-size:14px;font-weight:600;background:transparent;color:var(--text)}
-    .mypage-subtitle{font-size:17px;font-weight:800;color:#000000;margin:4px 0 12px}
-    .stub-muted{font-size:13px;color:var(--muted);line-height:1.5;margin:8px 0 16px}
+    .mypage-subtitle{font-size:17px;font-weight:800;color:var(--text);margin:4px 5px 10px}
+    .stub-muted{font-size:12px;color:var(--muted);line-height:1.4;margin:-8px 0px 13px}
 
     .mypage-sub-screen{padding:4px 2px 8px;height:100%;overflow:auto}
     /* Explore map */
     .explore-shell{height:100%;display:flex;flex-direction:column;position:relative;background:#FFFFFF;border-radius:20px;overflow:hidden;border:1px solid rgba(0,0,0,.06)}
     .explore-head{padding:10px 10px 8px;border-bottom:1px solid rgba(0,0,0,.06);background:#FFFFFF}
     .explore-location-wrap{position:relative}
-    .explore-location-btn{border:none;background:none;padding:0;display:flex;align-items:center;gap:6px;font-size:16px;font-weight:900;color:var(--text);cursor:pointer}
+    .explore-location-btn{border:none;background:none;padding:0;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:var(--text);cursor:pointer;font-family:inherit}
     .explore-location-arrow{width:22px;height:22px;border-radius:999px;background:var(--sep);border:none;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text)}
     .explore-location-menu{position:absolute;top:32px;left:0;right:0;background:#FFFFFF;border:1px solid rgba(0,0,0,.06);border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.1);padding:6px;display:none;z-index:3}
     .explore-location-menu.show{display:block}
@@ -552,7 +568,7 @@
     .walk-section{padding:14px 12px}
     .walk-section + .walk-section{border-top:8px solid var(--sep)}
     .walk-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-    .walk-section-title{font-size:14px;font-weight:800;color:var(--black)}
+    .walk-section-title{font-size:15px;font-weight:800;color:var(--black);letter-spacing:-2%;}
     .walk-section-more{font-size:12px;font-weight:700;color:var(--main);cursor:pointer;background:none;border:none;padding:0}
     .hscroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
     .hscroll::-webkit-scrollbar{display:none;width:0;height:0}
@@ -560,15 +576,18 @@
     .hcard:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(25,178,58,.1);border-color:rgba(25,178,58,.2)}
     .hcard-img{height:110px;background:linear-gradient(135deg,rgba(25,178,58,.06) 0%, var(--sep) 60%);position:relative}
     .hcard-rank{position:absolute;left:10px;bottom:8px;background:var(--main);color:#fff;font-size:12px;font-weight:900;border-radius:999px;padding:4px 8px}
+    .hcard-start-btn,
+    .walk-freq-start-btn,
+    .walk-dog-confirm{font-size:11px;font-weight:700;font-family:inherit;line-height:1.2;letter-spacing:0}
     .hcard-start-btn{
-      position:absolute;right:10px;bottom:8px;border:none;border-radius:999px;padding:7px 11px;cursor:pointer;
-      background:rgba(255,255,255,.95);color:#179833;font-size:11px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.12);backdrop-filter:blur(4px)
+      position:absolute;right:10px;bottom:8px;border:none;border-radius:999px;padding:9px 14px;cursor:pointer;
+      background:rgba(255,255,255,.95);color:#179833;box-shadow:0 2px 8px rgba(0,0,0,.12);backdrop-filter:blur(4px)
     }
     .hcard-body{padding:10px}
     .hcard-title{font-size:13px;font-weight:800;color:var(--black);line-height:1.2}
-    .hcard-meta{font-size:11px;color:var(--sub);margin-top:6px}
+    .hcard-meta{font-size:10px;color:var(--sub);font-weight:500;line-height:1.35}
     .hcard-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-    .tag{font-size:10px;font-weight:800;padding:4px 8px;border-radius:999px;background:var(--sep);color:var(--text)}
+    .tag{font-size:10px;font-weight:600;padding:4px 8px;border-radius:999px;background:var(--sep);color:var(--sub)}
     .walk-reco .tag{background:rgba(25,178,58,.08);color:var(--main)}
     .walk-frequent-stack{display:flex;flex-direction:column;gap:10px}
     .walk-freq-card{
@@ -580,11 +599,11 @@
       display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--sub);
     }
     .walk-freq-body{flex:1;min-width:0}
-    .walk-freq-title{font-size:13px;font-weight:800;color:var(--black);line-height:1.25}
+    .walk-freq-title{font-size:13px;font-weight:800;color:var(--black);line-height:1.25;letter-spacing:-2%}
     .walk-freq-title .walk-freq-rank{color:var(--main);margin-right:6px}
     .walk-freq-meta{font-size:10px;color:var(--sub);font-weight:500;margin-top:4px;line-height:1.35}
     .walk-freq-start-btn{
-      flex-shrink:0;border:none;border-radius:999px;padding:9px 14px;font-size:11px;font-weight:800;font-family:inherit;
+      flex-shrink:0;border:none;border-radius:999px;padding:10px 20px 8px;
       cursor:pointer;background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;box-shadow:0 2px 8px rgba(25,178,58,.25);white-space:nowrap;
     }
     .walk-freq-start-btn:active{transform:scale(.97)}
@@ -599,17 +618,18 @@
     .walk-reco-card-inner{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;min-height:148px;padding:14px 14px 12px}
     .walk-reco-card-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:auto}
     .walk-reco-copy{flex:1;min-width:0;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.35)}
-    .walk-reco-tagline{font-size:11px;font-weight:700;opacity:.92;line-height:1.35;margin-bottom:4px}
-    .walk-reco-name{font-size:14px;font-weight:900;line-height:1.25}
+    .walk-reco-tagline{font-size:11px;font-weight:700;opacity:.92;line-height:1.35;margin-bottom:3px}
+    .walk-reco-name{font-size:13px;font-weight:800;line-height:1.25;letter-spacing:-2%;}
     .walk-reco-sub{font-size:11px;font-weight:600;opacity:.88;margin-top:4px;line-height:1.35}
     .walk-reco-start-btn{
       flex-shrink:0;border:1.5px solid rgba(255,255,255,.9);background:rgba(255,255,255,.12);color:#fff;border-radius:999px;
-      padding:9px 14px;font-size:11px;font-weight:800;font-family:inherit;cursor:pointer;backdrop-filter:blur(6px);white-space:nowrap;
+      padding:10px 20px 8px;font-size:11px;font-weight:700;font-family:inherit;line-height:1.2;letter-spacing:0;
+      cursor:pointer;backdrop-filter:blur(6px);white-space:nowrap;
     }
     .walk-reco-start-btn:active{transform:scale(.97);background:rgba(255,255,255,.22)}
     .walk-reco-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;-ms-overflow-style:none}
     .walk-reco-tabs::-webkit-scrollbar{display:none;width:0;height:0}
-    .walk-reco-tab{flex-shrink:0;padding:7px 14px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-size:12px;font-weight:700;color:var(--sub);cursor:pointer;font-family:inherit;transition:all .15s ease;white-space:nowrap}
+    .walk-reco-tab{flex-shrink:0;padding:10px 14px 8px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-size:11px;font-weight:700;color:var(--sub);cursor:pointer;font-family:inherit;line-height:1.2;letter-spacing:0;transition:all .15s ease;white-space:nowrap;}
     .walk-reco-tab.active{background:var(--main);border-color:var(--main);color:#fff;box-shadow:0 2px 8px rgba(25,178,58,.2)}
     .walk-reco-tab:not(.active):active{transform:scale(.96)}
     .walk-reco-card[hidden]{display:none}
@@ -622,7 +642,7 @@
       background:linear-gradient(135deg, #19B23A 0%, #0fa34e 40%, #00E933 100%);
       border-radius:20px;padding:22px 18px;margin-bottom:14px;position:relative;overflow:hidden;
     }
-    .petlog-profile-card-main{padding-top:22px}
+    .petlog-profile-card-main{padding-top:18px}
     .petlog-profile-head{display:flex;align-items:center;gap:12px;width:100%;position:relative;z-index:1}
     .petlog-profile-inner{display:flex;align-items:center;gap:14px;position:relative;z-index:1;flex:1;min-width:0}
     .petlog-profile-add-slot{flex-shrink:0;align-self:center;display:flex;align-items:center;gap:8px;margin-left:auto}
@@ -637,12 +657,11 @@
     .petlog-add-btn:active{background:rgba(255,255,255,.35)}
     .petlog-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px;position:relative;z-index:1}
     .petlog-stat{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:10px 6px;text-align:center;backdrop-filter:blur(4px)}
-    .petlog-stat-val{font-size:18px;font-weight:900;color:#fff;line-height:1.1}
-    .petlog-stat-label{font-size:10px;color:rgba(255,255,255,.82);margin-top:3px;font-weight:700;letter-spacing:.02em}
+    .petlog-stat-val{font-size:18px;font-weight:800;color:#fff;line-height:1.1}
+    .petlog-stat-label{font-size:10px;color:rgba(255,255,255,.82);margin-top:3px;font-weight:700;}
     .petlog-root{padding:0 0 12px;overflow-x:hidden}
-    .petlog-root-topbar{display:flex;align-items:center;justify-content:center;padding:10px 14px 12px;position:sticky;top:0;background:var(--white);z-index:2}
-    .petlog-root-title{font-size:17px;font-weight:900;color:var(--text)}
-    .petlog-carousel-wrap{margin-bottom:4px}
+    .petlog-carousel-wrap{margin-bottom:4px;padding-top:8px}
+    .petlog-cal-below .mypage-subtitle{font-size:14px;font-weight:800}
     .petlog-carousel-viewport{overflow:hidden;width:100%}
     .petlog-carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:0;padding:0 4px 10px;-webkit-overflow-scrolling:touch;touch-action:pan-x;scrollbar-width:none;-ms-overflow-style:none}
     .petlog-carousel-track::-webkit-scrollbar{display:none;width:0;height:0}
@@ -657,19 +676,31 @@
     .petlog-carousel-dots .dot.active{background:var(--main);transform:scale(1.15)}
     .petlog-dual{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;position:relative;z-index:1;align-items:stretch}
     .petlog-dual-type-stack{align-self:stretch;min-width:0;width:100%;display:flex;flex-direction:column;gap:0}
-    .petlog-dual-cell{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.32);border-radius:14px;padding:10px 8px 10px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;min-height:88px;backdrop-filter:blur(4px)}
+    .petlog-dual-cell{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.32);border-radius:14px;padding:10px 14px 10px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;min-height:88px;backdrop-filter:blur(4px)}
     .petlog-dual-side{border:none;cursor:pointer;font-family:inherit;width:100%}
-    .petlog-dual-label{font-size:10px;font-weight:800;color:rgba(255,255,255,.86);letter-spacing:.03em;text-transform:none}
-    .petlog-dual-mini-emoji{font-size:22px;line-height:1;margin-top:2px}
-    .petlog-dual-mini-name{font-size:13px;font-weight:900;color:#fff;line-height:1.25}
+    .petlog-dual-label{font-size:10px;font-weight:500;color:rgba(255,255,255,.86);text-transform:none}
+    .petlog-dual-mini-head{display:flex;align-items:center;gap:6px;min-width:0;width:100%}
+    .petlog-dual-mini-emoji{font-size:14px;line-height:1.5;flex-shrink:0}
+    .petlog-dual-mini-name{font-size:14px;font-weight:800;color:#fff;line-height:1.5;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .petlog-dual-mini-tag{font-size:10px;font-weight:600;color:rgba(255,255,255,.82);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-    .petlog-dual-analysis .petlog-dual-mini-name{font-size:13px}
+    .petlog-dual-analysis .petlog-dual-mini-name{font-size:14px}
     .petlog-dual-analysis .petlog-dual-mini-tag{color:rgba(255,255,255,.88)}
     /* 펫로그 월간: 단일 스크롤 영역(.petlog-screen), 중첩 세로 스크롤바 제거 */
-    .petlog-root > .petlog-cal-below.mypage-sub-screen{overflow:visible !important;height:auto !important;min-height:0 !important}
-    .petlog-cal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-    .petlog-cal-title-wrap{min-width:0;flex:1}
-    .petlog-add-record-btn{border:1px solid rgba(16,166,74,.22);background:#FFFFFF;color:#10A64A;font-size:12px;font-weight:900;padding:8px 15px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.04);cursor:pointer;font-family:inherit;white-space:nowrap;line-height:1.2;margin-top:2px}
+    .petlog-root > .petlog-cal-below.mypage-sub-screen{
+      overflow:visible !important;height:auto !important;min-height:0 !important;
+      padding-left:6px !important;padding-right:6px !important;
+    }
+    .petlog-cal-below .walk-section-title,
+    .petlog-cal-below .stub-muted{margin-left:0;margin-right:0}
+    .petlog-cal-head{margin-bottom:10px}
+    .petlog-cal-title-wrap{min-width:0}
+    .petlog-cal-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .petlog-cal-toolbar .cal-dog-filter{flex:1;min-width:0;margin-bottom:0}
+    .petlog-add-record-btn{
+      flex-shrink:0;border:1px solid rgba(16,166,74,.22);background:#FFFFFF;color:#10A64A;font-size:12px;font-weight:900;
+      padding:8px 15px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.04);cursor:pointer;font-family:inherit;
+      white-space:nowrap;line-height:1.2;align-self:center;
+    }
     .petlog-add-record-btn:active{transform:scale(.97)}
     .petlog-record-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
     .petlog-record-item{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:11px 12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
@@ -730,8 +761,8 @@
     .cal-legend-item.muted{opacity:.45}
     .cal-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
     .cal-summary-item{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:12px 8px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.03)}
-    .cal-summary-val{font-size:18px;font-weight:900;color:var(--main);display:block}
-    .cal-summary-label{font-size:10px;color:var(--sub);font-weight:600;margin-top:2px;display:block}
+    .cal-summary-val{font-size:18px;font-weight:800;color:var(--main);display:block}
+    .cal-summary-label{font-size:10px;color:var(--sub);font-weight:700;margin-top:2px;display:block}
 
     /* Journal */
     .journal-card{border-radius:16px;overflow:hidden;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04)}
@@ -839,7 +870,7 @@
     .walk-dog-card.selected .walk-dog-card-badge::before{content:'✓';color:#fff;font-size:10px;font-weight:900;line-height:1}
     .walk-dog-modal-actions{display:flex;gap:10px;margin-top:16px;padding-top:4px}
     .walk-dog-cancel{flex:1;border-radius:12px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;border:1px solid rgba(0,0,0,.1);background:var(--white);color:var(--sub);font-family:inherit}
-    .walk-dog-confirm{flex:1;border-radius:12px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;border:none;color:#fff;background:linear-gradient(135deg,#19B23A,#0fa34e);box-shadow:0 4px 12px rgba(25,178,58,.26);font-family:inherit}
+    .walk-dog-confirm{flex:1;border-radius:12px;padding:9px 14px;cursor:pointer;border:none;color:#fff;background:linear-gradient(135deg,#19B23A,#0fa34e);box-shadow:0 4px 12px rgba(25,178,58,.26)}
     .walk-dog-confirm:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
 
     .walk-live-log{padding:12px 16px 8px;background:#fff;flex-shrink:0}
@@ -1112,7 +1143,7 @@
     .font-opt.selected{background:rgba(25,178,58,.06)}
     .font-opt.selected .mypage-row-text{color:var(--main);font-weight:800}
     .font-opt.selected::after{content:"✓";position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--main);font-size:16px;font-weight:900}
-    @media (max-width:980px){.phones{grid-template-columns:1fr}.phone{height:720px}}
+    @media (max-width:980px){.phones{grid-template-columns:max-content;justify-content:center}}
   </style>
 </head>
 <body>
@@ -1654,10 +1685,10 @@
 
                 <div class="home-section">
                   <div class="home-section-head">
-                    <div class="home-section-title">AI 추천 코스</div>
+                    <div class="walk-section-title">오늘의 추천 코스</div>
                     <button type="button" class="home-section-action" data-nav="walkHome">자세히 보기</button>
                   </div>
-                  <div class="hscroll" aria-label="AI 추천 코스">
+                  <div class="hscroll" aria-label="오늘의 추천 코스">
                     <div class="hcard" data-walk-route="노들섬" data-walk-meta="2.4km · 34분 · 잔디/그늘 균형">
                       <div class="hcard-img"></div>
                       <div class="hcard-body">
@@ -1699,7 +1730,7 @@
 
                 <div class="home-section">
                   <div class="home-section-head">
-                    <div class="home-section-title">오늘의 일정</div>
+                    <div class="walk-section-title">오늘의 일정</div>
                     <button type="button" class="home-section-action" id="homeScheduleEditBtn">＋ 일정 추가</button>
                   </div>
                   <div class="home-schedule" id="homeScheduleList">
@@ -1873,7 +1904,6 @@
             <!-- PET: 월간 산책 기록 (탭 루트 — 상단 스와이프 카드) -->
             <div class="view" data-view="pet_monthly" data-tab-root="pet">
               <div class="petlog-screen petlog-root">
-                <div class="petlog-root-topbar"><span class="petlog-root-title">펫로그</span></div>
 
                 <div class="petlog-carousel-wrap">
                   <div class="petlog-carousel-viewport">
@@ -1908,21 +1938,27 @@
                             <div class="petlog-dual-type-stack">
                               <button type="button" class="petlog-dual-cell petlog-dual-side" id="petPersonalityCard" data-nav="dogInfoResult" style="display:none;">
                                 <span class="petlog-dual-label">성격 유형</span>
-                                <span class="petlog-dual-mini-emoji" id="petPersonalityEmoji">🐶</span>
-                                <span class="petlog-dual-mini-name" id="petPersonalityName">사교왕 인싸형</span>
+                                <span class="petlog-dual-mini-head">
+                                  <span class="petlog-dual-mini-emoji" id="petPersonalityEmoji">🐶</span>
+                                  <span class="petlog-dual-mini-name" id="petPersonalityName">사교왕 인싸형</span>
+                                </span>
                                 <span class="petlog-dual-mini-tag" id="petPersonalityTagline">사람도 강아지도 다 좋아하는 만능 인싸!</span>
                               </button>
                               <button type="button" class="petlog-dual-cell petlog-dual-side" id="petPersonalityEmpty" data-nav="dogInfoTraits">
                                 <span class="petlog-dual-label">성격 유형</span>
-                                <span class="petlog-dual-mini-emoji">📋</span>
-                                <span class="petlog-dual-mini-name">기질 테스트</span>
+                                <span class="petlog-dual-mini-head">
+                                  <span class="petlog-dual-mini-emoji">📋</span>
+                                  <span class="petlog-dual-mini-name">기질 테스트</span>
+                                </span>
                                 <span class="petlog-dual-mini-tag">8문항으로 산책 성향 유형을 확인해요.</span>
                               </button>
                             </div>
                             <button type="button" class="petlog-dual-cell petlog-dual-side petlog-dual-analysis" data-nav="pet_analysis_period">
                               <span class="petlog-dual-label">성향 분석</span>
-                              <span class="petlog-dual-mini-emoji">🧠</span>
-                              <span class="petlog-dual-mini-name">AI 산책 리포트</span>
+                              <span class="petlog-dual-mini-head">
+                                <span class="petlog-dual-mini-emoji">🧠</span>
+                                <span class="petlog-dual-mini-name">AI 산책 리포트</span>
+                              </span>
                               <span class="petlog-dual-mini-tag">패턴·스트레스·에너지 분석</span>
                             </button>
                           </div>
@@ -1937,13 +1973,15 @@
                 <div class="mypage-sub-screen petlog-cal-below" style="padding-top:8px;margin:0;background:transparent;box-shadow:none;border:none;">
                 <div class="petlog-cal-head">
                   <div class="petlog-cal-title-wrap">
-                    <p class="mypage-subtitle">월간 산책 기록</p>
-                    <p class="stub-muted">날짜를 눌러 상세 산책 기록을 확인하세요. 점 색깔은 각 반려견의 산책을 의미해요.</p>
+                    <p class="walk-section-title">월간 산책 기록</p>
+                    <p class="stub-muted">날짜를 눌러 상세 산책 기록을 확인하세요. <br>점 색깔은 각 반려견의 산책을 의미해요.</p>
                   </div>
-                  <button type="button" class="petlog-add-record-btn">+ 기록 추가</button>
                 </div>
 
-                <div class="cal-dog-filter" id="calDogFilter"></div>
+                <div class="petlog-cal-toolbar">
+                  <div class="cal-dog-filter" id="calDogFilter"></div>
+                  <button type="button" class="petlog-add-record-btn">+ 기록 추가</button>
+                </div>
 
                 <div class="cal-header">
                   <button type="button" class="cal-nav" id="calPrev">‹</button>
@@ -2623,7 +2661,7 @@
                     </div>
                   </div>
                 </div>
-
+                <!-- WALK HOME (산책 탭 피드) AI 추천 코스-->
                 <div class="walk-section walk-reco">
                   <div class="walk-section-head">
                     <div class="walk-section-title">AI 추천 코스</div>
