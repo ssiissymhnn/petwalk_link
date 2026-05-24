@@ -708,6 +708,9 @@
     .petlog-record-main{flex:1;min-width:0}
     .petlog-record-title{font-size:13px;font-weight:900;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .petlog-record-sub{font-size:11px;color:var(--sub);font-weight:600;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .petlog-record-detail{font-size:10px;color:#8b5cf6;font-weight:600;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+    .petlog-record-completed .petlog-record-ico{background:rgba(139,92,246,.1)}
+    .petlog-record-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
     .petlog-share-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:18px;padding:14px 0;background:#fff;border:1.5px solid var(--line);border-radius:14px;font-size:14px;font-weight:800;color:var(--text);cursor:pointer;font-family:inherit;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .15s ease}
     .petlog-share-btn:hover{border-color:rgba(25,178,58,.35);color:var(--main);background:rgba(25,178,58,.04)}
     .petlog-share-btn:active{transform:scale(.97)}
@@ -766,8 +769,7 @@
 
     /* Journal */
     .journal-card{border-radius:16px;overflow:hidden;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04)}
-    .journal-map{height:140px;background:linear-gradient(160deg,#e8f5e9 0%,#c8e6c9 30%,#a5d6a7 60%,#81c784 100%);position:relative}
-    .journal-map::after{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='120'%3E%3Cpath d='M20 100 Q80 80 130 55 Q180 30 230 25 Q260 22 280 18' stroke='white' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}
+    .journal-map{height:160px;background:#F4F6F8;position:relative;z-index:0}
     .journal-stats{display:flex;align-items:center;justify-content:center;padding:14px 16px;background:#fff}
     .journal-stat{flex:1;text-align:center}
     .journal-stat-val{font-size:22px;font-weight:900;color:var(--text)}
@@ -952,16 +954,18 @@
     .walk-weather-divider{width:29px;height:5px;border-radius:999px;background:linear-gradient(90deg,#45B7FF,#2F8BFF);box-shadow:0 2px 5px rgba(47,139,255,.24)}
     .walk-live-hud-weather #walkHudWeatherDesc{font-weight:800;font-size:8px;color:#8A8F98;line-height:1}
     .walk-live-fab-loc{
-      position:absolute;left:18px;bottom:132px;z-index:4;width:42px;height:42px;border:none;border-radius:50%;
+      position:absolute;left:18px;bottom:108px;z-index:4;width:42px;height:42px;border:none;border-radius:50%;
       background:rgba(255,255,255,.95);box-shadow:0 2px 10px rgba(0,0,0,.12);font-size:19px;cursor:pointer
     }
-    .walk-live-fab-stack{position:absolute;right:10px;bottom:132px;z-index:4;display:flex;flex-direction:column;align-items:center;gap:10px;min-height:44px}
+    .walk-live-fab-stack{position:absolute;right:10px;bottom:108px;z-index:4;display:flex;flex-direction:column;align-items:center;gap:10px;min-height:44px}
     .walk-live-fab-end{
       width:44px;height:44px;border:none;border-radius:50%;background:rgba(255,255,255,.95);
       box-shadow:0 2px 12px rgba(0,0,0,.12);font-size:18px;cursor:pointer;color:#EF4444;
       display:flex;align-items:center;justify-content:center;transition:transform .12s ease,box-shadow .12s ease
     }
     .walk-live-fab-end:active{transform:scale(.92);box-shadow:0 1px 6px rgba(0,0,0,.1)}
+    .walk-live-fab-end-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
+    .walk-live-fab-end-label{font-size:10px;font-weight:800;color:#EF4444;line-height:1;letter-spacing:-.02em}
     .walk-end-confirm-overlay{position:absolute;inset:0;z-index:9000;background:rgba(0,0,0,.38);display:none;align-items:center;justify-content:center;padding:0 28px;backdrop-filter:blur(2px)}
     .walk-end-confirm-overlay.show{display:flex}
     .walk-end-confirm-box{background:#fff;border-radius:20px;padding:24px 20px 18px;width:100%;max-width:300px;box-shadow:0 12px 40px rgba(0,0,0,.18);text-align:center}
@@ -1049,7 +1053,7 @@
       display:flex;flex-direction:column;max-height:calc(100% - 56px);
       transition:height .24s ease;overflow:hidden;
     }
-    .walk-live-sheet.state-collapsed{height:104px}
+    .walk-live-sheet.state-collapsed{height:80px}
     .walk-live-sheet.state-expanded{height:70%;min-height:320px;max-height:calc(100% - 56px)}
     .walk-live-sheet-scroll{scrollbar-width:none;-ms-overflow-style:none}
     .walk-live-sheet-scroll::-webkit-scrollbar{display:none}
@@ -1081,10 +1085,6 @@
     .walk-report-accordion-arrow{font-size:16px;font-weight:800;color:var(--sub);transition:transform .2s ease;display:inline-block}
     .walk-report-accordion-arrow.open{transform:rotate(90deg)}
     .walk-report-accordion-body{padding:0 12px 12px}
-    .walk-sheet-end-btn{
-      margin-top:18px;width:100%;border:1px solid #F1F1F1;background:#FFFFFF;color:#179833;border-radius:12px;
-      padding:12px 8px;font-size:14px;font-weight:900;cursor:pointer;font-family:inherit
-    }
     .tab-hit.walk-live-active span:last-child{
       background:#E0FDE5;border:none;border-radius:999px;padding:2px 7px;color:#179833;font-weight:700
     }
@@ -1143,6 +1143,10 @@
     .font-opt.selected{background:rgba(25,178,58,.06)}
     .font-opt.selected .mypage-row-text{color:var(--main);font-weight:800}
     .font-opt.selected::after{content:"✓";position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--main);font-size:16px;font-weight:900}
+    .voice-style-opt{position:relative;transition:background .15s ease}
+    .voice-style-opt.selected{background:rgba(25,178,58,.06)}
+    .voice-style-opt.selected .mypage-row-text{color:var(--main);font-weight:800}
+    .voice-style-opt.selected::after{content:"✓";position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--main);font-size:16px;font-weight:900}
     @media (max-width:980px){.phones{grid-template-columns:max-content;justify-content:center}}
   </style>
 </head>
@@ -1261,7 +1265,7 @@
               <div class="form">
                 <div class="field">
                   <div class="label">닉네임 <span class="req">*</span></div>
-                  <input class="input" type="text" value="보리 보호자" />
+                  <input class="input" type="text" id="signupNicknameInput" value="보리 보호자" />
                 </div>
                 <div class="field">
                   <div class="label">주 산책 시간대 <span class="req">*</span></div>
@@ -1668,15 +1672,15 @@
                   </div>
                   <div class="home-greeting-stats">
                     <div class="home-stat">
-                      <div class="home-stat-val">4.2<span class="home-stat-unit"> km</span></div>
+                      <div class="home-stat-val" id="homeStatKm">0<span class="home-stat-unit"> km</span></div>
                       <div class="home-stat-label">오늘 km</div>
                     </div>
                     <div class="home-stat">
-                      <div class="home-stat-val">2</div>
+                      <div class="home-stat-val" id="homeStatCount">0</div>
                       <div class="home-stat-label">산책 횟수</div>
                     </div>
                     <div class="home-stat">
-                      <div class="home-stat-val">48</div>
+                      <div class="home-stat-val" id="homeStatStreak">0</div>
                       <div class="home-stat-label">연속 일수</div>
                     </div>
                   </div>
@@ -1922,15 +1926,15 @@
                           </div>
                           <div class="petlog-stats">
                             <div class="petlog-stat">
-                              <div class="petlog-stat-val">47</div>
+                              <div class="petlog-stat-val" id="petlogTotalWalks">0</div>
                               <div class="petlog-stat-label">총 산책</div>
                             </div>
                             <div class="petlog-stat">
-                              <div class="petlog-stat-val">68km</div>
+                              <div class="petlog-stat-val" id="petlogTotalKm">0km</div>
                               <div class="petlog-stat-label">총 거리</div>
                             </div>
                             <div class="petlog-stat">
-                              <div class="petlog-stat-val">32h</div>
+                              <div class="petlog-stat-val" id="petlogTotalHours">0h</div>
                               <div class="petlog-stat-label">총 시간</div>
                             </div>
                           </div>
@@ -1985,50 +1989,25 @@
 
                 <div class="cal-header">
                   <button type="button" class="cal-nav" id="calPrev">‹</button>
-                  <span class="cal-month" id="calMonth">2026년 4월</span>
+                  <span class="cal-month" id="calMonth"></span>
                   <button type="button" class="cal-nav" id="calNext">›</button>
                 </div>
-                <div class="cal-grid" id="calGrid">
-                  <div class="cal-dow">일</div><div class="cal-dow">월</div><div class="cal-dow">화</div><div class="cal-dow">수</div><div class="cal-dow">목</div><div class="cal-dow">금</div><div class="cal-dow">토</div>
-                  <div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div>
-                  <div class="cal-day">1</div>
-                  <div class="cal-day">2</div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori">3<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span></span></div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="extra_0">4<span class="cal-dots"><span class="cal-dot" data-dog="extra_0" style="background:#F59E0B;"></span></span></div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori,extra_0">5<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="extra_0" style="background:#F59E0B;"></span></span></div>
-                  <div class="cal-day">6</div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori">7<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span></span></div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori,extra_0">8<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="extra_0" style="background:#F59E0B;"></span></span></div>
-                  <div class="cal-day">9</div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="extra_0">10<span class="cal-dots"><span class="cal-dot" data-dog="extra_0" style="background:#F59E0B;"></span></span></div>
-                  <div class="cal-day">11</div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori">12<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span></span></div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori,extra_0">13<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="extra_0" style="background:#F59E0B;"></span></span></div>
-                  <div class="cal-day">14</div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="bori">15<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span></span></div>
-                  <div class="cal-day">16</div>
-                  <div class="cal-day walked" data-nav="pet_journal" data-dogs="extra_0">17<span class="cal-dots"><span class="cal-dot" data-dog="extra_0" style="background:#F59E0B;"></span></span></div>
-                  <div class="cal-day">18</div>
-                  <div class="cal-day today walked" data-nav="pet_journal" data-dogs="bori,extra_0">19<span class="cal-dots"><span class="cal-dot" data-dog="bori" style="background:#19B23A;"></span><span class="cal-dot" data-dog="extra_0" style="background:#F59E0B;"></span></span></div>
-                  <div class="cal-day">20</div><div class="cal-day">21</div><div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div>
-                  <div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div><div class="cal-day">29</div><div class="cal-day">30</div>
-                </div>
+                <div class="cal-grid" id="calGrid"></div>
 
                 <div class="cal-summary">
                   <div class="cal-summary-item">
-                    <span class="cal-summary-val">12회</span>
+                    <span class="cal-summary-val">0회</span>
                     <span class="cal-summary-label">이번달 산책</span>
                   </div>
                   <div class="cal-summary-item">
-                    <span class="cal-summary-val">18.4km</span>
+                    <span class="cal-summary-val">0.0km</span>
                     <span class="cal-summary-label">총 거리</span>
                   </div>
                   <div class="cal-summary-item">
-                    <span class="cal-summary-val">4.8h</span>
+                    <span class="cal-summary-val">0.0h</span>
                     <span class="cal-summary-label">총 시간</span>
                   </div>
                 </div>
-                <div class="petlog-record-list" id="petlogRecordList"></div>
               </div>
               </div>
             </div>
@@ -2041,42 +2020,13 @@
                   <span class="muted">산책 일지</span>
                 </div>
                 <p class="mypage-subtitle">산책 일지 상세</p>
-                <p class="stub-muted">4월 19일 (토) 산책 기록</p>
+                <p class="stub-muted" id="journalDateLabel">산책 기록</p>
 
-                <div class="journal-card">
-                  <div class="journal-map"></div>
-                  <div class="journal-stats">
-                    <div class="journal-stat"><span class="journal-stat-val">2.4</span><span class="journal-stat-unit">km</span></div>
-                    <div class="journal-stat-divider"></div>
-                    <div class="journal-stat"><span class="journal-stat-val">34</span><span class="journal-stat-unit">분</span></div>
-                    <div class="journal-stat-divider"></div>
-                    <div class="journal-stat"><span class="journal-stat-val">4.2</span><span class="journal-stat-unit">km/h</span></div>
-                  </div>
-                </div>
+                <div id="journalContent"></div>
 
-                <div class="mypage-group-card" style="margin-top:12px;">
-                  <div class="mypage-list">
-                    <div class="mypage-row mypage-row--sub" style="cursor:default;">
-                      <span class="mypage-row-ico green">🚶</span>
-                      <span class="mypage-row-text">경로<span class="mypage-row-hint">강변 그늘 루프</span></span>
-                    </div>
-                    <div class="mypage-row mypage-row--sub" style="cursor:default;">
-                      <span class="mypage-row-ico blue">⏰</span>
-                      <span class="mypage-row-text">시간<span class="mypage-row-hint">18:14 ~ 18:48</span></span>
-                    </div>
-                    <div class="mypage-row mypage-row--sub" style="cursor:default;">
-                      <span class="mypage-row-ico orange">💩</span>
-                      <span class="mypage-row-text">배변 기록<span class="mypage-row-hint">1회 (18:22)</span></span>
-                    </div>
-                    <div class="mypage-row mypage-row--sub" style="cursor:default;">
-                      <span class="mypage-row-ico cyan">🌤️</span>
-                      <span class="mypage-row-text">날씨<span class="mypage-row-hint">맑음 · 18°C · 습도 45%</span></span>
-                    </div>
-                    <div class="mypage-row mypage-row--sub" style="cursor:default;">
-                      <span class="mypage-row-ico purple">📝</span>
-                      <span class="mypage-row-text">메모<span class="mypage-row-hint">보리가 공놀이를 좋아해서 2분 정도 놀았어요</span></span>
-                    </div>
-                  </div>
+                <div id="journalEmpty" style="text-align:center;padding:40px 0;color:var(--sub);font-size:13px;font-weight:600;display:none;">
+                  <div style="font-size:40px;margin-bottom:12px;">📭</div>
+                  이 날짜에 산책 기록이 없습니다.
                 </div>
 
                 <button type="button" class="petlog-share-btn" id="petJournalShareBtn">
@@ -2393,7 +2343,10 @@
                     <button type="button" class="walk-live-fab-voice" id="voiceActionBtn" aria-label="음성 안내 토글"><span class="voice-pulse"></span><span id="voiceActionIco">🔊</span></button>
                     <button type="button" class="walk-live-fab-loc" id="walkLocateBtn" aria-label="현재 위치 보기">📍</button>
                     <div class="walk-live-fab-stack">
-                      <button type="button" class="walk-live-fab-end" id="walkEndFab" aria-label="산책 종료">⏹</button>
+                      <div class="walk-live-fab-end-wrap">
+                        <button type="button" class="walk-live-fab-end" id="walkEndFab" aria-label="산책 종료">⏹</button>
+                        <span class="walk-live-fab-end-label">종료</span>
+                      </div>
                       <div class="walk-live-fab-poop-menu" id="walkPoopMenu">
                         <button type="button" class="walk-live-mini-fab" data-poop-kind="💩">💩</button>
                         <button type="button" class="walk-live-mini-fab" data-poop-kind="💧">💧</button>
@@ -2488,7 +2441,6 @@
                           </div>
                         </div>
                       </div>
-                      <button type="button" class="walk-sheet-end-btn" id="walkEndSheetBtn">산책 종료</button>
                     </div>
                   </div>
                 </div>
@@ -2503,6 +2455,19 @@
                   <div class="reroute-btns">
                     <button class="reroute-btn primary" id="changeRoute">경로 변경하기</button>
                     <button class="reroute-btn secondary" id="keepRoute">현재 경로 유지</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="reroute-overlay" id="reportCheckOverlay">
+                <div class="reroute-modal">
+                  <div class="reroute-modal-icon">🚧</div>
+                  <div class="reroute-modal-title">공사중 제보가 있어요!</div>
+                  <div class="reroute-modal-reason">이전 이용자 제보</div>
+                  <div class="reroute-modal-detail">이 길에 공사중이라는 제보가 들어왔어요.<br>아직도 공사중인가요?</div>
+                  <div class="reroute-btns">
+                    <button class="reroute-btn primary" id="reportCheckYes">예, 아직 공사중이에요</button>
+                    <button class="reroute-btn secondary" id="reportCheckNo">아니오, 공사 끝났어요</button>
                   </div>
                 </div>
               </div>
@@ -2559,15 +2524,15 @@
                   <div class="review-hero-sub" id="reviewRouteName">강변 그늘 루프</div>
                   <div class="review-hero-stats">
                     <div class="review-hero-stat">
-                      <div class="review-hero-stat-val">2.4</div>
+                      <div class="review-hero-stat-val" id="reviewStatKm">0</div>
                       <div class="review-hero-stat-label">km</div>
                     </div>
                     <div class="review-hero-stat">
-                      <div class="review-hero-stat-val">34</div>
+                      <div class="review-hero-stat-val" id="reviewStatMin">0</div>
                       <div class="review-hero-stat-label">분</div>
                     </div>
                     <div class="review-hero-stat">
-                      <div class="review-hero-stat-val">4.2</div>
+                      <div class="review-hero-stat-val" id="reviewStatSpeed">0</div>
                       <div class="review-hero-stat-label">km/h</div>
                     </div>
                   </div>
@@ -2857,9 +2822,9 @@
                 <p class="stub-muted">닉네임·연락처 등 계정 정보를 수정하는 화면 예시입니다.</p>
                 <div class="card">
                   <div class="label">닉네임</div>
-                  <input class="input" type="text" value="보리 보호자" />
+                  <input class="input" type="text" id="editNicknameInput" value="보리 보호자" />
                 </div>
-                <button type="button" class="cta" data-nav="mypage" style="margin-top:12px">저장하고 돌아가기</button>
+                <button type="button" class="cta" id="saveNicknameBtn" style="margin-top:12px">저장하고 돌아가기</button>
               </div>
             </div>
 
@@ -3028,6 +2993,20 @@
                     <label class="toggle-switch"><input type="checkbox" id="toggleVoiceDefault" checked /><span class="toggle-track"></span></label>
                   </div>
                 </div>
+
+                <p class="mypage-subtitle" style="margin-top:24px;">목소리 선택</p>
+                <p class="stub-muted">Chrome 브라우저에서 모든 기기 동일한 음성이 적용됩니다.</p>
+                <div class="mypage-group-card" id="voiceStyleGroup">
+                  <div class="mypage-list">
+                    <button type="button" class="mypage-row mypage-row--sub voice-style-opt selected" data-voice-style="male_calm">
+                      <span class="mypage-row-text">🗣️ 차분하고 안정적인 톤<span class="toggle-row-hint">안내방송 스타일</span></span>
+                    </button>
+                    <button type="button" class="mypage-row mypage-row--sub voice-style-opt" data-voice-style="female_soft">
+                      <span class="mypage-row-text">🎙️ 부드럽고 따뜻한 톤<span class="toggle-row-hint">네비게이션 안내 스타일</span></span>
+                    </button>
+                  </div>
+                </div>
+                <p class="stub-muted" style="margin-top:8px;font-size:10px;color:#aaa;">※ Google Chrome 사용 시 Google 한국어 음성으로 통일됩니다. Safari/Firefox에서는 기기 기본 음성이 사용될 수 있습니다.</p>
               </div>
             </div>
 
@@ -3148,6 +3127,7 @@
       const views = Array.from(document.querySelectorAll(".view"));
       const tabs = Array.from(document.querySelectorAll("#tabs .tab-hit"));
       let rerouteTimer = null;
+      let reportCheckTimer = null;
       const state = {
         dogName: "보리",
         primaryPetSub: "",
@@ -3169,6 +3149,8 @@
         freeWalk: false,
         activePetlogDogId: "primary",
         dogTraitsTargetId: "primary",
+        journalSelectedDay: null,
+        completedWalkRecords: [],
         homeLocations: ["청파동", "송파1동"],
         activeHomeLocationIndex: 0,
       };
@@ -3257,6 +3239,35 @@
         } catch (_) {}
       }
 
+      function readCompletedWalkRecords() {
+        return state.completedWalkRecords || [];
+      }
+
+      function saveCompletedWalk(opts) {
+        const now = new Date();
+        const dateStr = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-" + String(now.getDate()).padStart(2, "0");
+        const timeStr = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+        const rec = {
+          id: Date.now(),
+          date: dateStr,
+          time: timeStr,
+          routeName: opts.routeName || "자유 산책",
+          routeSeed: opts.routeSeed || 0,
+          distance: opts.distance || 0,
+          durationMin: opts.durationMin || 0,
+          dogIds: opts.dogIds || ["primary"],
+          rating: opts.rating || 0,
+          goodTags: opts.goodTags || [],
+          badTags: opts.badTags || [],
+          memo: opts.memo || "",
+          walkMemos: opts.walkMemos || [],
+          freeWalk: opts.freeWalk || false,
+        };
+        if (!state.completedWalkRecords) state.completedWalkRecords = [];
+        state.completedWalkRecords.push(rec);
+        return rec;
+      }
+
       function getPetAddFormSubline() {
         const breed = document.getElementById("petAddBreedSelect");
         const age = document.getElementById("petAddAgeSelect");
@@ -3317,11 +3328,17 @@
         if (activeView && ["pet_add", "dogInfoTraits", "dogInfoResult"].includes(name)) {
           activeView.scrollTop = 0;
         }
-        if (name === "home") { syncHomeDogName(); renderSchedules(); syncHomeGreeting(); ensureWeatherLoaded(); ensureHomeMiniMap(); }
+        if (name === "mypage_edit") {
+          const editInput = document.getElementById("editNicknameInput");
+          const profileName = document.getElementById("mypageDogName");
+          if (editInput && profileName) editInput.value = profileName.textContent;
+        }
+        if (name === "home") { syncHomeDogName(); syncHomeWalkStats(); renderSchedules(); syncHomeGreeting(); ensureWeatherLoaded(); ensureHomeMiniMap(); }
         if (name === "walkHome") ensureWalkHomeMap();
         if (name === "walk") { ensureWalkLiveMap(); ensureWeatherLoaded(); }
         if (name === "explore") ensureExploreMap();
         if (name === "pet_monthly") { syncPetDogName(); syncPetPersonality(); initPetlogCarousel(); renderManualWalkRecords(); }
+        if (name === "pet_journal") { renderJournalForDay(); }
         if (name === "pet_analysis_period" || name === "pet_analysis_result") syncPetAnalysisDogText();
         if (name === "dogInfoTraits") { syncTraitsDogName(); syncDogInfoTraitsChrome(); }
         if (name === "dogInfoResult") { syncResultDogName(); renderResult(); applyResultLayout(); }
@@ -3363,6 +3380,36 @@
         if (!el) return;
         const safe = (state.dogName || "").trim() || "반려견";
         el.textContent = safe;
+      }
+
+      function syncHomeWalkStats() {
+        const all = readManualWalkRecords().concat(readCompletedWalkRecords());
+        const today = new Date();
+        const todayStr = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, "0") + "-" + String(today.getDate()).padStart(2, "0");
+
+        const todayRecords = all.filter(r => r.date === todayStr);
+        const todayKm = todayRecords.reduce((sum, r) => sum + (Number(r.distance) || 0), 0);
+        const todayCount = todayRecords.length;
+
+        const walkDates = new Set(all.map(r => r.date));
+        let streak = 0;
+        const d = new Date(today);
+        while (true) {
+          const ds = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+          if (walkDates.has(ds)) {
+            streak++;
+            d.setDate(d.getDate() - 1);
+          } else {
+            break;
+          }
+        }
+
+        const homeStatKm = document.getElementById("homeStatKm");
+        const homeStatCount = document.getElementById("homeStatCount");
+        const homeStatStreak = document.getElementById("homeStatStreak");
+        if (homeStatKm) homeStatKm.innerHTML = todayKm.toFixed(1) + '<span class="home-stat-unit"> km</span>';
+        if (homeStatCount) homeStatCount.textContent = todayCount;
+        if (homeStatStreak) homeStatStreak.textContent = streak;
       }
 
       // === 시간대별 인사말 (좋은 아침/오후/저녁/밤) ===
@@ -4546,17 +4593,26 @@
 
       function handleRerouteVisibility(viewName) {
         const overlay = document.getElementById("rerouteOverlay");
-        if (!overlay) return;
-        overlay.classList.remove("show");
-        if (rerouteTimer) {
-          clearTimeout(rerouteTimer);
-          rerouteTimer = null;
-        }
-        if (viewName === "walk" && !state.freeWalk) {
-          rerouteTimer = setTimeout(() => {
-            overlay.classList.add("show");
-            speak("더 좋은 경로가 발견되었습니다. 경로를 변경하시겠어요?");
-          }, 60000);
+        const reportOverlay = document.getElementById("reportCheckOverlay");
+        if (overlay) overlay.classList.remove("show");
+        if (reportOverlay) reportOverlay.classList.remove("show");
+        if (rerouteTimer) { clearTimeout(rerouteTimer); rerouteTimer = null; }
+        if (reportCheckTimer) { clearTimeout(reportCheckTimer); reportCheckTimer = null; }
+        if (viewName === "walk") {
+          reportCheckTimer = setTimeout(() => {
+            if (reportOverlay) {
+              reportOverlay.classList.add("show");
+              speak("이 길에 공사중 제보가 있습니다. 아직 공사중인지 확인해 주세요.");
+            }
+          }, 30000);
+          if (!state.freeWalk) {
+            rerouteTimer = setTimeout(() => {
+              if (overlay) {
+                overlay.classList.add("show");
+                speak("더 좋은 경로가 발견되었습니다. 경로를 변경하시겠어요?");
+              }
+            }, 60000);
+          }
         }
       }
 
@@ -4607,6 +4663,13 @@
         }
         if (navTarget && nav === "pet_analysis_period") {
           state.activePetlogDogId = navTarget.getAttribute("data-dog-id") || state.activePetlogDogId || "primary";
+        }
+        if (navTarget && nav === "pet_journal") {
+          const dayEl = navTarget.closest(".cal-day");
+          if (dayEl) {
+            const dayNum = parseInt(dayEl.childNodes[0] && dayEl.childNodes[0].textContent);
+            if (dayNum) state.journalSelectedDay = dayNum;
+          }
         }
         if (!skipDefaultNavForWalk && nav) setActiveView(nav);
 
@@ -4885,6 +4948,7 @@
         if (sel) sel.addEventListener("change", onPrimaryDogFieldChange);
       });
       syncHomeDogName();
+      syncHomeWalkStats();
       syncPetDogName();
       syncHomeLocationHeader();
       document.getElementById("homeLocationSwitcher")?.addEventListener("click", (e) => {
@@ -4963,7 +5027,6 @@
 
       // Walk interactions
       const voiceActionIco = document.getElementById("voiceActionIco");
-      const walkEndSheetBtn = document.getElementById("walkEndSheetBtn");
       const walkMoreBtn = document.getElementById("walkMoreBtn");
       const walkMoreMenu = document.getElementById("walkMoreMenu");
       const walkLiveSheet = document.getElementById("walkLiveSheet");
@@ -4980,6 +5043,11 @@
       let sheetState = "mid";
       let voiceGuidanceTimer = null;
       let voiceGuidanceStep = 0;
+      let voiceStyle = "male_calm";
+      const voiceStyles = {
+        male_calm: { rate: 0.88, pitch: 0.85 },
+        female_soft: { rate: 0.92, pitch: 1.1 }
+      };
       const synth = window.speechSynthesis;
       if (synth && synth.onvoiceschanged !== undefined) {
         synth.onvoiceschanged = () => { synth.getVoices(); };
@@ -4988,14 +5056,16 @@
       function speak(text) {
         if (!voiceOn || !synth) return;
         synth.cancel();
+        const style = voiceStyles[voiceStyle] || voiceStyles.female_soft;
         const utter = new SpeechSynthesisUtterance(text);
         utter.lang = "ko-KR";
-        utter.rate = 0.95;
-        utter.pitch = 1.05;
+        utter.rate = style.rate;
+        utter.pitch = style.pitch;
         utter.volume = 1;
         const voices = synth.getVoices();
-        const koVoice = voices.find(v => v.lang.startsWith("ko"));
-        if (koVoice) utter.voice = koVoice;
+        const googleKo = voices.find(v => v.lang === "ko-KR" && v.name.toLowerCase().includes("google"));
+        const fallbackKo = voices.find(v => v.lang.startsWith("ko"));
+        utter.voice = googleKo || fallbackKo || null;
         synth.speak(utter);
       }
 
@@ -5094,6 +5164,15 @@
         if (reviewRouteEl) {
           reviewRouteEl.textContent = (currentWalkRouteName || "").trim() || "오늘의 산책";
         }
+        const durationMin = Math.round(walkElapsedSec / 60);
+        const distKm = walkDistanceKm;
+        const speed = durationMin > 0 ? (distKm / (durationMin / 60)) : 0;
+        const reviewStatKm = document.getElementById("reviewStatKm");
+        const reviewStatMin = document.getElementById("reviewStatMin");
+        const reviewStatSpeed = document.getElementById("reviewStatSpeed");
+        if (reviewStatKm) reviewStatKm.textContent = distKm.toFixed(1);
+        if (reviewStatMin) reviewStatMin.textContent = durationMin;
+        if (reviewStatSpeed) reviewStatSpeed.textContent = speed.toFixed(1);
         const reviewMemoEl = document.getElementById("reviewMemo");
         if (reviewMemoEl && state.walkMemos && state.walkMemos.length) {
           reviewMemoEl.value = state.walkMemos.map((m, i) => `${i + 1}. ${m}`).join("\n");
@@ -5137,7 +5216,6 @@
       function hideWalkEndConfirm() {
         if (walkEndConfirmOverlay) { walkEndConfirmOverlay.classList.remove("show"); walkEndConfirmOverlay.setAttribute("aria-hidden","true"); }
       }
-      if (walkEndSheetBtn) walkEndSheetBtn.addEventListener("click", showWalkEndConfirm);
       var walkEndFab = document.getElementById("walkEndFab");
       if (walkEndFab) walkEndFab.addEventListener("click", showWalkEndConfirm);
       if (walkEndConfirmCancel) walkEndConfirmCancel.addEventListener("click", hideWalkEndConfirm);
@@ -5504,6 +5582,22 @@
         if (rerouteOverlay) rerouteOverlay.classList.remove("show");
         if (rerouteTimer) { clearTimeout(rerouteTimer); rerouteTimer = null; }
       }
+
+      const reportCheckOverlay = document.getElementById("reportCheckOverlay");
+      function dismissReportCheck() {
+        if (reportCheckOverlay) reportCheckOverlay.classList.remove("show");
+        if (reportCheckTimer) { clearTimeout(reportCheckTimer); reportCheckTimer = null; }
+      }
+      document.getElementById("reportCheckYes")?.addEventListener("click", () => {
+        dismissReportCheck();
+        speak("제보를 확인했어요. 감사합니다!");
+        addWalkTimelineEntry("🚧 공사중 제보 확인됨", "#f97316");
+      });
+      document.getElementById("reportCheckNo")?.addEventListener("click", () => {
+        dismissReportCheck();
+        speak("공사가 끝난 걸로 업데이트할게요. 감사합니다!");
+        addWalkTimelineEntry("✅ 공사 완료 확인됨", "#22c55e");
+      });
       document.getElementById("keepRoute").addEventListener("click", () => {
         dismissReroute();
         speak("현재 경로를 유지합니다. 계속 직진해 주세요.");
@@ -5553,6 +5647,52 @@
           if (!btn) return;
           fontSizeGroup.querySelectorAll(".font-opt").forEach(b => b.classList.remove("selected"));
           btn.classList.add("selected");
+        });
+      }
+
+      const saveNicknameBtn = document.getElementById("saveNicknameBtn");
+      if (saveNicknameBtn) {
+        saveNicknameBtn.addEventListener("click", () => {
+          const editInput = document.getElementById("editNicknameInput");
+          const newName = editInput ? editInput.value.trim() : "";
+          if (!newName) return;
+          const profileName = document.getElementById("mypageDogName");
+          if (profileName) profileName.textContent = newName;
+          const signupInput = document.getElementById("signupNicknameInput");
+          if (signupInput) signupInput.value = newName;
+          setActiveView("mypage");
+        });
+      }
+
+      function speakPreview(text) {
+        if (!synth) return;
+        synth.cancel();
+        const style = voiceStyles[voiceStyle] || voiceStyles.female_soft;
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = "ko-KR";
+        utter.rate = style.rate;
+        utter.pitch = style.pitch;
+        utter.volume = 1;
+        const voices = synth.getVoices();
+        const googleKo = voices.find(v => v.lang === "ko-KR" && v.name.toLowerCase().includes("google"));
+        const fallbackKo = voices.find(v => v.lang.startsWith("ko"));
+        utter.voice = googleKo || fallbackKo || null;
+        synth.speak(utter);
+      }
+
+      const voiceStyleGroup = document.getElementById("voiceStyleGroup");
+      if (voiceStyleGroup) {
+        voiceStyleGroup.addEventListener("click", (e) => {
+          const btn = e.target.closest(".voice-style-opt");
+          if (!btn) return;
+          voiceStyleGroup.querySelectorAll(".voice-style-opt").forEach(b => b.classList.remove("selected"));
+          btn.classList.add("selected");
+          voiceStyle = btn.dataset.voiceStyle;
+          const previews = {
+            male_calm: "안녕하세요. 차분하게 경로를 안내해 드리겠습니다.",
+            female_soft: "안녕하세요, 부드럽고 따뜻한 목소리로 산책을 안내해 드릴게요."
+          };
+          speakPreview(previews[voiceStyle] || previews.male_calm);
         });
       }
 
@@ -5608,15 +5748,41 @@
           chip.addEventListener("click", () => chip.classList.toggle("selected"));
         });
       });
+      function collectAndSaveWalkRecord(includeReview) {
+        const goodTags = [];
+        const badTags = [];
+        if (includeReview && reviewGoodTags) {
+          reviewGoodTags.querySelectorAll(".review-tag-chip.selected").forEach(c => goodTags.push(c.dataset.tag));
+        }
+        if (includeReview && reviewBadTags) {
+          reviewBadTags.querySelectorAll(".review-tag-chip.selected").forEach(c => badTags.push(c.dataset.tag));
+        }
+        saveCompletedWalk({
+          routeName: currentWalkRouteName || "자유 산책",
+          routeSeed: routeSeedFromName(currentWalkRouteName || ""),
+          distance: Math.round(walkDistanceKm * 100) / 100,
+          durationMin: Math.round(walkElapsedSec / 60),
+          dogIds: state.walkParticipantIds || ["primary"],
+          rating: includeReview ? reviewScore : 0,
+          goodTags: goodTags,
+          badTags: badTags,
+          memo: (reviewMemo && reviewMemo.value) ? reviewMemo.value.trim() : "",
+          walkMemos: state.walkMemos || [],
+          freeWalk: state.freeWalk || false,
+        });
+      }
+
       if (reviewSubmit) {
         reviewSubmit.addEventListener("click", () => {
           if (reviewScore === 0) return;
+          collectAndSaveWalkRecord(true);
           resetReview();
           setActiveView("walkHome");
         });
       }
       if (reviewSkip) {
         reviewSkip.addEventListener("click", () => {
+          collectAndSaveWalkRecord(false);
           resetReview();
           setActiveView("walkHome");
         });
@@ -5625,20 +5791,175 @@
       // === pet_monthly: 반려견별 색 필터 ===
       const calDogFilter = document.getElementById("calDogFilter");
       const calGrid = document.getElementById("calGrid");
-      const petlogRecordList = document.getElementById("petlogRecordList");
       const CAL_DOG_COLORS = ["#19B23A", "#F59E0B", "#6366F1", "#EC4899", "#14B8A6", "#F97316"];
       var renderCalDogChips = null;
+      var calViewYear = new Date().getFullYear();
+      var calViewMonth = new Date().getMonth();
+
+      function buildCalendar() {
+        if (!calGrid) return;
+        const now = new Date();
+        const todayDate = now.getDate();
+        const todayMonth = now.getMonth();
+        const todayYear = now.getFullYear();
+        const isCurrentMonth = (calViewYear === todayYear && calViewMonth === todayMonth);
+
+        const calMonthEl = document.getElementById("calMonth");
+        if (calMonthEl) calMonthEl.textContent = calViewYear + "년 " + (calViewMonth + 1) + "월";
+
+        const firstDay = new Date(calViewYear, calViewMonth, 1).getDay();
+        const daysInMonth = new Date(calViewYear, calViewMonth + 1, 0).getDate();
+
+        let html = '<div class="cal-dow">일</div><div class="cal-dow">월</div><div class="cal-dow">화</div><div class="cal-dow">수</div><div class="cal-dow">목</div><div class="cal-dow">금</div><div class="cal-dow">토</div>';
+        for (let i = 0; i < firstDay; i++) {
+          html += '<div class="cal-day empty"></div>';
+        }
+        for (let d = 1; d <= daysInMonth; d++) {
+          const isToday = isCurrentMonth && d === todayDate;
+          html += '<div class="cal-day' + (isToday ? ' today' : '') + '">' + d + '</div>';
+        }
+        calGrid.innerHTML = html;
+      }
+
+      const calPrev = document.getElementById("calPrev");
+      const calNext = document.getElementById("calNext");
+      if (calPrev) calPrev.addEventListener("click", () => {
+        calViewMonth--;
+        if (calViewMonth < 0) { calViewMonth = 11; calViewYear--; }
+        buildCalendar();
+        renderManualWalkRecords();
+      });
+      if (calNext) calNext.addEventListener("click", () => {
+        calViewMonth++;
+        if (calViewMonth > 11) { calViewMonth = 0; calViewYear++; }
+        buildCalendar();
+        renderManualWalkRecords();
+      });
+      buildCalendar();
+
       function normalizeDogIdForCalendar(id) {
         return id === "primary" ? "bori" : id;
       }
+      function renderJournalForDay() {
+        const year = calViewYear;
+        const month = calViewMonth + 1;
+        const day = state.journalSelectedDay || new Date().getDate();
+        const dateStr = year + "-" + String(month).padStart(2, "0") + "-" + String(day).padStart(2, "0");
+
+        const dateLabel = document.getElementById("journalDateLabel");
+        const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
+        const dateObj = new Date(dateStr + "T00:00:00");
+        const dayName = dayNames[dateObj.getDay()] || "";
+        if (dateLabel) dateLabel.textContent = month + "월 " + day + "일 (" + dayName + ") 산책 기록";
+
+        const allRecords = readManualWalkRecords().concat(readCompletedWalkRecords());
+        const dayRecords = allRecords.filter(r => r.date === dateStr);
+
+        const contentEl = document.getElementById("journalContent");
+        const emptyEl = document.getElementById("journalEmpty");
+        if (!contentEl) return;
+
+        if (dayRecords.length === 0) {
+          contentEl.innerHTML = "";
+          if (emptyEl) emptyEl.style.display = "block";
+          return;
+        }
+        if (emptyEl) emptyEl.style.display = "none";
+
+        const TAG_LABELS = {
+          safe: "안전했어요", quiet: "한적했어요", shade: "그늘이 좋았어요",
+          surface: "노면이 좋았어요", view: "풍경이 좋았어요", dogfriend: "강아지 친구",
+          poo: "배변봉투함", crowded: "사람 많음", cars: "차량 위험",
+          noisy: "시끄러움", hill: "언덕/계단", dirty: "노면 불량", hot: "더움"
+        };
+
+        let html = "";
+        dayRecords.forEach((rec, idx) => {
+          const dist = Number(rec.distance || 0).toFixed(1);
+          const dur = rec.durationMin || 0;
+          const speed = dur > 0 ? (Number(rec.distance || 0) / (dur / 60)).toFixed(1) : "0";
+          const routeName = rec.routeName || "산책";
+          const dogNames = (rec.dogIds || []).map((id) => (getDogById(id) || {}).name).filter(Boolean).join(", ") || "반려견";
+          const stars = rec.rating ? "⭐".repeat(rec.rating) + " (" + rec.rating + "/5)" : "";
+          const goodTags = (rec.goodTags || []).map(t => "👍 " + (TAG_LABELS[t] || t));
+          const badTags = (rec.badTags || []).map(t => "👎 " + (TAG_LABELS[t] || t));
+          const allTags = goodTags.concat(badTags);
+          const memo = rec.memo || "";
+          const walkMemos = rec.walkMemos || [];
+
+          html += '<div class="journal-card" style="margin-bottom:12px;">';
+          html += '<div class="journal-map" id="journalMap_' + idx + '"></div>';
+          html += '<div class="journal-stats">';
+          html += '<div class="journal-stat"><span class="journal-stat-val">' + dist + '</span><span class="journal-stat-unit">km</span></div>';
+          html += '<div class="journal-stat-divider"></div>';
+          html += '<div class="journal-stat"><span class="journal-stat-val">' + dur + '</span><span class="journal-stat-unit">분</span></div>';
+          html += '<div class="journal-stat-divider"></div>';
+          html += '<div class="journal-stat"><span class="journal-stat-val">' + speed + '</span><span class="journal-stat-unit">km/h</span></div>';
+          html += '</div></div>';
+
+          html += '<div class="mypage-group-card" style="margin-top:8px;margin-bottom:16px;"><div class="mypage-list">';
+          html += '<div class="mypage-row mypage-row--sub" style="cursor:default;"><span class="mypage-row-ico green">🚶</span><span class="mypage-row-text">경로<span class="mypage-row-hint">' + escapeHtml(routeName) + '</span></span></div>';
+          html += '<div class="mypage-row mypage-row--sub" style="cursor:default;"><span class="mypage-row-ico blue">🐕</span><span class="mypage-row-text">반려견<span class="mypage-row-hint">' + escapeHtml(dogNames) + '</span></span></div>';
+          if (rec.time) {
+            html += '<div class="mypage-row mypage-row--sub" style="cursor:default;"><span class="mypage-row-ico blue">⏰</span><span class="mypage-row-text">시간<span class="mypage-row-hint">' + escapeHtml(rec.time) + '</span></span></div>';
+          }
+          if (stars) {
+            html += '<div class="mypage-row mypage-row--sub" style="cursor:default;"><span class="mypage-row-ico orange">⭐</span><span class="mypage-row-text">평가<span class="mypage-row-hint">' + escapeHtml(stars) + '</span></span></div>';
+          }
+          if (allTags.length) {
+            html += '<div class="mypage-row mypage-row--sub" style="cursor:default;"><span class="mypage-row-ico purple">🏷️</span><span class="mypage-row-text">피드백<span class="mypage-row-hint">' + escapeHtml(allTags.join(", ")) + '</span></span></div>';
+          }
+          if (memo) {
+            html += '<div class="mypage-row mypage-row--sub" style="cursor:default;"><span class="mypage-row-ico purple">📝</span><span class="mypage-row-text">메모<span class="mypage-row-hint">' + escapeHtml(memo) + '</span></span></div>';
+          }
+          if (walkMemos.length) {
+            html += '<div class="mypage-row mypage-row--sub" style="cursor:default;"><span class="mypage-row-ico cyan">💬</span><span class="mypage-row-text">산책 중 메모<span class="mypage-row-hint">' + escapeHtml(walkMemos.join(" / ")) + '</span></span></div>';
+          }
+          html += '</div></div>';
+        });
+
+        contentEl.innerHTML = html;
+
+        if (leafletAvailable()) {
+          dayRecords.forEach((rec, idx) => {
+            const mapEl = document.getElementById("journalMap_" + idx);
+            if (!mapEl) return;
+            const lat = 37.5665;
+            const lon = 126.978;
+            const map = L.map(mapEl, {
+              zoomControl: false, attributionControl: false,
+              dragging: false, touchZoom: false, doubleClickZoom: false, scrollWheelZoom: false,
+            }).setView([lat, lon], 16);
+            tileLayer().addTo(map);
+            if (!rec.freeWalk && rec.routeSeed !== undefined) {
+              drawWalkRouteOnMap(map, lat, lon, {
+                color: "#19B23A", weight: 4, opacity: 0.9, fit: true, showEndpoints: true, seed: rec.routeSeed
+              });
+            } else {
+              drawWalkRouteOnMap(map, lat, lon, {
+                color: "#3b82f6", weight: 4, opacity: 0.85, fit: true, showEndpoints: true, seed: rec.id ? (rec.id % 360) * (Math.PI / 180) : Math.random()
+              });
+            }
+          });
+        }
+      }
+
       function renderManualWalkRecords() {
         state.manualWalkRecords = readManualWalkRecords();
+        const completedRecords = readCompletedWalkRecords();
+        const allRecords = state.manualWalkRecords.concat(completedRecords);
+
+        const monthRecords = allRecords.filter((rec) => {
+          const d = new Date(rec.date + "T00:00:00");
+          return d.getFullYear() === calViewYear && d.getMonth() === calViewMonth;
+        });
+
         if (calGrid) {
           calGrid.querySelectorAll(".cal-day.manual-walked").forEach((day) => {
             day.classList.remove("manual-walked");
             day.querySelectorAll(".cal-dot.manual-dot").forEach((dot) => dot.remove());
           });
-          state.manualWalkRecords.forEach((rec) => {
+          monthRecords.forEach((rec) => {
             const date = new Date(rec.date + "T00:00:00");
             const dayNum = date.getDate();
             const day = Array.from(calGrid.querySelectorAll(".cal-day")).find((el) => el.childNodes[0] && String(el.childNodes[0].textContent).trim() === String(dayNum));
@@ -5663,22 +5984,29 @@
             });
           });
         }
-        if (petlogRecordList) {
-          petlogRecordList.innerHTML = state.manualWalkRecords.slice(-4).reverse().map((rec) => {
-            const dogNames = (rec.dogIds || []).map((id) => (getDogById(id) || {}).name).filter(Boolean).join("•") || "반려견";
-            const potty = [rec.pee ? "소변" : "", rec.poop ? "대변" : ""].filter(Boolean).join(" · ");
-            const sub = [rec.date, rec.time, Number(rec.distance || 0).toFixed(1) + "km", potty].filter(Boolean).join(" · ");
-            return '<div class="petlog-record-item"><span class="petlog-record-ico">🚶</span><span class="petlog-record-main"><span class="petlog-record-title">' + escapeHtml(dogNames) + ' 산책</span><span class="petlog-record-sub">' + escapeHtml(sub) + '</span></span></div>';
-          }).join("");
-        }
+
+
+        const totalCount = monthRecords.length;
+        const totalKm = monthRecords.reduce((sum, r) => sum + (Number(r.distance) || 0), 0);
+        const totalMin = monthRecords.reduce((sum, r) => sum + (Number(r.durationMin) || 0), 0);
+        const totalH = totalMin / 60;
+
         const summaryVals = document.querySelectorAll(".cal-summary .cal-summary-val");
         if (summaryVals.length >= 3) {
-          const manualCount = state.manualWalkRecords.length;
-          const manualKm = state.manualWalkRecords.reduce((sum, r) => sum + (Number(r.distance) || 0), 0);
-          summaryVals[0].textContent = (12 + manualCount) + "회";
-          summaryVals[1].textContent = (18.4 + manualKm).toFixed(1) + "km";
-          summaryVals[2].textContent = (4.8 + manualCount * 0.5).toFixed(1) + "h";
+          summaryVals[0].textContent = totalCount + "회";
+          summaryVals[1].textContent = totalKm.toFixed(1) + "km";
+          summaryVals[2].textContent = totalH.toFixed(1) + "h";
         }
+        const allTotalCount = allRecords.length;
+        const allTotalKm = allRecords.reduce((sum, r) => sum + (Number(r.distance) || 0), 0);
+        const allTotalMin = allRecords.reduce((sum, r) => sum + (Number(r.durationMin) || 0), 0);
+        const allTotalH = allTotalMin / 60;
+        const petlogTotalWalks = document.getElementById("petlogTotalWalks");
+        const petlogTotalKm = document.getElementById("petlogTotalKm");
+        const petlogTotalHours = document.getElementById("petlogTotalHours");
+        if (petlogTotalWalks) petlogTotalWalks.textContent = allTotalCount;
+        if (petlogTotalKm) petlogTotalKm.textContent = allTotalKm.toFixed(1) + "km";
+        if (petlogTotalHours) petlogTotalHours.textContent = allTotalH.toFixed(1) + "h";
       }
       if (calDogFilter && calGrid) {
         function applyCalFilter() {
