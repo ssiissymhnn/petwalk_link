@@ -6,28 +6,30 @@
   <title>PetWalk UI Mock</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Madimi+One&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Leaflet (지도) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="" defer></script>
   <style>
-    :root { --main:#19B23A; --point:#00E933; --soft-mint:#C9FAD4; --black:#1a1a1a; --white:#FFFFFF; --sub:#999999; --sep:#F2F3F5; --bg:#F7F8FA; --card:#FFFFFF; --text:#1a1a1a; --muted:var(--sub); --primary:var(--main); --primary-dark:#0fa34e; --line:rgba(0,0,0,.08); --shadow:0 8px 28px rgba(0,0,0,.08); --radius:16px; --device-w:393px; --device-h:852px; }
-    *{box-sizing:border-box} body{margin:0;font-family:"Pretendard",sans-serif;background:var(--bg);color:var(--text)}
+    :root { --main:#10A34E; --point:#19B23A; --soft-mint:#C9FAD4; --black:#1e1e1e; --white:#FFFFFF; --sub:#7c7c7c; --sep:#f3f3f3; --bg:#ffffff; --card:#FFFFFF; --text:#1e1e1e; --muted:var(--sub); --primary:var(--main); --primary-dark:#096E32; --line:rgba(0,0,0,.08); --shadow:0 4px 14px rgba(0,0,0,.1); --radius:16px; --device-w:393px; --device-h:852px; --accent:#10A34E; --accent-alt:#19B23A; --surface:#d9d9d9; --surface-alt:#cdcdcd; --surface-3:#eeeeef; --surface-4:#ebf7ec; --bg-alt:#f3f3f3; --bg-3:#f8fef8; --border:#919093; --border-alt:#999999; --text-secondary:#303030; --text-secondary-alt:#515151; --text-tertiary:#7c7c7c; --elevation-1:0px -2px 2px 1px rgba(0,0,0,0.02); --elevation-2:0px 1px 4px 0px rgba(12,12,13,0.05),0px 1px 4px 0px rgba(12,12,13,0.1); --shadow-black-main:0px 2px 8px 0px rgba(0,0,0,0.04); --shadow-black-stress:0px 4px 14px 0px rgba(0,0,0,0.1); --shadow-green-main:0px 6px 16px 0px rgba(16,163,78,0.12); --shadow-green-stress:0px 8px 22px 0px rgba(16,163,78,0.24); --border-3:#989da1; --accent-53:#9747ff; --space-15:15px; --space-30:30px; --space-52:52px; }
+    *{box-sizing:border-box} body{margin:0;font-family:"Pretendard","Inter",-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text)}
     .wrap{max-width:1320px;margin:0 auto;padding:18px 22px 32px}.title{display:none}
     .phones{display:grid;grid-template-columns:max-content;justify-content:center}
-    .phone{background:var(--card);border-radius:34px;padding:18px 14px 16px;width:max-content;height:max-content;box-shadow:0 12px 40px rgba(0,0,0,.10);border:1px solid rgba(0,0,0,.06);position:relative;overflow:hidden;flex-shrink:0}
-    .screen{border-radius:28px;background:var(--bg);width:var(--device-w);height:var(--device-h);padding:12px;position:relative;overflow:hidden;box-sizing:border-box}
+    .phone{background:var(--card);border-radius:34px;padding:18px 14px 16px;width:max-content;height:max-content;box-shadow:var(--shadow-black-stress);border:1px solid rgba(0,0,0,.06);position:relative;overflow:hidden;flex-shrink:0}
+    .screen{border-radius:28px;background:var(--bg-alt);width:var(--device-w);height:var(--device-h);padding:12px;position:relative;overflow:hidden;box-sizing:border-box}
+    .screen.screen--home{background:#ffffff;padding:0}
+    .view[data-view="home"]{padding:0 14px 12px;background:#ffffff}
     .row{display:flex;align-items:center;justify-content:space-between}.muted{color:var(--muted);font-size:12px}.h2{font-size:20px;font-weight:800;margin:0}
-    .chip{font-size:12px;background:rgba(25,178,58,.1);color:var(--main);padding:7px 10px;border-radius:999px;font-weight:700}
-    .card{background:var(--white);border:1px solid rgba(0,0,0,.06);border-radius:var(--radius);box-shadow:0 2px 8px rgba(0,0,0,.04);padding:12px;margin-top:10px}
+    .chip{font-size:12px;background:rgba(16,163,78,.1);color:var(--main);padding:7px 10px;border-radius:999px;font-weight:700}
+    .card{background:var(--white);border:1px solid rgba(0,0,0,.06);border-radius:var(--radius);box-shadow:var(--shadow-black-main);padding:12px;margin-top:10px}
     .card.clickable{cursor:pointer;transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease}
-    .card.clickable:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(25,178,58,.12);border-color:rgba(25,178,58,.3)}
+    .card.clickable:hover{transform:translateY(-2px);box-shadow:var(--shadow-green-main);border-color:rgba(16,163,78,.3)}
     .card.clickable:active{transform:translateY(0)}
-    .map{height:134px;border-radius:16px;background:radial-gradient(circle at 20% 30%,rgba(25,178,58,.12) 0 9%,transparent 10%),radial-gradient(circle at 72% 68%,rgba(15,163,78,.1) 0 11%,transparent 12%),linear-gradient(130deg,var(--sep) 0%,#fff 100%);position:relative;overflow:hidden}
-    .map:before,.map:after{content:"";position:absolute;border-radius:999px}.map:before{width:220px;height:220px;top:-94px;left:-70px;border:12px solid rgba(25,178,58,.08)}.map:after{width:220px;height:220px;bottom:-116px;right:-84px;border:10px dashed rgba(25,178,58,.06)}
+    .map{height:134px;border-radius:16px;background:radial-gradient(circle at 20% 30%,rgba(16,163,78,.12) 0 9%,transparent 10%),radial-gradient(circle at 72% 68%,rgba(15,163,78,.1) 0 11%,transparent 12%),linear-gradient(130deg,var(--sep) 0%,#fff 100%);position:relative;overflow:hidden}
+    .map:before,.map:after{content:"";position:absolute;border-radius:999px}.map:before{width:220px;height:220px;top:-94px;left:-70px;border:12px solid rgba(16,163,78,.08)}.map:after{width:220px;height:220px;bottom:-116px;right:-84px;border:10px dashed rgba(16,163,78,.06)}
 
     /* === Leaflet 실제 지도 === */
-    .leaflet-container{font-family:"Pretendard",sans-serif !important;background:#F4F6F8 !important}
+    .leaflet-container{font-family:"Pretendard","Inter",sans-serif !important;background:#F4F6F8 !important}
     .leaflet-container a.leaflet-popup-close-button{font-family:inherit}
     /* 타일 톤 다운: 채도/대비 낮춰 앱 UI에 어울리는 부드러운 톤으로 */
     .leaflet-tile-pane{filter:saturate(.7) brightness(1.02) contrast(.95);opacity:.92}
@@ -35,12 +37,12 @@
     /* Leaflet 컨테이너의 stacking context를 격리해서 외부 오버레이가 항상 위에 뜨도록 */
     .walk-live-map-inner,.walkhome-mymap,.explore-leaflet,.home-hero-map-bg{isolation:isolate}
     .me-marker{position:relative;width:22px;height:22px}
-    .me-marker .me-pulse{position:absolute;inset:-10px;border-radius:50%;background:rgba(25,178,58,.25);animation:mePulse 2s ease-out infinite}
+    .me-marker .me-pulse{position:absolute;inset:-10px;border-radius:50%;background:rgba(16,163,78,.25);animation:mePulse 2s ease-out infinite}
     .me-marker .me-dot{position:absolute;inset:0;border-radius:50%;background:var(--main);border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
     @keyframes mePulse{0%{transform:scale(.6);opacity:.7}100%{transform:scale(1.6);opacity:0}}
     .walkhome-mymap{position:relative;height:160px;border-radius:16px;overflow:hidden;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04);margin-bottom:12px}
     .walkhome-mymap-overlay{position:absolute;left:10px;top:10px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.92);padding:6px 11px;border-radius:999px;font-size:11px;font-weight:800;color:var(--text);box-shadow:0 2px 6px rgba(0,0,0,.08);z-index:1000;backdrop-filter:blur(4px);pointer-events:none}
-    .walkhome-mymap-overlay .dot{width:8px;height:8px;border-radius:50%;background:var(--main);box-shadow:0 0 0 3px rgba(25,178,58,.25)}
+    .walkhome-mymap-overlay .dot{width:8px;height:8px;border-radius:50%;background:var(--main);box-shadow:0 0 0 3px rgba(16,163,78,.25)}
 
     .home-hero-gradient{display:none}
 
@@ -58,14 +60,14 @@
     .metric{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.metric .item{background:var(--bg);border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:8px;text-align:center}
     .big{font-size:40px;font-weight:900;letter-spacing:1px;line-height:1.05;text-align:center;margin:8px 0 10px}
     .bar{background:var(--sep);border-radius:99px;height:8px;margin:6px 0;overflow:hidden;border:none}.bar>span{display:block;height:100%;width:62%;background:linear-gradient(90deg,var(--primary),var(--primary-dark));border-radius:99px}
-    .cta{margin-top:10px;width:100%;border:none;border-radius:12px;padding:12px;font-size:15px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#19B23A 0%,#0fa34e 100%);color:var(--white);box-shadow:0 4px 12px rgba(25,178,58,.25);transition:transform .1s ease,box-shadow .1s ease}
-    .cta:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(25,178,58,.3)}
-    .cta:active{transform:translateY(0);box-shadow:0 2px 8px rgba(25,178,58,.2)}
+    .cta{margin-top:10px;width:100%;border:none;border-radius:12px;padding:12px;font-size:15px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#10A34E 0%,#096E32 100%);color:var(--white);box-shadow:var(--shadow-green-main);transition:transform .1s ease,box-shadow .1s ease}
+    .cta:hover{transform:translateY(-1px);box-shadow:var(--shadow-green-stress)}
+    .cta:active{transform:translateY(0);box-shadow:var(--shadow-black-main)}
     /* Bottom nav (ref image style) */
-    .tabs{position:absolute;left:0;right:0;bottom:0;background:var(--white);border-top:1px solid rgba(0,0,0,.06);padding:8px 10px 10px;box-shadow:0 -4px 12px rgba(0,0,0,.04)}
+    .tabs{position:absolute;left:0;right:0;bottom:0;background:#ffffff;border-top:none;border-radius:7px 7px 0 0;padding:8px 10px 10px;box-shadow:none}
     .tabs-inner{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;gap:2px;max-width:100%}
-    .tab-hit{background:none;border:none;padding:6px 2px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--sub);font-size:10px;font-weight:700;-webkit-tap-highlight-color:transparent}
-    .tab-hit .tab-ico{font-size:20px;line-height:1;opacity:.8}
+    .tab-hit{background:none;border:none;padding:6px 2px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:#989da1;font-size:11px;font-weight:600;font-family:"Pretendard",sans-serif;-webkit-tap-highlight-color:transparent}
+    .tab-hit .tab-ico{font-size:20px;line-height:1;opacity:.7}
     .tab-hit.active{color:var(--main)}
     .tab-hit.active .tab-ico{opacity:1}
     .view[data-view="walk"]{position:relative}
@@ -81,10 +83,10 @@
     .reroute-btn{width:100%;border-radius:14px;padding:16px;font-size:16px;font-weight:800;cursor:pointer;border:none;transition:transform .1s ease,box-shadow .1s ease}
     .reroute-btn:hover{transform:translateY(-1px)}
     .reroute-btn:active{transform:translateY(0)}
-    .reroute-btn.primary{background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;box-shadow:0 4px 14px rgba(25,178,58,.25)}
+    .reroute-btn.primary{background:linear-gradient(135deg,#10A34E,#096E32);color:#fff;box-shadow:0 4px 14px rgba(16,163,78,.25)}
     .reroute-btn.secondary{background:var(--white);color:var(--text);border:1px solid rgba(0,0,0,.1)}
     .reroute-btn.secondary:hover{background:var(--sep)}
-    .btns{display:flex;gap:8px;margin-top:8px}.btn{flex:1;border-radius:10px;padding:9px 0;font-size:12px;font-weight:700;border:1px solid rgba(0,0,0,.08);background:var(--white);color:var(--text);transition:background .1s ease}.btn:hover{background:var(--sep)}.btn.primary{background:linear-gradient(135deg,#19B23A,#0fa34e);color:var(--white);border-color:transparent;box-shadow:0 2px 8px rgba(25,178,58,.2)}
+    .btns{display:flex;gap:8px;margin-top:8px}.btn{flex:1;border-radius:10px;padding:9px 0;font-size:12px;font-weight:700;border:1px solid rgba(0,0,0,.08);background:var(--white);color:var(--text);transition:background .1s ease}.btn:hover{background:var(--sep)}.btn.primary{background:linear-gradient(135deg,#10A34E,#096E32);color:var(--white);border-color:transparent;box-shadow:0 2px 8px rgba(16,163,78,.2)}
     .views{height:100%;padding-top:0;position:relative}
     .screen--tabs .views{padding-bottom:74px}
     .screen--walk-fullbleed .views{padding-top:0}
@@ -98,24 +100,29 @@
     .view[data-view="walkHome"]{overflow:auto}
     .home-bg{background:var(--white);border-radius:20px;padding:8px;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04)}
 
-    /* === Home v2 (참고 이미지 기반 재설계) === */
-    .home-screen{display:flex;flex-direction:column;gap:14px;padding:0 0 12px}
-    .home-hero{
-      position:relative;box-sizing:border-box;margin:0 4px 0;padding:14px 18px;
-      background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;
-      box-shadow:0 4px 14px rgba(0,0,0,.05);
+    /* === Home (Figma 1027:670 메인 화면) === */
+    .home-screen{display:flex;flex-direction:column;gap:10px;padding:0 0 12px;background:#ffffff}
+    .home-topbar{
+      position:relative;box-sizing:border-box;margin:0;padding:14px 0 10px;
+      background:transparent;border:none;border-radius:0;box-shadow:none;
     }
-    .home-hero-top{display:flex;justify-content:space-between;align-items:center;gap:14px;position:relative;z-index:2}
-    .home-location-switcher{display:flex;align-items:center;gap:7px;min-width:0;flex:1;border:none;background:transparent;padding:0;cursor:pointer;font-family:inherit;text-align:left;-webkit-tap-highlight-color:transparent}
-    .home-location-pin{position:relative;width:18px;height:22px;line-height:1;flex-shrink:0;font-size:0;transform:translateY(1px)}
-    .home-location-pin::before{content:"";position:absolute;left:2px;top:1px;width:14px;height:14px;border-radius:50% 50% 50% 0;background:#000000;transform:rotate(-45deg)}
-    .home-location-pin::after{content:"";position:absolute;left:7px;top:6px;width:4px;height:4px;border-radius:50%;background:#fff}
-    .home-location-names{display:flex;align-items:baseline;gap:12px;min-width:0;transition:opacity .18s ease,transform .18s ease}
-    .home-location-name{border:none;background:transparent;padding:0;font-family:inherit;font-weight:800;line-height:1.15;max-width:112px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;transition:color .18s ease,font-size .18s ease,opacity .18s ease}
-    .home-location-name.active{font-size:18px;color:var(--text);letter-spacing:-1%}
-    .home-location-name.inactive{font-size:15px;color:#D4D4D4;letter-spacing:-1%}
-    .home-weather-chip{display:inline-flex;align-items:center;gap:7px;background:transparent;border:none;border-radius:999px;padding:0;font-size:18px;font-weight:800;color:#6A6A6A;box-shadow:none;white-space:nowrap;flex-shrink:0;letter-spacing:-.025em}
-    .home-weather-chip .home-weather-ico{font-size:22px;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.08))}
+    .home-hero{
+      position:relative;box-sizing:border-box;margin:0;padding:14px 0 10px;
+      background:transparent;border:none;border-radius:0;box-shadow:none;
+    }
+    .home-hero-top,.home-topbar-row{display:flex;justify-content:space-between;align-items:center;gap:14px;position:relative;z-index:2}
+    .home-logo-mark{flex-shrink:0;display:flex;align-items:center;line-height:1;font-family:"Madimi One",sans-serif;font-size:26px;font-weight:400;color:#19b23a;letter-spacing:0}
+    .home-location-weather-chip{display:inline-flex;align-items:center;gap:10px;background:#ffffff;border:1px solid #eeeeef;border-radius:22px;padding:10px 15px;cursor:pointer;font-family:"Pretendard","Inter",sans-serif;-webkit-tap-highlight-color:transparent;transition:box-shadow .15s ease,border-color .15s ease}
+    .home-location-weather-chip:hover{box-shadow:var(--shadow-black-main);border-color:#dbf1db}
+    .home-lw-location{display:flex;align-items:center;gap:7px}
+    .home-lw-pin{display:flex;align-items:center;flex-shrink:0;line-height:1}
+    .home-lw-loc-names{display:flex;align-items:baseline;gap:7px;min-width:0}
+    .home-location-name{border:none;background:transparent;padding:0;font-family:"Pretendard",sans-serif;line-height:1.24;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;transition:color .18s ease,opacity .18s ease}
+    .home-location-name.active{font-size:11.7px;font-weight:600;color:#000000}
+    .home-location-name.inactive{font-size:11.4px;font-weight:500;color:#919093}
+    .home-lw-divider{width:1px;height:14px;background:#d4d4d4;flex-shrink:0}
+    .home-lw-weather{display:inline-flex;align-items:center;gap:5px;font-size:11.7px;font-weight:600;font-family:"Pretendard",sans-serif;color:#000000;white-space:nowrap}
+    .home-lw-weather .home-weather-ico{font-size:16px;line-height:1}
     .home-loc-chip{display:none}
     .home-hero-character{display:none}
     .home-location-overlay{position:absolute;left:0;right:0;top:0;bottom:74px;z-index:4200;display:none;align-items:flex-end;background:rgba(0,0,0,.22);backdrop-filter:blur(2px)}
@@ -136,88 +143,101 @@
     .home-location-toast{position:absolute;left:50%;top:132px;z-index:4300;transform:translateX(-50%) translateY(-8px);background:#252A32;color:#fff;border-radius:6px;padding:10px 16px;font-size:11px;font-weight:800;box-shadow:0 6px 20px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;white-space:nowrap}
     .home-location-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-    .home-greeting-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:20px 18px 18px;box-shadow:0 4px 14px rgba(0,0,0,.05);margin:0 4px 0;position:relative;z-index:2}
+    .home-greeting-card,.home-main-card{background:#ffffff;border:1px solid #eeeeef;border-radius:20px;padding:18px 17px 16px;box-shadow:none;margin:0;position:relative;z-index:2}
     @media (prefers-color-scheme: dark){
-      .home-hero{background:#fff;border-color:rgba(0,0,0,.06)}
-      .home-location-pin,.home-weather-chip{color:#6A6A6A}
-      .home-location-name.active{color:var(--text)}
-      .home-location-pin::before{background:#000000}
-      .home-location-pin::after{background:#FFFFFF}
-      .home-location-name.inactive{color:#D4D4D4}
+      .home-location-name.active{color:#000000}
+      .home-location-name.inactive{color:#919093}
     }
     .home-greeting-top-row{
       display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
     }
     .home-greeting-left{
       flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;
-      padding-top:23px;padding-right:4px;
+      padding-top:20px;padding-right:4px;
     }
     .home-greeting-right{
       flex-shrink:0;display:flex;align-items:flex-start;justify-content:flex-end;
-      margin-top:-2px;margin-right:-4px;
+      margin-top:0;margin-right:0;
     }
     .home-greeting-right img{
-      height:88px;width:auto;max-width:104px;object-fit:contain;object-position:right top;
+      width:95px;height:103px;object-fit:contain;object-position:right top;
       display:block;filter:drop-shadow(0 3px 8px rgba(0,0,0,.10));
     }
-    .home-greeting-title{font-size:17px;font-weight:800;color:var(--text);letter-spacing:-.01em;line-height:1.25;display:flex;align-items:center;gap:6px}
-    .home-greeting-title-left{display:flex;align-items:center;gap:6px;min-width:0}
-    .home-greeting-paw{font-size:18px;line-height:1}
-    .home-greeting-sub{font-size:14px;color:var(--text);font-weight:600;margin-top:0;line-height:2}
-    .home-greeting-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
-    .home-stat{background:linear-gradient(135deg,rgba(25,178,58,.06) 0%,rgba(0,233,51,.04) 100%);border:1px solid rgba(25,178,58,.14);border-radius:14px;padding:10px 6px;text-align:center}
-    .home-stat-val{font-size:18px;font-weight:900;color:var(--main);line-height:1.1}
-    .home-stat-val .home-stat-unit{font-size:11px;font-weight:800;color:var(--main);margin-left:1px}
-    .home-stat-label{font-size:10px;color:var(--sub);font-weight:700;margin-top:3px;letter-spacing:.02em}
+    .home-greeting-title{font-size:20.5px;font-weight:800;color:#000000;letter-spacing:0;line-height:1.31;font-family:"Pretendard",sans-serif}
+    .home-greeting-sub{font-size:12.57px;color:#666666;font-weight:600;margin-top:4px;line-height:1.24;font-family:"Pretendard",sans-serif}
+    .home-greeting-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+    .home-stat{background:#f8fef8;border:1px solid #dbf1db;border-radius:10px;height:63px;padding:0 10px;text-align:center;display:flex;align-items:center;gap:6px;justify-content:center}
+    .home-stat-ico{flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#10a34e}
+    .home-stat-ico svg{display:block}
+    .home-stat-body{display:flex;flex-direction:column;align-items:flex-start;gap:1px}
+    .home-stat-val{font-size:16px;font-weight:600;color:#10a34e;line-height:1.4;font-family:"Inter",sans-serif}
+    .home-stat-val .home-stat-unit{font-size:12px;font-weight:600;color:#10a34e;margin-left:0}
+    .home-stat-label{font-size:11px;color:#4c5056;font-weight:600;font-family:"Pretendard",sans-serif}
     .home-quick-start-btn{
-      width:100%;border:none;border-radius:14px;cursor:pointer;padding:15px;font-size:16px;font-weight:800;
-      background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;font-family:inherit;
-      display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 4px 14px rgba(25,178,58,.3);
-      margin-top:10px;transition:transform .1s ease,box-shadow .1s ease;letter-spacing:-.01em
+      width:100%;height:46px;margin-top:14px;border:none;border-radius:12px;cursor:pointer;padding:0 18px;font-size:16px;font-weight:600;
+      background:#10a54b;color:#ffffff;font-family:"Inter",sans-serif;
+      display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:none;
+      transition:transform .1s ease,box-shadow .1s ease,background .12s ease;letter-spacing:0
     }
-    .home-quick-start-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(25,178,58,.35)}
-    .home-quick-start-btn:active{transform:translateY(0);box-shadow:0 2px 8px rgba(25,178,58,.2)}
+    .home-quick-paw{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;line-height:1}
+    .home-quick-start-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-green-main);background:#0e9345}
+    .home-quick-start-btn:active{transform:translateY(0);background:#0c8a3f}
 
-    .home-section{padding:0 4px}
+    .home-section{padding:0}
     .home-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 2px}
-    .home-section-title{font-size:14px;font-weight:800;color:var(--black);letter-spacing:-2%}
-    .home-section-action{background:none;border:none;cursor:pointer;font-size:12px;color:var(--main);font-weight:600;font-family:inherit;padding:4px 6px;border-radius:8px;transition:background .12s}
-    .home-section-action:hover{background:rgba(25,178,58,.08)}
+    .home-section .walk-section-title{font-size:12.5px;font-weight:600;color:#000000;font-family:"Pretendard",sans-serif;letter-spacing:0}
+    .home-section-title{font-size:12.5px;font-weight:600;color:#000000;font-family:"Pretendard",sans-serif}
+    .home-section-action{background:none;border:none;cursor:pointer;font-size:11px;color:#10a34e;font-weight:600;font-family:"Pretendard",sans-serif;padding:4px 6px;border-radius:8px;transition:background .12s}
+    .home-section-action:hover{background:rgba(16,163,78,.08)}
+
+    .home-reco-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .view[data-view="home"] .hscroll{display:block;overflow:visible;scroll-snap-type:none;padding-bottom:0}
+    .view[data-view="home"] .hcard{min-width:0;max-width:none;height:154;border-radius:10px;cursor:pointer}
+    .view[data-view="home"] .hcard-img{height:81px;background:#ffffff center/cover no-repeat;border-bottom:1px solid #eeeeef}
+    .view[data-view="home"] .hcard-img--hyochang{background-image:linear-gradient(145deg,#d4ecd6 0%,#8ecf93 45%,#5cad62 100%)}
+    .view[data-view="home"] .hcard-img--yongsan{background-image:linear-gradient(145deg,#d6e8f7 0%,#8ec5ef 45%,#5a9fd4 100%)}
+    .view[data-view="home"] .hcard-body{padding:8px 13px 12px}
+    .view[data-view="home"] .hcard-text{display:flex;flex-direction:column;gap:2px}
+    .view[data-view="home"] .hcard .row{display:block}
 
     .home-route-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .home-route-card{position:relative;border-radius:16px;overflow:hidden;cursor:pointer;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04);transition:transform .12s ease,box-shadow .12s ease;height:96px;background:#fff}
-    .home-route-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(25,178,58,.12)}
+    .home-route-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(16,163,78,.12)}
     .home-route-card.green{background:linear-gradient(135deg,#D9F1DD 0%,#A8E6B9 100%)}
     .home-route-card.blue{background:linear-gradient(135deg,#DCEEFB 0%,#B1D8F4 100%)}
     .home-route-card-illust{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:34px;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.06))}
     .home-route-tag{position:absolute;top:8px;right:8px;background:rgba(255,255,255,.85);color:var(--text);border-radius:999px;padding:3px 9px;font-size:10px;font-weight:800;backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.6)}
 
-    .home-schedule{display:flex;flex-direction:column;gap:8px}
-    .home-schedule-item{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:transform .12s ease,box-shadow .12s ease}
-    .home-schedule-item:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(25,178,58,.08);border-color:rgba(25,178,58,.18)}
-    .home-schedule-ico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:rgba(25,178,58,.1)}
-    .home-schedule-ico.walk{background:rgba(25,178,58,.1)}
-    .home-schedule-ico.medic{background:rgba(59,130,246,.12)}
-    .home-schedule-ico.feed{background:rgba(249,115,22,.12)}
-    .home-schedule-ico.bath{background:rgba(6,182,212,.12)}
-    .home-schedule-ico.play{background:rgba(236,72,153,.12)}
+    .home-schedule{display:flex;flex-direction:column;gap:10px}
+    .home-schedule-item{display:flex;align-items:center;gap:12px;background:#ffffff;border:1px solid #eeeeef;border-radius:10px;padding:10px 12px;box-shadow:none;transition:transform .12s ease,box-shadow .12s ease;min-height:48px}
+    .home-schedule-item:hover{transform:translateY(-1px);box-shadow:var(--shadow-black-main);border-color:#dbf1db}
+    .home-schedule-ico{width:35px;height:35px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:#f1f6e4}
+    .home-schedule-ico.walk{background:#f1f6e4}
+    .home-schedule-ico.medic{background:#e8effa}
+    .home-schedule-ico.feed{background:rgba(249,115,22,.1)}
+    .home-schedule-ico.bath{background:rgba(6,182,212,.1)}
+    .home-schedule-ico.play{background:rgba(236,72,153,.1)}
     .home-schedule-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-    .home-schedule-title{font-size:13px;font-weight:800;color:var(--black);line-height:1.2}
-    .home-schedule-meta{font-size:10px;color:var(--sub);font-weight:500;margin-top:4px;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .home-schedule-action{background:none;border:none;color:var(--main);font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;padding:6px 10px;border-radius:8px;transition:background .12s;flex-shrink:0;display:inline-flex;align-items:center;gap:2px}
-    .home-schedule-action:hover{background:rgba(25,178,58,.08)}
+    .home-schedule-title{font-size:11.58px;font-weight:600;color:#000000;line-height:1.24;font-family:"Pretendard",sans-serif}
+    .home-schedule-meta{font-size:9.13px;color:#898a8c;font-weight:500;margin-top:3px;line-height:1.24;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:"Pretendard",sans-serif}
+    .home-schedule-action{background:none;border:none;color:var(--border);font-size:18px;cursor:pointer;font-family:inherit;padding:4px;border-radius:8px;transition:color .12s;flex-shrink:0;display:inline-flex;align-items:center}
+    .home-schedule-action:hover{color:var(--main)}
+    .home-schedule-bell{flex-shrink:0;width:25px;height:25px;border-radius:15px;display:flex;align-items:center;justify-content:center;background:#f1f6e4;border:none;padding:0;cursor:pointer}
+    .home-schedule-bell.walk{background:#f1f6e4}
+    .home-schedule-bell.medic{background:#e8effa}
+    .home-schedule-bell svg{display:block;width:15px;height:15px}
     .home-schedule-empty{text-align:center;padding:24px 16px;background:#fff;border:1.5px dashed var(--line);border-radius:14px;color:var(--sub);font-size:13px;font-weight:600}
     .home-schedule-empty strong{display:block;color:var(--text);font-weight:800;margin-bottom:4px;font-size:14px}
     .home-schedule-empty--action{cursor:pointer;transition:background .15s ease,border-color .15s ease}
-    .home-schedule-empty--action:hover{background:rgba(25,178,58,.06);border-color:rgba(25,178,58,.45)}
+    .home-schedule-empty--action:hover{background:rgba(16,163,78,.06);border-color:rgba(16,163,78,.45)}
     .home-schedule-empty--action:active{transform:scale(.985)}
     .home-schedule-swipe{position:relative;border-radius:14px;overflow:hidden;touch-action:pan-y}
     .home-schedule-swipe-under{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:stretch;pointer-events:none}
     .home-schedule-swipe-under button{pointer-events:auto}
     .home-schedule-swipe-btn{flex:0 0 76px;border:none;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;color:#fff;display:flex;align-items:center;justify-content:center;padding:0}
-    .home-schedule-swipe-btn--done{background:linear-gradient(135deg,#19B23A,#0fa34e)}
+    .home-schedule-swipe-btn--done{background:linear-gradient(135deg,#10A34E,#096E32)}
     .home-schedule-swipe-btn--del{background:linear-gradient(135deg,#ef4444,#dc2626)}
-    .home-schedule-swipe-pane{position:relative;display:flex;align-items:center;gap:12px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,0,0,.04);will-change:transform;transition:transform .22s cubic-bezier(.25,.8,.25,1);touch-action:none;user-select:none}
+    .home-schedule-swipe-pane{position:relative;display:flex;align-items:center;gap:12px;background:#ffffff;border:1px solid #eeeeef;border-radius:10px;padding:12px 14px;box-shadow:none;will-change:transform;transition:transform .22s cubic-bezier(.25,.8,.25,1);touch-action:none;user-select:none}
 
     /* === Schedule add modal === */
     .schedule-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:30;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(2px)}
@@ -234,13 +254,13 @@
     .schedule-type-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:10px 4px;font-size:10px;font-weight:700;color:var(--sub);cursor:pointer;font-family:inherit;transition:all .15s ease;line-height:1.2}
     .schedule-type-btn .schedule-type-ico{font-size:20px;line-height:1}
     .schedule-type-btn:hover{border-color:#a8e6b9}
-    .schedule-type-btn.selected{background:rgba(25,178,58,.08);border-color:var(--main);color:var(--main);box-shadow:0 2px 6px rgba(25,178,58,.14)}
+    .schedule-type-btn.selected{background:rgba(16,163,78,.08);border-color:var(--main);color:var(--main);box-shadow:0 2px 6px rgba(16,163,78,.14)}
     .schedule-input{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;font-size:14px;font-family:inherit;color:var(--text);outline:none;background:#fff;transition:border-color .15s ease,box-shadow .15s ease;box-sizing:border-box}
-    .schedule-input:focus{border-color:var(--main);box-shadow:0 0 0 3px rgba(25,178,58,.12)}
+    .schedule-input:focus{border-color:var(--main);box-shadow:0 0 0 3px rgba(16,163,78,.12)}
     .schedule-row-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
     .schedule-modal-actions{display:flex;gap:8px;margin-top:18px}
     .schedule-modal-cancel{flex:0 0 auto;padding:13px 18px;border:1.5px solid var(--line);background:#fff;color:var(--sub);border-radius:13px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
-    .schedule-modal-save{flex:1;border:none;border-radius:13px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#19B23A 0%,#0fa34e 100%);color:#fff;box-shadow:0 4px 12px rgba(25,178,58,.25);font-family:inherit;transition:transform .1s,opacity .15s}
+    .schedule-modal-save{flex:1;border:none;border-radius:13px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#10A34E 0%,#096E32 100%);color:#fff;box-shadow:0 4px 12px rgba(16,163,78,.25);font-family:inherit;transition:transform .1s,opacity .15s}
     .schedule-modal-save:hover{transform:translateY(-1px)}
     .schedule-modal-save:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
     .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
@@ -249,7 +269,7 @@
     .hint{font-size:12px;color:var(--muted);margin-top:8px}
     .flow{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
     .flow-step{background:#ffffff;border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:8px 10px;font-size:13px;font-weight:700}
-    .flow-step.active{background:rgba(25,178,58,.1);border:1px solid var(--main);color:var(--main)}
+    .flow-step.active{background:rgba(16,163,78,.1);border:1px solid var(--main);color:var(--main)}
     .hero{margin-top:16px;padding:14px;border:1px solid rgba(0,0,0,.06);border-radius:16px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.04)}
     .form{margin-top:10px}
     .field{margin-top:10px}
@@ -265,7 +285,7 @@
       color:var(--text);
       transition:border-color .15s ease,box-shadow .15s ease;
     }
-    .input:focus,.select:focus{border-color:var(--main);box-shadow:0 0 0 3px rgba(25,178,58,.1)}
+    .input:focus,.select:focus{border-color:var(--main);box-shadow:0 0 0 3px rgba(16,163,78,.1)}
     .select{appearance:none}
     .actions{display:flex;gap:10px;margin-top:14px}
     .cta.secondary{background:#ffffff;color:var(--text);border:1px solid rgba(0,0,0,.08);box-shadow:none}
@@ -282,7 +302,7 @@
     .matrix th,.matrix td{border:1px solid rgba(0,0,0,.06);padding:8px 6px;text-align:center;font-size:11px}
     .matrix th:first-child,.matrix td:first-child{text-align:left;white-space:nowrap;font-weight:700;min-width:110px}
     .matrix th{background:var(--sep);font-weight:800}
-    .matrix input[type="radio"], .matrix input[type="checkbox"]{accent-color:#19B23A;width:15px;height:15px}
+    .matrix input[type="radio"], .matrix input[type="checkbox"]{accent-color:#10A34E;width:15px;height:15px}
 
     /* === 시간대 선택 (chip + day tabs) === */
     .timeslot-card{border:1px solid var(--line);border-radius:18px;background:#fff;padding:12px 12px 14px;box-shadow:0 4px 14px rgba(0,0,0,.04)}
@@ -300,7 +320,7 @@
     .timeslot-chip .label{font-weight:800;color:var(--text);font-size:12px;line-height:1.2}
     .timeslot-chip .desc{font-size:10px;color:var(--sub);font-weight:600;line-height:1.2}
     .timeslot-chip .check{width:18px;height:18px;border-radius:50%;border:1.5px solid #d6d6d6;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff;transition:all .15s}
-    .timeslot-chip.selected{background:rgba(25,178,58,.08);border-color:var(--main);box-shadow:0 2px 8px rgba(25,178,58,.12)}
+    .timeslot-chip.selected{background:rgba(16,163,78,.08);border-color:var(--main);box-shadow:0 2px 8px rgba(16,163,78,.12)}
     .timeslot-chip.selected .check{background:var(--main);border-color:var(--main)}
     .timeslot-chip.selected .check::after{content:"✓";color:#fff;font-size:11px;font-weight:900}
     .timeslot-chip.selected .label{color:var(--main)}
@@ -313,7 +333,7 @@
     .tag-chip{border:1.5px solid var(--line);background:#fff;color:var(--text);border-radius:999px;padding:9px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s ease;display:inline-flex;align-items:center;gap:5px}
     .tag-chip .tag-ico{font-size:13px;line-height:1}
     .tag-chip:hover{border-color:#a8e6b9}
-    .tag-chip.selected{background:var(--main);border-color:var(--main);color:#fff;box-shadow:0 3px 10px rgba(25,178,58,.22)}
+    .tag-chip.selected{background:var(--main);border-color:var(--main);color:#fff;box-shadow:0 3px 10px rgba(16,163,78,.22)}
     .tag-chip:active{transform:scale(.96)}
     .tag-helper{margin-top:8px;font-size:11px;color:var(--sub);font-weight:600}
     .tag-helper strong{color:var(--main);font-weight:800}
@@ -322,28 +342,28 @@
     /* === Personality quiz (8문항) === */
     .quiz-list{display:flex;flex-direction:column;gap:12px}
     .quiz-card{border:1px solid var(--line);border-radius:16px;background:#fff;padding:14px 14px 12px;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:border-color .15s ease,box-shadow .15s ease}
-    .quiz-card.answered{border-color:rgba(25,178,58,.4);box-shadow:0 2px 10px rgba(25,178,58,.1)}
+    .quiz-card.answered{border-color:rgba(16,163,78,.4);box-shadow:0 2px 10px rgba(16,163,78,.1)}
     .quiz-card-head{display:flex;align-items:center;gap:8px;margin-bottom:4px}
     .quiz-num{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;padding:0 7px;background:var(--main);color:#fff;border-radius:7px;font-size:10px;font-weight:900;letter-spacing:.04em}
-    .quiz-card.answered .quiz-num{background:#0fa34e}
+    .quiz-card.answered .quiz-num{background:#096E32}
     .quiz-card:not(.answered) .quiz-num{background:#cfd2cf}
     .quiz-title{font-size:14px;font-weight:800;color:var(--text);line-height:1.2}
     .quiz-desc{font-size:12px;color:var(--sub);font-weight:600;margin-bottom:10px}
     .quiz-options{display:flex;flex-direction:column;gap:6px}
     .quiz-option{text-align:left;width:100%;border:1.5px solid var(--line);background:#fff;color:var(--text);border-radius:12px;padding:11px 13px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:10px;transition:all .15s ease;line-height:1.3}
-    .quiz-option:hover{border-color:#a8e6b9;background:rgba(25,178,58,.04)}
+    .quiz-option:hover{border-color:#a8e6b9;background:rgba(16,163,78,.04)}
     .quiz-option .quiz-radio{width:18px;height:18px;border-radius:50%;border:1.5px solid #d6d6d6;background:#fff;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;transition:all .15s}
-    .quiz-option.selected{border-color:var(--main);background:rgba(25,178,58,.08);color:var(--text);box-shadow:0 2px 6px rgba(25,178,58,.12)}
+    .quiz-option.selected{border-color:var(--main);background:rgba(16,163,78,.08);color:var(--text);box-shadow:0 2px 6px rgba(16,163,78,.12)}
     .quiz-option.selected .quiz-radio{border-color:var(--main);background:var(--main)}
     .quiz-option.selected .quiz-radio::after{content:"";width:7px;height:7px;border-radius:50%;background:#fff}
     .quiz-option:active{transform:scale(.99)}
     .quiz-progress-bar{position:sticky;top:0;background:var(--bg);padding:6px 0 10px;z-index:2}
     .quiz-progress-track{height:6px;background:var(--sep);border-radius:999px;overflow:hidden}
-    .quiz-progress-fill{height:100%;background:linear-gradient(90deg,#19B23A,#00E933);border-radius:999px;transition:width .25s ease}
+    .quiz-progress-fill{height:100%;background:linear-gradient(90deg,#10A34E,#19B23A);border-radius:999px;transition:width .25s ease}
     .quiz-progress-text{font-size:11px;color:var(--sub);font-weight:700;margin-top:6px;text-align:center}
 
     /* === Wesen test 안내 배너 === */
-    .wesen-notice{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:linear-gradient(135deg,rgba(25,178,58,.08) 0%,rgba(0,233,51,.06) 100%);border:1px solid rgba(25,178,58,.22);border-radius:14px;margin-bottom:14px}
+    .wesen-notice{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:linear-gradient(135deg,rgba(16,163,78,.08) 0%,rgba(0,233,51,.06) 100%);border:1px solid rgba(16,163,78,.22);border-radius:14px;margin-bottom:14px}
     .wesen-notice-ico{font-size:20px;line-height:1.2;flex-shrink:0;margin-top:1px}
     .wesen-notice-text{font-size:12px;color:var(--text);line-height:1.55;font-weight:600}
     .wesen-notice-text strong{color:var(--main);font-weight:800}
@@ -351,19 +371,19 @@
 
     /* === Petlog 성격 카드 (퀴즈 결과 반영) === */
     .petlog-personality-card{display:flex;align-items:center;gap:12px;padding:14px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.04);cursor:pointer;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
-    .petlog-personality-card:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(25,178,58,.12);border-color:rgba(25,178,58,.3)}
+    .petlog-personality-card:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(16,163,78,.12);border-color:rgba(16,163,78,.3)}
     .petlog-personality-card:active{transform:translateY(0)}
-    .petlog-personality-emoji{width:54px;height:54px;border-radius:14px;background:linear-gradient(135deg,rgba(25,178,58,.14),rgba(0,233,51,.08));display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+    .petlog-personality-emoji{width:54px;height:54px;border-radius:14px;background:linear-gradient(135deg,rgba(16,163,78,.14),rgba(0,233,51,.08));display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
     .petlog-personality-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
     .petlog-personality-name{font-size:15px;font-weight:800;color:var(--text);letter-spacing:-.005em}
     .petlog-personality-tagline{font-size:11px;color:var(--sub);font-weight:600;line-height:1.4;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical}
     .petlog-personality-arrow{color:var(--sub);font-size:18px;font-weight:800;flex-shrink:0}
     .petlog-personality-empty{display:flex;align-items:center;gap:12px;padding:14px;background:#fff;border:1.5px dashed var(--line);border-radius:16px;cursor:pointer;transition:all .15s ease;color:var(--sub);font-size:13px;font-weight:700}
-    .petlog-personality-empty:hover{border-color:var(--main);color:var(--main);background:rgba(25,178,58,.04)}
+    .petlog-personality-empty:hover{border-color:var(--main);color:var(--main);background:rgba(16,163,78,.04)}
     .petlog-personality-empty .petlog-personality-emoji{background:var(--sep);font-size:24px}
 
     /* === Result page (성격 결과) === */
-    .result-hero{background:linear-gradient(135deg,#19B23A 0%,#0fa34e 50%,#00E933 100%);border-radius:22px;padding:28px 22px 26px;color:#fff;text-align:center;position:relative;overflow:hidden;box-shadow:0 8px 22px rgba(25,178,58,.24)}
+    .result-hero{background:linear-gradient(135deg,#10A34E 0%,#096E32 50%,#19B23A 100%);border-radius:22px;padding:28px 22px 26px;color:#fff;text-align:center;position:relative;overflow:hidden;box-shadow:var(--shadow-green-stress)}
     .result-hero::before{content:"";position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.1);top:-60px;right:-50px}
     .result-hero::after{content:"";position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.07);bottom:-50px;left:-30px}
     .result-emoji{font-size:62px;line-height:1;margin-bottom:10px;position:relative;z-index:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15))}
@@ -378,27 +398,57 @@
     .result-axis-label{font-size:12px;font-weight:800;color:var(--text);min-width:72px}
     .result-axis-label .axis-code{display:inline-block;background:var(--sep);color:var(--sub);padding:1px 6px;border-radius:6px;font-size:9px;margin-left:4px;font-weight:700}
     .result-axis-bar{height:8px;background:var(--sep);border-radius:999px;overflow:hidden;position:relative}
-    .result-axis-fill{height:100%;background:linear-gradient(90deg,#19B23A,#00E933);border-radius:999px;transition:width .6s ease}
+    .result-axis-fill{height:100%;background:linear-gradient(90deg,#10A34E,#19B23A);border-radius:999px;transition:width .6s ease}
     .result-axis-val{font-size:11px;font-weight:800;color:var(--main);min-width:34px;text-align:right}
     .result-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
-    .result-tag{font-size:11px;font-weight:700;color:var(--main);background:rgba(25,178,58,.1);border:1px solid rgba(25,178,58,.2);border-radius:999px;padding:5px 10px}
+    .result-tag{font-size:11px;font-weight:700;color:var(--main);background:rgba(16,163,78,.1);border:1px solid rgba(16,163,78,.2);border-radius:999px;padding:5px 10px}
     .result-desc{font-size:13px;color:var(--text);line-height:1.6;font-weight:500}
 
-    /* Auth (login / signup method) — sage / cream mood */
-    .view[data-view="login"],.view[data-view="signupMethod"]{
+    /* Auth (login / signup method) */
+    .view[data-view="signupMethod"]{
       background:#ffffff;
       border-radius:20px;height:100%;padding:22px 18px 24px;overflow:auto;border:1px solid rgba(0,0,0,.06);
       box-shadow:0 2px 8px rgba(0,0,0,.04);
     }
+    .view[data-view="login"]{
+      background:#ffffff;border-radius:20px;height:100%;padding:32px 25px 28px;overflow:auto;
+      border:none;box-shadow:none;
+    }
+    .view[data-view="login"].active{display:flex;flex-direction:column}
+    .auth-brand{text-align:center;margin:0 0 32px}
+    .auth-brand-logo{font-family:"Madimi One",sans-serif;font-size:36px;font-weight:400;color:#19b23a;margin:0;line-height:1.3;letter-spacing:0}
+    .auth-brand-sub{font-family:"Pretendard",sans-serif;font-size:12.3px;font-weight:600;color:#999999;margin:8px 0 0;line-height:1.25}
+    .auth-field-wrap{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+    .auth-field{display:flex;align-items:center;gap:12px;background:#ffffff;border:1px solid #f3f3f3;border-radius:12px;padding:0 16px;height:63px;transition:border-color .15s ease,box-shadow .15s ease}
+    .auth-field:focus-within{border-color:#dbf1db;box-shadow:0 0 0 3px rgba(16,165,75,.08)}
+    .auth-field-ico{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:22px;color:#19b23a}
+    .auth-field-ico svg{display:block}
+    .auth-field input{flex:1;min-width:0;border:none;outline:none;background:transparent;font-family:"Pretendard",sans-serif;font-size:14.3px;font-weight:400;color:#000000;padding:0}
+    .auth-field input::placeholder{color:#999999}
+    .auth-pw-toggle{border:none;background:none;padding:4px;cursor:pointer;color:#999999;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .auth-pw-toggle .auth-pw-icon{display:block}
+    .auth-pw-toggle .auth-pw-icon--show{display:none}
+    .auth-pw-toggle.is-visible .auth-pw-icon--hide{display:none}
+    .auth-pw-toggle.is-visible .auth-pw-icon--show{display:block}
+    .auth-options-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:8px;flex-wrap:wrap}
+    .auth-find-links{font-size:13px;color:#515151;font-weight:400;font-family:"Pretendard",sans-serif;white-space:nowrap}
+    .auth-find-btn{border:none;background:none;padding:0;font:inherit;color:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+    .auth-find-sep{text-decoration:none}
+    .auth-or-divider{display:flex;align-items:center;margin:18px 0 16px}
+    .auth-or-divider::before,.auth-or-divider::after{content:"";flex:1;height:1px;background:#f2f3f5}
+    .auth-or-divider span{padding:0 14px;font-size:14.1px;color:#999999;font-weight:400;font-family:"Pretendard",sans-serif;flex-shrink:0}
+    .auth-signup-prompt{text-align:center;margin-top:auto;padding-top:28px;font-size:13.4px;color:#515151;font-weight:400;font-family:"Pretendard",sans-serif;line-height:1.4}
+    .view[data-view="login"] .auth-signup-prompt .auth-inline-link{color:#10a34e;font-weight:600;text-decoration:none;margin-left:4px}
+    .view[data-view="login"] .auth-signup-prompt .auth-inline-link::after{content:" ›";font-weight:600}
     .auth-login-title{text-align:center;font-size:28px;font-weight:800;letter-spacing:.06em;margin:8px 0 20px;color:var(--text)}
     .auth-input{width:100%;border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:14px 12px;font-size:15px;margin-bottom:10px;outline:none;box-sizing:border-box;background:#fff;transition:border-color .15s ease,box-shadow .15s ease}
-    .auth-input:focus{border-color:var(--main);box-shadow:0 0 0 3px rgba(25,178,58,.1)}
+    .auth-input:focus{border-color:var(--main);box-shadow:0 0 0 3px rgba(16,163,78,.1)}
     .auth-input::placeholder{color:var(--sub)}
-    .auth-checkrow{display:flex;align-items:center;gap:8px;margin:6px 0 18px;font-size:13px;color:var(--text)}
-    .auth-checkrow input{width:16px;height:16px;accent-color:var(--main)}
-    .auth-btn-black{width:100%;border:none;border-radius:12px;padding:15px;font-size:16px;font-weight:800;background:linear-gradient(135deg,#19B23A 0%,#0fa34e 100%);color:#fff;cursor:pointer;box-shadow:0 4px 14px rgba(25,178,58,.25);transition:transform .1s ease,box-shadow .1s ease}
-    .auth-btn-black:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(25,178,58,.3)}
-    .auth-btn-black:active{transform:translateY(0)}
+    .auth-checkrow{display:flex;align-items:center;gap:10px;margin:0;font-size:13px;color:#515151;font-weight:400;font-family:"Pretendard",sans-serif}
+    .auth-checkrow input[type="checkbox"]{width:16px;height:16px;margin:0;border:1px solid #f3f3f3;border-radius:3px;accent-color:#10a34e;flex-shrink:0}
+    .auth-btn-primary,.auth-btn-black{width:100%;border:none;border-radius:12px;padding:18px;font-size:16px;font-weight:700;font-family:"Inter",sans-serif;background:#10a54b;color:#ffffff;cursor:pointer;box-shadow:none;transition:background .12s ease,transform .1s ease;margin-bottom:4px}
+    .auth-btn-primary:hover,.auth-btn-black:hover{background:#0e9345;transform:translateY(-1px)}
+    .auth-btn-primary:active,.auth-btn-black:active{transform:translateY(0);background:#0c8a3f}
     .auth-links{display:flex;align-items:center;justify-content:center;gap:10px;margin:18px 0 22px;font-size:13px;color:var(--sub);flex-wrap:wrap}
     .auth-links .sep{color:rgba(0,0,0,.15);font-weight:300}
     .auth-link-btn{border:none;background:none;padding:0;font:inherit;color:var(--text);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
@@ -414,13 +464,20 @@
     .auth-social-btn.facebook:hover{background:#1565d8}
     .auth-social-btn.google{background:#fff;color:var(--text);border:1px solid rgba(0,0,0,.1)}
     .auth-social-btn.google .ico{background:var(--sep);color:var(--text);font-weight:900;font-size:18px}
-    .view[data-view="login"] .auth-social-btn.naver{background:#03C75A;color:#fff;border-color:transparent}
-    .view[data-view="login"] .auth-social-btn.naver .ico{background:rgba(255,255,255,.2);color:#fff}
-    .view[data-view="login"] .auth-social-btn.google{background:#fff;color:var(--text);border:1px solid rgba(0,0,0,.1)}
-    .view[data-view="login"] .auth-social-btn.google .ico{background:var(--sep);color:var(--text)}
-    .view[data-view="login"] .auth-social-btn.facebook{background:#1877F2;color:#fff;border-color:transparent}
-    .view[data-view="login"] .auth-social-btn.facebook .ico{background:rgba(255,255,255,.2);color:#fff}
-    .auth-social-btn.email-signup{background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;justify-content:flex-start;border-color:transparent;box-shadow:0 4px 12px rgba(25,178,58,.2)}
+    .auth-social-label{flex:1;text-align:center;font-family:"Pretendard",sans-serif;font-weight:600;font-size:14px}
+    .view[data-view="login"] .auth-social-stack{gap:10px;margin-top:0}
+    .view[data-view="login"] .auth-social-btn{height:52px;border-radius:13px;padding:0 18px;box-shadow:none}
+    .view[data-view="login"] .auth-social-btn .ico{width:28px;height:28px;border-radius:8px;font-size:16px;font-weight:900}
+    .view[data-view="login"] .auth-social-btn.naver{background:#f2faf4;border:1px solid #e5f2e8;color:#1a6b3c}
+    .view[data-view="login"] .auth-social-btn.naver .ico{background:transparent;color:#03c75a;font-size:20px;font-weight:900}
+    .view[data-view="login"] .auth-social-btn.naver:hover{background:#e8f5eb}
+    .view[data-view="login"] .auth-social-btn.google{background:#ffffff;border:1px solid #eeeeef;color:#515151}
+    .view[data-view="login"] .auth-social-btn.google .ico{background:transparent;color:transparent;font-size:0;width:28px;height:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%23EA4335' d='M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z'/%3E%3Cpath fill='%234285F4' d='M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z'/%3E%3Cpath fill='%23FBBC05' d='M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z'/%3E%3Cpath fill='%2334A853' d='M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+    .view[data-view="login"] .auth-social-btn.google:hover{background:#fafafa}
+    .view[data-view="login"] .auth-social-btn.facebook{background:#f3f6fc;border:1px solid #e8eef8;color:#3b5998}
+    .view[data-view="login"] .auth-social-btn.facebook .ico{background:#1877f2;color:#fff;border-radius:50%;width:28px;height:28px;font-size:18px}
+    .view[data-view="login"] .auth-social-btn.facebook:hover{background:#eaf0fa}
+    .auth-social-btn.email-signup{background:linear-gradient(135deg,#10A34E,#096E32);color:#fff;justify-content:flex-start;border-color:transparent;box-shadow:0 4px 12px rgba(16,163,78,.2)}
     .auth-social-btn.email-signup .ico{background:rgba(255,255,255,.2);color:#fff;font-size:16px}
     .auth-back{position:absolute;left:18px;top:18px;border:1px solid rgba(0,0,0,.08);background:#FFFFFF;border-radius:10px;width:40px;height:40px;font-size:20px;font-weight:700;cursor:pointer;color:var(--text);transition:background .1s ease}
     .auth-back:hover{background:var(--sep)}
@@ -431,16 +488,17 @@
     /* Email signup (PetWalk 시작하기) — same mood + top back */
     .view[data-view="signup"]{background:#ffffff;border-radius:20px;padding:12px;height:100%;overflow:auto;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04)}
     .view[data-view="signup"] .topbar{margin-bottom:6px}
-    .view[data-view="signup"] .chip{background:rgba(25,178,58,.1);color:var(--main)}
+    .view[data-view="signup"] .chip{background:rgba(16,163,78,.1);color:var(--main)}
     /* 마이페이지 */
     .mypage-screen{padding:0;height:100%;overflow:auto}
     .mypage-profile{
-      background:linear-gradient(135deg, #19B23A 0%, #0fa34e 40%, #00E933 100%);
+      background:linear-gradient(135deg, #10A34E 0%, #096E32 40%, #19B23A 100%);
       border-radius:20px;
       padding:28px 20px 22px;
       margin-bottom:16px;
       position:relative;
       overflow:hidden;
+      box-shadow:var(--shadow-green-stress);
     }
     .mypage-profile::before{
       content:"";position:absolute;width:160px;height:160px;border-radius:50%;
@@ -494,14 +552,14 @@
       transition:background .12s ease;
     }
     .mypage-row:last-child{border-bottom:none}
-    .mypage-row:hover{background:rgba(25,178,58,.04)}
-    .mypage-row:active{background:rgba(25,178,58,.08)}
+    .mypage-row:hover{background:rgba(16,163,78,.04)}
+    .mypage-row:active{background:rgba(16,163,78,.08)}
     .mypage-row-ico{
       width:34px;height:34px;border-radius:10px;
       display:flex;align-items:center;justify-content:center;
       font-size:16px;flex-shrink:0;
     }
-    .mypage-row-ico.green{background:rgba(25,178,58,.1);color:#19B23A}
+    .mypage-row-ico.green{background:rgba(16,163,78,.1);color:#10A34E}
     .mypage-row-ico.blue{background:rgba(59,130,246,.1);color:#3b82f6}
     .mypage-row-ico.orange{background:rgba(249,115,22,.1);color:#f97316}
     .mypage-row-ico.purple{background:rgba(139,92,246,.1);color:#8b5cf6}
@@ -529,18 +587,18 @@
     .explore-location-menu{position:absolute;top:32px;left:0;right:0;background:#FFFFFF;border:1px solid rgba(0,0,0,.06);border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.1);padding:6px;display:none;z-index:3}
     .explore-location-menu.show{display:block}
     .explore-location-option{width:100%;border:none;background:#FFFFFF;padding:9px 10px;border-radius:10px;text-align:left;font-size:13px;font-weight:700;color:var(--text);cursor:pointer;transition:background .1s ease}
-    .explore-location-option.active{background:rgba(25,178,58,.1);color:var(--main)}
+    .explore-location-option.active{background:rgba(16,163,78,.1);color:var(--main)}
     .explore-location-option:hover{background:var(--sep)}
     .explore-cats{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}
     .explore-cat-btn{border:1px solid rgba(0,0,0,.06);background:#FFFFFF;border-radius:12px;padding:8px 4px 7px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:700;color:var(--text);cursor:pointer;transition:background .1s ease,border-color .1s ease}
     .explore-cat-btn .ico{width:22px;height:22px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:12px}
-    .explore-cat-btn.active{border-color:var(--main);background:rgba(25,178,58,.1);color:var(--main)}
+    .explore-cat-btn.active{border-color:var(--main);background:rgba(16,163,78,.1);color:var(--main)}
     .explore-map-wrap{position:relative;flex:1;min-height:300px;background:var(--sep)}
     .explore-map{position:absolute;inset:0;overflow:hidden;touch-action:none;background:var(--sep)}
     .explore-map-grid{position:absolute;inset:0;background:
-      linear-gradient(90deg, rgba(25,178,58,.06) 1px, transparent 1px),
-      linear-gradient(0deg, rgba(25,178,58,.06) 1px, transparent 1px),
-      linear-gradient(180deg,#F7F8FA 0%,rgba(25,178,58,.08) 45%,#F7F8FA 100%);
+      linear-gradient(90deg, rgba(16,163,78,.06) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(16,163,78,.06) 1px, transparent 1px),
+      linear-gradient(180deg,#F7F8FA 0%,rgba(16,163,78,.08) 45%,#F7F8FA 100%);
       background-size:34px 34px,34px 34px,100% 100%;
       transform-origin:center center;
     }
@@ -557,7 +615,7 @@
     .explore-sheet-toggle .right{font-size:12px;color:var(--main);font-weight:700}
     .explore-sheet-list{padding:0 12px 12px;max-height:220px;overflow:auto}
     .explore-list-item{border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:10px;margin-bottom:8px;background:#FFFFFF;box-shadow:0 1px 4px rgba(0,0,0,.04);transition:border-color .1s ease}
-    .explore-list-item:hover{border-color:rgba(25,178,58,.2)}
+    .explore-list-item:hover{border-color:rgba(16,163,78,.2)}
     .explore-list-item .name{font-size:13px;font-weight:800}
     .explore-list-item .meta{font-size:11px;color:var(--sub);margin-top:3px}
 
@@ -570,11 +628,11 @@
     .walk-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .walk-section-title{font-size:15px;font-weight:800;color:var(--black);letter-spacing:-2%;}
     .walk-section-more{font-size:12px;font-weight:700;color:var(--main);cursor:pointer;background:none;border:none;padding:0}
-    .hscroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
+    .hscroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory;padding-left:0}
     .hscroll::-webkit-scrollbar{display:none;width:0;height:0}
-    .hcard{min-width:210px;max-width:210px;scroll-snap-align:start;border:1px solid rgba(0,0,0,.06);border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
-    .hcard:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(25,178,58,.1);border-color:rgba(25,178,58,.2)}
-    .hcard-img{height:110px;background:linear-gradient(135deg,rgba(25,178,58,.06) 0%, var(--sep) 60%);position:relative}
+    .hcard{min-width:150px;max-width:150px;scroll-snap-align:start;border:1px solid #eeeeef;border-radius:10px;overflow:hidden;background:#ffffff;box-shadow:none;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
+    .hcard:hover{transform:translateY(-2px);box-shadow:var(--shadow-black-main);border-color:#dbf1db}
+    .hcard-img{height:83px;background:#f8f8f8;position:relative;border-bottom:1px solid #eeeeef}
     .hcard-rank{position:absolute;left:10px;bottom:8px;background:var(--main);color:#fff;font-size:12px;font-weight:900;border-radius:999px;padding:4px 8px}
     .hcard-start-btn,
     .walk-freq-start-btn,
@@ -583,12 +641,12 @@
       position:absolute;right:10px;bottom:8px;border:none;border-radius:999px;padding:9px 14px;cursor:pointer;
       background:rgba(255,255,255,.95);color:#179833;box-shadow:0 2px 8px rgba(0,0,0,.12);backdrop-filter:blur(4px)
     }
-    .hcard-body{padding:10px}
-    .hcard-title{font-size:13px;font-weight:800;color:var(--black);line-height:1.2}
-    .hcard-meta{font-size:10px;color:var(--sub);font-weight:500;line-height:1.35}
-    .hcard-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-    .tag{font-size:10px;font-weight:600;padding:4px 8px;border-radius:999px;background:var(--sep);color:var(--sub)}
-    .walk-reco .tag{background:rgba(25,178,58,.08);color:var(--main)}
+    .hcard-body{padding:9px 12px 15px}
+    .hcard-title{font-size:12.5px;font-weight:600;color:#000000;line-height:1.31;font-family:"Pretendard",sans-serif}
+    .hcard-meta{font-size:9.4px;color:#666666;font-weight:500;line-height:1.24;margin-top:2px;font-family:"Pretendard",sans-serif}
+    .hcard-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+    .tag{font-size:9.4px;font-weight:500;padding:2px 6px;border-radius:8px;background:#f6f6f6;color:#666666;font-family:"Pretendard",sans-serif}
+    .walk-reco .tag{background:rgba(16,163,78,.08);color:var(--main)}
     .walk-frequent-stack{display:flex;flex-direction:column;gap:10px}
     .walk-freq-card{
       display:flex;align-items:center;gap:12px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:12px 14px;
@@ -604,7 +662,7 @@
     .walk-freq-meta{font-size:10px;color:var(--sub);font-weight:500;margin-top:4px;line-height:1.35}
     .walk-freq-start-btn{
       flex-shrink:0;border:none;border-radius:999px;padding:10px 20px 8px;
-      cursor:pointer;background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;box-shadow:0 2px 8px rgba(25,178,58,.25);white-space:nowrap;
+      cursor:pointer;background:linear-gradient(135deg,#10A34E,#096E32);color:#fff;box-shadow:0 2px 8px rgba(16,163,78,.25);white-space:nowrap;
     }
     .walk-freq-start-btn:active{transform:scale(.97)}
     .walk-reco-stack{display:flex;flex-direction:column;gap:12px;padding-bottom:8px}
@@ -630,16 +688,16 @@
     .walk-reco-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;-ms-overflow-style:none}
     .walk-reco-tabs::-webkit-scrollbar{display:none;width:0;height:0}
     .walk-reco-tab{flex-shrink:0;padding:10px 14px 8px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-size:11px;font-weight:700;color:var(--sub);cursor:pointer;font-family:inherit;line-height:1.2;letter-spacing:0;transition:all .15s ease;white-space:nowrap;}
-    .walk-reco-tab.active{background:var(--main);border-color:var(--main);color:#fff;box-shadow:0 2px 8px rgba(25,178,58,.2)}
+    .walk-reco-tab.active{background:var(--main);border-color:var(--main);color:#fff;box-shadow:0 2px 8px rgba(16,163,78,.2)}
     .walk-reco-tab:not(.active):active{transform:scale(.96)}
     .walk-reco-card[hidden]{display:none}
     .view[data-view="pet_monthly"] .chip,
-    .view[data-view="home"] .chip{background:rgba(25,178,58,.1);color:var(--main)}
+    .view[data-view="home"] .chip{background:rgba(16,163,78,.1);color:var(--main)}
     /* Petlog */
     .petlog-screen{padding:0;height:100%;overflow:auto;scrollbar-width:none;-ms-overflow-style:none}
     .petlog-screen::-webkit-scrollbar{display:none;width:0;height:0}
     .petlog-profile-card{
-      background:linear-gradient(135deg, #19B23A 0%, #0fa34e 40%, #00E933 100%);
+      background:linear-gradient(135deg, #10A34E 0%, #096E32 40%, #19B23A 100%);
       border-radius:20px;padding:22px 18px;margin-bottom:14px;position:relative;overflow:hidden;
     }
     .petlog-profile-card-main{padding-top:18px}
@@ -666,10 +724,10 @@
     .petlog-carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:0;padding:0 4px 10px;-webkit-overflow-scrolling:touch;touch-action:pan-x;scrollbar-width:none;-ms-overflow-style:none}
     .petlog-carousel-track::-webkit-scrollbar{display:none;width:0;height:0}
     .petlog-carousel-slide{flex:0 0 100%;scroll-snap-align:start;min-width:100%;box-sizing:border-box}
-    .petlog-slide-add-inner{background:linear-gradient(145deg,#E8FDF0 0%,#C9FAD4 55%,#fff 100%);border:1.5px dashed rgba(25,178,58,.45);border-radius:20px;padding:28px 20px;text-align:center;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+    .petlog-slide-add-inner{background:linear-gradient(145deg,#E8FDF0 0%,#C9FAD4 55%,#fff 100%);border:1.5px dashed rgba(16,163,78,.45);border-radius:20px;padding:28px 20px;text-align:center;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
     .petlog-slide-add-title{font-size:17px;font-weight:900;color:var(--text)}
     .petlog-slide-add-hint{font-size:12px;color:var(--sub);font-weight:600;line-height:1.45}
-    .petlog-slide-add-cta{border:none;cursor:pointer;background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;font-weight:800;font-size:14px;padding:12px 28px;border-radius:999px;box-shadow:0 4px 14px rgba(25,178,58,.3);font-family:inherit}
+    .petlog-slide-add-cta{border:none;cursor:pointer;background:linear-gradient(135deg,#10A34E,#096E32);color:#fff;font-weight:800;font-size:14px;padding:12px 28px;border-radius:999px;box-shadow:0 4px 14px rgba(16,163,78,.3);font-family:inherit}
     .petlog-carousel-dots{display:flex;justify-content:center;gap:6px;margin-top:4px}
     .petlog-carousel-dots.petlog-carousel-dots--empty{display:none !important;margin:0;height:0;overflow:hidden}
     .petlog-carousel-dots .dot{width:6px;height:6px;border-radius:50%;background:var(--sep);transition:background .2s,transform .2s}
@@ -682,7 +740,7 @@
     .petlog-dual-mini-head{display:flex;align-items:center;gap:6px;min-width:0;width:100%}
     .petlog-dual-mini-emoji{font-size:14px;line-height:1.5;flex-shrink:0}
     .petlog-dual-mini-name{font-size:14px;font-weight:800;color:#fff;line-height:1.5;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .petlog-dual-mini-tag{font-size:10px;font-weight:600;color:rgba(255,255,255,.82);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .petlog-dual-mini-tag{font-size:10px;font-weight:600;color:rgba(255,255,255,.82);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
     .petlog-dual-analysis .petlog-dual-mini-name{font-size:14px}
     .petlog-dual-analysis .petlog-dual-mini-tag{color:rgba(255,255,255,.88)}
     /* 펫로그 월간: 단일 스크롤 영역(.petlog-screen), 중첩 세로 스크롤바 제거 */
@@ -704,7 +762,7 @@
     .petlog-add-record-btn:active{transform:scale(.97)}
     .petlog-record-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
     .petlog-record-item{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:11px 12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-    .petlog-record-ico{width:34px;height:34px;border-radius:12px;background:rgba(25,178,58,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .petlog-record-ico{width:34px;height:34px;border-radius:12px;background:rgba(16,163,78,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
     .petlog-record-main{flex:1;min-width:0}
     .petlog-record-title{font-size:13px;font-weight:900;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .petlog-record-sub{font-size:11px;color:var(--sub);font-weight:600;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -712,7 +770,7 @@
     .petlog-record-completed .petlog-record-ico{background:rgba(139,92,246,.1)}
     .petlog-record-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
     .petlog-share-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:18px;padding:14px 0;background:#fff;border:1.5px solid var(--line);border-radius:14px;font-size:14px;font-weight:800;color:var(--text);cursor:pointer;font-family:inherit;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .15s ease}
-    .petlog-share-btn:hover{border-color:rgba(25,178,58,.35);color:var(--main);background:rgba(25,178,58,.04)}
+    .petlog-share-btn:hover{border-color:rgba(16,163,78,.35);color:var(--main);background:rgba(16,163,78,.04)}
     .petlog-share-btn:active{transform:scale(.97)}
     .petlog-share-ico{font-size:18px;line-height:1}
     .petlog-share-toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%) translateY(8px);background:#252A32;color:#fff;border-radius:10px;padding:12px 22px;font-size:13px;font-weight:800;box-shadow:0 6px 24px rgba(0,0,0,.22);opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;white-space:nowrap;z-index:9999}
@@ -733,10 +791,10 @@
     .manual-record-textarea{min-height:72px;resize:none}
     .dog-chip-grid,.walk-poop-dog-list{display:flex;flex-wrap:wrap;gap:8px}
     .dog-select-chip,.walk-poop-dog-chip{border:1px solid rgba(0,0,0,.08);background:#F8F9FA;color:var(--text);border-radius:999px;padding:9px 12px;font-size:12px;font-weight:900;cursor:pointer;font-family:inherit}
-    .dog-select-chip.selected,.walk-poop-dog-chip.selected{background:rgba(25,178,58,.12);border-color:rgba(25,178,58,.45);color:#12922d}
+    .dog-select-chip.selected,.walk-poop-dog-chip.selected{background:rgba(16,163,78,.12);border-color:rgba(16,163,78,.45);color:#12922d}
     .manual-record-checks{display:flex;gap:8px;flex-wrap:wrap}
     .manual-record-check{display:inline-flex;align-items:center;gap:6px;background:#F8F9FA;border:1px solid rgba(0,0,0,.08);border-radius:999px;padding:9px 12px;font-size:12px;font-weight:800;color:var(--text)}
-    .manual-record-submit,.walk-poop-dog-submit{width:100%;border:none;border-radius:16px;background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;font-size:15px;font-weight:900;padding:14px;font-family:inherit;cursor:pointer;box-shadow:0 5px 14px rgba(25,178,58,.24);margin-top:4px}
+    .manual-record-submit,.walk-poop-dog-submit{width:100%;border:none;border-radius:16px;background:linear-gradient(135deg,#10A34E,#096E32);color:#fff;font-size:15px;font-weight:900;padding:14px;font-family:inherit;cursor:pointer;box-shadow:0 5px 14px rgba(16,163,78,.24);margin-top:4px}
 
     /* Calendar */
     .cal-header{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:12px}
@@ -749,7 +807,7 @@
     .cal-day.empty{visibility:hidden}
     .cal-day.walked{cursor:pointer;color:var(--text);font-weight:700}
     .cal-day.walked:hover{background:rgba(0,0,0,.04)}
-    .cal-day.today{background:rgba(25,178,58,.12);color:var(--main);font-weight:900;border-radius:10px}
+    .cal-day.today{background:rgba(16,163,78,.12);color:var(--main);font-weight:900;border-radius:10px}
     .cal-dots{position:absolute;left:50%;bottom:3px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:2px;pointer-events:none}
     .cal-dot{width:5px;height:5px;border-radius:50%;background:var(--main);box-shadow:0 0 0 1px rgba(255,255,255,.6)}
     .cal-dog-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
@@ -777,7 +835,7 @@
     .journal-stat-divider{width:1px;height:28px;background:rgba(0,0,0,.08);flex-shrink:0}
 
     /* Analysis result */
-    .analysis-result-card{background:linear-gradient(135deg,#19B23A 0%,#0fa34e 40%,#00E933 100%);border-radius:16px;padding:24px 20px;text-align:center;position:relative;overflow:hidden}
+    .analysis-result-card{background:linear-gradient(135deg,#10A34E 0%,#096E32 40%,#19B23A 100%);border-radius:16px;padding:24px 20px;text-align:center;position:relative;overflow:hidden}
     .analysis-result-card::before{content:"";position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.08);top:-40px;right:-30px}
     .analysis-badge{font-size:12px;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:10px}
     .analysis-type{font-size:24px;font-weight:900;color:#fff;margin-bottom:8px;letter-spacing:.02em}
@@ -848,7 +906,7 @@
     .walk-live-sheet-handle::before{content:"";width:40px;height:4px;border-radius:999px;background:#d8d8d8}
     .walk-live-sheet-handle:active{cursor:grabbing}
     .walk-live-sheet-scroll{flex:1;overflow:auto;min-height:0;display:flex;flex-direction:column;-webkit-overflow-scrolling:touch}
-    .walk-report-marker{font-size:20px;line-height:1;text-align:center;background:#fff;border-radius:12px;padding:2px 4px;box-shadow:0 2px 10px rgba(0,0,0,.2);border:2px solid rgba(25,178,58,.45)}
+    .walk-report-marker{font-size:20px;line-height:1;text-align:center;background:#fff;border-radius:12px;padding:2px 4px;box-shadow:0 2px 10px rgba(0,0,0,.2);border:2px solid rgba(16,163,78,.45)}
 
     /* 산책 시작 반려견 선택 팝업 */
     .walk-dog-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:4000;display:none;align-items:center;justify-content:center;padding:20px 16px;backdrop-filter:blur(3px)}
@@ -861,9 +919,9 @@
       position:relative;border:2px solid var(--line);border-radius:16px;padding:12px 10px 11px;text-align:center;cursor:pointer;font-family:inherit;
       background:var(--white);transition:border-color .15s ease,background .15s ease,transform .08s;-webkit-tap-highlight-color:transparent;
     }
-    .walk-dog-card:hover{border-color:rgba(25,178,58,.35)}
+    .walk-dog-card:hover{border-color:rgba(16,163,78,.35)}
     .walk-dog-card:active{transform:scale(.98)}
-    .walk-dog-card.selected{border-color:var(--main);background:rgba(25,178,58,.07);box-shadow:0 2px 10px rgba(25,178,58,.14)}
+    .walk-dog-card.selected{border-color:var(--main);background:rgba(16,163,78,.07);box-shadow:0 2px 10px rgba(16,163,78,.14)}
     .walk-dog-card-avatar{font-size:30px;line-height:1;display:block;margin-bottom:6px}
     .walk-dog-card-name{font-size:13px;font-weight:800;color:var(--text);letter-spacing:-.015em;display:block;line-height:1.2}
     .walk-dog-card-sub{font-size:9px;color:var(--sub);margin-top:5px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -872,7 +930,7 @@
     .walk-dog-card.selected .walk-dog-card-badge::before{content:'✓';color:#fff;font-size:10px;font-weight:900;line-height:1}
     .walk-dog-modal-actions{display:flex;gap:10px;margin-top:16px;padding-top:4px}
     .walk-dog-cancel{flex:1;border-radius:12px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;border:1px solid rgba(0,0,0,.1);background:var(--white);color:var(--sub);font-family:inherit}
-    .walk-dog-confirm{flex:1;border-radius:12px;padding:9px 14px;cursor:pointer;border:none;color:#fff;background:linear-gradient(135deg,#19B23A,#0fa34e);box-shadow:0 4px 12px rgba(25,178,58,.26)}
+    .walk-dog-confirm{flex:1;border-radius:12px;padding:9px 14px;cursor:pointer;border:none;color:#fff;background:linear-gradient(135deg,#10A34E,#096E32);box-shadow:0 4px 12px rgba(16,163,78,.26)}
     .walk-dog-confirm:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
 
     .walk-live-log{padding:12px 16px 8px;background:#fff;flex-shrink:0}
@@ -889,9 +947,9 @@
 
     .walk-live-actions{padding:8px 12px 16px;background:#fff;border-top:1px solid rgba(0,0,0,.06);flex-shrink:0}
     .walk-live-actions-poop{display:flex;justify-content:center;margin-bottom:10px}
-    .walk-action-btn{display:flex;flex-direction:column;align-items:center;gap:4px;background:rgba(25,178,58,.08);border:1px solid rgba(25,178,58,.2);cursor:pointer;padding:10px 20px;border-radius:14px;font-size:11px;font-weight:800;color:var(--text);transition:background .12s ease;font-family:inherit}
-    .walk-action-btn:hover{background:rgba(25,178,58,.14)}
-    .walk-action-btn:active{background:rgba(25,178,58,.2)}
+    .walk-action-btn{display:flex;flex-direction:column;align-items:center;gap:4px;background:rgba(16,163,78,.08);border:1px solid rgba(16,163,78,.2);cursor:pointer;padding:10px 20px;border-radius:14px;font-size:11px;font-weight:800;color:var(--text);transition:background .12s ease;font-family:inherit}
+    .walk-action-btn:hover{background:rgba(16,163,78,.14)}
+    .walk-action-btn:active{background:rgba(16,163,78,.2)}
     .walk-action-ico{font-size:22px;line-height:1}
     .walk-report-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
     .walk-report-btn{
@@ -899,7 +957,7 @@
       background:#fafafa;border-radius:12px;padding:8px 4px;font-size:9px;font-weight:800;color:var(--text);cursor:pointer;font-family:inherit;
       min-height:64px;line-height:1.2;-webkit-tap-highlight-color:transparent;
     }
-    .walk-report-btn:active{background:rgba(25,178,58,.1);border-color:rgba(25,178,58,.25)}
+    .walk-report-btn:active{background:rgba(16,163,78,.1);border-color:rgba(16,163,78,.25)}
     .walk-report-btn .e{font-size:18px;line-height:1}
 
     /* Walk live v2 tweaks */
@@ -986,10 +1044,10 @@
     .walk-mode-desc{font-size:12px;color:var(--sub);font-weight:600;margin-bottom:16px}
     .walk-mode-options{display:flex;flex-direction:column;gap:10px}
     .walk-mode-option{display:flex;align-items:center;gap:14px;border:1.5px solid rgba(0,0,0,.08);background:#fff;border-radius:16px;padding:16px 14px;cursor:pointer;transition:all .15s ease;font-family:inherit;text-align:left;width:100%}
-    .walk-mode-option:hover{border-color:rgba(25,178,58,.3);background:rgba(25,178,58,.03)}
+    .walk-mode-option:hover{border-color:rgba(16,163,78,.3);background:rgba(16,163,78,.03)}
     .walk-mode-option:active{transform:scale(.98)}
     .walk-mode-ico{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
-    .walk-mode-ico.ai{background:linear-gradient(135deg,rgba(25,178,58,.15),rgba(0,233,51,.08))}
+    .walk-mode-ico.ai{background:linear-gradient(135deg,rgba(16,163,78,.15),rgba(0,233,51,.08))}
     .walk-mode-ico.free{background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(96,165,250,.08))}
     .walk-mode-info{flex:1;min-width:0}
     .walk-mode-name{font-size:15px;font-weight:900;color:var(--text);margin-bottom:2px}
@@ -1011,7 +1069,7 @@
     .place-route-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.04);margin-bottom:8px}
     .place-route-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
     .place-route-name{font-size:14px;font-weight:800;color:var(--text)}
-    .place-route-chip{background:rgba(25,178,58,.1);color:var(--main);font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px}
+    .place-route-chip{background:rgba(16,163,78,.1);color:var(--main);font-size:10px;font-weight:800;padding:4px 10px;border-radius:999px}
     .place-route-stats{display:flex;gap:16px}
     .place-route-stat{font-size:12px;color:var(--sub);font-weight:700}
     .place-route-stat strong{color:var(--text);font-weight:900}
@@ -1107,7 +1165,7 @@
     /* Walk review (산책 종료 후 평가) */
     .view[data-view="walkReview"]{padding:0;overflow:auto}
     .review-screen{padding:18px 16px 24px;display:flex;flex-direction:column;gap:14px;min-height:100%}
-    .review-hero{background:linear-gradient(135deg,#19B23A 0%,#0fa34e 50%,#00E933 100%);border-radius:20px;padding:20px 18px;color:#fff;position:relative;overflow:hidden;box-shadow:0 6px 18px rgba(25,178,58,.22)}
+    .review-hero{background:linear-gradient(135deg,#10A34E 0%,#096E32 50%,#19B23A 100%);border-radius:20px;padding:20px 18px;color:#fff;position:relative;overflow:hidden;box-shadow:0 6px 18px rgba(16,163,78,.22)}
     .review-hero::before{content:"";position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.12);top:-40px;right:-30px}
     .review-hero-emoji{font-size:34px;line-height:1;margin-bottom:6px;position:relative;z-index:1}
     .review-hero-title{font-size:18px;font-weight:900;letter-spacing:-.01em;position:relative;z-index:1}
@@ -1126,25 +1184,25 @@
     .star-label{text-align:center;font-size:13px;font-weight:800;color:var(--main);min-height:18px}
     .review-tag-grid{display:flex;flex-wrap:wrap;gap:6px}
     .review-tag-chip{border:1.5px solid var(--line);background:#fff;color:var(--text);border-radius:999px;padding:8px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s ease;display:inline-flex;align-items:center;gap:5px}
-    .review-tag-chip.good.selected{background:#19B23A;border-color:#19B23A;color:#fff;box-shadow:0 2px 8px rgba(25,178,58,.22)}
+    .review-tag-chip.good.selected{background:#10A34E;border-color:#10A34E;color:#fff;box-shadow:0 2px 8px rgba(16,163,78,.22)}
     .review-tag-chip.bad.selected{background:#ef4444;border-color:#ef4444;color:#fff;box-shadow:0 2px 8px rgba(239,68,68,.22)}
     .review-tag-chip:active{transform:scale(.96)}
     .review-tag-section + .review-tag-section{margin-top:14px}
     .review-tag-section-label{font-size:11px;font-weight:800;color:var(--sub);margin-bottom:7px;letter-spacing:.04em;text-transform:uppercase}
     .review-memo{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px;font-family:inherit;color:var(--text);resize:vertical;min-height:72px;background:#fff;transition:border-color .15s ease}
-    .review-memo:focus{outline:none;border-color:var(--main);box-shadow:0 0 0 3px rgba(25,178,58,.14)}
+    .review-memo:focus{outline:none;border-color:var(--main);box-shadow:0 0 0 3px rgba(16,163,78,.14)}
     .review-actions{display:flex;gap:8px;margin-top:6px}
     .review-skip{flex:0 0 auto;padding:14px 16px;border:1.5px solid var(--line);background:#fff;color:var(--sub);border-radius:14px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
-    .review-submit{flex:1;border:none;border-radius:14px;padding:14px;font-size:14px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#19B23A 0%,#0fa34e 100%);color:#fff;box-shadow:0 4px 12px rgba(25,178,58,.25);transition:transform .1s ease,opacity .15s ease;font-family:inherit}
+    .review-submit{flex:1;border:none;border-radius:14px;padding:14px;font-size:14px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#10A34E 0%,#096E32 100%);color:#fff;box-shadow:0 4px 12px rgba(16,163,78,.25);transition:transform .1s ease,opacity .15s ease;font-family:inherit}
     .review-submit:hover{transform:translateY(-1px)}
     .review-submit:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
     /* Font size selected */
     .font-opt{position:relative}
-    .font-opt.selected{background:rgba(25,178,58,.06)}
+    .font-opt.selected{background:rgba(16,163,78,.06)}
     .font-opt.selected .mypage-row-text{color:var(--main);font-weight:800}
     .font-opt.selected::after{content:"✓";position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--main);font-size:16px;font-weight:900}
     .voice-style-opt{position:relative;transition:background .15s ease}
-    .voice-style-opt.selected{background:rgba(25,178,58,.06)}
+    .voice-style-opt.selected{background:rgba(16,163,78,.06)}
     .voice-style-opt.selected .mypage-row-text{color:var(--main);font-weight:800}
     .voice-style-opt.selected::after{content:"✓";position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--main);font-size:16px;font-weight:900}
     @media (max-width:980px){.phones{grid-template-columns:max-content;justify-content:center}}
@@ -1158,23 +1216,42 @@
           <div class="views" id="views">
             <!-- LOGIN (app entry) -->
             <div class="view active" data-view="login">
-              <h1 class="auth-login-title">LOGIN</h1>
-              <input class="auth-input" id="loginIdField" type="text" placeholder="아이디 또는 이메일" autocomplete="username" />
-              <input class="auth-input" id="loginPwField" type="password" placeholder="비밀번호" autocomplete="current-password" />
-              <label class="auth-checkrow"><input type="checkbox" /> 로그인 상태 유지</label>
-              <button type="button" class="auth-btn-black">LOGIN</button>
-              <div class="auth-links">
-                <button type="button" class="auth-link-btn" data-nav="signupMethod">회원가입</button>
-                <span class="sep">|</span>
-                <button type="button" class="auth-link-btn">아이디찾기</button>
-                <span class="sep">|</span>
-                <button type="button" class="auth-link-btn">비밀번호찾기</button>
+              <header class="auth-brand">
+                <h1 class="auth-brand-logo">PetWalk</h1>
+                <p class="auth-brand-sub">오늘도 우리 강아지와 좋은 산책을</p>
+              </header>
+              <div class="auth-field-wrap">
+                <div class="auth-field">
+                  <span class="auth-field-ico" aria-hidden="true">
+                    <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="2" width="18" height="12" rx="2" stroke="#19B23A" stroke-width="1.5"/><path d="M1 4l9 6 9-6" stroke="#19B23A" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </span>
+                  <input id="loginIdField" type="text" placeholder="아이디 또는 이메일" autocomplete="username" />
+                </div>
+                <div class="auth-field">
+                  <span class="auth-field-ico" aria-hidden="true">
+                    <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="9" width="12" height="9" rx="2" stroke="#19B23A" stroke-width="1.5"/><path d="M6 9V6a3 3 0 116 0v3" stroke="#19B23A" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </span>
+                  <input id="loginPwField" type="password" placeholder="비밀번호" autocomplete="current-password" />
+                  <button type="button" class="auth-pw-toggle" id="loginPwToggle" aria-label="비밀번호 표시" aria-pressed="false">
+                    <svg class="auth-pw-icon auth-pw-icon--hide" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="#999" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke="#999" stroke-width="1.5"/><path d="M4 4l16 16" stroke="#999" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    <svg class="auth-pw-icon auth-pw-icon--show" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="#999" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke="#999" stroke-width="1.5"/></svg>
+                  </button>
+                </div>
               </div>
+              <div class="auth-options-row">
+                <label class="auth-checkrow"><input type="checkbox" id="loginKeepSignedIn" /> 로그인 상태 유지</label>
+                <div class="auth-find-links">
+                  <button type="button" class="auth-find-btn">아이디 찾기</button><span class="auth-find-sep">  |  </span><button type="button" class="auth-find-btn">비밀번호 찾기</button>
+                </div>
+              </div>
+              <button type="button" class="auth-btn-primary auth-btn-black">로그인</button>
+              <div class="auth-or-divider" role="separator"><span>또는</span></div>
               <div class="auth-social-stack">
-                <button type="button" class="auth-social-btn naver" data-nav="home"><span class="ico">N</span><span style="flex:1;text-align:center;">네이버로 로그인하기</span></button>
-                <button type="button" class="auth-social-btn google" data-nav="home"><span class="ico">G</span><span style="flex:1;text-align:center;">구글로 로그인하기</span></button>
-                <button type="button" class="auth-social-btn facebook" data-nav="home"><span class="ico">f</span><span style="flex:1;text-align:center;">페이스북으로 로그인하기</span></button>
+                <button type="button" class="auth-social-btn naver" data-nav="home"><span class="ico">N</span><span class="auth-social-label">네이버로 로그인</span></button>
+                <button type="button" class="auth-social-btn google" data-nav="home"><span class="ico" aria-hidden="true"></span><span class="auth-social-label">구글로 로그인</span></button>
+                <button type="button" class="auth-social-btn facebook" data-nav="home"><span class="ico">f</span><span class="auth-social-label">페이스북으로 로그인</span></button>
               </div>
+              <p class="auth-signup-prompt">아직 계정이 없으신가요? <button type="button" class="auth-inline-link" data-nav="signupMethod">회원가입</button></p>
             </div>
 
             <!-- SIGNUP METHOD -->
@@ -1628,24 +1705,32 @@
               </div>
             </div>
 
-            <!-- HOME (메인홈) -->
+            <!-- HOME (메인홈 · Figma 1027:670) -->
             <div class="view" data-view="home" data-tab-root="home">
               <div class="home-screen">
-                <div class="home-hero" id="homeHero">
-                  <div class="home-hero-top">
-                    <button type="button" class="home-location-switcher" id="homeLocationSwitcher" aria-label="동네 전환">
-                      <span class="home-location-pin" aria-hidden="true">⌖</span>
-                      <span class="home-location-names" id="homeLocationNames">
-                        <span class="home-location-name active" id="homeLocText">청파동</span>
-                        <span class="home-location-name inactive" id="homeSubLocText">송파1동</span>
+                <header class="home-topbar" id="homeHero">
+                  <div class="home-topbar-row">
+                    <span class="home-logo-mark" aria-label="PetWalk">PetWalk</span>
+                    <button type="button" class="home-location-weather-chip" id="homeLocationSwitcher" aria-label="동네 전환">
+                      <span class="home-lw-location">
+                        <span class="home-lw-pin" aria-hidden="true">
+                          <svg width="12" height="15" viewBox="0 0 12 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 0C2.69 0 0 2.69 0 6c0 4.5 6 9 6 9s6-4.5 6-9c0-3.31-2.69-6-6-6zm0 8.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="#19B23A"/>
+                          </svg>
+                        </span>
+                        <span class="home-lw-loc-names" id="homeLocationNames">
+                          <span class="home-location-name active" id="homeLocText">청파동</span>
+                          <span class="home-location-name inactive" id="homeSubLocText">송파1동</span>
+                        </span>
+                      </span>
+                      <span class="home-lw-divider"></span>
+                      <span class="home-lw-weather" id="homeWeatherChip" title="실시간 날씨">
+                        <span class="home-weather-ico" id="homeWeatherIco">⏳</span>
+                        <span id="homeWeatherText">--°</span>
                       </span>
                     </button>
-                    <span class="home-weather-chip" id="homeWeatherChip" title="실시간 날씨"><span class="home-weather-ico" id="homeWeatherIco">⏳</span><span id="homeWeatherText">--°</span></span>
                   </div>
-                  <div class="home-hero-character">
-                    <img src="petwalk-mascot.png" alt="보리 캐릭터" />
-                  </div>
-                </div>
+                </header>
                 <div class="home-location-toast" id="homeLocationToast" role="status" aria-live="polite"></div>
                 <div class="home-location-overlay" id="homeLocationOverlay" aria-hidden="true">
                   <div class="home-location-sheet" role="dialog" aria-modal="true" aria-labelledby="homeLocationSheetTitle">
@@ -1658,74 +1743,72 @@
                   </div>
                 </div>
 
-                <div class="home-greeting-card" id="homeGreetingCard">
+                <section class="home-main-card" id="homeGreetingCard">
                   <div class="home-greeting-top-row">
                     <div class="home-greeting-left">
-                      <div class="home-greeting-title">
-                        <span class="home-greeting-title-left"><span id="homeGreetingPrefix">좋은 오후예요</span>, <span id="homeDogName">보리</span>!<span class="home-greeting-paw">🐾</span></span>
-                      </div>
-                      <div class="home-greeting-sub">오늘도 멋진 산책 떠나볼까요?</div>
+                      <h2 class="home-greeting-title"><span id="homeGreetingPrefix">좋은 저녁이에요</span>, <span id="homeDogName">보리</span>!</h2>
+                      <p class="home-greeting-sub">오늘도 멋진 산책을 떠나볼까요?</p>
                     </div>
                     <div class="home-greeting-right">
-                      <img src="petwalk-mascot.png" alt="보리 캐릭터" />
+                      <img src="petwalk-mascot.png" alt="보리 캐릭터" width="95" height="103" />
                     </div>
                   </div>
                   <div class="home-greeting-stats">
                     <div class="home-stat">
-                      <div class="home-stat-val" id="homeStatKm">0<span class="home-stat-unit"> km</span></div>
-                      <div class="home-stat-label">오늘 km</div>
+                      <span class="home-stat-ico"><svg width="15" height="17" viewBox="0 0 12 15" fill="none"><path d="M6 0C2.69 0 0 2.69 0 6c0 4.5 6 9 6 9s6-4.5 6-9c0-3.31-2.69-6-6-6zm0 8.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="#19B23A"/></svg></span>
+                      <div class="home-stat-body">
+                        <div class="home-stat-val" id="homeStatKm">4.2<span class="home-stat-unit">km</span></div>
+                        <div class="home-stat-label">오늘 km</div>
+                      </div>
                     </div>
                     <div class="home-stat">
-                      <div class="home-stat-val" id="homeStatCount">0</div>
-                      <div class="home-stat-label">산책 횟수</div>
+                      <span class="home-stat-ico"><svg width="13" height="25" viewBox="0 0 13 25" fill="none"><path d="M7.5 4a2 2 0 10-.001-4A2 2 0 007.5 4zM4 25l1.5-7L3 16v-5.5L0 7l1.5-1.5L5 9l1-2h3l2.5 3.5H13l-1 2h-1.5L9 10l-1 2 3 3v10H9V17l-3-3-1 4.5L4 25z" fill="#19B23A"/></svg></span>
+                      <div class="home-stat-body">
+                        <div class="home-stat-val" id="homeStatCount">2<span class="home-stat-unit">회</span></div>
+                        <div class="home-stat-label">산책 횟수</div>
+                      </div>
                     </div>
                     <div class="home-stat">
-                      <div class="home-stat-val" id="homeStatStreak">0</div>
-                      <div class="home-stat-label">연속 일수</div>
+                      <span class="home-stat-ico"><svg width="18" height="18" viewBox="0 0 22 20" fill="none"><path d="M17 2h3a2 2 0 012 2v14a2 2 0 01-2 2H2a2 2 0 01-2-2V4a2 2 0 012-2h3V0h2v2h6V0h2v2zm3 6H2v10h18V8zM5 12h6v6H5v-6z" fill="#19B23A"/></svg></span>
+                      <div class="home-stat-body">
+                        <div class="home-stat-val" id="homeStatStreak">48<span class="home-stat-unit">일</span></div>
+                        <div class="home-stat-label">연속 일수</div>
+                      </div>
                     </div>
                   </div>
-                  <button type="button" class="home-quick-start-btn" id="homeQuickWalkStart">🐾 바로 산책 시작</button>
-                </div>
+                  <button type="button" class="home-quick-start-btn" id="homeQuickWalkStart">
+                    <span class="home-quick-paw" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><ellipse cx="5" cy="4.5" rx="1.8" ry="2.2" fill="#fff"/><ellipse cx="8" cy="3.5" rx="1.8" ry="2.2" fill="#fff"/><ellipse cx="11" cy="4.5" rx="1.8" ry="2.2" fill="#fff"/><ellipse cx="3.5" cy="7.5" rx="1.6" ry="2" fill="#fff"/><path d="M4.5 8.5c1.2 3.5 6.8 3.5 8 0 .6-1.8-.2-3.5-2-4.2-1.2-.5-2.5-.5-4 0-1.8.7-2.6 2.4-2 4.2z" fill="#fff"/></svg></span>
+                    바로 산책 시작
+                  </button>
+                </section>
 
                 <div class="home-section">
                   <div class="home-section-head">
                     <div class="walk-section-title">오늘의 추천 코스</div>
                     <button type="button" class="home-section-action" data-nav="walkHome">자세히 보기</button>
                   </div>
-                  <div class="hscroll" aria-label="오늘의 추천 코스">
-                    <div class="hcard" data-walk-route="노들섬" data-walk-meta="2.4km · 34분 · 잔디/그늘 균형">
-                      <div class="hcard-img"></div>
+                  <div class="home-reco-grid" aria-label="오늘의 추천 코스">
+                    <div class="hcard" data-walk-route="효창공원 루프" data-walk-meta="2.1km · 30분 · 잔디/그늘 균형">
+                      <div class="hcard-img hcard-img--hyochang"></div>
                       <div class="hcard-body">
-                        <div class="row"><div class="hcard-title">노들섬</div><div class="hcard-meta">만족도 79%</div></div>
+                        <div class="hcard-text">
+                          <div class="hcard-title">효창공원 루프</div>
+                          <div class="hcard-meta">만족도 86%</div>
+                        </div>
                         <div class="hcard-tags">
                           <span class="tag">#풀밭많</span><span class="tag">#한강산책</span>
                         </div>
                       </div>
                     </div>
-                    <div class="hcard" data-walk-route="올림픽공원" data-walk-meta="2.8km · 39분 · 넓은 공간">
-                      <div class="hcard-img"></div>
+                    <div class="hcard" data-walk-route="용산가족공원" data-walk-meta="2.0km · 30분 · 넓은 공간">
+                      <div class="hcard-img hcard-img--yongsan"></div>
                       <div class="hcard-body">
-                        <div class="row"><div class="hcard-title">올림픽공원</div><div class="hcard-meta">만족도 84%</div></div>
+                        <div class="hcard-text">
+                          <div class="hcard-title">용산가족공원</div>
+                          <div class="hcard-meta">만족도 74%</div>
+                        </div>
                         <div class="hcard-tags">
                           <span class="tag">#잔잔함</span><span class="tag">#넓은공간</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="hcard" data-walk-route="용산공원" data-walk-meta="2.0km · 30분 · 차분한 분위기">
-                      <div class="hcard-img"></div>
-                      <div class="hcard-body">
-                        <div class="row"><div class="hcard-title">용산공원</div><div class="hcard-meta">만족도 81%</div></div>
-                        <div class="hcard-tags">
-                          <span class="tag">#잔잔함</span><span class="tag">#한강인근</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="hcard" data-walk-route="그늘 많은 루프 코스" data-walk-meta="1.9km · 29분 · 체감 시원">
-                      <div class="hcard-img"></div>
-                      <div class="hcard-body">
-                        <div class="row"><div class="hcard-title">그늘 많은 루프 코스</div><div class="hcard-meta">혼잡도 낮음</div></div>
-                        <div class="hcard-tags">
-                          <span class="tag">#그늘많음</span><span class="tag">#시원함</span>
                         </div>
                       </div>
                     </div>
@@ -1738,7 +1821,22 @@
                     <button type="button" class="home-section-action" id="homeScheduleEditBtn">＋ 일정 추가</button>
                   </div>
                   <div class="home-schedule" id="homeScheduleList">
-                    <!-- 기본 일정 (JS에서 렌더링) -->
+                    <div class="home-schedule-item" data-schedule-id="1">
+                      <div class="home-schedule-ico walk" aria-hidden="true">🐕</div>
+                      <div class="home-schedule-info">
+                        <div class="home-schedule-title">저녁 산책</div>
+                        <div class="home-schedule-meta"><span>오늘 오후 6:30</span><span style="margin-left:10px">한강공원</span></div>
+                      </div>
+                      <button type="button" class="home-schedule-bell walk" aria-label="알림"><svg viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5a4 4 0 00-4 4v2.5l-1 2h10l-1-2V5.5a4 4 0 00-4-4z" stroke="#2f6b2f" stroke-width="1.2"/><path d="M6 12.5a1.5 1.5 0 003 0" stroke="#2f6b2f" stroke-width="1.2"/></svg></button>
+                    </div>
+                    <div class="home-schedule-item" data-schedule-id="2">
+                      <div class="home-schedule-ico medic" aria-hidden="true">💉</div>
+                      <div class="home-schedule-info">
+                        <div class="home-schedule-title">예방접종 예약</div>
+                        <div class="home-schedule-meta"><span>내일 오전 10:00</span><span style="margin-left:10px">행복동물병원</span></div>
+                      </div>
+                      <button type="button" class="home-schedule-bell medic" aria-label="알림"><svg viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5a4 4 0 00-4 4v2.5l-1 2h10l-1-2V5.5a4 4 0 00-4-4z" stroke="#3163c9" stroke-width="1.2"/><path d="M6 12.5a1.5 1.5 0 003 0" stroke="#3163c9" stroke-width="1.2"/></svg></button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2137,16 +2235,16 @@
                     </div>
                   </div>
                   <div class="explore-cats" id="exploreCategoryBar">
-                    <button type="button" class="explore-cat-btn" data-cat="all"><span class="ico" style="background:#19B23A;color:#FFFFFF;">◎</span><span>전체</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="stay"><span class="ico" style="background:rgba(25,178,58,.12);color:#19B23A;">🏨</span><span>숙소</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="food"><span class="ico" style="background:rgba(0,233,51,.12);color:#0fa34e;">🍜</span><span>맛집</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="cafe"><span class="ico" style="background:rgba(25,178,58,.12);color:#19B23A;">☕</span><span>카페</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="field"><span class="ico" style="background:rgba(0,233,51,.12);color:#0fa34e;">🏟</span><span>운동장</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="trail"><span class="ico" style="background:rgba(25,178,58,.12);color:#19B23A;">🥾</span><span>산책로</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="hospital"><span class="ico" style="background:rgba(0,233,51,.12);color:#0fa34e;">🏥</span><span>병원</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="tour"><span class="ico" style="background:rgba(25,178,58,.12);color:#19B23A;">📍</span><span>관광지</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="petshop"><span class="ico" style="background:rgba(0,233,51,.12);color:#0fa34e;">🦴</span><span>펫용품</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="dogpark"><span class="ico" style="background:rgba(25,178,58,.12);color:#19B23A;">🐕‍🦺</span><span>반려견 놀이터</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="all"><span class="ico" style="background:#10A34E;color:#FFFFFF;">◎</span><span>전체</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="stay"><span class="ico" style="background:rgba(16,163,78,.12);color:#10A34E;">🏨</span><span>숙소</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="food"><span class="ico" style="background:rgba(0,233,51,.12);color:#096E32;">🍜</span><span>맛집</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="cafe"><span class="ico" style="background:rgba(16,163,78,.12);color:#10A34E;">☕</span><span>카페</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="field"><span class="ico" style="background:rgba(0,233,51,.12);color:#096E32;">🏟</span><span>운동장</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="trail"><span class="ico" style="background:rgba(16,163,78,.12);color:#10A34E;">🥾</span><span>산책로</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="hospital"><span class="ico" style="background:rgba(0,233,51,.12);color:#096E32;">🏥</span><span>병원</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="tour"><span class="ico" style="background:rgba(16,163,78,.12);color:#10A34E;">📍</span><span>관광지</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="petshop"><span class="ico" style="background:rgba(0,233,51,.12);color:#096E32;">🦴</span><span>펫용품</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="dogpark"><span class="ico" style="background:rgba(16,163,78,.12);color:#10A34E;">🐕‍🦺</span><span>반려견 놀이터</span></button>
                   </div>
                 </div>
                 <div class="explore-map-wrap">
@@ -2918,7 +3016,7 @@
                 <div class="mypage-group-card">
                   <div class="toggle-row">
                     <div class="toggle-row-left">
-                      <span class="toggle-row-ico" style="background:rgba(25,178,58,.1);color:#19B23A">📲</span>
+                      <span class="toggle-row-ico" style="background:rgba(16,163,78,.1);color:#10A34E">📲</span>
                       <span class="toggle-row-text">PUSH 알림<span class="toggle-row-hint">앱 전체 푸시 알림 허용</span></span>
                     </div>
                     <label class="toggle-switch"><input type="checkbox" id="togglePush" checked /><span class="toggle-track"></span></label>
@@ -3316,7 +3414,10 @@
         const tabKey = (activeView && activeView.dataset.tabRoot) || name;
         tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === tabKey));
         const phoneScreen = document.querySelector(".phone .screen");
-        if (phoneScreen) phoneScreen.classList.toggle("screen--walk-fullbleed", name === "walk");
+        if (phoneScreen) {
+          phoneScreen.classList.toggle("screen--walk-fullbleed", name === "walk");
+          phoneScreen.classList.toggle("screen--home", name === "home");
+        }
         const walkTab = document.querySelector('#tabs .tab-hit[data-tab="walk"]');
         const walkTabLabel = document.getElementById("walkTabLabel");
         const onWalkLive = name === "walk";
@@ -3404,12 +3505,17 @@
           }
         }
 
+        const useDemo = all.length === 0;
+        const displayKm = useDemo ? "4.2" : todayKm.toFixed(1);
+        const displayCount = useDemo ? 2 : todayCount;
+        const displayStreak = useDemo ? 48 : streak;
+
         const homeStatKm = document.getElementById("homeStatKm");
         const homeStatCount = document.getElementById("homeStatCount");
         const homeStatStreak = document.getElementById("homeStatStreak");
-        if (homeStatKm) homeStatKm.innerHTML = todayKm.toFixed(1) + '<span class="home-stat-unit"> km</span>';
-        if (homeStatCount) homeStatCount.textContent = todayCount;
-        if (homeStatStreak) homeStatStreak.textContent = streak;
+        if (homeStatKm) homeStatKm.innerHTML = displayKm + '<span class="home-stat-unit">km</span>';
+        if (homeStatCount) homeStatCount.innerHTML = displayCount + '<span class="home-stat-unit">회</span>';
+        if (homeStatStreak) homeStatStreak.innerHTML = displayStreak + '<span class="home-stat-unit">일</span>';
       }
 
       // === 시간대별 인사말 (좋은 아침/오후/저녁/밤) ===
@@ -3705,7 +3811,7 @@
         const presets = String(locationName || "").includes("청파")
           ? [
               ["효창공원 루프", "1.8km · 27분 · 언덕 적음", "만족도 86%"],
-              ["용산가족공원", "2.0km · 30분 · 차분한 분위기", "만족도 82%"],
+              ["용산가족공원", "2.0km · 30분 · 차분한 분위기", "만족도 74%"],
             ]
           : [
               ["석촌호수 산책길", "2.4km · 34분 · 물가 산책", "만족도 88%"],
@@ -3774,7 +3880,7 @@
       }
 
       function drawWalkRouteOnMap(map, lat, lon, opts) {
-        const o = Object.assign({ color: "#19B23A", weight: 5, opacity: .9, dashed: false, fit: true, seed: 0, showEndpoints: true }, opts || {});
+        const o = Object.assign({ color: "#10A34E", weight: 5, opacity: .9, dashed: false, fit: true, seed: 0, showEndpoints: true }, opts || {});
         const points = generateWalkRoute(lat, lon, o.seed);
         const layer = L.layerGroup();
         // 흰 외곽 (가독성)
@@ -3943,7 +4049,7 @@
           }
           if (walkHomeRouteLayer) { walkHomeRouteLayer.remove(); walkHomeRouteLayer = null; }
           walkHomeRouteLayer = drawWalkRouteOnMap(walkHomeMap, loc.lat, loc.lon, {
-            color: "#19B23A", weight: 4, opacity: 0.65, dashed: true, fit: true, showEndpoints: false, seed: 0,
+            color: "#10A34E", weight: 4, opacity: 0.65, dashed: true, fit: true, showEndpoints: false, seed: 0,
           });
           setTimeout(() => walkHomeMap && walkHomeMap.invalidateSize(), 50);
           if (!loc.label) fetchReverseGeocode(loc.lat, loc.lon).then((nm) => {
@@ -3983,7 +4089,7 @@
           if (!state.freeWalk) {
             const seed = routeSeedFromName(currentWalkRouteName || "");
             walkLiveRouteLayer = drawWalkRouteOnMap(walkLiveMap, loc.lat, loc.lon, {
-              color: "#19B23A", weight: 5, opacity: 0.92, fit: true, showEndpoints: true, seed,
+              color: "#10A34E", weight: 5, opacity: 0.92, fit: true, showEndpoints: true, seed,
             });
           }
           setTimeout(() => walkLiveMap && walkLiveMap.invalidateSize(), 80);
@@ -4045,7 +4151,7 @@
         visible.forEach((spot) => {
           const lat = center.lat + ((50 - spot.y) / 50) * scale;
           const lon = center.lng + ((spot.x - 50) / 50) * scale;
-          const color = (typeof markerColors !== "undefined" && markerColors[spot.cat]) || "#19B23A";
+          const color = (typeof markerColors !== "undefined" && markerColors[spot.cat]) || "#10A34E";
           const ico = (typeof categoryIcons !== "undefined" && categoryIcons[spot.cat]) || "📍";
           const cname = (typeof categoryNames !== "undefined" && categoryNames[spot.cat]) || "";
           const icon = L.divIcon({
@@ -4133,6 +4239,14 @@
         });
       }
 
+      const SCHEDULE_BELL_SVG = {
+        walk: '<svg viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5a4 4 0 00-4 4v2.5l-1 2h10l-1-2V5.5a4 4 0 00-4-4z" stroke="#2f6b2f" stroke-width="1.2"/><path d="M6 12.5a1.5 1.5 0 003 0" stroke="#2f6b2f" stroke-width="1.2"/></svg>',
+        medic: '<svg viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5a4 4 0 00-4 4v2.5l-1 2h10l-1-2V5.5a4 4 0 00-4-4z" stroke="#3163c9" stroke-width="1.2"/><path d="M6 12.5a1.5 1.5 0 003 0" stroke="#3163c9" stroke-width="1.2"/></svg>',
+        feed: '<svg viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5a4 4 0 00-4 4v2.5l-1 2h10l-1-2V5.5a4 4 0 00-4-4z" stroke="#b45309" stroke-width="1.2"/><path d="M6 12.5a1.5 1.5 0 003 0" stroke="#b45309" stroke-width="1.2"/></svg>',
+        bath: '<svg viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5a4 4 0 00-4 4v2.5l-1 2h10l-1-2V5.5a4 4 0 00-4-4z" stroke="#0891b2" stroke-width="1.2"/><path d="M6 12.5a1.5 1.5 0 003 0" stroke="#0891b2" stroke-width="1.2"/></svg>',
+        play: '<svg viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5a4 4 0 00-4 4v2.5l-1 2h10l-1-2V5.5a4 4 0 00-4-4z" stroke="#db2777" stroke-width="1.2"/><path d="M6 12.5a1.5 1.5 0 003 0" stroke="#db2777" stroke-width="1.2"/></svg>',
+      };
+
       function renderSchedules() {
         const list = document.getElementById("homeScheduleList");
         if (!list) return;
@@ -4155,28 +4269,21 @@
 
         list.innerHTML = state.schedules
           .map((s) => {
-            const meta = `${s.when} ${formatTime(s.time)}${s.loc ? " · " + escapeHtml(s.loc) : ""}`;
+            const metaTime = `${s.when} ${formatTime(s.time)}`;
+            const metaLoc = s.loc ? escapeHtml(s.loc) : "";
+            const bellSvg = SCHEDULE_BELL_SVG[s.type] || SCHEDULE_BELL_SVG.walk;
             return (
-              `<div class="home-schedule-swipe" data-schedule-id="${s.id}">
-                <div class="home-schedule-swipe-under">
-                  <button type="button" class="home-schedule-swipe-btn home-schedule-swipe-btn--del">삭제</button>
-                  <button type="button" class="home-schedule-swipe-btn home-schedule-swipe-btn--done">완료</button>
+              `<div class="home-schedule-item" data-schedule-id="${s.id}">
+                <div class="home-schedule-ico ${s.type}" aria-hidden="true">${s.ico}</div>
+                <div class="home-schedule-info">
+                  <div class="home-schedule-title">${escapeHtml(s.title)}</div>
+                  <div class="home-schedule-meta"><span>${metaTime}</span>${metaLoc ? `<span style="margin-left:10px">${metaLoc}</span>` : ""}</div>
                 </div>
-                <div class="home-schedule-swipe-pane">
-                  <div class="home-schedule-ico ${s.type}">${s.ico}</div>
-                  <div class="home-schedule-info">
-                    <div class="home-schedule-title">${escapeHtml(s.title)}</div>
-                    <div class="home-schedule-meta">${meta}</div>
-                  </div>
-                </div>
+                <button type="button" class="home-schedule-bell ${s.type}" aria-label="알림">${bellSvg}</button>
               </div>`
             );
           })
           .join("");
-
-        list.querySelectorAll(".home-schedule-swipe").forEach((row) => {
-          attachHomeScheduleSwipe(row, Number(row.getAttribute("data-schedule-id")));
-        });
       }
 
       function formatTime(t) {
@@ -4712,15 +4819,15 @@
       const exploreZoomIn = document.getElementById("exploreZoomIn");
       const exploreZoomOut = document.getElementById("exploreZoomOut");
       const markerColors = {
-        stay: "#19B23A",
-        food: "#00E933",
-        cafe: "#19B23A",
-        field: "#00E933",
-        trail: "#19B23A",
-        hospital: "#00E933",
-        tour: "#19B23A",
-        petshop: "#00E933",
-        dogpark: "#19B23A",
+        stay: "#10A34E",
+        food: "#19B23A",
+        cafe: "#10A34E",
+        field: "#19B23A",
+        trail: "#10A34E",
+        hospital: "#19B23A",
+        tour: "#10A34E",
+        petshop: "#19B23A",
+        dogpark: "#10A34E",
       };
       const categoryNames = {
         stay: "숙소",
@@ -4976,25 +5083,41 @@
       });
       document.getElementById("homeLocationAddBtn")?.addEventListener("click", addHomeLocation);
 
-      // 개발자 바로가기: 아이디·비밀번호 모두 "." 입력 후 LOGIN
-      (function bindDevLoginShortcut() {
+      (function bindLoginPwToggle() {
+        const pwEl = document.getElementById("loginPwField");
+        const toggle = document.getElementById("loginPwToggle");
+        if (!pwEl || !toggle) return;
+        toggle.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const show = pwEl.type === "password";
+          pwEl.type = show ? "text" : "password";
+          toggle.classList.toggle("is-visible", show);
+          toggle.setAttribute("aria-pressed", show ? "true" : "false");
+          toggle.setAttribute("aria-label", show ? "비밀번호 숨기기" : "비밀번호 표시");
+        });
+      })();
+
+      // 로그인 버튼 → 홈 이동 (개발 바로가기 포함)
+      (function bindLoginButton() {
         const loginBtn = document.querySelector('.view[data-view="login"] .auth-btn-black');
         const idEl = document.getElementById("loginIdField");
         const pwEl = document.getElementById("loginPwField");
         const devDogPool = ["초코", "몽이", "두부", "바둑이", "루이", "코코", "뭉치", "해피", "쿠키", "별이"];
         if (!loginBtn || !idEl || !pwEl) return;
         loginBtn.addEventListener("click", () => {
-          if (idEl.value !== "." || pwEl.value !== ".") return;
-          const pick = devDogPool[Math.floor(Math.random() * devDogPool.length)];
-          state.dogName = pick;
-          state.primaryPetSub = "개발 모드 · 임의 반려견";
-          try {
-            localStorage.setItem(PRIMARY_PET_KEY, JSON.stringify({ name: pick, sub: state.primaryPetSub }));
-          } catch (_) {}
-          const dn = document.getElementById("dogNameInput");
-          if (dn) dn.value = pick;
-          syncHomeDogName();
-          syncPetDogName();
+          if (idEl.value === "." && pwEl.value === ".") {
+            const pick = devDogPool[Math.floor(Math.random() * devDogPool.length)];
+            state.dogName = pick;
+            state.primaryPetSub = "개발 모드 · 임의 반려견";
+            try {
+              localStorage.setItem(PRIMARY_PET_KEY, JSON.stringify({ name: pick, sub: state.primaryPetSub }));
+            } catch (_) {}
+            const dn = document.getElementById("dogNameInput");
+            if (dn) dn.value = pick;
+            syncHomeDogName();
+            syncPetDogName();
+          }
           setActiveView("home");
         });
       })();
@@ -5609,7 +5732,7 @@
           const c = walkLiveMarker.getLatLng();
           const newSeed = Math.random() * Math.PI * 2;
           walkLiveRouteLayer = drawWalkRouteOnMap(walkLiveMap, c.lat, c.lng, {
-            color: "#19B23A", weight: 5, opacity: 0.92, fit: true, showEndpoints: true, seed: newSeed,
+            color: "#10A34E", weight: 5, opacity: 0.92, fit: true, showEndpoints: true, seed: newSeed,
           });
           const nm = document.getElementById("walkRouteName");
           if (nm) nm.textContent = "추천 변경 루트";
@@ -5791,7 +5914,7 @@
       // === pet_monthly: 반려견별 색 필터 ===
       const calDogFilter = document.getElementById("calDogFilter");
       const calGrid = document.getElementById("calGrid");
-      const CAL_DOG_COLORS = ["#19B23A", "#F59E0B", "#6366F1", "#EC4899", "#14B8A6", "#F97316"];
+      const CAL_DOG_COLORS = ["#10A34E", "#F59E0B", "#6366F1", "#EC4899", "#14B8A6", "#F97316"];
       var renderCalDogChips = null;
       var calViewYear = new Date().getFullYear();
       var calViewMonth = new Date().getMonth();
@@ -5933,7 +6056,7 @@
             tileLayer().addTo(map);
             if (!rec.freeWalk && rec.routeSeed !== undefined) {
               drawWalkRouteOnMap(map, lat, lon, {
-                color: "#19B23A", weight: 4, opacity: 0.9, fit: true, showEndpoints: true, seed: rec.routeSeed
+                color: "#10A34E", weight: 4, opacity: 0.9, fit: true, showEndpoints: true, seed: rec.routeSeed
               });
             } else {
               drawWalkRouteOnMap(map, lat, lon, {
