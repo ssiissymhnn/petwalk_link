@@ -10,13 +10,17 @@
   <!-- Leaflet (지도) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
   <style>
     :root { --main:#10A34E; --point:#19B23A; --soft-mint:#C9FAD4; --black:#1e1e1e; --white:#FFFFFF; --sub:#7c7c7c; --sep:#f3f3f3; --bg:#ffffff; --card:#FFFFFF; --text:#1e1e1e; --muted:var(--sub); --primary:var(--main); --primary-dark:#096E32; --line:rgba(0,0,0,.08); --shadow:0 4px 14px rgba(0,0,0,.1); --radius:16px; --device-w:393px; --device-h:852px; --accent:#10A34E; --accent-alt:#19B23A; --surface:#d9d9d9; --surface-alt:#cdcdcd; --surface-3:#eeeeef; --surface-4:#ebf7ec; --bg-alt:#f3f3f3; --bg-3:#f8fef8; --border:#919093; --border-alt:#999999; --text-secondary:#303030; --text-secondary-alt:#515151; --text-tertiary:#7c7c7c; --elevation-1:0px -2px 2px 1px rgba(0,0,0,0.02); --elevation-2:0px 1px 4px 0px rgba(12,12,13,0.05),0px 1px 4px 0px rgba(12,12,13,0.1); --shadow-black-main:0px 2px 8px 0px rgba(0,0,0,0.04); --shadow-black-stress:0px 4px 14px 0px rgba(0,0,0,0.1); --shadow-green-main:0px 6px 16px 0px rgba(16,163,78,0.12); --shadow-green-stress:0px 8px 22px 0px rgba(16,163,78,0.24); --border-3:#989da1; --accent-53:#9747ff; --space-15:15px; --space-30:30px; --space-52:52px; }
     *{box-sizing:border-box} body{margin:0;font-family:"Pretendard","Inter",-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text)}
     .wrap{max-width:1320px;margin:0 auto;padding:18px 22px 32px}.title{display:none}
     .phones{display:grid;grid-template-columns:max-content;justify-content:center}
     .phone{background:var(--card);border-radius:34px;padding:18px 14px 16px;width:max-content;height:max-content;box-shadow:var(--shadow-black-stress);border:1px solid rgba(0,0,0,.06);position:relative;overflow:hidden;flex-shrink:0}
-    .screen{border-radius:28px;background:var(--bg-alt);width:var(--device-w);height:var(--device-h);padding:12px;position:relative;overflow:hidden;box-sizing:border-box}
+    .screen{border-radius:28px;background:var(--bg-alt);width:var(--device-w);height:var(--device-h);padding:12px;position:relative;overflow:hidden;box-sizing:border-box;--fs-scale:1}
+    .screen[data-font-size="small"]{--fs-scale:0.88}
+    .screen[data-font-size="medium"]{--fs-scale:1}
+    .screen[data-font-size="large"]{--fs-scale:1.14}
     .screen.screen--home{background:#ffffff;padding:0}
     .view[data-view="home"]{padding:0 20px 12px;background:#ffffff}
     .row{display:flex;align-items:center;justify-content:space-between}.muted{color:var(--muted);font-size:12px}.h2{font-size:20px;font-weight:800;margin:0}
@@ -261,6 +265,13 @@
     .schedule-input{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;font-size:14px;font-family:inherit;color:var(--text);outline:none;background:#fff;transition:border-color .15s ease,box-shadow .15s ease;box-sizing:border-box}
     .schedule-input:focus{border-color:var(--main);box-shadow:0 0 0 3px rgba(16,163,78,.12)}
     .schedule-row-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .schedule-date-row{display:flex;flex-direction:column;gap:8px;margin-bottom:4px}
+    .schedule-date-quick{display:flex;gap:6px}
+    .schedule-date-chip{
+      flex:1;border:1.5px solid var(--line);background:#fff;color:var(--sub);border-radius:10px;
+      padding:9px 6px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .15s ease;
+    }
+    .schedule-date-chip.selected{background:rgba(16,163,78,.08);border-color:var(--main);color:var(--main);box-shadow:0 2px 6px rgba(16,163,78,.12)}
     .schedule-modal-actions{display:flex;gap:8px;margin-top:18px}
     .schedule-modal-cancel{flex:0 0 auto;padding:13px 18px;border:1.5px solid var(--line);background:#fff;color:var(--sub);border-radius:13px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
     .schedule-modal-save{flex:1;border:none;border-radius:13px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#10A34E 0%,#096E32 100%);color:#fff;box-shadow:0 4px 12px rgba(16,163,78,.25);font-family:inherit;transition:transform .1s,opacity .15s}
@@ -664,6 +675,16 @@
       opacity:0;transform:scale(.85);transition:opacity .15s ease,transform .15s ease;pointer-events:none;
     }
     .signup-input-wrap.is-valid .signup-field-check{opacity:1;transform:scale(1)}
+    .signup-input-actions{display:flex;align-items:center;gap:4px;flex-shrink:0}
+    .signup-pw-toggle{border:none;background:none;padding:4px;cursor:pointer;color:#999999;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .signup-pw-toggle .signup-pw-icon{display:block}
+    .signup-pw-toggle .signup-pw-icon--show{display:none}
+    .signup-pw-toggle.is-visible .signup-pw-icon--hide{display:none}
+    .signup-pw-toggle.is-visible .signup-pw-icon--show{display:block}
+    .signup-hero--brand{margin-bottom:0}
+    .signup-step-head{margin:14px 0 18px}
+    .signup-step-title{margin:0;font-family:"Pretendard",sans-serif;font-size:20.36px;font-weight:800;line-height:25.34px;color:#000000;letter-spacing:0}
+    .signup-step-sub{margin:8px 0 0;font-family:"Pretendard",sans-serif;font-size:10.97px;font-weight:400;line-height:13.65px;color:#666666}
     .signup-terms-card{
       display:flex;align-items:flex-start;gap:12px;background:#fcfcfd;border:1px solid #f3f3f3;border-radius:13px;
       padding:12px 14px;min-height:0;box-sizing:border-box;margin-bottom:24px;
@@ -708,8 +729,23 @@
       margin-top:10px;font-size:10.97px;line-height:13.65px;color:#666666;
     }
     .view[data-view="userInfo"] .signup-progress{margin-top:16px}
+    .view[data-view="userInfo"] .signup-hero--brand{margin-bottom:0}
+    .view[data-view="userInfo"] .signup-step-head{margin:14px 0 16px}
     .view[data-view="userInfo"] .signup-form{
       display:flex;flex-direction:column;gap:0;flex:1;
+    }
+    .view[data-view="userInfo"] .userinfo-field--profile{margin-bottom:10px}
+    .view[data-view="userInfo"] .userinfo-profile-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+    .view[data-view="userInfo"] .userinfo-profile-row .userinfo-field{margin-bottom:0}
+    .view[data-view="userInfo"] .userinfo-select-wrap{position:relative;padding-right:32px}
+    .view[data-view="userInfo"] .userinfo-select{
+      width:100%;border:none;outline:none;background:transparent;appearance:none;-webkit-appearance:none;
+      font-family:"Pretendard",sans-serif;font-size:14px;font-weight:500;line-height:19.6px;color:#000000;padding:0;cursor:pointer;
+    }
+    .view[data-view="userInfo"] .userinfo-select:invalid,.view[data-view="userInfo"] .userinfo-select option[value=""]{color:#aaaaaa}
+    .view[data-view="userInfo"] .userinfo-select-arrow{
+      position:absolute;right:14px;top:50%;transform:translateY(-50%) rotate(90deg);
+      font-size:14px;color:#999999;cursor:pointer;line-height:1;padding:4px;
     }
     .view[data-view="userInfo"] .userinfo-field--nickname{margin-bottom:10px}
     .view[data-view="userInfo"] .userinfo-field--timeslot{margin-bottom:12px}
@@ -829,7 +865,9 @@
     }
     .view[data-view="dogInfo"].active{display:flex}
     .view[data-view="dogInfo"] .signup-topbar{margin-bottom:19px}
-    .view[data-view="dogInfo"] .signup-hero{margin-bottom:42px}
+    .view[data-view="dogInfo"] .signup-hero--brand{margin-bottom:0}
+    .view[data-view="dogInfo"] .signup-step-head{margin:14px 0 20px}
+    .view[data-view="dogInfo"] .signup-hero{margin-bottom:0}
     .view[data-view="dogInfo"] .signup-title{
       font-size:20.36px;font-weight:800;line-height:25.34px;letter-spacing:0;
     }
@@ -865,9 +903,10 @@
     .view[data-view="dogInfo"] .doginfo-select:invalid,.view[data-view="dogInfo"] .doginfo-select option[value=""]{color:#999999}
     .view[data-view="dogInfo"] .doginfo-select-arrow{
       position:absolute;right:16px;top:50%;transform:translateY(-50%) rotate(90deg);
-      font-size:14px;color:#999999;pointer-events:none;line-height:1;
+      font-size:14px;color:#999999;cursor:pointer;line-height:1;padding:4px;
     }
-    .view[data-view="dogInfo"] .doginfo-actions{display:flex;gap:18px;margin-top:auto;padding-top:32px}
+    .view[data-view="dogInfo"] .doginfo-actions{display:flex;flex-direction:column;gap:0;margin-top:auto;padding-top:32px}
+    .view[data-view="dogInfo"] .doginfo-action-row{display:flex;gap:18px;width:100%}
     .view[data-view="dogInfo"] .doginfo-prev-btn,.view[data-view="dogInfo"] .doginfo-next-btn{
       flex:1;height:58px;border-radius:13px;padding:0;font-family:"Pretendard",sans-serif;font-size:18.37px;font-weight:500;
       line-height:22.85px;letter-spacing:0;cursor:pointer;transition:background .15s ease,border-color .15s ease;
@@ -1151,13 +1190,54 @@
     .petlog-cal-title-wrap{min-width:0}
     .petlog-cal-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
     .petlog-cal-toolbar .cal-dog-filter{flex:1;min-width:0;margin-bottom:0}
-    .petlog-add-record-btn{
-      flex-shrink:0;border:1px solid rgba(16,166,74,.22);background:#FFFFFF;color:#10A64A;font-size:12px;font-weight:900;
-      padding:8px 15px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.04);cursor:pointer;font-family:inherit;
+    .petlog-cal-actions{display:flex;flex-shrink:0;align-items:center;gap:6px}
+    .petlog-add-task-btn,.petlog-add-record-btn{
+      flex-shrink:0;border:1px solid rgba(16,166,74,.22);background:#FFFFFF;color:#10A64A;font-size:11px;font-weight:900;
+      padding:8px 12px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.04);cursor:pointer;font-family:inherit;
       white-space:nowrap;line-height:1.2;align-self:center;
     }
-    .petlog-add-record-btn:active{transform:scale(.97)}
+    .petlog-add-task-btn{background:#10A64A;color:#fff;border-color:#10A64A}
+    .petlog-add-task-btn:active,.petlog-add-record-btn:active{transform:scale(.97)}
     .petlog-record-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+    .journal-schedule-block{margin-bottom:16px}
+    .journal-schedule-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;padding:0 2px}
+    .journal-schedule-head-title{margin:0;font-size:13px;font-weight:800;color:var(--text);letter-spacing:-.01em}
+    .journal-schedule-head-count{font-size:10px;font-weight:800;color:var(--main);background:rgba(16,163,78,.1);padding:4px 9px;border-radius:999px;line-height:1.2}
+    .journal-schedule-list{display:flex;flex-direction:column;gap:8px}
+    .journal-schedule-item{
+      display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #eef0f2;border-radius:14px;
+      padding:12px 14px 12px 16px;box-shadow:0 2px 8px rgba(0,0,0,.04);position:relative;overflow:hidden;
+    }
+    .journal-schedule-item::before{
+      content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:0 3px 3px 0;
+      background:var(--schedule-accent,var(--main));
+    }
+    .journal-schedule-item--walk{--schedule-accent:#10A34E}
+    .journal-schedule-item--medic{--schedule-accent:#3b82f6}
+    .journal-schedule-item--feed{--schedule-accent:#f97316}
+    .journal-schedule-item--bath{--schedule-accent:#06b6d4}
+    .journal-schedule-item--play{--schedule-accent:#ec4899}
+    .journal-schedule-ico{
+      width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+      font-size:20px;flex-shrink:0;background:var(--schedule-bg,rgba(16,163,78,.1));
+    }
+    .journal-schedule-item--walk .journal-schedule-ico{--schedule-bg:#f1f6e4}
+    .journal-schedule-item--medic .journal-schedule-ico{--schedule-bg:#e8effa}
+    .journal-schedule-item--feed .journal-schedule-ico{--schedule-bg:rgba(249,115,22,.1)}
+    .journal-schedule-item--bath .journal-schedule-ico{--schedule-bg:rgba(6,182,212,.1)}
+    .journal-schedule-item--play .journal-schedule-ico{--schedule-bg:rgba(236,72,153,.1)}
+    .journal-schedule-body{flex:1;min-width:0}
+    .journal-schedule-title{font-size:14px;font-weight:800;color:var(--text);line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .journal-schedule-meta{font-size:11px;color:var(--sub);font-weight:600;margin-top:3px;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .journal-schedule-done{
+      flex-shrink:0;display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:800;color:var(--main);
+      background:#ebf7ec;border:1px solid rgba(16,163,78,.18);padding:5px 8px;border-radius:999px;line-height:1;
+    }
+    .journal-schedule-upcoming{
+      flex-shrink:0;display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:800;color:#515151;
+      background:#f3f4f6;border:1px solid #e5e7eb;padding:5px 8px;border-radius:999px;line-height:1;
+    }
+    .journal-schedule-head-count--pending{color:#2563eb;background:rgba(37,99,235,.1)}
     .petlog-record-item{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:11px 12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
     .petlog-record-ico{width:34px;height:34px;border-radius:12px;background:rgba(16,163,78,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
     .petlog-record-main{flex:1;min-width:0}
@@ -1165,10 +1245,21 @@
     .petlog-record-sub{font-size:11px;color:var(--sub);font-weight:600;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .petlog-record-detail{font-size:10px;color:#8b5cf6;font-weight:600;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
     .petlog-record-completed .petlog-record-ico{background:rgba(139,92,246,.1)}
-    .petlog-record-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
     .petlog-share-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:18px;padding:14px 0;background:#fff;border:1.5px solid var(--line);border-radius:14px;font-size:14px;font-weight:800;color:var(--text);cursor:pointer;font-family:inherit;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .15s ease}
     .petlog-share-btn:hover{border-color:rgba(16,163,78,.35);color:var(--main);background:rgba(16,163,78,.04)}
     .petlog-share-btn:active{transform:scale(.97)}
+    .petlog-share-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:35;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(2px)}
+    .petlog-share-overlay.show{display:flex;animation:overlayFadeIn .15s ease}
+    .petlog-share-modal{background:#fff;border-radius:22px 22px 0 0;width:100%;padding:18px 18px 22px;box-shadow:0 -8px 32px rgba(0,0,0,.18);animation:modalSlideUp .25s ease}
+    .petlog-share-modal-handle{width:40px;height:4px;background:var(--sep);border-radius:999px;margin:0 auto 14px}
+    .petlog-share-modal-title{font-size:17px;font-weight:900;color:var(--text);text-align:center;margin:0 0 4px;letter-spacing:-.01em}
+    .petlog-share-modal-sub{font-size:12px;color:var(--sub);font-weight:600;text-align:center;margin:0 0 16px}
+    .petlog-share-options{display:flex;flex-direction:column;gap:8px}
+    .petlog-share-option{display:flex;align-items:center;gap:10px;width:100%;border:1px solid #eeeeef;background:#ffffff;border-radius:12px;padding:14px 16px;font-size:14px;font-weight:700;color:#000000;cursor:pointer;font-family:inherit;text-align:left;transition:border-color .12s ease,background .12s ease}
+    .petlog-share-option:hover{border-color:#dbf1db;background:#f8fef8}
+    .petlog-share-option-ico{font-size:18px;line-height:1;flex-shrink:0}
+    .petlog-share-cancel{width:100%;margin-top:10px;border:1px solid var(--line);background:#fff;color:var(--sub);border-radius:13px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+    .petlog-share-capture-target{background:#ffffff}
     .petlog-share-ico{font-size:18px;line-height:1}
     .petlog-share-toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%) translateY(8px);background:#252A32;color:#fff;border-radius:10px;padding:12px 22px;font-size:13px;font-weight:800;box-shadow:0 6px 24px rgba(0,0,0,.22);opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;white-space:nowrap;z-index:9999}
     .petlog-share-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -1200,13 +1291,20 @@
     .cal-nav:hover{background:var(--sep)}
     .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px}
     .cal-dow{text-align:center;font-size:11px;font-weight:700;color:var(--sub);padding:4px 0}
-    .cal-day{text-align:center;font-size:13px;font-weight:600;color:var(--text);padding:8px 0 14px;border-radius:10px;cursor:default;position:relative}
+    .cal-day{text-align:center;font-size:13px;font-weight:600;color:var(--text);padding:6px 0 16px;border-radius:10px;cursor:default;position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;gap:4px}
     .cal-day.empty{visibility:hidden}
-    .cal-day.walked{cursor:pointer;color:var(--text);font-weight:700}
+    .cal-day-num{
+      display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;
+      line-height:1;font-size:13px;font-weight:700;position:relative;z-index:1;
+    }
+    .cal-day.has-walk .cal-day-num{background:var(--main);color:#fff;font-weight:800}
+    .cal-day.walked{cursor:pointer}
     .cal-day.walked:hover{background:rgba(0,0,0,.04)}
-    .cal-day.today{background:rgba(16,163,78,.12);color:var(--main);font-weight:900;border-radius:10px}
-    .cal-dots{position:absolute;left:50%;bottom:3px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:2px;pointer-events:none}
-    .cal-dot{width:5px;height:5px;border-radius:50%;background:var(--main);box-shadow:0 0 0 1px rgba(255,255,255,.6)}
+    .cal-day.today:not(.has-walk){background:rgba(16,163,78,.12);border-radius:10px}
+    .cal-day.today:not(.has-walk) .cal-day-num{color:var(--main);font-weight:900}
+    .cal-dots{position:relative;left:auto;bottom:auto;transform:none;display:flex;align-items:center;justify-content:center;gap:3px;pointer-events:none;min-height:6px;margin-top:1px}
+    .cal-dot.cal-task-pending-dot{width:6px;height:6px;border-radius:50%;background:#3b82f6;box-shadow:0 0 0 1px rgba(255,255,255,.75)}
+    .cal-dot.cal-task-done-dot{width:6px;height:6px;border-radius:50%;background:var(--main);box-shadow:0 0 0 1px rgba(255,255,255,.75)}
     .cal-dog-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
     .cal-dog-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;border:1.5px solid var(--line);background:#fff;cursor:pointer;font-size:12px;font-weight:700;color:var(--text);font-family:inherit;transition:all .15s ease}
     .cal-dog-chip .cal-dog-swatch{width:9px;height:9px;border-radius:50%;background:var(--dog-color, var(--main))}
@@ -1557,8 +1655,33 @@
     .toggle-track::after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;top:3px;left:3px;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:transform .2s ease}
     .toggle-switch input:checked + .toggle-track{background:var(--main)}
     .toggle-switch input:checked + .toggle-track::after{transform:translateX(20px)}
-    .toggle-sub-row{padding-left:62px;opacity:1;transition:opacity .15s ease}
-    .toggle-sub-row.disabled{opacity:.4;pointer-events:none}
+    .toggle-nested-block{margin:0 12px 10px;padding:0;background:#f8f9fb;border:1px solid rgba(0,0,0,.06);border-radius:14px;overflow:hidden}
+    .toggle-nested-block.disabled{opacity:.45;pointer-events:none}
+    .toggle-nested-block .toggle-row{background:transparent;border-bottom:1px solid rgba(0,0,0,.05);padding:12px 14px}
+    .toggle-nested-block .toggle-row:last-child{border-bottom:none}
+    .toggle-nested-label{font-size:11px;font-weight:700;color:var(--sub);padding:10px 14px 0;letter-spacing:.02em}
+    .doginfo-skip-btn{width:100%;margin-top:10px;border:none;background:transparent;color:#7a7f85;font-size:13px;font-weight:600;cursor:pointer;padding:10px;font-family:inherit;text-decoration:underline;text-underline-offset:3px}
+    .doginfo-skip-btn:hover{color:#515151}
+    .view[data-view="dogInfoTraits"] .traits-skip-btn{margin:-4px 0 18px;padding:4px 10px 10px}
+    .wesen-skip-confirm-overlay{position:absolute;inset:0;z-index:55;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:0 28px;backdrop-filter:blur(2px)}
+    .wesen-skip-confirm-overlay.show{display:flex}
+    .wesen-skip-confirm-box{background:#fff;border-radius:20px;padding:24px 20px 18px;width:100%;max-width:300px;box-shadow:0 12px 40px rgba(0,0,0,.18);text-align:center}
+    .wesen-skip-confirm-title{font-size:16px;font-weight:900;color:var(--text);margin:0 0 8px;line-height:1.35}
+    .wesen-skip-confirm-desc{font-size:13px;color:var(--sub);font-weight:600;line-height:1.5;margin:0 0 20px}
+    .wesen-skip-confirm-actions{display:flex;flex-direction:column;gap:8px}
+    .wesen-skip-confirm-actions button{width:100%;border:none;border-radius:12px;padding:13px 0;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit}
+    .wesen-skip-confirm-stay{background:#10a54b;color:#fff;box-shadow:0 3px 10px rgba(16,165,75,.22)}
+    .wesen-skip-confirm-stay:active{background:#0d8f40}
+    .wesen-skip-confirm-go{background:#F2F3F5;color:var(--sub)}
+    .wesen-skip-confirm-go:active{background:#E5E7EB}
+    .wesen-prompt-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:50;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(2px)}
+    .wesen-prompt-overlay.show{display:flex}
+    .wesen-prompt-sheet{width:100%;background:#fff;border-radius:22px 22px 0 0;padding:22px 20px 24px;box-shadow:0 -8px 32px rgba(0,0,0,.18);animation:modalSlideUp .25s ease}
+    .wesen-prompt-title{font-size:17px;font-weight:900;color:var(--text);margin:0 0 8px}
+    .wesen-prompt-desc{font-size:13px;color:var(--sub);font-weight:600;line-height:1.5;margin:0 0 18px}
+    .wesen-prompt-actions{display:flex;flex-direction:column;gap:10px}
+    .wesen-prompt-primary{width:100%;height:52px;border:none;border-radius:13px;background:#10a54b;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+    .wesen-prompt-secondary{width:100%;height:48px;border:1px solid var(--line);border-radius:13px;background:#fff;color:var(--sub);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
     /* Walk review (산책 종료 후 평가) */
     .view[data-view="walkReview"]{padding:0;overflow:auto}
     .review-screen{padding:18px 16px 24px;display:flex;flex-direction:column;gap:14px;min-height:100%}
@@ -1604,12 +1727,23 @@
     .voice-style-opt.selected::after{content:"✓";position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--main);font-size:16px;font-weight:900}
     @media (max-width:980px){.phones{grid-template-columns:max-content;justify-content:center}}
   </style>
+  <script>
+    (function initFontScaleRules() {
+      const style = document.querySelector("head > style");
+      if (!style || style.dataset.fsScaled === "1") return;
+      style.textContent = style.textContent.replace(
+        /font-size:\s*([\d.]+)px/g,
+        "font-size:calc($1px * var(--fs-scale, 1))"
+      );
+      style.dataset.fsScaled = "1";
+    })();
+  </script>
 </head>
 <body>
   <div class="wrap">
     <div class="phones">
       <section class="phone">
-        <div class="screen">
+        <div class="screen" data-font-size="medium">
           <div class="views" id="views">
             <!-- LOGIN (app entry) -->
             <div class="view active" data-view="login">
@@ -1727,8 +1861,14 @@
                       placeholder="8자 이상 입력해주세요."
                       value=""
                     />
-                    <span class="signup-field-check" aria-hidden="true">
-                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#10a34e"/><path d="M6 10.2l2.6 2.6L14.2 7.2" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="signup-input-actions">
+                      <button type="button" class="signup-pw-toggle" id="signupPwToggle" aria-label="비밀번호 표시" aria-pressed="false">
+                        <svg class="signup-pw-icon signup-pw-icon--hide" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="#999" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke="#999" stroke-width="1.5"/><path d="M4 4l16 16" stroke="#999" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        <svg class="signup-pw-icon signup-pw-icon--show" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="#999" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke="#999" stroke-width="1.5"/></svg>
+                      </button>
+                      <span class="signup-field-check" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#10a34e"/><path d="M6 10.2l2.6 2.6L14.2 7.2" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </span>
                     </span>
                   </div>
                 </div>
@@ -1751,12 +1891,57 @@
                 <span class="signup-step-badge">회원 가입</span>
                 <span class="signup-step-count">2/4</span>
               </header>
-              <div class="signup-hero">
-                <h1 class="signup-title">유저 정보 입력</h1>
-                <p class="signup-sub">추천 품질을 위해 산책 선호를 알려주세요.</p>
+              <div class="signup-hero signup-hero--brand">
+                <h1 class="signup-title"><span class="signup-brand">PetWalk</span> 시작하기</h1>
+                <p class="signup-sub">간단 가입 후 바로 개인화 추천을 받을 수 있어요.</p>
                 <div class="signup-progress"><span data-progress></span></div>
               </div>
+              <div class="signup-step-head">
+                <h2 class="signup-step-title">유저 정보 입력</h2>
+                <p class="signup-step-sub">추천 품질을 위해 산책 선호를 알려주세요.</p>
+              </div>
               <div class="signup-form">
+                <div class="userinfo-field userinfo-field--profile">
+                  <label class="userinfo-label" for="signupUserNameInput">이름<span class="userinfo-req" aria-hidden="true">*</span></label>
+                  <div class="userinfo-nickname-wrap">
+                    <input
+                      class="userinfo-nickname-input"
+                      type="text"
+                      id="signupUserNameInput"
+                      placeholder="이름을 입력해주세요"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div class="userinfo-profile-row">
+                  <div class="userinfo-field userinfo-field--profile">
+                    <label class="userinfo-label" for="signupUserAgeSelect">나이</label>
+                    <div class="userinfo-nickname-wrap userinfo-select-wrap">
+                      <select class="userinfo-select" id="signupUserAgeSelect" required>
+                        <option value="" disabled selected hidden>나이</option>
+                        <option>10대</option>
+                        <option>20대</option>
+                        <option>30대</option>
+                        <option>40대</option>
+                        <option>50대</option>
+                        <option>60대 이상</option>
+                      </select>
+                      <span class="userinfo-select-arrow" data-select-trigger="signupUserAgeSelect" aria-hidden="true">›</span>
+                    </div>
+                  </div>
+                  <div class="userinfo-field userinfo-field--profile">
+                    <label class="userinfo-label" for="signupUserGenderSelect">성별</label>
+                    <div class="userinfo-nickname-wrap userinfo-select-wrap">
+                      <select class="userinfo-select" id="signupUserGenderSelect" required>
+                        <option value="" disabled selected hidden>성별</option>
+                        <option>여성</option>
+                        <option>남성</option>
+                        <option>선택 안 함</option>
+                      </select>
+                      <span class="userinfo-select-arrow" data-select-trigger="signupUserGenderSelect" aria-hidden="true">›</span>
+                    </div>
+                  </div>
+                </div>
                 <div class="userinfo-field userinfo-field--nickname">
                   <label class="userinfo-label" for="signupNicknameInput">닉네임<span class="userinfo-req" aria-hidden="true">*</span></label>
                   <div class="userinfo-nickname-wrap">
@@ -1851,10 +2036,13 @@
                 <span class="signup-step-badge">회원 가입</span>
                 <span class="signup-step-count">3/4</span>
               </header>
-              <div class="signup-hero">
-                <h1 class="signup-title">반려견 정보 입력</h1>
-                <p class="signup-sub">이름 · 나이 · 종 · 성별을 알려주세요. 성격은 다음 단계에서 입력해요.</p>
+              <div class="signup-hero signup-hero--brand">
+                <h1 class="signup-title"><span class="signup-brand">PetWalk</span> 시작하기</h1>
+                <p class="signup-sub">간단 가입 후 바로 개인화 추천을 받을 수 있어요.</p>
                 <div class="signup-progress"><span data-progress></span></div>
+              </div>
+              <div class="signup-step-head">
+                <h2 class="signup-step-title">반려견 정보 입력</h2>
               </div>
               <div class="signup-form">
                 <div class="doginfo-field">
@@ -1902,7 +2090,7 @@
                       <option>20살</option>
                       <option>20+</option>
                     </select>
-                    <span class="doginfo-select-arrow" aria-hidden="true">›</span>
+                    <span class="doginfo-select-arrow" data-select-trigger="dogAgeSelect" aria-hidden="true">›</span>
                   </div>
                 </div>
                 <div class="doginfo-field">
@@ -1940,7 +2128,7 @@
                       <option>퍼그</option>
                       <option>그 외</option>
                     </select>
-                    <span class="doginfo-select-arrow" aria-hidden="true">›</span>
+                    <span class="doginfo-select-arrow" data-select-trigger="dogBreedSelect" aria-hidden="true">›</span>
                   </div>
                 </div>
                 <div class="doginfo-field">
@@ -1954,12 +2142,14 @@
                       <option>암컷</option>
                       <option>수컷</option>
                     </select>
-                    <span class="doginfo-select-arrow" aria-hidden="true">›</span>
+                    <span class="doginfo-select-arrow" data-select-trigger="dogSexSelect" aria-hidden="true">›</span>
                   </div>
                 </div>
                 <div class="doginfo-actions">
-                  <button type="button" class="doginfo-prev-btn" data-nav="userInfo">이전</button>
-                  <button type="button" class="doginfo-next-btn" id="dogInfoToTraitsBtn" data-nav="dogInfoTraits">다음</button>
+                  <div class="doginfo-action-row">
+                    <button type="button" class="doginfo-prev-btn" data-nav="userInfo">이전</button>
+                    <button type="button" class="doginfo-next-btn" id="dogInfoToTraitsBtn" data-nav="dogInfoTraits">다음</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1984,6 +2174,7 @@
                     <p class="wesen-notice-sub">독일에서 사용되는 표준 기질 평가 방식을 산책 환경에 맞춰 재구성 했어요.</p>
                   </div>
                 </div>
+                <button type="button" class="doginfo-skip-btn traits-skip-btn" id="traitsSkipWesenBtn">성격 테스트 건너뛰고 시작하기</button>
 
                 <div class="quiz-list" id="quizList">
                   <div class="quiz-card" data-q="q1">
@@ -2298,24 +2489,7 @@
                     <div class="walk-section-title">오늘의 일정</div>
                     <button type="button" class="home-section-action" id="homeScheduleEditBtn">＋ 일정 추가</button>
                   </div>
-                  <div class="home-schedule" id="homeScheduleList">
-                    <div class="home-schedule-item" data-schedule-id="1">
-                      <div class="home-schedule-ico walk" aria-hidden="true">🐕</div>
-                      <div class="home-schedule-info">
-                        <div class="home-schedule-title">저녁 산책</div>
-                        <div class="home-schedule-meta"><span>오늘 오후 6:30</span><span style="margin-left:10px">한강공원</span></div>
-                      </div>
-                      <button type="button" class="home-schedule-bell walk" aria-label="알림"><svg viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5a4 4 0 00-4 4v2.5l-1 2h10l-1-2V5.5a4 4 0 00-4-4z" stroke="#2f6b2f" stroke-width="1.2"/><path d="M6 12.5a1.5 1.5 0 003 0" stroke="#2f6b2f" stroke-width="1.2"/></svg></button>
-                    </div>
-                    <div class="home-schedule-item" data-schedule-id="2">
-                      <div class="home-schedule-ico medic" aria-hidden="true">💉</div>
-                      <div class="home-schedule-info">
-                        <div class="home-schedule-title">예방접종 예약</div>
-                        <div class="home-schedule-meta"><span>내일 오전 10:00</span><span style="margin-left:10px">행복동물병원</span></div>
-                      </div>
-                      <button type="button" class="home-schedule-bell medic" aria-label="알림"><svg viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5a4 4 0 00-4 4v2.5l-1 2h10l-1-2V5.5a4 4 0 00-4-4z" stroke="#3163c9" stroke-width="1.2"/><path d="M6 12.5a1.5 1.5 0 003 0" stroke="#3163c9" stroke-width="1.2"/></svg></button>
-                    </div>
-                  </div>
+                  <div class="home-schedule" id="homeScheduleList"></div>
                 </div>
               </div>
               <div class="walk-mode-overlay" id="walkModeOverlay" aria-hidden="true">
@@ -2567,13 +2741,16 @@
                 <div class="petlog-cal-head">
                   <div class="petlog-cal-title-wrap">
                     <p class="walk-section-title">월간 산책 기록</p>
-                    <p class="stub-muted">날짜를 눌러 상세 산책 기록을 확인하세요. <br>점 색깔은 각 반려견의 산책을 의미해요.</p>
+                    <p class="stub-muted">날짜를 눌러 상세 기록을 확인하세요. <br>초록 원·흰 숫자는 산책, 아래 초록 점은 할일 완료, 파란 점은 할일 예정이에요.</p>
                   </div>
                 </div>
 
                 <div class="petlog-cal-toolbar">
                   <div class="cal-dog-filter" id="calDogFilter"></div>
-                  <button type="button" class="petlog-add-record-btn">+ 기록 추가</button>
+                  <div class="petlog-cal-actions">
+                    <button type="button" class="petlog-add-task-btn" id="petlogAddTaskBtn">+ 할일 추가</button>
+                    <button type="button" class="petlog-add-record-btn">+ 기록 추가</button>
+                  </div>
                 </div>
 
                 <div class="cal-header">
@@ -2610,12 +2787,15 @@
                 </div>
                 <p class="mypage-subtitle">산책 일지 상세</p>
                 <p class="stub-muted" id="journalDateLabel">산책 기록</p>
+                <button type="button" class="petlog-add-task-btn" id="journalAddTaskBtn" style="margin-bottom:12px;width:100%;">+ 이 날짜에 할일 추가</button>
 
-                <div id="journalContent"></div>
+                <div id="journalCaptureArea" class="petlog-share-capture-target">
+                  <div id="journalContent"></div>
+                </div>
 
                 <div id="journalEmpty" style="text-align:center;padding:40px 0;color:var(--sub);font-size:13px;font-weight:600;display:none;">
                   <div style="font-size:40px;margin-bottom:12px;">📭</div>
-                  이 날짜에 산책 기록이 없습니다.
+                  <span id="journalEmptyText">이 날짜에 산책 기록이 없습니다.</span>
                 </div>
 
                 <button type="button" class="petlog-share-btn" id="petJournalShareBtn">
@@ -3014,7 +3194,7 @@
                       <div class="walk-report-accordion" id="walkReportAccordion">
                         <button type="button" class="walk-report-accordion-toggle" id="walkReportToggle">
                           <span class="walk-report-accordion-title">상황 제보하기</span>
-                          <span class="walk-report-accordion-sub">이 구간 어때요?</span>
+                          <span class="walk-report-accordion-sub">산책 구간에 문제가 생길 시, 제보해주세요</span>
                           <span class="walk-report-accordion-arrow" id="walkReportArrow">›</span>
                         </button>
                         <div class="walk-report-accordion-body" id="walkReportBody" style="display:none;">
@@ -3521,12 +3701,15 @@
                     <label class="toggle-switch"><input type="checkbox" id="toggleWalkReco" checked /><span class="toggle-track"></span></label>
                   </div>
 
-                  <div class="toggle-row toggle-sub-row" id="nightNotiRow">
-                    <div class="toggle-row-left">
-                      <span class="toggle-row-ico" style="background:rgba(139,92,246,.1);color:#8b5cf6">🌙</span>
-                      <span class="toggle-row-text">야간 알림 허용<span class="toggle-row-hint">22시~07시 사이에도 알림을 받아요</span></span>
+                  <div class="toggle-nested-block" id="nightNotiBlock">
+                    <div class="toggle-nested-label">산책 추천 알림 세부 설정</div>
+                    <div class="toggle-row" id="nightNotiRow">
+                      <div class="toggle-row-left">
+                        <span class="toggle-row-ico" style="background:rgba(139,92,246,.1);color:#8b5cf6">🌙</span>
+                        <span class="toggle-row-text">야간 알림 허용<span class="toggle-row-hint">22시~07시 사이에도 알림을 받아요</span></span>
+                      </div>
+                      <label class="toggle-switch"><input type="checkbox" id="toggleNight" /><span class="toggle-track"></span></label>
                     </div>
-                    <label class="toggle-switch"><input type="checkbox" id="toggleNight" /><span class="toggle-track"></span></label>
                   </div>
 
                   <div class="toggle-row">
@@ -3626,12 +3809,56 @@
             
           </div>
 
+          <!-- 산책 일지 공유 팝업 -->
+          <div class="petlog-share-overlay" id="petJournalShareOverlay" aria-hidden="true">
+            <div class="petlog-share-modal" role="dialog" aria-modal="true" aria-labelledby="petJournalShareTitle">
+              <div class="petlog-share-modal-handle" aria-hidden="true"></div>
+              <h3 class="petlog-share-modal-title" id="petJournalShareTitle">기록 공유하기</h3>
+              <p class="petlog-share-modal-sub">공유 방식을 선택해 주세요</p>
+              <div class="petlog-share-options">
+                <button type="button" class="petlog-share-option" id="petJournalSharePhoto">
+                  <span class="petlog-share-option-ico">🖼️</span>
+                  <span>사진으로 저장</span>
+                </button>
+                <button type="button" class="petlog-share-option" id="petJournalShareLink">
+                  <span class="petlog-share-option-ico">🔗</span>
+                  <span>링크 복사</span>
+                </button>
+              </div>
+              <button type="button" class="petlog-share-cancel" id="petJournalShareCancel">취소</button>
+            </div>
+          </div>
+
+          <!-- 베젠 테스트 건너뛰기 확인 -->
+          <div class="wesen-skip-confirm-overlay" id="wesenSkipConfirmOverlay" aria-hidden="true">
+            <div class="wesen-skip-confirm-box" role="dialog" aria-modal="true" aria-labelledby="wesenSkipConfirmTitle">
+              <h3 class="wesen-skip-confirm-title" id="wesenSkipConfirmTitle">성격 테스트를 건너뛸까요?</h3>
+              <p class="wesen-skip-confirm-desc">정확한 산책 추천을 위해 베젠 테스트를 권장해요.<br>가입 후 펫로그에서도 언제든 진행할 수 있어요.</p>
+              <div class="wesen-skip-confirm-actions">
+                <button type="button" class="wesen-skip-confirm-stay" id="wesenSkipConfirmStay">테스트 계속하기</button>
+                <button type="button" class="wesen-skip-confirm-go" id="wesenSkipConfirmGo">건너뛰고 시작하기</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 베젠 테스트 안내 (산책 탭 진입 시) -->
+          <div class="wesen-prompt-overlay" id="wesenPromptOverlay" aria-hidden="true">
+            <div class="wesen-prompt-sheet" role="dialog" aria-modal="true" aria-labelledby="wesenPromptTitle">
+              <h3 class="wesen-prompt-title" id="wesenPromptTitle">성격 테스트를 완료하면 더 정확해요</h3>
+              <p class="wesen-prompt-desc">베젠 테스트를 하지 않으면 AI 기반 산책로 추천 정확도가 낮아질 수 있어요. 지금 테스트하고 맞춤 코스를 받아보세요.</p>
+              <div class="wesen-prompt-actions">
+                <button type="button" class="wesen-prompt-primary" id="wesenPromptTestBtn">테스트 하기</button>
+                <button type="button" class="wesen-prompt-secondary" id="wesenPromptLaterBtn">나중에 하기</button>
+              </div>
+            </div>
+          </div>
+
           <!-- 일정 추가 모달 (홈 화면용, .screen 기준으로 오버레이) -->
           <div class="schedule-overlay" id="scheduleOverlay">
             <div class="schedule-modal">
               <div class="schedule-modal-handle"></div>
-              <div class="schedule-modal-title">오늘의 일정 추가</div>
-              <div class="schedule-modal-sub">반려견의 일정을 등록해보세요</div>
+              <div class="schedule-modal-title">일정 추가</div>
+              <div class="schedule-modal-sub">원하는 날짜에 반려견 일정을 등록해보세요</div>
 
               <div class="schedule-modal-label">일정 종류</div>
               <div class="schedule-type-grid" id="scheduleTypeGrid">
@@ -3645,19 +3872,18 @@
               <div class="schedule-modal-label">제목</div>
               <input type="text" class="schedule-input" id="scheduleTitleInput" placeholder="예: 저녁 산책" maxlength="20">
 
-              <div class="schedule-row-2">
-                <div>
-                  <div class="schedule-modal-label">시간</div>
-                  <input type="time" class="schedule-input" id="scheduleTimeInput" value="18:30">
+              <div class="schedule-modal-label">날짜</div>
+              <div class="schedule-date-row">
+                <div class="schedule-date-quick" id="scheduleDateQuick">
+                  <button type="button" class="schedule-date-chip selected" data-date-offset="0">오늘</button>
+                  <button type="button" class="schedule-date-chip" data-date-offset="1">내일</button>
+                  <button type="button" class="schedule-date-chip" data-date-offset="2">모레</button>
                 </div>
-                <div>
-                  <div class="schedule-modal-label">날짜</div>
-                  <select class="schedule-input" id="scheduleWhenInput">
-                    <option value="오늘">오늘</option>
-                    <option value="내일">내일</option>
-                  </select>
-                </div>
+                <input type="date" class="schedule-input" id="scheduleDateInput" aria-label="날짜 선택">
               </div>
+
+              <div class="schedule-modal-label">시간</div>
+              <input type="time" class="schedule-input" id="scheduleTimeInput" value="18:30">
 
               <div class="schedule-modal-label">장소 (선택)</div>
               <input type="text" class="schedule-input" id="scheduleLocInput" placeholder="예: 한강공원" maxlength="24">
@@ -3719,17 +3945,21 @@
       let reportCheckTimer = null;
       const state = {
         dogName: "보리",
+        userName: "",
+        userAge: "",
+        userGender: "",
+        userNickname: "",
         primaryPetSub: "",
         petPersonality: null,
         petAddQuizResult: null,
         dogTraitsFrom: null,
         resultEntryFrom: null,
-        schedules: [
-          { id: 1, type: "walk", ico: "🐕", title: "저녁 산책", time: "18:30", when: "오늘", loc: "한강공원" },
-          { id: 2, type: "medic", ico: "💉", title: "예방접종 예약", time: "10:00", when: "내일", loc: "행복동물병원" },
-        ],
+        schedules: [],
+        scheduleLogs: [],
         scheduleSelectedType: "walk",
         scheduleSelectedIco: "🐕",
+        currentWalkReports: [],
+        wesenPromptDismissed: false,
         walkParticipantIds: ["primary"],
         walkMemos: [],
         walkPottyRecords: [],
@@ -3750,6 +3980,185 @@
       const PETLOG_EXTRA_PETS_KEY = "petwalk_extra_pet_names";
       const PRIMARY_PET_KEY = "petwalk_primary_pet";
       const MANUAL_WALK_RECORDS_KEY = "petwalk_manual_walk_records";
+      const SCHEDULES_KEY = "petwalk_schedules";
+      const SCHEDULE_LOGS_KEY = "petwalk_schedule_logs";
+      const FONT_SIZE_KEY = "petwalk_font_size";
+      const WESEN_DISMISS_KEY = "petwalk_wesen_prompt_dismissed";
+      function getTodayStr() {
+        const now = new Date();
+        return now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-" + String(now.getDate()).padStart(2, "0");
+      }
+
+      function addDaysToDateStr(dateStr, days) {
+        const d = new Date(dateStr + "T12:00:00");
+        d.setDate(d.getDate() + days);
+        return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+      }
+
+      function formatScheduleDateLabel(dateStr) {
+        const today = getTodayStr();
+        const tomorrow = addDaysToDateStr(today, 1);
+        if (dateStr === today) return "오늘";
+        if (dateStr === tomorrow) return "내일";
+        const d = new Date(dateStr + "T00:00:00");
+        return (d.getMonth() + 1) + "월 " + d.getDate() + "일";
+      }
+
+      function normalizeScheduleEntry(s) {
+        const item = Object.assign({}, s);
+        if (!item.date) {
+          const today = getTodayStr();
+          item.date = item.when === "내일" ? addDaysToDateStr(today, 1) : today;
+        }
+        if (!item.when) item.when = formatScheduleDateLabel(item.date);
+        return item;
+      }
+
+      function readSchedulesFromStorage() {
+        try {
+          const raw = localStorage.getItem(SCHEDULES_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) return parsed.map(normalizeScheduleEntry);
+          }
+        } catch (_) {}
+        const today = getTodayStr();
+        const tomorrow = addDaysToDateStr(today, 1);
+        return [
+          { id: 1, type: "walk", ico: "🐕", title: "저녁 산책", time: "18:30", date: today, when: "오늘", loc: "한강공원" },
+          { id: 2, type: "medic", ico: "💉", title: "예방접종 예약", time: "10:00", date: tomorrow, when: "내일", loc: "행복동물병원" },
+        ];
+      }
+
+      function writeSchedulesToStorage() {
+        try {
+          localStorage.setItem(SCHEDULES_KEY, JSON.stringify(state.schedules));
+        } catch (_) {}
+      }
+
+      function readScheduleLogsFromStorage() {
+        try {
+          const raw = localStorage.getItem(SCHEDULE_LOGS_KEY);
+          const parsed = raw ? JSON.parse(raw) : [];
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (_) {
+          return [];
+        }
+      }
+
+      function writeScheduleLogsToStorage() {
+        try {
+          localStorage.setItem(SCHEDULE_LOGS_KEY, JSON.stringify(state.scheduleLogs));
+        } catch (_) {}
+      }
+
+      function completeScheduleById(scheduleId) {
+        const idx = state.schedules.findIndex((x) => x.id === scheduleId);
+        if (idx === -1) return;
+        const s = state.schedules[idx];
+        state.scheduleLogs.push({
+          id: Date.now(),
+          scheduleId: s.id,
+          date: s.date || getTodayStr(),
+          type: s.type,
+          ico: s.ico,
+          title: s.title,
+          time: s.time,
+          loc: s.loc || "",
+          completedAt: new Date().toISOString(),
+        });
+        state.schedules.splice(idx, 1);
+        writeSchedulesToStorage();
+        writeScheduleLogsToStorage();
+        renderSchedules();
+        if (typeof renderManualWalkRecords === "function") renderManualWalkRecords();
+        if (typeof renderJournalForDay === "function" && document.querySelector('.view[data-view="pet_journal"].active')) {
+          renderJournalForDay();
+        }
+      }
+
+      function applyFontSize(sizeKey) {
+        const key = ["small", "medium", "large"].includes(sizeKey) ? sizeKey : "medium";
+        const screen = document.querySelector(".phone .screen");
+        if (screen) {
+          screen.style.removeProperty("zoom");
+          screen.setAttribute("data-font-size", key);
+        }
+        try {
+          localStorage.setItem(FONT_SIZE_KEY, key);
+        } catch (_) {}
+      }
+
+      function loadFontSizePreference() {
+        let sizeKey = "medium";
+        try {
+          sizeKey = localStorage.getItem(FONT_SIZE_KEY) || "medium";
+        } catch (_) {}
+        applyFontSize(sizeKey);
+        const fontSizeGroup = document.getElementById("fontSizeGroup");
+        if (fontSizeGroup) {
+          fontSizeGroup.querySelectorAll(".font-opt").forEach((b) => {
+            b.classList.toggle("selected", b.dataset.font === sizeKey);
+          });
+        }
+      }
+
+      function shouldShowWesenPrompt() {
+        if (state.petPersonality) return false;
+        if (state.wesenPromptDismissed) return false;
+        try {
+          if (sessionStorage.getItem(WESEN_DISMISS_KEY) === "1") return false;
+        } catch (_) {}
+        return true;
+      }
+
+      function showWesenPrompt() {
+        const overlay = document.getElementById("wesenPromptOverlay");
+        if (overlay) {
+          overlay.classList.add("show");
+          overlay.setAttribute("aria-hidden", "false");
+        }
+      }
+
+      function hideWesenPrompt(persistDismiss) {
+        const overlay = document.getElementById("wesenPromptOverlay");
+        if (overlay) {
+          overlay.classList.remove("show");
+          overlay.setAttribute("aria-hidden", "true");
+        }
+        if (persistDismiss) {
+          state.wesenPromptDismissed = true;
+          try {
+            sessionStorage.setItem(WESEN_DISMISS_KEY, "1");
+          } catch (_) {}
+        }
+      }
+
+      function showWesenSkipConfirm() {
+        const overlay = document.getElementById("wesenSkipConfirmOverlay");
+        if (overlay) {
+          overlay.classList.add("show");
+          overlay.setAttribute("aria-hidden", "false");
+        }
+      }
+
+      function hideWesenSkipConfirm() {
+        const overlay = document.getElementById("wesenSkipConfirmOverlay");
+        if (overlay) {
+          overlay.classList.remove("show");
+          overlay.setAttribute("aria-hidden", "true");
+        }
+      }
+
+      function confirmWesenSkipAndGoHome() {
+        hideWesenSkipConfirm();
+        state.wesenPromptDismissed = false;
+        try { sessionStorage.removeItem(WESEN_DISMISS_KEY); } catch (_) {}
+        setActiveView("home");
+      }
+
+      state.schedules = readSchedulesFromStorage();
+      state.scheduleLogs = readScheduleLogsFromStorage();
       let currentWalkRouteName = "백빈건널목";
       let currentWalkRouteMeta = "1.2km · 20분";
       let currentWalkRouteInfo = { totalDistance: 1.2, estimatedDuration: 20 };
@@ -3772,7 +4181,22 @@
         return [pb, pa, ps].filter(Boolean).join(" · ");
       }
 
+      function syncUserProfileFromForm() {
+        const nameEl = document.getElementById("signupUserNameInput");
+        const ageEl = document.getElementById("signupUserAgeSelect");
+        const genderEl = document.getElementById("signupUserGenderSelect");
+        const nickEl = document.getElementById("signupNicknameInput");
+        if (nameEl) state.userName = nameEl.value.trim();
+        if (ageEl) state.userAge = ageEl.value;
+        if (genderEl) state.userGender = genderEl.value;
+        if (nickEl) state.userNickname = nickEl.value.trim();
+        const profileName = document.getElementById("mypageDogName");
+        const displayNick = state.userNickname || state.userName;
+        if (profileName && displayNick) profileName.textContent = displayNick + " 보호자";
+      }
+
       function savePrimaryPetProfileFromSignupForm() {
+        syncUserProfileFromForm();
         const nameIn = document.getElementById("dogNameInput");
         const name = (nameIn && nameIn.value ? nameIn.value.trim() : "") || (state.dogName || "").trim() || "반려견";
         state.dogName = name;
@@ -3856,6 +4280,7 @@
           badTags: opts.badTags || [],
           memo: opts.memo || "",
           walkMemos: opts.walkMemos || [],
+          walkReports: opts.walkReports || [],
           freeWalk: opts.freeWalk || false,
         };
         if (!state.completedWalkRecords) state.completedWalkRecords = [];
@@ -3872,6 +4297,14 @@
         const ps = sex && sex.selectedIndex >= 0 ? sex.options[sex.selectedIndex].text : "";
         return [pb, pa, ps].filter(Boolean).join(" · ");
       }
+      const ONBOARDING_PROGRESS = {
+        signup: 25,
+        userInfo: 50,
+        dogInfo: 75,
+        dogInfoTraits: 100,
+        dogInfoResult: 100,
+      };
+
       const progressByView = new Map([
         ["login", 0],
         ["signupMethod", 0],
@@ -3932,7 +4365,11 @@
           if (editInput && profileName) editInput.value = profileName.textContent;
         }
         if (name === "home") { syncHomeDogName(); syncHomeWalkStats(); renderSchedules(); syncHomeGreeting(); ensureWeatherLoaded(); ensureHomeMiniMap(); }
-        if (name === "walkHome") ensureWalkHomeMap();
+        if (name === "userInfo" || name === "dogInfo") syncUserProfileFromForm();
+        if (name === "walkHome") {
+          ensureWalkHomeMap();
+          if (shouldShowWesenPrompt()) showWesenPrompt();
+        }
         if (name === "walk") { ensureWalkLiveMap(); ensureWeatherLoaded(); }
         if (name === "explore") ensureExploreMap();
         if (name === "pet_monthly") { syncPetDogName(); syncPetPersonality(); initPetlogCarousel(); renderManualWalkRecords(); }
@@ -4700,12 +5137,12 @@
 
         function removeOne() {
           state.schedules = state.schedules.filter((x) => x.id !== scheduleId);
+          writeSchedulesToStorage();
           renderSchedules();
         }
 
         function completeOne() {
-          state.schedules = state.schedules.filter((x) => x.id !== scheduleId);
-          renderSchedules();
+          completeScheduleById(scheduleId);
         }
 
         pane.addEventListener("pointerdown", (e) => {
@@ -4762,7 +5199,10 @@
         const list = document.getElementById("homeScheduleList");
         if (!list) return;
 
-        if (!state.schedules.length) {
+        const today = getTodayStr();
+        const todaySchedules = state.schedules.filter((s) => (s.date || getTodayStr()) === today);
+
+        if (!todaySchedules.length) {
           list.innerHTML =
             '<div class="home-schedule-empty home-schedule-empty--action" role="button" tabindex="0"><strong>등록된 일정이 없어요</strong>이 박스를 눌러 오늘의 일정을 추가해 보세요</div>';
           const tap = list.querySelector(".home-schedule-empty--action");
@@ -4778,9 +5218,10 @@
           return;
         }
 
-        list.innerHTML = state.schedules
+        list.innerHTML = todaySchedules
           .map((s) => {
-            const metaTime = `${s.when} ${formatTime(s.time)}`;
+            const whenLabel = s.when || formatScheduleDateLabel(s.date || today);
+            const metaTime = `${whenLabel} ${formatTime(s.time)}`;
             const metaLoc = s.loc ? escapeHtml(s.loc) : "";
             const bellSvg = SCHEDULE_BELL_SVG[s.type] || SCHEDULE_BELL_SVG.walk;
             return (
@@ -4814,6 +5255,94 @@
         const period = hh < 12 ? "오전" : "오후";
         const h12 = hh % 12 || 12;
         return `${period} ${h12}:${String(mm).padStart(2, "0")}`;
+      }
+
+      function formatCompletedTimeFromIso(iso) {
+        if (!iso) return "";
+        const d = new Date(iso);
+        if (Number.isNaN(d.getTime())) return "";
+        return formatTime(d.getHours() + ":" + String(d.getMinutes()).padStart(2, "0"));
+      }
+
+      function getScheduleTypeClass(type) {
+        return ["walk", "medic", "feed", "bath", "play"].includes(type) ? type : "walk";
+      }
+
+      function getScheduleTypeColor(type) {
+        const map = { walk: "#10A34E", medic: "#3b82f6", feed: "#f97316", bath: "#06b6d4", play: "#ec4899" };
+        return map[getScheduleTypeClass(type)] || map.walk;
+      }
+
+      function getJournalSelectedDateStr() {
+        const day = state.journalSelectedDay || new Date().getDate();
+        return calViewYear + "-" + String(calViewMonth + 1).padStart(2, "0") + "-" + String(day).padStart(2, "0");
+      }
+
+      function getPetlogScheduleDefaultDate() {
+        if (state.journalSelectedDay) return getJournalSelectedDateStr();
+        const now = new Date();
+        if (calViewYear === now.getFullYear() && calViewMonth === now.getMonth()) return getTodayStr();
+        return calViewYear + "-" + String(calViewMonth + 1).padStart(2, "0") + "-01";
+      }
+
+      function openScheduleModalForPetlog(presetDate) {
+        openScheduleModal(presetDate || getPetlogScheduleDefaultDate(), "할일 추가");
+      }
+
+      function buildJournalPendingScheduleHtml(dayPendingSchedules) {
+        if (!dayPendingSchedules.length) return "";
+        let html = '<section class="journal-schedule-block">';
+        html += '<div class="journal-schedule-head">';
+        html += '<h3 class="journal-schedule-head-title">등록한 할일</h3>';
+        html += '<span class="journal-schedule-head-count journal-schedule-head-count--pending">' + dayPendingSchedules.length + "건</span>";
+        html += "</div><div class=\"journal-schedule-list\">";
+        dayPendingSchedules.forEach((s) => {
+          const typeClass = getScheduleTypeClass(s.type);
+          const timeLabel = formatTime(s.time);
+          const metaParts = [];
+          if (timeLabel) metaParts.push(timeLabel);
+          if (s.loc) metaParts.push(escapeHtml(s.loc));
+          const meta = metaParts.join(" · ") || "예정된 할일";
+          html += '<article class="journal-schedule-item journal-schedule-item--' + typeClass + '">';
+          html += '<div class="journal-schedule-ico" aria-hidden="true">' + (s.ico || "📌") + "</div>";
+          html += '<div class="journal-schedule-body">';
+          html += '<div class="journal-schedule-title">' + escapeHtml(s.title || "할일") + "</div>";
+          html += '<div class="journal-schedule-meta">' + meta + "</div>";
+          html += "</div>";
+          html += '<span class="journal-schedule-upcoming">예정</span>';
+          html += "</article>";
+        });
+        html += "</div></section>";
+        return html;
+      }
+
+      function buildJournalScheduleHtml(dayScheduleLogs) {
+        if (!dayScheduleLogs.length) return "";
+        let html = '<section class="journal-schedule-block">';
+        html += '<div class="journal-schedule-head">';
+        html += '<h3 class="journal-schedule-head-title">완료한 할일</h3>';
+        html += '<span class="journal-schedule-head-count">' + dayScheduleLogs.length + "건</span>";
+        html += "</div><div class=\"journal-schedule-list\">";
+        dayScheduleLogs.forEach((log) => {
+          const typeClass = getScheduleTypeClass(log.type);
+          const timeLabel = formatTime(log.time);
+          const completedLabel = formatCompletedTimeFromIso(log.completedAt);
+          const metaParts = [];
+          if (timeLabel) metaParts.push(timeLabel);
+          if (log.loc) metaParts.push(escapeHtml(log.loc));
+          if (completedLabel) metaParts.push(completedLabel + " 완료");
+          const meta = metaParts.join(" · ") || "일정 완료";
+          html += '<article class="journal-schedule-item journal-schedule-item--' + typeClass + '">';
+          html += '<div class="journal-schedule-ico" aria-hidden="true">' + (log.ico || "📌") + "</div>";
+          html += '<div class="journal-schedule-body">';
+          html += '<div class="journal-schedule-title">' + escapeHtml(log.title || "일정") + "</div>";
+          html += '<div class="journal-schedule-meta">' + meta + "</div>";
+          html += "</div>";
+          html += '<span class="journal-schedule-done">✓ 완료</span>';
+          html += "</article>";
+        });
+        html += "</div></section>";
+        return html;
       }
 
       function escapeHtml(s) {
@@ -4908,6 +5437,7 @@
 
       function beginWalkNavigationOrPicker(route) {
         if (!route.free) state.freeWalk = false;
+        state.currentWalkReports = [];
         const dogs = getRegisteredWalkDogs();
         if (dogs.length >= 2) {
           state.walkDogPickMode = "start";
@@ -5069,10 +5599,13 @@
         setActiveView("walk");
       }
 
-      function openScheduleModal() {
+      function isValidDateStr(str) {
+        return typeof str === "string" && /^\d{4}-\d{2}-\d{2}$/.test(str);
+      }
+
+      function openScheduleModal(presetDate, modalTitle) {
         const overlay = document.getElementById("scheduleOverlay");
         if (!overlay) return;
-        // reset form
         state.scheduleSelectedType = "walk";
         state.scheduleSelectedIco = "🐕";
         document.querySelectorAll("#scheduleTypeGrid .schedule-type-btn").forEach((b) => {
@@ -5080,13 +5613,37 @@
         });
         const t = document.getElementById("scheduleTitleInput"); if (t) t.value = "";
         const tm = document.getElementById("scheduleTimeInput"); if (tm) tm.value = "18:30";
-        const wh = document.getElementById("scheduleWhenInput"); if (wh) wh.value = "오늘";
         const lc = document.getElementById("scheduleLocInput"); if (lc) lc.value = "";
+        setScheduleModalDate(isValidDateStr(presetDate) ? presetDate : getTodayStr());
+        const titleEl = document.querySelector("#scheduleOverlay .schedule-modal-title");
+        const subEl = document.querySelector("#scheduleOverlay .schedule-modal-sub");
+        if (titleEl) titleEl.textContent = modalTitle || "일정 추가";
+        if (subEl) subEl.textContent = modalTitle === "할일 추가"
+          ? "날짜와 시간을 선택해 할일을 등록해 보세요. 해당 날짜가 되면 홈 화면에 표시돼요."
+          : "날짜와 시간을 선택해 반려견 일정을 등록해 보세요.";
         overlay.classList.add("show");
       }
       function closeScheduleModal() {
         const overlay = document.getElementById("scheduleOverlay");
         if (overlay) overlay.classList.remove("show");
+      }
+
+      function syncScheduleDateQuickChips(dateStr) {
+        const quick = document.getElementById("scheduleDateQuick");
+        if (!quick) return;
+        const today = getTodayStr();
+        quick.querySelectorAll(".schedule-date-chip").forEach((chip) => {
+          const offset = Number(chip.dataset.dateOffset || 0);
+          const chipDate = addDaysToDateStr(today, offset);
+          chip.classList.toggle("selected", chipDate === dateStr);
+        });
+      }
+
+      function setScheduleModalDate(dateStr) {
+        const dt = document.getElementById("scheduleDateInput");
+        const value = isValidDateStr(dateStr) ? dateStr : getTodayStr();
+        if (dt) dt.value = value;
+        syncScheduleDateQuickChips(value);
       }
 
       // 위치 칩 클릭 시 날씨 강제 새로고침
@@ -5111,7 +5668,7 @@
         const typeGrid = document.getElementById("scheduleTypeGrid");
         const titleInput = document.getElementById("scheduleTitleInput");
 
-        if (editBtn) editBtn.addEventListener("click", openScheduleModal);
+        if (editBtn) editBtn.addEventListener("click", () => openScheduleModal());
         if (cancelBtn) cancelBtn.addEventListener("click", closeScheduleModal);
         if (overlay) overlay.addEventListener("click", (e) => {
           if (e.target === overlay) closeScheduleModal();
@@ -5124,10 +5681,29 @@
           state.scheduleSelectedType = btn.dataset.type;
           state.scheduleSelectedIco = btn.dataset.ico;
         });
+        const dateQuick = document.getElementById("scheduleDateQuick");
+        const dateInput = document.getElementById("scheduleDateInput");
+        if (dateQuick) {
+          dateQuick.addEventListener("click", (e) => {
+            const chip = e.target.closest(".schedule-date-chip");
+            if (!chip) return;
+            const offset = Number(chip.dataset.dateOffset || 0);
+            setScheduleModalDate(addDaysToDateStr(getTodayStr(), offset));
+          });
+        }
+        if (dateInput) {
+          dateInput.addEventListener("change", () => {
+            setScheduleModalDate(dateInput.value || getTodayStr());
+          });
+          dateInput.addEventListener("input", () => {
+            setScheduleModalDate(dateInput.value || getTodayStr());
+          });
+        }
         if (saveBtn) saveBtn.addEventListener("click", () => {
           const title = (titleInput && titleInput.value.trim()) || "";
           const time = (document.getElementById("scheduleTimeInput") || {}).value || "";
-          const when = (document.getElementById("scheduleWhenInput") || {}).value || "오늘";
+          const dateInput = document.getElementById("scheduleDateInput");
+          const date = (dateInput && dateInput.value) || getTodayStr();
           const loc = (document.getElementById("scheduleLocInput") || {}).value.trim() || "";
           if (!title) {
             if (titleInput) {
@@ -5145,11 +5721,17 @@
             ico: state.scheduleSelectedIco,
             title,
             time,
-            when,
+            date,
+            when: formatScheduleDateLabel(date),
             loc,
           });
+          writeSchedulesToStorage();
           closeScheduleModal();
           renderSchedules();
+          if (typeof renderManualWalkRecords === "function") renderManualWalkRecords();
+          if (typeof renderJournalForDay === "function" && document.querySelector('.view[data-view="pet_journal"].active')) {
+            renderJournalForDay();
+          }
         });
         renderSchedules();
       })();
@@ -5204,9 +5786,51 @@
       }
 
       function handleProgress(viewName) {
-        const value = progressByView.has(viewName) ? progressByView.get(viewName) : 100;
-        progressEls.forEach(el => {
-          el.style.width = `${value}%`;
+        const value = ONBOARDING_PROGRESS[viewName] ?? (progressByView.has(viewName) ? progressByView.get(viewName) : 100);
+        const viewEl = document.querySelector(`.view[data-view="${viewName}"]`);
+        if (viewEl) {
+          viewEl.querySelectorAll("[data-progress]").forEach((el) => {
+            el.style.width = `${value}%`;
+          });
+        }
+      }
+
+      function openSelectById(selectId) {
+        const sel = document.getElementById(selectId);
+        if (!sel) return;
+        sel.focus();
+        if (typeof sel.showPicker === "function") {
+          try {
+            sel.showPicker();
+            return;
+          } catch (_) {}
+        }
+        sel.click();
+      }
+
+      function bindSelectArrowTriggers() {
+        document.querySelectorAll("[data-select-trigger]").forEach((arrow) => {
+          arrow.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const selectId = arrow.getAttribute("data-select-trigger");
+            if (selectId) openSelectById(selectId);
+          });
+        });
+      }
+
+      function bindPasswordToggle(inputId, toggleId) {
+        const pwEl = document.getElementById(inputId);
+        const toggle = document.getElementById(toggleId);
+        if (!pwEl || !toggle) return;
+        toggle.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const show = pwEl.type === "password";
+          pwEl.type = show ? "text" : "password";
+          toggle.classList.toggle("is-visible", show);
+          toggle.setAttribute("aria-pressed", show ? "true" : "false");
+          toggle.setAttribute("aria-label", show ? "비밀번호 숨기기" : "비밀번호 표시");
         });
       }
 
@@ -5296,7 +5920,7 @@
         if (navTarget && nav === "pet_journal") {
           const dayEl = navTarget.closest(".cal-day");
           if (dayEl) {
-            const dayNum = parseInt(dayEl.childNodes[0] && dayEl.childNodes[0].textContent);
+            const dayNum = parseInt(dayEl.dataset.day || (dayEl.querySelector(".cal-day-num") || {}).textContent, 10);
             if (dayNum) state.journalSelectedDay = dayNum;
           }
         }
@@ -5606,18 +6230,7 @@
       document.getElementById("homeLocationAddBtn")?.addEventListener("click", addHomeLocation);
 
       (function bindLoginPwToggle() {
-        const pwEl = document.getElementById("loginPwField");
-        const toggle = document.getElementById("loginPwToggle");
-        if (!pwEl || !toggle) return;
-        toggle.addEventListener("click", (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          const show = pwEl.type === "password";
-          pwEl.type = show ? "text" : "password";
-          toggle.classList.toggle("is-visible", show);
-          toggle.setAttribute("aria-pressed", show ? "true" : "false");
-          toggle.setAttribute("aria-label", show ? "비밀번호 숨기기" : "비밀번호 표시");
-        });
+        bindPasswordToggle("loginPwField", "loginPwToggle");
       })();
 
       // 로그인 버튼 → 홈 이동 (개발 바로가기 포함)
@@ -5675,6 +6288,14 @@
           signupNext.classList.toggle("is-enabled", ok);
         }
       }
+      bindPasswordToggle("passwordInput", "signupPwToggle");
+      bindSelectArrowTriggers();
+      ["signupUserNameInput", "signupNicknameInput", "signupUserAgeSelect", "signupUserGenderSelect"].forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener("input", syncUserProfileFromForm);
+        el.addEventListener("change", syncUserProfileFromForm);
+      });
       if (tosRequired) tosRequired.addEventListener("change", syncSignupForm);
       [emailInput, passwordInput].forEach((el) => {
         if (!el) return;
@@ -6127,6 +6748,10 @@
           if (!btn) return;
           const label = btn.getAttribute("data-report") || "";
           const emoji = btn.getAttribute("data-emoji") || "📍";
+          const now = new Date();
+          const timeStr = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+          if (!state.currentWalkReports) state.currentWalkReports = [];
+          state.currentWalkReports.push({ label, emoji, time: timeStr });
           addWalkReportMarker(emoji, label);
           addWalkTimelineEntry(emoji + " 제보 · " + label, "#8b5cf6");
         });
@@ -6280,10 +6905,10 @@
 
       // Night notification depends on walk recommendation toggle
       const toggleWalkReco = document.getElementById("toggleWalkReco");
-      const nightNotiRow = document.getElementById("nightNotiRow");
+      const nightNotiBlock = document.getElementById("nightNotiBlock");
       function syncNightNoti() {
-        if (!toggleWalkReco || !nightNotiRow) return;
-        nightNotiRow.classList.toggle("disabled", !toggleWalkReco.checked);
+        if (!toggleWalkReco || !nightNotiBlock) return;
+        nightNotiBlock.classList.toggle("disabled", !toggleWalkReco.checked);
       }
       if (toggleWalkReco) {
         toggleWalkReco.addEventListener("change", syncNightNoti);
@@ -6305,11 +6930,13 @@
       if (fontSizeGroup) {
         fontSizeGroup.addEventListener("click", (e) => {
           const btn = e.target.closest(".font-opt");
-          if (!btn) return;
+          if (!btn || !btn.dataset.font) return;
           fontSizeGroup.querySelectorAll(".font-opt").forEach(b => b.classList.remove("selected"));
           btn.classList.add("selected");
+          applyFontSize(btn.dataset.font);
         });
       }
+      loadFontSizePreference();
 
       const saveNicknameBtn = document.getElementById("saveNicknameBtn");
       if (saveNicknameBtn) {
@@ -6429,6 +7056,7 @@
           badTags: badTags,
           memo: (reviewMemo && reviewMemo.value) ? reviewMemo.value.trim() : "",
           walkMemos: state.walkMemos || [],
+          walkReports: state.currentWalkReports || [],
           freeWalk: state.freeWalk || false,
         });
       }
@@ -6454,8 +7082,14 @@
       const calGrid = document.getElementById("calGrid");
       const CAL_DOG_COLORS = ["#10A34E", "#F59E0B", "#6366F1", "#EC4899", "#14B8A6", "#F97316"];
       var renderCalDogChips = null;
+      var applyCalFilter = null;
       var calViewYear = new Date().getFullYear();
       var calViewMonth = new Date().getMonth();
+
+      function findCalDay(dayNum) {
+        if (!calGrid) return null;
+        return calGrid.querySelector('.cal-day[data-day="' + dayNum + '"]');
+      }
 
       function buildCalendar() {
         if (!calGrid) return;
@@ -6477,7 +7111,7 @@
         }
         for (let d = 1; d <= daysInMonth; d++) {
           const isToday = isCurrentMonth && d === todayDate;
-          html += '<div class="cal-day' + (isToday ? ' today' : '') + '">' + d + '</div>';
+          html += '<div class="cal-day' + (isToday ? ' today' : '') + '" data-day="' + d + '"><span class="cal-day-num">' + d + '</span></div>';
         }
         calGrid.innerHTML = html;
       }
@@ -6507,21 +7141,36 @@
         const day = state.journalSelectedDay || new Date().getDate();
         const dateStr = year + "-" + String(month).padStart(2, "0") + "-" + String(day).padStart(2, "0");
 
+        const allRecords = readManualWalkRecords().concat(readCompletedWalkRecords());
+        const dayRecords = allRecords.filter(r => r.date === dateStr);
+        const dayScheduleLogs = (state.scheduleLogs || []).filter((l) => l.date === dateStr);
+        const dayPendingSchedules = state.schedules.filter((s) => (s.date || getTodayStr()) === dateStr);
+
         const dateLabel = document.getElementById("journalDateLabel");
         const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
         const dateObj = new Date(dateStr + "T00:00:00");
         const dayName = dayNames[dateObj.getDay()] || "";
-        if (dateLabel) dateLabel.textContent = month + "월 " + day + "일 (" + dayName + ") 산책 기록";
-
-        const allRecords = readManualWalkRecords().concat(readCompletedWalkRecords());
-        const dayRecords = allRecords.filter(r => r.date === dateStr);
+        if (dateLabel) {
+          let suffix = "기록";
+          const hasWalk = dayRecords.length > 0;
+          const hasPending = dayPendingSchedules.length > 0;
+          const hasDone = dayScheduleLogs.length > 0;
+          if (hasWalk && (hasPending || hasDone)) suffix = "산책 · 할일";
+          else if (hasWalk) suffix = "산책 기록";
+          else if (hasPending && hasDone) suffix = "할일";
+          else if (hasPending) suffix = "등록한 할일";
+          else if (hasDone) suffix = "완료한 할일";
+          dateLabel.textContent = month + "월 " + day + "일 (" + dayName + ") " + suffix;
+        }
 
         const contentEl = document.getElementById("journalContent");
         const emptyEl = document.getElementById("journalEmpty");
+        const emptyTextEl = document.getElementById("journalEmptyText");
         if (!contentEl) return;
 
-        if (dayRecords.length === 0) {
+        if (dayRecords.length === 0 && dayScheduleLogs.length === 0 && dayPendingSchedules.length === 0) {
           contentEl.innerHTML = "";
+          if (emptyTextEl) emptyTextEl.textContent = "이 날짜에 산책·할일 기록이 없습니다.";
           if (emptyEl) emptyEl.style.display = "block";
           return;
         }
@@ -6535,6 +7184,15 @@
         };
 
         let html = "";
+
+        if (dayPendingSchedules.length) {
+          html += buildJournalPendingScheduleHtml(dayPendingSchedules);
+        }
+
+        if (dayScheduleLogs.length) {
+          html += buildJournalScheduleHtml(dayScheduleLogs);
+        }
+
         dayRecords.forEach((rec, idx) => {
           const dist = Number(rec.distance || 0).toFixed(1);
           const dur = rec.durationMin || 0;
@@ -6576,6 +7234,11 @@
           if (walkMemos.length) {
             html += '<div class="mypage-row mypage-row--sub" style="cursor:default;"><span class="mypage-row-ico cyan">💬</span><span class="mypage-row-text">산책 중 메모<span class="mypage-row-hint">' + escapeHtml(walkMemos.join(" / ")) + '</span></span></div>';
           }
+          const walkReports = rec.walkReports || [];
+          if (walkReports.length) {
+            const reportText = walkReports.map((r) => (r.emoji || "📍") + " " + (r.label || "") + (r.time ? " (" + r.time + ")" : "")).join(", ");
+            html += '<div class="mypage-row mypage-row--sub" style="cursor:default;"><span class="mypage-row-ico purple">📣</span><span class="mypage-row-text">산책 중 제보<span class="mypage-row-hint">' + escapeHtml(reportText) + '</span></span></div>';
+          }
           html += '</div></div>';
         });
 
@@ -6616,19 +7279,34 @@
         });
 
         if (calGrid) {
-          calGrid.querySelectorAll(".cal-day.manual-walked").forEach((day) => {
-            day.classList.remove("manual-walked");
-            day.querySelectorAll(".cal-dot.manual-dot").forEach((dot) => dot.remove());
+          calGrid.querySelectorAll(".cal-day:not(.empty)").forEach((day) => {
+            day.classList.remove("manual-walked", "walked", "has-schedule-done", "has-schedule-pending", "has-walk");
+            day.removeAttribute("data-nav");
+            delete day.dataset.dogs;
+            day.querySelectorAll(".cal-dots").forEach((dots) => dots.remove());
           });
           monthRecords.forEach((rec) => {
             const date = new Date(rec.date + "T00:00:00");
             const dayNum = date.getDate();
-            const day = Array.from(calGrid.querySelectorAll(".cal-day")).find((el) => el.childNodes[0] && String(el.childNodes[0].textContent).trim() === String(dayNum));
+            const day = findCalDay(dayNum);
             if (!day) return;
             const dogs = (rec.dogIds || []).map(normalizeDogIdForCalendar);
             const prevDogs = (day.dataset.dogs || "").split(",").map((s) => s.trim()).filter(Boolean);
             day.dataset.dogs = Array.from(new Set(prevDogs.concat(dogs))).join(",");
-            day.classList.add("walked", "manual-walked");
+            day.classList.add("manual-walked", "walked", "has-walk");
+            day.setAttribute("data-nav", "pet_journal");
+          });
+
+          const monthScheduleLogs = (state.scheduleLogs || []).filter((log) => {
+            const d = new Date(log.date + "T00:00:00");
+            return d.getFullYear() === calViewYear && d.getMonth() === calViewMonth;
+          });
+          monthScheduleLogs.forEach((log) => {
+            const date = new Date(log.date + "T00:00:00");
+            const dayNum = date.getDate();
+            const day = findCalDay(dayNum);
+            if (!day) return;
+            day.classList.add("walked", "has-schedule-done");
             day.setAttribute("data-nav", "pet_journal");
             let dots = day.querySelector(".cal-dots");
             if (!dots) {
@@ -6636,15 +7314,46 @@
               dots.className = "cal-dots";
               day.appendChild(dots);
             }
-            dogs.forEach((dogId) => {
+            const dot = document.createElement("span");
+            dot.className = "cal-dot cal-task-done-dot";
+            dot.setAttribute("aria-hidden", "true");
+            dots.appendChild(dot);
+          });
+
+          const monthPendingSchedules = state.schedules.filter((s) => {
+            const d = new Date((s.date || getTodayStr()) + "T00:00:00");
+            return d.getFullYear() === calViewYear && d.getMonth() === calViewMonth;
+          });
+          const pendingByDay = {};
+          monthPendingSchedules.forEach((s) => {
+            const dayNum = new Date((s.date || getTodayStr()) + "T00:00:00").getDate();
+            if (!pendingByDay[dayNum]) pendingByDay[dayNum] = [];
+            pendingByDay[dayNum].push(s);
+          });
+          Object.keys(pendingByDay).forEach((dayKey) => {
+            const dayNum = Number(dayKey);
+            const items = pendingByDay[dayNum];
+            const day = findCalDay(dayNum);
+            if (!day || !items.length) return;
+            day.classList.add("walked", "has-schedule-pending");
+            day.setAttribute("data-nav", "pet_journal");
+            let dots = day.querySelector(".cal-dots");
+            if (!dots) {
+              dots = document.createElement("span");
+              dots.className = "cal-dots";
+              day.appendChild(dots);
+            }
+            items.forEach(() => {
               const dot = document.createElement("span");
-              dot.className = "cal-dot manual-dot";
-              dot.dataset.dog = dogId;
-              dot.style.background = getDogColorById(dogId);
+              dot.className = "cal-dot cal-task-pending-dot";
+              dot.dataset.taskPending = "1";
+              dot.setAttribute("aria-hidden", "true");
               dots.appendChild(dot);
             });
           });
         }
+
+        if (applyCalFilter) applyCalFilter();
 
 
         const totalCount = monthRecords.length;
@@ -6670,24 +7379,23 @@
         if (petlogTotalHours) petlogTotalHours.textContent = allTotalH.toFixed(1) + "h";
       }
       if (calDogFilter && calGrid) {
-        function applyCalFilter() {
+        applyCalFilter = function() {
           const activeDogs = Array.from(calDogFilter.querySelectorAll(".cal-dog-chip.active")).map(c => c.dataset.dog);
-          calGrid.querySelectorAll(".cal-day").forEach(day => {
+          calGrid.querySelectorAll(".cal-day:not(.empty)").forEach(day => {
+            const hasSchedule = day.classList.contains("has-schedule-done") || day.classList.contains("has-schedule-pending");
             const dogsAttr = day.dataset.dogs;
-            if (!dogsAttr) return;
-            const dogList = dogsAttr.split(",").map(s => s.trim()).filter(Boolean);
-            let anyVisible = false;
-            day.querySelectorAll(".cal-dot").forEach(dot => {
-              const visible = activeDogs.includes(dot.dataset.dog);
-              dot.style.display = visible ? "" : "none";
-              if (visible) anyVisible = true;
-            });
-            const matched = dogList.some(d => activeDogs.includes(d));
-            day.classList.toggle("walked", matched);
-            if (!matched) day.removeAttribute("data-nav");
+            let showWalk = false;
+            if (dogsAttr) {
+              const dogList = dogsAttr.split(",").map(s => s.trim()).filter(Boolean);
+              showWalk = dogList.some(d => activeDogs.includes(d));
+            }
+            day.classList.toggle("has-walk", showWalk);
+            const showDay = showWalk || hasSchedule;
+            day.classList.toggle("walked", showDay);
+            if (!showDay) day.removeAttribute("data-nav");
             else day.setAttribute("data-nav", "pet_journal");
           });
-        }
+        };
 
         renderCalDogChips = function() {
           const primaryName = (state.dogName || "").trim() || "반려견";
@@ -6720,30 +7428,85 @@
 
       (function initPetJournalShare() {
         var shareBtn = document.getElementById("petJournalShareBtn");
+        var shareOverlay = document.getElementById("petJournalShareOverlay");
+        var shareCancel = document.getElementById("petJournalShareCancel");
+        var sharePhotoBtn = document.getElementById("petJournalSharePhoto");
+        var shareLinkBtn = document.getElementById("petJournalShareLink");
         var shareToast = document.getElementById("petJournalShareToast");
         if (!shareBtn) return;
-        shareBtn.addEventListener("click", function() {
-          var url = window.location.href;
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(url).then(function() { showShareToast(); }).catch(function() { fallbackCopy(url); });
-          } else {
-            fallbackCopy(url);
-          }
-        });
+
+        function openSharePopup() {
+          if (!shareOverlay) return;
+          shareOverlay.classList.add("show");
+          shareOverlay.setAttribute("aria-hidden", "false");
+        }
+
+        function closeSharePopup() {
+          if (!shareOverlay) return;
+          shareOverlay.classList.remove("show");
+          shareOverlay.setAttribute("aria-hidden", "true");
+        }
+
+        function showShareToast(msg) {
+          if (!shareToast) return;
+          shareToast.textContent = msg || "완료되었습니다!";
+          shareToast.classList.add("show");
+          clearTimeout(showShareToast._t);
+          showShareToast._t = setTimeout(function() { shareToast.classList.remove("show"); }, 1800);
+        }
+
         function fallbackCopy(text) {
           var ta = document.createElement("textarea");
           ta.value = text;
           ta.style.cssText = "position:fixed;left:-9999px;top:-9999px;opacity:0";
           document.body.appendChild(ta);
           ta.select();
-          try { document.execCommand("copy"); showShareToast(); } catch(e) {}
+          try { document.execCommand("copy"); showShareToast("링크가 복사되었습니다!"); } catch(e) {}
           document.body.removeChild(ta);
         }
-        function showShareToast() {
-          if (!shareToast) return;
-          shareToast.classList.add("show");
-          clearTimeout(showShareToast._t);
-          showShareToast._t = setTimeout(function() { shareToast.classList.remove("show"); }, 1800);
+
+        shareBtn.addEventListener("click", openSharePopup);
+        if (shareCancel) shareCancel.addEventListener("click", closeSharePopup);
+        if (shareOverlay) {
+          shareOverlay.addEventListener("click", function(e) {
+            if (e.target === shareOverlay) closeSharePopup();
+          });
+        }
+
+        if (shareLinkBtn) {
+          shareLinkBtn.addEventListener("click", function() {
+            var url = window.location.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(url).then(function() { showShareToast("링크가 복사되었습니다!"); }).catch(function() { fallbackCopy(url); });
+            } else {
+              fallbackCopy(url);
+            }
+            closeSharePopup();
+          });
+        }
+
+        if (sharePhotoBtn) {
+          sharePhotoBtn.addEventListener("click", function() {
+            const target = document.getElementById("journalCaptureArea");
+            if (!target || typeof html2canvas !== "function") {
+              showShareToast("이미지 저장을 준비 중이에요. 잠시 후 다시 시도해 주세요.");
+              return;
+            }
+            closeSharePopup();
+            html2canvas(target, { backgroundColor: "#ffffff", scale: 2, useCORS: true }).then(function(canvas) {
+              canvas.toBlob(function(blob) {
+                if (!blob) return;
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(blob);
+                a.download = "petwalk-journal-" + (state.journalSelectedDay || "record") + ".png";
+                a.click();
+                URL.revokeObjectURL(a.href);
+                showShareToast("사진이 저장되었습니다!");
+              }, "image/png");
+            }).catch(function() {
+              showShareToast("이미지 저장에 실패했어요.");
+            });
+          });
         }
       })();
 
@@ -6796,6 +7559,12 @@
           e.preventDefault();
           e.stopPropagation();
           openManualRecordModal();
+        }
+        const taskBtn = e.target && e.target.closest && e.target.closest("#petlogAddTaskBtn, #journalAddTaskBtn");
+        if (taskBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          openScheduleModalForPetlog(taskBtn.id === "journalAddTaskBtn" ? getJournalSelectedDateStr() : undefined);
         }
       });
       if (manualRecordClose) manualRecordClose.addEventListener("click", closeManualRecordModal);
@@ -7389,8 +8158,42 @@
         if (dogInfoToTraitsBtn) {
           dogInfoToTraitsBtn.addEventListener("click", () => {
             state.dogTraitsFrom = null;
+            savePrimaryPetProfileFromSignupForm();
           });
         }
+        const traitsSkipWesenBtn = document.getElementById("traitsSkipWesenBtn");
+        if (traitsSkipWesenBtn) {
+          traitsSkipWesenBtn.addEventListener("click", () => {
+            showWesenSkipConfirm();
+          });
+        }
+      })();
+
+      (function bindWesenSkipConfirm() {
+        document.getElementById("wesenSkipConfirmStay")?.addEventListener("click", () => {
+          hideWesenSkipConfirm();
+        });
+        document.getElementById("wesenSkipConfirmGo")?.addEventListener("click", () => {
+          confirmWesenSkipAndGoHome();
+        });
+        document.getElementById("wesenSkipConfirmOverlay")?.addEventListener("click", (e) => {
+          if (e.target.id === "wesenSkipConfirmOverlay") hideWesenSkipConfirm();
+        });
+      })();
+
+      (function bindWesenPrompt() {
+        document.getElementById("wesenPromptTestBtn")?.addEventListener("click", () => {
+          hideWesenPrompt(false);
+          state.dogTraitsFrom = null;
+          clearQuizStateAndUI();
+          setActiveView("dogInfoTraits");
+        });
+        document.getElementById("wesenPromptLaterBtn")?.addEventListener("click", () => {
+          hideWesenPrompt(true);
+        });
+        document.getElementById("wesenPromptOverlay")?.addEventListener("click", (e) => {
+          if (e.target.id === "wesenPromptOverlay") hideWesenPrompt(true);
+        });
       })();
 
       function updateQuizProgress() {
@@ -7425,6 +8228,7 @@
         quizSubmitBtn.addEventListener("click", () => {
           if (Object.keys(quizState).length < 8) return;
           renderResult();
+          hideWesenPrompt(true);
           setActiveView("dogInfoResult");
         });
       }
