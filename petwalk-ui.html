@@ -18,7 +18,7 @@
     .phone{background:var(--card);border-radius:34px;padding:18px 14px 16px;width:max-content;height:max-content;box-shadow:var(--shadow-black-stress);border:1px solid rgba(0,0,0,.06);position:relative;overflow:hidden;flex-shrink:0}
     .screen{border-radius:28px;background:var(--bg-alt);width:var(--device-w);height:var(--device-h);padding:12px;position:relative;overflow:hidden;box-sizing:border-box}
     .screen.screen--home{background:#ffffff;padding:0}
-    .view[data-view="home"]{padding:0 14px 12px;background:#ffffff}
+    .view[data-view="home"]{padding:0 20px 12px;background:#ffffff}
     .row{display:flex;align-items:center;justify-content:space-between}.muted{color:var(--muted);font-size:12px}.h2{font-size:20px;font-weight:800;margin:0}
     .chip{font-size:12px;background:rgba(16,163,78,.1);color:var(--main);padding:7px 10px;border-radius:999px;font-weight:700}
     .card{background:var(--white);border:1px solid rgba(0,0,0,.06);border-radius:var(--radius);box-shadow:var(--shadow-black-main);padding:12px;margin-top:10px}
@@ -67,7 +67,8 @@
     .tabs{position:absolute;left:0;right:0;bottom:0;background:#ffffff;border-top:none;border-radius:7px 7px 0 0;padding:8px 10px 10px;box-shadow:none}
     .tabs-inner{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;gap:2px;max-width:100%}
     .tab-hit{background:none;border:none;padding:6px 2px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:#989da1;font-size:11px;font-weight:600;font-family:"Pretendard",sans-serif;-webkit-tap-highlight-color:transparent}
-    .tab-hit .tab-ico{font-size:20px;line-height:1;opacity:.7}
+    .tab-hit .tab-ico{display:flex;align-items:center;justify-content:center;width:24px;height:24px;line-height:1;opacity:.55}
+    .tab-hit .tab-ico img{width:24px;height:24px;object-fit:contain;display:block}
     .tab-hit.active{color:var(--main)}
     .tab-hit.active .tab-ico{opacity:1}
     .view[data-view="walk"]{position:relative}
@@ -101,7 +102,7 @@
     .home-bg{background:var(--white);border-radius:20px;padding:8px;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04)}
 
     /* === Home (Figma 1027:670 메인 화면) === */
-    .home-screen{display:flex;flex-direction:column;gap:10px;padding:0 0 12px;background:#ffffff}
+    .home-screen{display:flex;flex-direction:column;gap:25px;padding:0 0 12px;background:#ffffff}
     .home-topbar{
       position:relative;box-sizing:border-box;margin:0;padding:14px 0 10px;
       background:transparent;border:none;border-radius:0;box-shadow:none;
@@ -143,40 +144,40 @@
     .home-location-toast{position:absolute;left:50%;top:132px;z-index:4300;transform:translateX(-50%) translateY(-8px);background:#252A32;color:#fff;border-radius:6px;padding:10px 16px;font-size:11px;font-weight:800;box-shadow:0 6px 20px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;white-space:nowrap}
     .home-location-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-    .home-greeting-card,.home-main-card{background:#ffffff;border:1px solid #eeeeef;border-radius:20px;padding:18px 17px 16px;box-shadow:none;margin:0;position:relative;z-index:2}
+    .home-greeting-card,.home-main-card{background:#ffffff;border:1px solid #eeeeef;border-radius:10px;padding:19px 21px 27px;box-shadow:none;margin:0;position:relative;z-index:2;display:flex;flex-direction:column}
     @media (prefers-color-scheme: dark){
       .home-location-name.active{color:#000000}
       .home-location-name.inactive{color:#919093}
     }
     .home-greeting-top-row{
-      display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+      display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
     }
     .home-greeting-left{
-      flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;
-      padding-top:20px;padding-right:4px;
+      flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;
+      padding-top:5px;padding-right:0;
     }
     .home-greeting-right{
       flex-shrink:0;display:flex;align-items:flex-start;justify-content:flex-end;
       margin-top:0;margin-right:0;
     }
     .home-greeting-right img{
-      width:95px;height:103px;object-fit:contain;object-position:right top;
+      width:90px;height:98px;object-fit:contain;object-position:right top;
       display:block;filter:drop-shadow(0 3px 8px rgba(0,0,0,.10));
     }
-    .home-greeting-title{font-size:20.5px;font-weight:800;color:#000000;letter-spacing:0;line-height:1.31;font-family:"Pretendard",sans-serif}
-    .home-greeting-sub{font-size:12.57px;color:#666666;font-weight:600;margin-top:4px;line-height:1.24;font-family:"Pretendard",sans-serif}
-    .home-greeting-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
-    .home-stat{background:#f8fef8;border:1px solid #dbf1db;border-radius:10px;height:63px;padding:0 10px;text-align:center;display:flex;align-items:center;gap:6px;justify-content:center}
+    .home-greeting-title{font-size:20.5px;font-weight:800;color:#000000;letter-spacing:0;line-height:1.31;font-family:"Pretendard",sans-serif;margin:0}
+    .home-greeting-sub{font-size:12.57px;color:#666666;font-weight:600;margin:0;line-height:1.24;font-family:"Pretendard",sans-serif}
+    .home-greeting-stats{display:flex;align-items:stretch;justify-content:space-between;gap:10px;margin-top:8px}
+    .home-stat{flex:1;min-width:0;background:#f8fef8;border:1px solid #dbf1db;border-radius:10px;height:55px;padding:10px 8px;text-align:center;display:flex;align-items:center;gap:7px;justify-content:center}
     .home-stat-ico{flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#10a34e}
     .home-stat-ico svg{display:block}
-    .home-stat-body{display:flex;flex-direction:column;align-items:flex-start;gap:1px}
-    .home-stat-val{font-size:16px;font-weight:600;color:#10a34e;line-height:1.4;font-family:"Inter",sans-serif}
-    .home-stat-val .home-stat-unit{font-size:12px;font-weight:600;color:#10a34e;margin-left:0}
-    .home-stat-label{font-size:11px;color:#4c5056;font-weight:600;font-family:"Pretendard",sans-serif}
+    .home-stat-body{display:flex;flex-direction:column;align-items:center;gap:0}
+    .home-stat-val{font-size:14px;font-weight:600;color:#10a34e;line-height:19.6px;font-family:"Inter",sans-serif;text-align:center}
+    .home-stat-val .home-stat-unit{font-size:14px;font-weight:600;color:#10a34e;margin-left:0}
+    .home-stat-label{font-size:11px;color:#4c5056;font-weight:600;font-family:"Pretendard",sans-serif;text-align:center;line-height:15.4px}
     .home-quick-start-btn{
-      width:100%;height:46px;margin-top:14px;border:none;border-radius:12px;cursor:pointer;padding:0 18px;font-size:16px;font-weight:600;
+      width:100%;height:49px;margin-top:12px;border:none;border-radius:12px;cursor:pointer;padding:0 18px;font-size:16px;font-weight:600;
       background:#10a54b;color:#ffffff;font-family:"Inter",sans-serif;
-      display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:none;
+      display:flex;align-items:center;justify-content:center;gap:14px;box-shadow:none;
       transition:transform .1s ease,box-shadow .1s ease,background .12s ease;letter-spacing:0
     }
     .home-quick-paw{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;line-height:1}
@@ -184,20 +185,21 @@
     .home-quick-start-btn:active{transform:translateY(0);background:#0c8a3f}
 
     .home-section{padding:0}
-    .home-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 2px}
-    .home-section .walk-section-title{font-size:12.5px;font-weight:600;color:#000000;font-family:"Pretendard",sans-serif;letter-spacing:0}
-    .home-section-title{font-size:12.5px;font-weight:600;color:#000000;font-family:"Pretendard",sans-serif}
-    .home-section-action{background:none;border:none;cursor:pointer;font-size:11px;color:#10a34e;font-weight:600;font-family:"Pretendard",sans-serif;padding:4px 6px;border-radius:8px;transition:background .12s}
+    .home-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:0}
+    .home-section .walk-section-title{font-size:12.5px;font-weight:700;color:#000000;font-family:"Pretendard",sans-serif;letter-spacing:0;line-height:16.42px}
+    .home-section-title{font-size:12.5px;font-weight:700;color:#000000;font-family:"Pretendard",sans-serif;line-height:16.42px}
+    .home-section-action{background:none;border:none;cursor:pointer;font-size:11px;color:#10a34e;font-weight:600;font-family:"Pretendard",sans-serif;line-height:15.4px;padding:4px 6px;border-radius:8px;transition:background .12s}
     .home-section-action:hover{background:rgba(16,163,78,.08)}
 
     .home-reco-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .view[data-view="home"] .hscroll{display:block;overflow:visible;scroll-snap-type:none;padding-bottom:0}
-    .view[data-view="home"] .hcard{min-width:0;max-width:none;height:154;border-radius:10px;cursor:pointer}
-    .view[data-view="home"] .hcard-img{height:81px;background:#ffffff center/cover no-repeat;border-bottom:1px solid #eeeeef}
+    .view[data-view="home"] .hcard{min-width:0;max-width:none;height:157px;border-radius:10px;cursor:pointer;display:flex;flex-direction:column}
+    .view[data-view="home"] .hcard-img{height:83px;flex-shrink:0;background:#ffffff center/cover no-repeat;border-bottom:1px solid #eeeeef}
     .view[data-view="home"] .hcard-img--hyochang{background-image:linear-gradient(145deg,#d4ecd6 0%,#8ecf93 45%,#5cad62 100%)}
     .view[data-view="home"] .hcard-img--yongsan{background-image:linear-gradient(145deg,#d6e8f7 0%,#8ec5ef 45%,#5a9fd4 100%)}
-    .view[data-view="home"] .hcard-body{padding:8px 13px 12px}
+    .view[data-view="home"] .hcard-body{padding:9px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1}
     .view[data-view="home"] .hcard-text{display:flex;flex-direction:column;gap:2px}
+    .view[data-view="home"] .hcard-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:0}
     .view[data-view="home"] .hcard .row{display:block}
 
     .home-route-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -237,7 +239,8 @@
     .home-schedule-swipe-btn{flex:0 0 76px;border:none;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;color:#fff;display:flex;align-items:center;justify-content:center;padding:0}
     .home-schedule-swipe-btn--done{background:linear-gradient(135deg,#10A34E,#096E32)}
     .home-schedule-swipe-btn--del{background:linear-gradient(135deg,#ef4444,#dc2626)}
-    .home-schedule-swipe-pane{position:relative;display:flex;align-items:center;gap:12px;background:#ffffff;border:1px solid #eeeeef;border-radius:10px;padding:12px 14px;box-shadow:none;will-change:transform;transition:transform .22s cubic-bezier(.25,.8,.25,1);touch-action:none;user-select:none}
+    .home-schedule-swipe-pane{position:relative;display:flex;align-items:center;gap:12px;background:#ffffff;border:1px solid #eeeeef;border-radius:10px;padding:10px 12px;box-shadow:none;will-change:transform;transition:transform .22s cubic-bezier(.25,.8,.25,1);touch-action:none;user-select:none;min-height:48px;z-index:1}
+    .home-schedule-swipe-pane .home-schedule-bell{position:relative;z-index:2}
 
     /* === Schedule add modal === */
     .schedule-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:30;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(2px)}
@@ -369,6 +372,100 @@
     .wesen-notice-text strong{color:var(--main);font-weight:800}
     .wesen-notice-text em{color:var(--sub);font-style:normal;font-weight:600}
 
+    /* dogInfoTraits — Figma iPhone 17 - 32 (top area only) */
+    .view[data-view="dogInfoTraits"]{
+      position:relative;background:#ffffff;border-radius:0;height:100%;padding:24px 20px 28px;overflow:auto;
+      border:none;box-shadow:none;display:none;flex-direction:column;
+    }
+    .view[data-view="dogInfoTraits"].active{display:flex}
+    .view[data-view="dogInfoTraits"] .signup-topbar{margin-bottom:19px}
+    .view[data-view="dogInfoTraits"] .signup-hero{margin-bottom:18px}
+    .view[data-view="dogInfoTraits"] .signup-title{font-size:20.36px;font-weight:700;line-height:25.34px;letter-spacing:0;margin:0}
+    .view[data-view="dogInfoTraits"] .signup-sub{margin:10px 0 0;font-size:10.97px;font-weight:300;line-height:13.65px;color:#666666;max-width:291px}
+    .view[data-view="dogInfoTraits"] .signup-progress{margin-top:16px}
+    .view[data-view="dogInfoTraits"] .form{margin-top:0}
+    .view[data-view="dogInfoTraits"] .wesen-notice{
+      background:#ebf7ec;border:1px solid #c3e5c7;border-radius:10px;
+      padding:12px 14px;gap:8px;margin:0 0 16px;
+    }
+    .view[data-view="dogInfoTraits"] .wesen-notice-ico{font-size:20px;margin-top:2px}
+    .view[data-view="dogInfoTraits"] .wesen-notice-title{
+      font-family:"Pretendard",sans-serif;font-size:10.67px;font-weight:500;line-height:18px;color:#000000;
+      margin:0;white-space:nowrap;
+    }
+    .view[data-view="dogInfoTraits"] .wesen-notice-accent{color:#10A54B;font-weight:600}
+    .view[data-view="dogInfoTraits"] .wesen-notice-sub{
+      font-family:"Pretendard",sans-serif;font-size:10.67px;font-weight:400;line-height:18px;color:#999999;
+      margin:0;white-space:normal;word-break:keep-all;
+    }
+    .view[data-view="dogInfoTraits"] .quiz-title{font-weight:700}
+    .view[data-view="dogInfoTraits"] .quiz-option{font-weight:600}
+    .view[data-view="dogInfoTraits"] .quiz-card{border-color:#f3f3f3}
+    .view[data-view="dogInfoTraits"] .quiz-card.answered{border-color:#10A54B;box-shadow:0 2px 10px rgba(16,165,75,.14)}
+    .view[data-view="dogInfoTraits"] .quiz-num,
+    .view[data-view="dogInfoTraits"] .quiz-card:not(.answered) .quiz-num{background:#cfd2cf}
+    .view[data-view="dogInfoTraits"] .quiz-card.answered .quiz-num{background:#10A54B}
+    .view[data-view="dogInfoTraits"] .quiz-option.selected{border-color:#10A54B}
+    .view[data-view="dogInfoTraits"] .quiz-option.selected .quiz-radio{border-color:#10A54B;background:#10A54B}
+    .view[data-view="dogInfoTraits"] #traitsPrevDogInfoBtn,
+    .view[data-view="dogInfoTraits"] #quizSubmitBtn{font-weight:500}
+    .view[data-view="dogInfoTraits"] #quizSubmitBtn:disabled{background:#d6eede;border-color:#d6eede;color:#ffffff}
+    .view[data-view="dogInfoTraits"] #quizSubmitBtn:not(:disabled){background:#10A54B;border-color:#10A54B;color:#ffffff}
+
+    /* dogInfoResult — Figma iPhone 17 - 35 (top + type card) */
+    .view[data-view="dogInfoResult"]{
+      position:relative;background:#ffffff;border-radius:0;height:100%;padding:24px 20px 28px;overflow:auto;
+      border:none;box-shadow:none;display:none;flex-direction:column;
+    }
+    .view[data-view="dogInfoResult"].active{display:flex}
+    .view[data-view="dogInfoResult"] .signup-topbar{margin-bottom:19px}
+    .view[data-view="dogInfoResult"] .signup-hero{margin-bottom:20px}
+    .view[data-view="dogInfoResult"] .signup-title{font-size:20.36px;font-weight:800;line-height:25.34px;letter-spacing:0;margin:0}
+    .view[data-view="dogInfoResult"] .signup-sub{margin:10px 0 0;font-size:10.97px;font-weight:400;line-height:13.65px;color:#666666;max-width:291px}
+    .view[data-view="dogInfoResult"] .signup-progress{margin-top:16px}
+    .view[data-view="dogInfoResult"] .form{margin-top:0}
+    .view[data-view="dogInfoResult"] .result-hero{
+      background:#f7fbf4;border:1px solid #c3e5c7;border-radius:10px;padding:21px 24px;
+      color:#000000;position:relative;overflow:hidden;box-shadow:none;text-align:left;
+      display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
+    }
+    .view[data-view="dogInfoResult"] .result-hero::before,
+    .view[data-view="dogInfoResult"] .result-hero::after{display:none}
+    .view[data-view="dogInfoResult"] .result-type-copy{flex:1;min-width:0;display:flex;flex-direction:column}
+    .view[data-view="dogInfoResult"] .result-badge{
+      display:inline-flex;align-items:center;justify-content:center;width:fit-content;align-self:flex-start;
+      background:#eaf7ea;border:1px solid #c3e5c7;border-radius:9.56px;
+      padding:4px 9px;font-size:8.03px;font-weight:600;line-height:9.99px;color:#10a34e;
+      letter-spacing:0;margin:0 0 12px;backdrop-filter:none;
+    }
+    .view[data-view="dogInfoResult"] .result-name-row{
+      display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap;margin:0;
+    }
+    .view[data-view="dogInfoResult"] .result-name{
+      font-size:25px;font-weight:800;line-height:32.88px;letter-spacing:0;color:#10a34e;margin:0;
+      word-break:keep-all;overflow-wrap:normal;
+    }
+    .view[data-view="dogInfoResult"] .result-emoji{
+      font-size:34px;line-height:1;margin:0;position:static;z-index:auto;filter:none;flex-shrink:0;
+    }
+    .view[data-view="dogInfoResult"] .result-tagline{
+      font-size:11.94px;font-weight:500;line-height:14.85px;color:#515151;opacity:1;margin:10px 0 0;
+      max-width:170px;display:flex;flex-wrap:wrap;gap:0 4px;word-break:keep-all;overflow-wrap:normal;
+    }
+    .view[data-view="dogInfoResult"] .result-tagline .result-phrase{white-space:nowrap}
+    .view[data-view="dogInfoResult"] .result-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+    .view[data-view="dogInfoResult"] .result-tag{
+      font-size:6.37px;font-weight:600;line-height:7.92px;color:#10a34e;background:#eaf7ea;
+      border:1px solid #c3e5c7;border-radius:9.56px;padding:4px 8px;
+    }
+    .view[data-view="dogInfoResult"] .result-hero-art{
+      width:131px;min-height:138px;display:flex;align-items:flex-end;justify-content:center;
+      position:relative;flex-shrink:0;
+    }
+    .view[data-view="dogInfoResult"] .result-hero-mascot{
+      width:100px;height:124px;object-fit:contain;display:block;
+    }
+
     /* === Petlog 성격 카드 (퀴즈 결과 반영) === */
     .petlog-personality-card{display:flex;align-items:center;gap:12px;padding:14px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.04);cursor:pointer;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
     .petlog-personality-card:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(16,163,78,.12);border-color:rgba(16,163,78,.3)}
@@ -406,10 +503,10 @@
 
     /* Auth (login / signup method) */
     .view[data-view="signupMethod"]{
-      background:#ffffff;
-      border-radius:20px;height:100%;padding:22px 18px 24px;overflow:auto;border:1px solid rgba(0,0,0,.06);
-      box-shadow:0 2px 8px rgba(0,0,0,.04);
+      position:relative;background:#ffffff;border-radius:0;height:100%;padding:24px 20px 28px;overflow:auto;
+      border:none;box-shadow:none;display:none;flex-direction:column;
     }
+    .view[data-view="signupMethod"].active{display:flex}
     .view[data-view="login"]{
       background:#ffffff;border-radius:20px;height:100%;padding:32px 25px 28px;overflow:auto;
       border:none;box-shadow:none;
@@ -479,16 +576,306 @@
     .view[data-view="login"] .auth-social-btn.facebook:hover{background:#eaf0fa}
     .auth-social-btn.email-signup{background:linear-gradient(135deg,#10A34E,#096E32);color:#fff;justify-content:flex-start;border-color:transparent;box-shadow:0 4px 12px rgba(16,163,78,.2)}
     .auth-social-btn.email-signup .ico{background:rgba(255,255,255,.2);color:#fff;font-size:16px}
-    .auth-back{position:absolute;left:18px;top:18px;border:1px solid rgba(0,0,0,.08);background:#FFFFFF;border-radius:10px;width:40px;height:40px;font-size:20px;font-weight:700;cursor:pointer;color:var(--text);transition:background .1s ease}
-    .auth-back:hover{background:var(--sep)}
-    .view[data-view="signupMethod"]{position:relative;padding-top:56px}
-    .auth-method-title{text-align:center;font-size:16px;font-weight:800;margin:0 0 22px;line-height:1.4;color:var(--text)}
+    .auth-back{position:absolute;left:20px;top:24px;border:1px solid #f3f3f3;background:#ffffff;border-radius:10px;width:40px;height:40px;font-size:20px;font-weight:700;cursor:pointer;color:var(--text);transition:background .1s ease;display:flex;align-items:center;justify-content:center;padding:0;line-height:1}
+    .auth-back:hover{background:#fafafa}
+    .auth-method-title{text-align:center;font-family:"Pretendard",sans-serif;font-size:18.68px;font-weight:700;line-height:23.24px;margin:54px 0 58px;color:#000000;letter-spacing:0}
+    .view[data-view="signupMethod"] .auth-social-stack{gap:12px;margin:0}
+    .view[data-view="signupMethod"] .auth-social-btn{height:63px;min-height:63px;border-radius:13px;padding:0 18px;box-shadow:none;font-family:"Inter",sans-serif;font-size:14px;font-weight:600}
+    .view[data-view="signupMethod"] .auth-social-btn .ico{width:28px;height:28px;border-radius:8px;font-size:16px;font-weight:900}
+    .view[data-view="signupMethod"] .auth-social-btn .auth-social-label{flex:1;text-align:center;font-family:"Inter",sans-serif;font-weight:600;font-size:14px;line-height:19.6px}
+    .view[data-view="signupMethod"] .auth-social-btn.naver{background:#f2faf4;border:1px solid #e5f2e8;color:#1a6b3c}
+    .view[data-view="signupMethod"] .auth-social-btn.naver .auth-social-label{color:#1a6b3c}
+    .view[data-view="signupMethod"] .auth-social-btn.naver .ico{background:transparent;color:#03c75a;font-size:20px;font-weight:900}
+    .view[data-view="signupMethod"] .auth-social-btn.naver:hover{background:#e8f5eb}
+    .view[data-view="signupMethod"] .auth-social-btn.google{background:#ffffff;border:1px solid #eeeeef;color:#515151}
+    .view[data-view="signupMethod"] .auth-social-btn.google .auth-social-label{color:#515151}
+    .view[data-view="signupMethod"] .auth-social-btn.google .ico{background:transparent;color:transparent;font-size:0;width:28px;height:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%23EA4335' d='M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z'/%3E%3Cpath fill='%234285F4' d='M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z'/%3E%3Cpath fill='%23FBBC05' d='M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z'/%3E%3Cpath fill='%2334A853' d='M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:contain}
+    .view[data-view="signupMethod"] .auth-social-btn.google:hover{background:#fafafa}
+    .view[data-view="signupMethod"] .auth-social-btn.facebook{background:#f3f6fc;border:1px solid #e8eef8;color:#3b5998}
+    .view[data-view="signupMethod"] .auth-social-btn.facebook .auth-social-label{color:#3b5998}
+    .view[data-view="signupMethod"] .auth-social-btn.facebook .ico{background:#1877f2;color:#fff;border-radius:50%;width:28px;height:28px;font-size:18px}
+    .view[data-view="signupMethod"] .auth-social-btn.facebook:hover{background:#eaf0fa}
+    .view[data-view="signupMethod"] .auth-social-btn.email-signup{background:#ffffff;border:1px solid #eeeeef;color:#515151;justify-content:flex-start;box-shadow:none}
+    .view[data-view="signupMethod"] .auth-social-btn.email-signup .auth-social-label{color:#515151}
+    .view[data-view="signupMethod"] .auth-social-btn.email-signup .ico{background:transparent;color:#10a34e;font-size:16px}
+    .view[data-view="signupMethod"] .auth-social-btn.email-signup:hover{background:#fafafa;border-color:#dddddf}
+    .view[data-view="signupMethod"] .auth-or-divider{margin:20px 0 18px}
+    .view[data-view="signupMethod"] .auth-or-divider span{font-family:"Inter",sans-serif;font-size:14px;line-height:19.6px;color:#999999}
+    .view[data-view="signupMethod"] .auth-footer-note{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;margin:0;font-family:"Inter",sans-serif;font-size:14px;font-weight:400;color:#515151;line-height:19.6px;text-align:center}
+    .view[data-view="signupMethod"] .auth-inline-link{font-family:"Inter",sans-serif;font-weight:600;font-size:14px;color:#10a34e;text-decoration:none;display:inline-flex;align-items:center;gap:4px;margin-left:4px}
+    .view[data-view="signupMethod"] .auth-inline-link svg{flex-shrink:0;display:block}
     .auth-footer-note{text-align:center;font-size:13px;color:var(--sub);margin-top:22px;line-height:1.5}
     .auth-inline-link{border:none;background:none;padding:0;font:inherit;font-weight:800;color:var(--main);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
-    /* Email signup (PetWalk 시작하기) — same mood + top back */
-    .view[data-view="signup"]{background:#ffffff;border-radius:20px;padding:12px;height:100%;overflow:auto;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04)}
-    .view[data-view="signup"] .topbar{margin-bottom:6px}
-    .view[data-view="signup"] .chip{background:rgba(16,163,78,.1);color:var(--main)}
+    /* Email signup — Figma iPhone 17 - 28 (empty) / - 20 (filled) */
+    .view[data-view="signup"]{
+      position:relative;background:#ffffff;border-radius:0;height:100%;padding:24px 20px 28px;overflow:auto;
+      border:none;box-shadow:none;display:none;flex-direction:column;
+    }
+    .view[data-view="signup"].active{display:flex}
+    .signup-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;min-height:30px;position:relative}
+    .signup-back{
+      flex-shrink:0;width:30px;height:30px;border:1px solid #f3f3f3;background:#ffffff;border-radius:5px;
+      font-size:18px;font-weight:700;cursor:pointer;color:#000000;transition:background .1s ease;
+      display:flex;align-items:center;justify-content:center;padding:0;line-height:1;
+    }
+    .signup-back:hover{background:#fafafa}
+    .signup-step-badge{
+      position:absolute;left:50%;transform:translateX(-50%);
+      display:inline-flex;align-items:center;justify-content:center;width:fit-content;
+      font-family:"Pretendard",sans-serif;font-size:12px;font-weight:700;line-height:15px;
+      color:#10a54b;background:#ebf7ec;border-radius:8.5px;padding:7px 12px;white-space:nowrap;
+    }
+    .signup-step-count{
+      flex-shrink:0;font-family:"Pretendard",sans-serif;font-size:12px;font-weight:400;line-height:15px;color:#7a7f85;
+    }
+    .signup-hero{margin-bottom:24px}
+    .signup-title{
+      margin:0;font-family:"Pretendard",sans-serif;font-size:20.36px;font-weight:800;line-height:25.34px;color:#000000;letter-spacing:0;
+    }
+    .signup-brand{font-family:"Madimi One",sans-serif;font-weight:400;color:#19b23a;margin-right:6px}
+    .signup-sub{
+      margin:8px 0 0;font-family:"Pretendard",sans-serif;font-size:10.97px;font-weight:400;line-height:13.65px;color:#666666;
+    }
+    .signup-progress{
+      height:10px;border-radius:5px;background:#f2f3f5;overflow:hidden;border:none;margin-top:16px;
+    }
+    .signup-progress > span{
+      display:block;height:100%;width:0%;background:#10a34e;transition:width .18s ease;border-radius:5px;
+    }
+    .signup-form{display:flex;flex-direction:column;flex:1}
+    .signup-field{margin-bottom:22px}
+    .signup-label{
+      display:flex;align-items:center;gap:4px;margin-bottom:10px;font-family:"Inter",sans-serif;font-size:14px;font-weight:600;line-height:19.6px;color:#000000;
+    }
+    .signup-req{color:#e53935;font-weight:700;font-size:14px;line-height:1}
+    .signup-input-wrap{
+      display:flex;align-items:center;gap:10px;background:#ffffff;border:1px solid #f3f3f3;border-radius:13px;
+      height:58px;padding:0 16px;transition:border-color .15s ease;
+    }
+    .signup-input-wrap:focus-within,.signup-input-wrap.is-valid{border-color:#10a34e}
+    .signup-field-ico{flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#10a34e;line-height:0}
+    .signup-input{
+      flex:1;min-width:0;border:none;outline:none;background:transparent;
+      font-family:"Inter",sans-serif;font-size:14px;font-weight:600;line-height:19.6px;color:#000000;padding:0;
+    }
+    .signup-input::placeholder{color:#7a7f85;font-weight:400;font-family:"Inter",sans-serif}
+    .signup-field-check{
+      flex-shrink:0;display:flex;align-items:center;justify-content:center;width:20px;height:20px;
+      opacity:0;transform:scale(.85);transition:opacity .15s ease,transform .15s ease;pointer-events:none;
+    }
+    .signup-input-wrap.is-valid .signup-field-check{opacity:1;transform:scale(1)}
+    .signup-terms-card{
+      display:flex;align-items:flex-start;gap:12px;background:#fcfcfd;border:1px solid #f3f3f3;border-radius:13px;
+      padding:12px 14px;min-height:0;box-sizing:border-box;margin-bottom:24px;
+    }
+    .signup-terms-check{
+      flex-shrink:0;width:19px;height:19px;margin:2px 0 0;border:1px solid #d9d9d9;border-radius:4.75px;
+      accent-color:#10a34e;cursor:pointer;appearance:none;-webkit-appearance:none;
+      background:#ffffff;position:relative;
+    }
+    .signup-terms-check:checked{background:#10a34e;border-color:#10a34e}
+    .signup-terms-check:checked::after{
+      content:"";position:absolute;left:5px;top:2px;width:5px;height:9px;
+      border:solid #ffffff;border-width:0 2px 2px 0;transform:rotate(45deg);
+    }
+    .signup-terms-label{flex:1;min-width:0;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+    .signup-terms-title{font-family:"Pretendard",sans-serif;font-size:13px;font-weight:500;line-height:15px;color:#7a7f85}
+    .signup-terms-desc{font-family:"Pretendard",sans-serif;font-size:11px;font-weight:600;line-height:15px;color:#7a7f85}
+    .signup-terms-badge{
+      flex-shrink:0;font-family:"Pretendard",sans-serif;font-size:11.7px;font-weight:700;line-height:14.5px;
+      color:#10a54b;background:#ebf7ec;border-radius:7.9px;padding:6px 10px;white-space:nowrap;align-self:flex-start;
+    }
+    .signup-next-btn{
+      width:100%;height:58px;border:none;border-radius:13px;padding:0;
+      font-family:"Pretendard",sans-serif;font-size:18.37px;font-weight:500;line-height:22.85px;color:#ffffff;
+      background:#d6eede;cursor:not-allowed;transition:background .15s ease;margin-top:auto;
+    }
+    .signup-next-btn.is-enabled{background:#10a54b;cursor:pointer}
+    .signup-next-btn.is-enabled:hover{background:#0e9345}
+    .signup-next-btn.is-enabled:active{background:#0c8a3f}
+    /* User info — Figma iPhone 17 - 29 (autolayout spacing) */
+    .view[data-view="userInfo"]{
+      position:relative;background:#ffffff;border-radius:0;height:100%;padding:24px 20px 28px;overflow:auto;
+      border:none;box-shadow:none;display:none;flex-direction:column;
+    }
+    .view[data-view="userInfo"].active{display:flex}
+    .view[data-view="userInfo"] .signup-topbar{margin-bottom:20px}
+    .view[data-view="userInfo"] .signup-hero{margin-bottom:18px}
+    .view[data-view="userInfo"] .signup-title{
+      font-size:20.36px;font-weight:800;line-height:25.34px;letter-spacing:0;
+    }
+    .view[data-view="userInfo"] .signup-sub{
+      margin-top:10px;font-size:10.97px;line-height:13.65px;color:#666666;
+    }
+    .view[data-view="userInfo"] .signup-progress{margin-top:16px}
+    .view[data-view="userInfo"] .signup-form{
+      display:flex;flex-direction:column;gap:0;flex:1;
+    }
+    .view[data-view="userInfo"] .userinfo-field--nickname{margin-bottom:10px}
+    .view[data-view="userInfo"] .userinfo-field--timeslot{margin-bottom:12px}
+    .view[data-view="userInfo"] .userinfo-label{
+      display:flex;align-items:center;gap:0;margin:0 0 5px;
+      min-height:19px;font-family:"Pretendard",sans-serif;font-size:12.5px;font-weight:700;
+      line-height:16.42px;color:#000000;letter-spacing:0;
+    }
+    .view[data-view="userInfo"] .userinfo-req{
+      color:#e53935;font-weight:700;font-size:12.5px;line-height:16.42px;margin-left:2px;
+    }
+    .view[data-view="userInfo"] .userinfo-label-row{
+      display:flex;align-items:baseline;gap:4px;margin:0 0 7px;min-height:17px;
+    }
+    .view[data-view="userInfo"] .userinfo-label-row .userinfo-label{margin:0;min-height:17px;line-height:16.42px}
+    .view[data-view="userInfo"] .userinfo-label-sub{
+      font-family:"Pretendard",sans-serif;font-size:9px;font-weight:600;line-height:13px;color:#999999;letter-spacing:0;
+    }
+    .view[data-view="userInfo"] .userinfo-nickname-wrap{
+      display:flex;align-items:center;background:#ffffff;border:1px solid #f3f3f3;border-radius:10px;
+      height:40px;padding:0 17px;transition:border-color .15s ease;box-sizing:border-box;
+    }
+    .view[data-view="userInfo"] .userinfo-nickname-wrap:focus-within{border-color:#10a34e}
+    .view[data-view="userInfo"] .userinfo-nickname-input{
+      flex:1;min-width:0;border:none;outline:none;background:transparent;
+      font-family:"Pretendard",sans-serif;font-size:10.97px;font-weight:400;line-height:13.65px;color:#000000;
+      padding:0;letter-spacing:0;
+    }
+    .view[data-view="userInfo"] .userinfo-nickname-input::placeholder{color:#aaaaaa;font-weight:400}
+    .view[data-view="userInfo"] .timeslot-card{
+      border:1px solid #f3f3f3;border-radius:10px;background:#ffffff;padding:11px;box-shadow:none;box-sizing:border-box;
+    }
+    .view[data-view="userInfo"] .timeslot-tabs{
+      display:grid;grid-template-columns:1fr 1fr;background:#f6f7f9;border:1px solid #f3f3f3;border-radius:8px;
+      padding:2px;gap:0;margin:0 0 12px;height:30px;box-sizing:border-box;
+    }
+    .view[data-view="userInfo"] .timeslot-tab{
+      border:1px solid transparent;background:transparent;padding:0;border-radius:8px;height:26px;
+      font-family:"Pretendard",sans-serif;font-size:10.82px;font-weight:600;line-height:13.46px;letter-spacing:0;
+      cursor:pointer;color:#999999;transition:all .15s ease;display:flex;align-items:center;justify-content:center;gap:4px;
+    }
+    .view[data-view="userInfo"] .timeslot-tab.active{background:#ffffff;border-color:#f3f3f3;color:#10a34e;box-shadow:none}
+    .view[data-view="userInfo"] .timeslot-tab:not(.active){background:#f6f7f9}
+    .view[data-view="userInfo"] .timeslot-tab .count{
+      font-family:"Pretendard",sans-serif;font-size:9.27px;font-weight:600;line-height:11.54px;letter-spacing:0;
+      background:#999999;color:#ffffff;border-radius:7px;padding:1px 6px;min-width:18px;height:14px;
+      display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;
+    }
+    .view[data-view="userInfo"] .timeslot-tab.active .count{background:#10a54b}
+    .view[data-view="userInfo"] .timeslot-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:10px;row-gap:8px}
+    .view[data-view="userInfo"] .timeslot-chip{
+      display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid #f3f3f3;border-radius:8px;
+      background:#ffffff;cursor:pointer;transition:all .15s ease;text-align:left;font-family:inherit;
+      height:50px;box-sizing:border-box;width:100%;
+    }
+    .view[data-view="userInfo"] .timeslot-chip .ico{
+      width:31px;height:31px;border-radius:50%;background:#f2f7f4;display:flex;align-items:center;justify-content:center;
+      font-size:14px;line-height:1;flex-shrink:0;
+    }
+    .view[data-view="userInfo"] .timeslot-chip .info{
+      flex:1;min-width:0;display:flex;flex-direction:column;gap:0;
+    }
+    .view[data-view="userInfo"] .timeslot-chip .label{
+      font-family:"Pretendard",sans-serif;font-weight:600;font-size:10.39px;line-height:11px;color:#000000;letter-spacing:0;
+    }
+    .view[data-view="userInfo"] .timeslot-chip .desc{
+      font-family:"Pretendard",sans-serif;font-weight:400;font-size:8.65px;line-height:10px;color:#515151;letter-spacing:0;margin-top:1px;
+    }
+    .view[data-view="userInfo"] .timeslot-chip .check{
+      width:16px;height:16px;border-radius:8px;border:1px solid #e3e3e5;display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;background:#ffffff;transition:all .15s ease;box-sizing:border-box;
+    }
+    .view[data-view="userInfo"] .timeslot-chip.selected{background:#f2f7f4;border-color:#10a34e;box-shadow:none}
+    .view[data-view="userInfo"] .timeslot-chip.selected .check{background:#10a34e;border-color:#10a34e}
+    .view[data-view="userInfo"] .timeslot-chip.selected .check::after{
+      content:"";width:4px;height:7px;border:solid #ffffff;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);margin-top:-1px;
+    }
+    .view[data-view="userInfo"] .timeslot-summary{
+      margin-top:14px;font-family:"Pretendard",sans-serif;font-size:9.4px;font-weight:500;line-height:11.62px;
+      color:#7a7f85;text-align:center;letter-spacing:0;
+    }
+    .view[data-view="userInfo"] .tag-grid{display:flex;flex-wrap:wrap;gap:6px 6px;row-gap:10px}
+    .view[data-view="userInfo"] .tag-chip{
+      border:1px solid #f3f3f3;background:#ffffff;color:#000000;border-radius:14px;padding:8px 12px 8px 16px;
+      font-family:"Pretendard",sans-serif;font-size:8.87px;font-weight:600;line-height:11.04px;letter-spacing:0;
+      cursor:pointer;transition:all .15s ease;display:inline-flex;align-items:center;gap:8px;height:28px;box-sizing:border-box;
+    }
+    .view[data-view="userInfo"] .tag-chip .tag-ico{font-size:11px;line-height:1;width:11px;height:11px;display:inline-flex;align-items:center;justify-content:center}
+    .view[data-view="userInfo"] .tag-chip.selected{background:#10a34e;border-color:#10a34e;color:#ffffff;box-shadow:none}
+    .view[data-view="userInfo"] .userinfo-tag-helper{
+      display:flex;align-items:center;gap:5px;margin-top:10px;min-height:13px;
+    }
+    .view[data-view="userInfo"] .userinfo-tag-check{
+      flex-shrink:0;display:none;align-items:center;justify-content:center;width:12px;height:12px;line-height:0;
+    }
+    .view[data-view="userInfo"] .userinfo-tag-check.is-visible{display:flex}
+    .view[data-view="userInfo"] .userinfo-tag-check svg{display:block}
+    .view[data-view="userInfo"] .userinfo-tag-count{
+      color:#10a34e;font-family:"Pretendard",sans-serif;font-size:9.78px;font-weight:600;line-height:12.17px;letter-spacing:0;white-space:nowrap;
+    }
+    .view[data-view="userInfo"] .userinfo-tag-helper-text{
+      color:#515151;font-family:"Pretendard",sans-serif;font-size:9.78px;font-weight:400;line-height:12.17px;letter-spacing:0;
+    }
+    .view[data-view="userInfo"] .userinfo-actions{display:flex;gap:10px;margin-top:24px;padding-top:0}
+    .view[data-view="userInfo"] .userinfo-prev-btn,.view[data-view="userInfo"] .userinfo-next-btn{
+      flex:1;height:58px;border-radius:13px;padding:0;font-family:"Pretendard",sans-serif;font-size:18.37px;font-weight:500;
+      line-height:22.85px;letter-spacing:0;cursor:pointer;transition:background .15s ease,border-color .15s ease;
+    }
+    .view[data-view="userInfo"] .userinfo-prev-btn{background:#ffffff;border:1px solid #f3f3f3;color:#515151}
+    .view[data-view="userInfo"] .userinfo-prev-btn:hover{background:#fafafa}
+    .view[data-view="userInfo"] .userinfo-next-btn{background:#10a54b;border:1px solid #10a54b;color:#ffffff}
+    .view[data-view="userInfo"] .userinfo-next-btn:hover{background:#0e9345}
+    /* Dog info — Figma iPhone 17 - 31 */
+    .view[data-view="dogInfo"]{
+      position:relative;background:#ffffff;border-radius:0;height:100%;padding:24px 20px 28px;overflow:auto;
+      border:none;box-shadow:none;display:none;flex-direction:column;
+    }
+    .view[data-view="dogInfo"].active{display:flex}
+    .view[data-view="dogInfo"] .signup-topbar{margin-bottom:19px}
+    .view[data-view="dogInfo"] .signup-hero{margin-bottom:42px}
+    .view[data-view="dogInfo"] .signup-title{
+      font-size:20.36px;font-weight:800;line-height:25.34px;letter-spacing:0;
+    }
+    .view[data-view="dogInfo"] .signup-sub{
+      margin-top:10px;font-size:10.97px;line-height:13.65px;color:#666666;white-space:nowrap;
+    }
+    .view[data-view="dogInfo"] .signup-progress{margin-top:16px}
+    .view[data-view="dogInfo"] .signup-form{display:flex;flex-direction:column;flex:1}
+    .view[data-view="dogInfo"] .doginfo-field{margin-bottom:24px}
+    .view[data-view="dogInfo"] .doginfo-field:last-of-type{margin-bottom:0}
+    .view[data-view="dogInfo"] .doginfo-label{
+      display:block;margin:0 0 11px;font-family:"Pretendard",sans-serif;font-size:12.5px;font-weight:700;
+      line-height:16.42px;color:#000000;letter-spacing:0;
+    }
+    .view[data-view="dogInfo"] .doginfo-input-wrap{
+      display:flex;align-items:center;gap:12px;background:#ffffff;border:1px solid #f3f3f3;border-radius:13px;
+      height:58px;padding:0 16px 0 19px;box-sizing:border-box;transition:border-color .15s ease;
+    }
+    .view[data-view="dogInfo"] .doginfo-input-wrap:focus-within{border-color:#10a34e}
+    .view[data-view="dogInfo"] .doginfo-field-ico{
+      flex-shrink:0;display:flex;align-items:center;justify-content:center;width:19px;color:#10a34e;line-height:0;
+    }
+    .view[data-view="dogInfo"] .doginfo-input{
+      flex:1;min-width:0;border:none;outline:none;background:transparent;
+      font-family:"Inter",sans-serif;font-size:14px;font-weight:400;line-height:19.6px;color:#000000;padding:0;
+    }
+    .view[data-view="dogInfo"] .doginfo-input::placeholder{color:#999999;font-weight:400}
+    .view[data-view="dogInfo"] .doginfo-select-wrap{position:relative;padding-right:36px}
+    .view[data-view="dogInfo"] .doginfo-select{
+      flex:1;min-width:0;border:none;outline:none;background:transparent;appearance:none;-webkit-appearance:none;
+      font-family:"Inter",sans-serif;font-size:14px;font-weight:400;line-height:19.6px;color:#000000;padding:0;cursor:pointer;
+    }
+    .view[data-view="dogInfo"] .doginfo-select:invalid,.view[data-view="dogInfo"] .doginfo-select option[value=""]{color:#999999}
+    .view[data-view="dogInfo"] .doginfo-select-arrow{
+      position:absolute;right:16px;top:50%;transform:translateY(-50%) rotate(90deg);
+      font-size:14px;color:#999999;pointer-events:none;line-height:1;
+    }
+    .view[data-view="dogInfo"] .doginfo-actions{display:flex;gap:18px;margin-top:auto;padding-top:32px}
+    .view[data-view="dogInfo"] .doginfo-prev-btn,.view[data-view="dogInfo"] .doginfo-next-btn{
+      flex:1;height:58px;border-radius:13px;padding:0;font-family:"Pretendard",sans-serif;font-size:18.37px;font-weight:500;
+      line-height:22.85px;letter-spacing:0;cursor:pointer;transition:background .15s ease,border-color .15s ease;
+    }
+    .view[data-view="dogInfo"] .doginfo-prev-btn{background:#fefefe;border:1px solid #f3f3f3;color:#000000}
+    .view[data-view="dogInfo"] .doginfo-prev-btn:hover{background:#fafafa}
+    .view[data-view="dogInfo"] .doginfo-next-btn{background:#10a34e;border:1px solid #10a34e;color:#ffffff}
+    .view[data-view="dogInfo"] .doginfo-next-btn:hover{background:#0e9345}
     /* 마이페이지 */
     .mypage-screen{padding:0;height:100%;overflow:auto}
     .mypage-profile{
@@ -642,7 +1029,7 @@
       background:rgba(255,255,255,.95);color:#179833;box-shadow:0 2px 8px rgba(0,0,0,.12);backdrop-filter:blur(4px)
     }
     .hcard-body{padding:9px 12px 15px}
-    .hcard-title{font-size:12.5px;font-weight:600;color:#000000;line-height:1.31;font-family:"Pretendard",sans-serif}
+    .hcard-title{font-size:12.5px;font-weight:700;color:#000000;line-height:16.42px;font-family:"Pretendard",sans-serif}
     .hcard-meta{font-size:9.4px;color:#666666;font-weight:500;line-height:1.24;margin-top:2px;font-family:"Pretendard",sans-serif}
     .hcard-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
     .tag{font-size:9.4px;font-weight:500;padding:2px 6px;border-radius:8px;background:#f6f6f6;color:#666666;font-family:"Pretendard",sans-serif}
@@ -697,26 +1084,36 @@
     .petlog-screen{padding:0;height:100%;overflow:auto;scrollbar-width:none;-ms-overflow-style:none}
     .petlog-screen::-webkit-scrollbar{display:none;width:0;height:0}
     .petlog-profile-card{
-      background:linear-gradient(135deg, #10A34E 0%, #096E32 40%, #19B23A 100%);
-      border-radius:20px;padding:22px 18px;margin-bottom:14px;position:relative;overflow:hidden;
+      background:transparent;border-radius:0;padding:0 0 4px;margin-bottom:14px;position:relative;overflow:visible;
     }
-    .petlog-profile-card-main{padding-top:18px}
-    .petlog-profile-head{display:flex;align-items:center;gap:12px;width:100%;position:relative;z-index:1}
-    .petlog-profile-inner{display:flex;align-items:center;gap:14px;position:relative;z-index:1;flex:1;min-width:0}
-    .petlog-profile-add-slot{flex-shrink:0;align-self:center;display:flex;align-items:center;gap:8px;margin-left:auto}
-    .petlog-card-corner-add{position:relative;top:auto;right:auto;left:auto;z-index:3;padding:6px 10px;font-size:10px;font-weight:800;cursor:pointer;font-family:inherit;line-height:1.2;background:rgba(255,255,255,.22);border:1.2px solid rgba(255,255,255,.45);color:#fff;border-radius:8px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.08)}
-    .petlog-card-corner-add:active{background:rgba(255,255,255,.38)}
-    .petlog-profile-card::before{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.08);top:-30px;right:-20px}
-    .petlog-avatar{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
-    .petlog-profile-info{flex:1;color:#fff}
-    .petlog-profile-name{font-size:18px;font-weight:800;letter-spacing:.02em}
-    .petlog-profile-sub{font-size:12px;opacity:.82;margin-top:2px;font-weight:500}
-    .petlog-add-btn{background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:10px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap}
-    .petlog-add-btn:active{background:rgba(255,255,255,.35)}
-    .petlog-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px;position:relative;z-index:1}
-    .petlog-stat{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:10px 6px;text-align:center;backdrop-filter:blur(4px)}
-    .petlog-stat-val{font-size:18px;font-weight:800;color:#fff;line-height:1.1}
-    .petlog-stat-label{font-size:10px;color:rgba(255,255,255,.82);margin-top:3px;font-weight:700;}
+    .petlog-profile-card-main{padding-top:8px}
+    .petlog-profile-banner{
+      position:relative;height:164px;border-radius:10px;overflow:hidden;padding:13px;box-sizing:border-box;
+      background:
+        radial-gradient(ellipse 120px 80px at 88% 72%, rgba(168,210,145,.55) 0%, transparent 72%),
+        radial-gradient(ellipse 90px 60px at 92% 48%, rgba(210,235,190,.45) 0%, transparent 70%),
+        linear-gradient(135deg, #f7fbf4 0%, #edf7e8 52%, #f9fcf7 100%);
+    }
+    .petlog-profile-head{display:flex;align-items:flex-start;gap:8px;width:100%;position:relative;z-index:1}
+    .petlog-profile-inner{display:flex;align-items:center;gap:0;position:relative;z-index:1;flex:1;min-width:0}
+    .petlog-profile-add-slot{flex-shrink:0;align-self:flex-start;display:flex;align-items:center;gap:8px;margin-left:auto}
+    .petlog-card-corner-add{position:relative;top:auto;right:auto;left:auto;z-index:3;padding:6px 10px;font-size:10px;font-weight:800;cursor:pointer;font-family:inherit;line-height:1.2;background:rgba(255,255,255,.92);border:1px solid #eeeeef;color:#10a34e;border-radius:8px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+    .petlog-card-corner-add:active{background:#f3fbf5}
+    .petlog-profile-card::before{display:none}
+    .petlog-avatar{width:70px;height:70px;border-radius:50%;background:#ffffff;border:none;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:0}
+    .petlog-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .petlog-profile-info{flex:1;min-width:0;color:#000000;padding:4px 0 0 10px;display:flex;flex-direction:column;gap:3px}
+    .petlog-profile-name{font-family:"Inter",sans-serif;font-size:16px;font-weight:600;line-height:22.4px;color:#000000;letter-spacing:0}
+    .petlog-profile-sub{font-family:"Pretendard",sans-serif;font-size:11px;font-weight:600;line-height:15.4px;color:#7a7f85;margin:0}
+    .petlog-add-btn{background:#ffffff;border:1px solid #eeeeef;color:#10a34e;border-radius:10px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+    .petlog-add-btn:active{background:#f3fbf5}
+    .petlog-stats{display:flex;align-items:stretch;justify-content:space-between;gap:10px;margin:-67px 16px 0;position:relative;z-index:2}
+    .petlog-stat{flex:1;min-width:0;background:#ffffff;border:none;border-radius:10px;height:55px;padding:10px 8px;text-align:center;display:flex;align-items:center;gap:7px;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+    .petlog-stat-ico{flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#10a34e}
+    .petlog-stat-ico svg{display:block}
+    .petlog-stat-body{display:flex;flex-direction:column;align-items:center;gap:0}
+    .petlog-stat-val{font-size:14px;font-weight:600;color:#10a34e;line-height:19.6px;font-family:"Inter",sans-serif;text-align:center}
+    .petlog-stat-label{font-size:9px;color:#4c5056;margin-top:0;font-weight:600;font-family:"Pretendard",sans-serif;line-height:13px;text-align:center}
     .petlog-root{padding:0 0 12px;overflow-x:hidden}
     .petlog-carousel-wrap{margin-bottom:4px;padding-top:8px}
     .petlog-cal-below .mypage-subtitle{font-size:14px;font-weight:800}
@@ -732,17 +1129,17 @@
     .petlog-carousel-dots.petlog-carousel-dots--empty{display:none !important;margin:0;height:0;overflow:hidden}
     .petlog-carousel-dots .dot{width:6px;height:6px;border-radius:50%;background:var(--sep);transition:background .2s,transform .2s}
     .petlog-carousel-dots .dot.active{background:var(--main);transform:scale(1.15)}
-    .petlog-dual{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;position:relative;z-index:1;align-items:stretch}
+    .petlog-dual{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;position:relative;z-index:1;align-items:stretch;padding:0 2px}
     .petlog-dual-type-stack{align-self:stretch;min-width:0;width:100%;display:flex;flex-direction:column;gap:0}
-    .petlog-dual-cell{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.32);border-radius:14px;padding:10px 14px 10px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;min-height:88px;backdrop-filter:blur(4px)}
+    .petlog-dual-cell{background:#ffffff;border:1px solid #eeeeef;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;min-height:88px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
     .petlog-dual-side{border:none;cursor:pointer;font-family:inherit;width:100%}
-    .petlog-dual-label{font-size:10px;font-weight:500;color:rgba(255,255,255,.86);text-transform:none}
+    .petlog-dual-label{font-size:10px;font-weight:500;color:#7a7f85;text-transform:none;font-family:"Pretendard",sans-serif}
     .petlog-dual-mini-head{display:flex;align-items:center;gap:6px;min-width:0;width:100%}
     .petlog-dual-mini-emoji{font-size:14px;line-height:1.5;flex-shrink:0}
-    .petlog-dual-mini-name{font-size:14px;font-weight:800;color:#fff;line-height:1.5;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .petlog-dual-mini-tag{font-size:10px;font-weight:600;color:rgba(255,255,255,.82);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .petlog-dual-mini-name{font-size:14px;font-weight:700;color:#000000;line-height:1.5;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:"Pretendard",sans-serif}
+    .petlog-dual-mini-tag{font-size:10px;font-weight:600;color:#666666;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-family:"Pretendard",sans-serif}
     .petlog-dual-analysis .petlog-dual-mini-name{font-size:14px}
-    .petlog-dual-analysis .petlog-dual-mini-tag{color:rgba(255,255,255,.88)}
+    .petlog-dual-analysis .petlog-dual-mini-tag{color:#666666}
     /* 펫로그 월간: 단일 스크롤 영역(.petlog-screen), 중첩 세로 스크롤바 제거 */
     .petlog-root > .petlog-cal-below.mypage-sub-screen{
       overflow:visible !important;height:auto !important;min-height:0 !important;
@@ -1259,93 +1656,121 @@
               <button type="button" class="auth-back" data-nav="login" aria-label="뒤로">‹</button>
               <p class="auth-method-title">회원가입 방법을 선택하세요</p>
               <div class="auth-social-stack">
-                <button type="button" class="auth-social-btn naver" data-nav="userInfo"><span class="ico">N</span><span style="flex:1;text-align:center;">네이버로 회원가입</span></button>
-                <button type="button" class="auth-social-btn google" data-nav="userInfo"><span class="ico">G</span><span style="flex:1;text-align:center;">구글로 회원가입</span></button>
-                <button type="button" class="auth-social-btn facebook" data-nav="userInfo"><span class="ico">f</span><span style="flex:1;text-align:center;">페이스북으로 회원가입</span></button>
-                <button type="button" class="auth-social-btn email-signup" data-nav="signup"><span class="ico">✉</span><span style="flex:1;text-align:center;">이메일로 회원가입</span></button>
+                <button type="button" class="auth-social-btn naver" data-nav="userInfo"><span class="ico">N</span><span class="auth-social-label">네이버로 회원가입</span></button>
+                <button type="button" class="auth-social-btn google" data-nav="userInfo"><span class="ico">G</span><span class="auth-social-label">구글로 회원가입</span></button>
+                <button type="button" class="auth-social-btn facebook" data-nav="userInfo"><span class="ico">f</span><span class="auth-social-label">페이스북으로 회원가입</span></button>
+                <button type="button" class="auth-social-btn email-signup" data-nav="signup"><span class="ico">✉</span><span class="auth-social-label">이메일로 회원가입</span></button>
               </div>
-              <p class="auth-footer-note">기존에 petwalk를 사용하셨나요? <button type="button" class="auth-inline-link" data-nav="login">로그인</button></p>
+              <div class="auth-or-divider" aria-hidden="true"><span>또는</span></div>
+              <p class="auth-footer-note">
+                기존에 petwalk를 사용하셨나요?
+                <button type="button" class="auth-inline-link" data-nav="login">
+                  로그인
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M4.5 2.5L9 6.5L4.5 10.5" stroke="#10A34E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </p>
             </div>
 
-            <!-- SIGNUP (PetWalk 시작하기) -->
+            <!-- SIGNUP (이메일 · 비밀번호 · 약관) -->
             <div class="view" data-view="signup">
-              <div class="topbar">
-                <button class="iconbtn" data-nav="signupMethod" aria-label="뒤로">←</button>
-                <span class="chip">회원 가입</span>
-                <span class="muted">1/3</span>
+              <header class="signup-topbar">
+                <button type="button" class="signup-back" data-nav="signupMethod" aria-label="뒤로">‹</button>
+                <span class="signup-step-badge">회원 가입</span>
+                <span class="signup-step-count">1/4</span>
+              </header>
+              <div class="signup-hero">
+                <h1 class="signup-title"><span class="signup-brand">PetWalk</span> 시작하기</h1>
+                <p class="signup-sub">간단 가입 후 바로 개인화 추천을 받을 수 있어요.</p>
+                <div class="signup-progress"><span data-progress></span></div>
               </div>
-              <p class="h2">PetWalk 시작하기</p>
-              <p class="muted">간단 가입 후 바로 개인화 추천을 받을 수 있어요.</p>
-              <div class="progress"><span data-progress></span></div>
-              <div class="form">
-                <div class="field">
-                  <div class="label">이메일 <span class="req">*</span></div>
-                  <input
-                    class="input"
-                    id="emailInput"
-                    type="email"
-                    inputmode="email"
-                    autocomplete="email"
-                    autocapitalize="off"
-                    autocorrect="off"
-                    spellcheck="false"
-                    enterkeyhint="next"
-                    placeholder="name@example.com"
-                    value="bori.owner@email.com"
-                  />
-                </div>
-                <div class="field">
-                  <div class="label">비밀번호 <span class="req">*</span></div>
-                  <input
-                    class="input"
-                    id="passwordInput"
-                    type="password"
-                    inputmode="text"
-                    autocomplete="new-password"
-                    autocapitalize="off"
-                    autocorrect="off"
-                    spellcheck="false"
-                    enterkeyhint="done"
-                    placeholder="8자 이상"
-                    value="password"
-                  />
-                </div>
-                <div class="field">
-                  <div class="card" style="margin-top:0;">
-                    <div class="checkrow">
-                      <input class="check" id="tosRequired" type="checkbox" />
-                      <label for="tosRequired" style="flex:1;cursor:pointer;">
-                        <div class="row">
-                          <span class="muted">필수 약관 동의</span>
-                          <span class="chip" id="tosChip">미체크</span>
-                        </div>
-                        <div class="small" style="margin-top:6px;">개인정보 처리방침, 위치정보 이용약관</div>
-                      </label>
-                    </div>
+              <div class="signup-form">
+                <div class="signup-field">
+                  <label class="signup-label" for="emailInput">이메일 <span class="signup-req" aria-hidden="true">*</span></label>
+                  <div class="signup-input-wrap" id="emailInputWrap">
+                    <span class="signup-field-ico" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 6h16v12H4V6z" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                    </span>
+                    <input
+                      class="signup-input"
+                      id="emailInput"
+                      type="email"
+                      inputmode="email"
+                      autocomplete="email"
+                      autocapitalize="off"
+                      autocorrect="off"
+                      spellcheck="false"
+                      enterkeyhint="next"
+                      placeholder="이메일 주소를 입력해주세요."
+                      value=""
+                    />
+                    <span class="signup-field-check" aria-hidden="true">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#10a34e"/><path d="M6 10.2l2.6 2.6L14.2 7.2" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
                   </div>
                 </div>
-                <div class="actions">
-                  <button class="cta" data-nav="userInfo" id="signupNext" style="flex:1;" disabled>다음</button>
+                <div class="signup-field">
+                  <label class="signup-label" for="passwordInput">비밀번호 <span class="signup-req" aria-hidden="true">*</span></label>
+                  <div class="signup-input-wrap" id="passwordInputWrap">
+                    <span class="signup-field-ico" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V8a4 4 0 118 0v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                    </span>
+                    <input
+                      class="signup-input"
+                      id="passwordInput"
+                      type="password"
+                      inputmode="text"
+                      autocomplete="new-password"
+                      autocapitalize="off"
+                      autocorrect="off"
+                      spellcheck="false"
+                      enterkeyhint="done"
+                      placeholder="8자 이상 입력해주세요."
+                      value=""
+                    />
+                    <span class="signup-field-check" aria-hidden="true">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#10a34e"/><path d="M6 10.2l2.6 2.6L14.2 7.2" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                  </div>
                 </div>
+                <div class="signup-terms-card">
+                  <input class="signup-terms-check" id="tosRequired" type="checkbox" />
+                  <label class="signup-terms-label" for="tosRequired">
+                    <span class="signup-terms-title">필수 약관 동의</span>
+                    <span class="signup-terms-desc">개인정보 처리방침, 위치정보 이용약관</span>
+                  </label>
+                  <span class="signup-terms-badge" id="tosChip">미체크</span>
+                </div>
+                <button type="button" class="signup-next-btn" data-nav="userInfo" id="signupNext" disabled>다음</button>
               </div>
             </div>
 
             <!-- USER INFO -->
             <div class="view" data-view="userInfo">
-              <div class="topbar">
-                <button class="iconbtn" data-nav="signup">←</button>
-                <span class="muted">2/4</span>
+              <header class="signup-topbar">
+                <button type="button" class="signup-back" data-nav="signup" aria-label="뒤로">‹</button>
+                <span class="signup-step-badge">회원 가입</span>
+                <span class="signup-step-count">2/4</span>
+              </header>
+              <div class="signup-hero">
+                <h1 class="signup-title">유저 정보 입력</h1>
+                <p class="signup-sub">추천 품질을 위해 산책 선호를 알려주세요.</p>
+                <div class="signup-progress"><span data-progress></span></div>
               </div>
-              <p class="h2">유저 정보 입력</p>
-              <p class="muted">추천 품질을 위해 산책 선호를 알려주세요.</p>
-              <div class="progress"><span data-progress></span></div>
-              <div class="form">
-                <div class="field">
-                  <div class="label">닉네임 <span class="req">*</span></div>
-                  <input class="input" type="text" id="signupNicknameInput" value="보리 보호자" />
+              <div class="signup-form">
+                <div class="userinfo-field userinfo-field--nickname">
+                  <label class="userinfo-label" for="signupNicknameInput">닉네임<span class="userinfo-req" aria-hidden="true">*</span></label>
+                  <div class="userinfo-nickname-wrap">
+                    <input
+                      class="userinfo-nickname-input"
+                      type="text"
+                      id="signupNicknameInput"
+                      placeholder="닉네임을 입력해주세요"
+                      value=""
+                    />
+                  </div>
                 </div>
-                <div class="field">
-                  <div class="label">주 산책 시간대 <span class="req">*</span></div>
+                <div class="userinfo-field userinfo-field--timeslot">
+                  <label class="userinfo-label">주 산책 시간대<span class="userinfo-req" aria-hidden="true">*</span></label>
                   <div class="timeslot-card" id="timeslotCard">
                     <div class="timeslot-tabs" role="tablist" aria-label="요일 구분">
                       <button type="button" class="timeslot-tab active" data-day-tab="weekday" role="tab" aria-selected="true">
@@ -1360,35 +1785,38 @@
 
                     <div class="timeslot-pane active" data-day-pane="weekday">
                       <div class="timeslot-grid">
-                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="dawn"><span class="ico">🌙</span><span class="info"><span class="label">새벽</span><span class="desc">04:00~06:00</span></span><span class="check"></span></button>
-                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="morning"><span class="ico">🌅</span><span class="info"><span class="label">아침</span><span class="desc">06:00~09:00</span></span><span class="check"></span></button>
-                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="forenoon"><span class="ico">☀️</span><span class="info"><span class="label">오전</span><span class="desc">09:00~12:00</span></span><span class="check"></span></button>
-                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="afternoon"><span class="ico">🌤️</span><span class="info"><span class="label">낮</span><span class="desc">12:00~16:00</span></span><span class="check"></span></button>
-                        <button type="button" class="timeslot-chip selected" data-day="weekday" data-slot="evening"><span class="ico">🌇</span><span class="info"><span class="label">저녁</span><span class="desc">16:00~20:00</span></span><span class="check"></span></button>
-                        <button type="button" class="timeslot-chip selected" data-day="weekday" data-slot="night"><span class="ico">🌃</span><span class="info"><span class="label">밤</span><span class="desc">20:00~22:00</span></span><span class="check"></span></button>
-                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="late"><span class="ico">🌌</span><span class="info"><span class="label">심야</span><span class="desc">22:00~</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="dawn"><span class="ico">🌙</span><span class="info"><span class="label">새벽</span><span class="desc">04:00 ~ 06:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="morning"><span class="ico">🌅</span><span class="info"><span class="label">아침</span><span class="desc">06:00 ~ 09:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="forenoon"><span class="ico">☀️</span><span class="info"><span class="label">오전</span><span class="desc">09:00 ~ 12:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="afternoon"><span class="ico">🌤️</span><span class="info"><span class="label">낮</span><span class="desc">12:00 ~ 16:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip selected" data-day="weekday" data-slot="evening"><span class="ico">🌇</span><span class="info"><span class="label">저녁</span><span class="desc">16:00 ~ 20:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip selected" data-day="weekday" data-slot="night"><span class="ico">🌃</span><span class="info"><span class="label">밤</span><span class="desc">20:00 ~ 22:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="late"><span class="ico">🌌</span><span class="info"><span class="label">심야</span><span class="desc">22:00 ~</span></span><span class="check"></span></button>
                       </div>
                     </div>
 
                     <div class="timeslot-pane" data-day-pane="weekend">
                       <div class="timeslot-grid">
-                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="dawn"><span class="ico">🌙</span><span class="info"><span class="label">새벽</span><span class="desc">04:00~06:00</span></span><span class="check"></span></button>
-                        <button type="button" class="timeslot-chip selected" data-day="weekend" data-slot="morning"><span class="ico">🌅</span><span class="info"><span class="label">아침</span><span class="desc">06:00~09:00</span></span><span class="check"></span></button>
-                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="forenoon"><span class="ico">☀️</span><span class="info"><span class="label">오전</span><span class="desc">09:00~12:00</span></span><span class="check"></span></button>
-                        <button type="button" class="timeslot-chip selected" data-day="weekend" data-slot="afternoon"><span class="ico">🌤️</span><span class="info"><span class="label">낮</span><span class="desc">12:00~16:00</span></span><span class="check"></span></button>
-                        <button type="button" class="timeslot-chip selected" data-day="weekend" data-slot="evening"><span class="ico">🌇</span><span class="info"><span class="label">저녁</span><span class="desc">16:00~20:00</span></span><span class="check"></span></button>
-                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="night"><span class="ico">🌃</span><span class="info"><span class="label">밤</span><span class="desc">20:00~22:00</span></span><span class="check"></span></button>
-                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="late"><span class="ico">🌌</span><span class="info"><span class="label">심야</span><span class="desc">22:00~</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="dawn"><span class="ico">🌙</span><span class="info"><span class="label">새벽</span><span class="desc">04:00 ~ 06:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip selected" data-day="weekend" data-slot="morning"><span class="ico">🌅</span><span class="info"><span class="label">아침</span><span class="desc">06:00 ~ 09:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="forenoon"><span class="ico">☀️</span><span class="info"><span class="label">오전</span><span class="desc">09:00 ~ 12:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip selected" data-day="weekend" data-slot="afternoon"><span class="ico">🌤️</span><span class="info"><span class="label">낮</span><span class="desc">12:00 ~ 16:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip selected" data-day="weekend" data-slot="evening"><span class="ico">🌇</span><span class="info"><span class="label">저녁</span><span class="desc">16:00 ~ 20:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="night"><span class="ico">🌃</span><span class="info"><span class="label">밤</span><span class="desc">20:00 ~ 22:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="late"><span class="ico">🌌</span><span class="info"><span class="label">심야</span><span class="desc">22:00 ~</span></span><span class="check"></span></button>
                       </div>
                     </div>
 
-                    <div class="timeslot-summary">평일·주말 모두 여러 시간대를 선택할 수 있어요.</div>
+                    <div class="timeslot-summary">평일 주말 모두 여러 시간대를 선택할 수 있어요.</div>
                   </div>
                 </div>
-                <div class="field">
-                  <div class="label">산책 시 중요한 기준 <span class="small" style="font-weight:600;color:var(--sub);margin-left:4px;">(여러 개 선택 가능)</span></div>
+                <div class="userinfo-field userinfo-field--priority">
+                  <div class="userinfo-label-row">
+                    <span class="userinfo-label">산책 시 중요한 기준</span>
+                    <span class="userinfo-label-sub">(여러개 선택 가능)</span>
+                  </div>
                   <div class="tag-grid" id="priorityTagGrid">
-                    <button type="button" class="tag-chip selected" data-tag="safety"><span class="tag-ico">🛡️</span>안전(차도/교차로)</button>
+                    <button type="button" class="tag-chip selected" data-tag="safety"><span class="tag-ico">🛡️</span>안전 (차도/교차로)</button>
                     <button type="button" class="tag-chip" data-tag="crowd"><span class="tag-ico">👥</span>한적함</button>
                     <button type="button" class="tag-chip selected" data-tag="shade"><span class="tag-ico">🌳</span>그늘/수변</button>
                     <button type="button" class="tag-chip" data-tag="quiet"><span class="tag-ico">🤫</span>조용함</button>
@@ -1401,120 +1829,160 @@
                     <button type="button" class="tag-chip" data-tag="nightlight"><span class="tag-ico">💡</span>야간 조명</button>
                     <button type="button" class="tag-chip" data-tag="hill"><span class="tag-ico">⛰️</span>언덕/계단 적음</button>
                   </div>
-                  <div class="tag-helper"><strong id="priorityTagCount">2</strong>개 선택됨 · 추천 알고리즘에 반영돼요</div>
+                  <div class="userinfo-tag-helper">
+                    <span class="userinfo-tag-check is-visible" id="priorityTagCheck" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="6" fill="#10a34e"/><path d="M3.4 6.1l1.7 1.7 3.5-3.6" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    <span class="userinfo-tag-count"><span id="priorityTagCount">2</span>개</span>
+                    <span class="userinfo-tag-helper-text">선택됨 · 추천 알고리즘에 반영돼요</span>
+                  </div>
                 </div>
-                <div class="actions">
-                  <button class="cta secondary" data-nav="signup" style="flex:1;">이전</button>
-                  <button class="cta" data-nav="dogInfo" style="flex:1;">다음</button>
+                <div class="userinfo-actions">
+                  <button type="button" class="userinfo-prev-btn" data-nav="signup">이전</button>
+                  <button type="button" class="userinfo-next-btn" data-nav="dogInfo">다음</button>
                 </div>
               </div>
             </div>
 
             <!-- DOG INFO -->
             <div class="view" data-view="dogInfo">
-              <div class="topbar">
-                <button class="iconbtn" data-nav="userInfo">←</button>
-                <span class="muted">3/4</span>
+              <header class="signup-topbar">
+                <button type="button" class="signup-back" data-nav="userInfo" aria-label="뒤로">‹</button>
+                <span class="signup-step-badge">회원 가입</span>
+                <span class="signup-step-count">3/4</span>
+              </header>
+              <div class="signup-hero">
+                <h1 class="signup-title">반려견 정보 입력</h1>
+                <p class="signup-sub">이름 · 나이 · 종 · 성별을 알려주세요. 성격은 다음 단계에서 입력해요.</p>
+                <div class="signup-progress"><span data-progress></span></div>
               </div>
-              <p class="h2">반려견 정보 입력</p>
-              <p class="muted">이름·나이·종·성별을 알려주세요. 성격은 다음 단계에서 입력해요.</p>
-              <div class="progress"><span data-progress></span></div>
-              <div class="form">
-                <div class="field">
-                  <div class="label">이름</div>
-                  <input class="input" id="dogNameInput" type="text" value="보리" />
+              <div class="signup-form">
+                <div class="doginfo-field">
+                  <label class="doginfo-label" for="dogNameInput">이름</label>
+                  <div class="doginfo-input-wrap">
+                    <span class="doginfo-field-ico" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 10a4 4 0 118 0 4 4 0 01-8 0z" stroke="currentColor" stroke-width="1.6"/><path d="M6 20c.6-3 2.4-5 6-5s5.4 2 6 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                    </span>
+                    <input
+                      class="doginfo-input"
+                      id="dogNameInput"
+                      type="text"
+                      placeholder="반려견 이름을 입력해주세요."
+                      value=""
+                    />
+                  </div>
                 </div>
-                <div class="field">
-                  <div class="label">나이</div>
-                  <select class="select" id="dogAgeSelect">
-                    <option>1살</option>
-                    <option selected>2살</option>
-                    <option>3살</option>
-                    <option>4살</option>
-                    <option>5살</option>
-                    <option>6살</option>
-                    <option>7살</option>
-                    <option>8살</option>
-                    <option>9살</option>
-                    <option>10살</option>
-                    <option>11살</option>
-                    <option>12살</option>
-                    <option>13살</option>
-                    <option>14살</option>
-                    <option>15살</option>
-                    <option>16살</option>
-                    <option>17살</option>
-                    <option>18살</option>
-                    <option>19살</option>
-                    <option>20살</option>
-                    <option>20+</option>
-                  </select>
+                <div class="doginfo-field">
+                  <label class="doginfo-label" for="dogAgeSelect">나이</label>
+                  <div class="doginfo-input-wrap doginfo-select-wrap">
+                    <span class="doginfo-field-ico" aria-hidden="true">
+                      <svg width="16" height="18" viewBox="0 0 16 18" fill="none"><rect x="1.5" y="2.5" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M5 1.5v2M11 1.5v2M1.5 7.5h13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                    </span>
+                    <select class="doginfo-select" id="dogAgeSelect" required>
+                      <option value="" disabled selected hidden>나이를 입력해주세요.</option>
+                      <option>1살</option>
+                      <option>2살</option>
+                      <option>3살</option>
+                      <option>4살</option>
+                      <option>5살</option>
+                      <option>6살</option>
+                      <option>7살</option>
+                      <option>8살</option>
+                      <option>9살</option>
+                      <option>10살</option>
+                      <option>11살</option>
+                      <option>12살</option>
+                      <option>13살</option>
+                      <option>14살</option>
+                      <option>15살</option>
+                      <option>16살</option>
+                      <option>17살</option>
+                      <option>18살</option>
+                      <option>19살</option>
+                      <option>20살</option>
+                      <option>20+</option>
+                    </select>
+                    <span class="doginfo-select-arrow" aria-hidden="true">›</span>
+                  </div>
                 </div>
-                <div class="field">
-                  <div class="label">종</div>
-                  <select class="select" id="dogBreedSelect">
-                    <option>믹스견</option>
-                    <option>말티즈</option>
-                    <option selected>푸들</option>
-                    <option>포메라니안</option>
-                    <option>치와와</option>
-                    <option>시츄</option>
-                    <option>비숑프리제</option>
-                    <option>요크셔테리어</option>
-                    <option>닥스훈트</option>
-                    <option>웰시코기</option>
-                    <option>비글</option>
-                    <option>프렌치불도그</option>
-                    <option>시바이누</option>
-                    <option>보더콜리</option>
-                    <option>코커스패니얼</option>
-                    <option>골든리트리버</option>
-                    <option>래브라도리트리버</option>
-                    <option>진돗개</option>
-                    <option>사모예드</option>
-                    <option>시베리안허스키</option>
-                    <option>도베르만</option>
-                    <option>로트와일러</option>
-                    <option>셰틀랜드쉽독</option>
-                    <option>미니어처핀셔</option>
-                    <option>퍼그</option>
-                    <option>그 외</option>
-                  </select>
+                <div class="doginfo-field">
+                  <label class="doginfo-label" for="dogBreedSelect">종</label>
+                  <div class="doginfo-input-wrap doginfo-select-wrap">
+                    <span class="doginfo-field-ico" aria-hidden="true">
+                      <svg width="19" height="18" viewBox="0 0 19 18" fill="none"><path d="M4.5 8.5c0-2.5 2-4.5 5-4.5s5 2 5 4.5c0 2.2-1.5 4-3.5 5.2L9.5 16l-1.5-2.3C5.9 12.5 4.5 10.8 4.5 8.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+                    </span>
+                    <select class="doginfo-select" id="dogBreedSelect" required>
+                      <option value="" disabled selected hidden>견종을 선택해주세요.</option>
+                      <option>믹스견</option>
+                      <option>말티즈</option>
+                      <option>푸들</option>
+                      <option>포메라니안</option>
+                      <option>치와와</option>
+                      <option>시츄</option>
+                      <option>비숑프리제</option>
+                      <option>요크셔테리어</option>
+                      <option>닥스훈트</option>
+                      <option>웰시코기</option>
+                      <option>비글</option>
+                      <option>프렌치불도그</option>
+                      <option>시바이누</option>
+                      <option>보더콜리</option>
+                      <option>코커스패니얼</option>
+                      <option>골든리트리버</option>
+                      <option>래브라도리트리버</option>
+                      <option>진돗개</option>
+                      <option>사모예드</option>
+                      <option>시베리안허스키</option>
+                      <option>도베르만</option>
+                      <option>로트와일러</option>
+                      <option>셰틀랜드쉽독</option>
+                      <option>미니어처핀셔</option>
+                      <option>퍼그</option>
+                      <option>그 외</option>
+                    </select>
+                    <span class="doginfo-select-arrow" aria-hidden="true">›</span>
+                  </div>
                 </div>
-                <div class="field">
-                  <div class="label">성별</div>
-                  <select class="select" id="dogSexSelect">
-                    <option selected>암컷</option>
-                    <option>수컷</option>
-                  </select>
+                <div class="doginfo-field">
+                  <label class="doginfo-label" for="dogSexSelect">성별</label>
+                  <div class="doginfo-input-wrap doginfo-select-wrap">
+                    <span class="doginfo-field-ico" aria-hidden="true">
+                      <svg width="14" height="20" viewBox="0 0 14 20" fill="none"><circle cx="7" cy="6" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M7 10.5V18M4 15.5h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                    </span>
+                    <select class="doginfo-select" id="dogSexSelect" required>
+                      <option value="" disabled selected hidden>성별을 선택해주세요.</option>
+                      <option>암컷</option>
+                      <option>수컷</option>
+                    </select>
+                    <span class="doginfo-select-arrow" aria-hidden="true">›</span>
+                  </div>
                 </div>
-                <div class="actions">
-                  <button class="cta secondary" data-nav="userInfo" style="flex:1;">이전</button>
-                  <button type="button" class="cta" id="dogInfoToTraitsBtn" data-nav="dogInfoTraits" style="flex:1;">다음</button>
+                <div class="doginfo-actions">
+                  <button type="button" class="doginfo-prev-btn" data-nav="userInfo">이전</button>
+                  <button type="button" class="doginfo-next-btn" id="dogInfoToTraitsBtn" data-nav="dogInfoTraits">다음</button>
                 </div>
               </div>
             </div>
 
             <!-- DOG INFO: 성격 (별도 페이지) -->
             <div class="view" data-view="dogInfoTraits">
-              <div class="topbar">
-                <button class="iconbtn" type="button" id="traitsTopBackBtn" data-nav="dogInfo">←</button>
-                <span class="muted" id="traitsTopMuted">4/4</span>
+              <header class="signup-topbar">
+                <button type="button" class="signup-back" id="traitsTopBackBtn" data-nav="dogInfo" aria-label="뒤로">‹</button>
+                <span class="signup-step-badge">회원 가입</span>
+                <span class="signup-step-count" id="traitsTopMuted">4/4</span>
+              </header>
+              <div class="signup-hero">
+                <h1 class="signup-title"><span id="traitsDogName">보리</span>의 성격 알아보기</h1>
+                <p class="signup-sub">8개의 질문에 답하면 우리 아이의 산책 성향 유형을 알려드려요.</p>
+                <div class="signup-progress"><span data-progress></span></div>
               </div>
-              <p class="h2"><span id="traitsDogName">보리</span>의 성격 알아보기</p>
-              <p class="muted">8개의 질문에 답하면 우리 아이의 산책 성향 유형을 알려드려요.</p>
-              <div class="progress"><span data-progress></span></div>
               <div class="form">
                 <div class="wesen-notice" role="note">
                   <span class="wesen-notice-ico">📋</span>
                   <div class="wesen-notice-text">
-                    <strong>베젠테스트(Wesen test)</strong>를 활용한 반려견 기질 테스트입니다.<br>
-                    <em>독일에서 사용되는 표준 기질 평가 방식을 산책 환경에 맞춰 재구성했어요.</em>
+                    <p class="wesen-notice-title"><span class="wesen-notice-accent">베젠테스트(Wesen test)</span>를 활용한 반려견 기질 테스트입니다.</p>
+                    <p class="wesen-notice-sub">독일에서 사용되는 표준 기질 평가 방식을 산책 환경에 맞춰 재구성 했어요.</p>
                   </div>
-                </div>
-                <div class="quiz-progress-bar">
-                  <div class="quiz-progress-track"><div class="quiz-progress-fill" id="quizProgressFill" style="width:0%"></div></div>
-                  <div class="quiz-progress-text"><strong id="quizAnsweredCount">0</strong> / 8 답변 완료</div>
                 </div>
 
                 <div class="quiz-list" id="quizList">
@@ -1640,19 +2108,30 @@
 
             <!-- DOG INFO: 성격 결과 -->
             <div class="view" data-view="dogInfoResult">
-              <div class="topbar">
-                <button class="iconbtn" id="resultBackBtn" data-nav="dogInfoTraits">←</button>
-                <span class="muted">결과</span>
+              <header class="signup-topbar">
+                <button type="button" class="signup-back" id="resultBackBtn" data-nav="dogInfoTraits" aria-label="뒤로">‹</button>
+                <span class="signup-step-badge">회원 가입</span>
+                <span class="signup-step-count">4/4</span>
+              </header>
+              <div class="signup-hero">
+                <h1 class="signup-title"><span id="resultDogName">보리</span>의 성격 결과</h1>
+                <p class="signup-sub">8개의 답변을 분석했어요. 우리 아이의 유형을 확인해 보세요.</p>
+                <div class="signup-progress" id="resultProgress"><span data-progress></span></div>
               </div>
-              <p class="h2"><span id="resultDogName">보리</span>의 성격 결과</p>
-              <p class="muted">8개의 답변을 분석했어요. 우리 아이의 유형을 확인해 보세요.</p>
-              <div class="progress" id="resultProgress"><span data-progress></span></div>
               <div class="form">
                 <div class="result-hero">
-                  <div class="result-emoji" id="resultEmoji">🐶</div>
-                  <div class="result-badge">우리 아이 유형</div>
-                  <div class="result-name" id="resultName">사교왕 인싸형</div>
-                  <div class="result-tagline" id="resultTagline">사람도 강아지도 다 좋아하는 만능 인싸!</div>
+                  <div class="result-type-copy">
+                    <div class="result-badge">우리 아이 유형</div>
+                    <div class="result-name-row">
+                      <div class="result-name" id="resultName">사교왕 인싸형</div>
+                      <span class="result-emoji" id="resultEmoji">🐶</span>
+                    </div>
+                    <div class="result-tagline" id="resultTagline">사람도 강아지도 다 좋아하는 만능 인싸!</div>
+                    <div class="result-tags" id="resultTags"></div>
+                  </div>
+                  <div class="result-hero-art" aria-hidden="true">
+                    <img class="result-hero-mascot" src="기본 강아지.png" alt="" />
+                  </div>
                 </div>
 
                 <div class="result-card">
@@ -1694,7 +2173,6 @@
 
                 <div class="result-card">
                   <div class="result-card-title">💡 산책 추천 포인트</div>
-                  <div class="result-tags" id="resultTags"></div>
                   <p class="result-desc" id="resultDesc" style="margin-top:12px;"></p>
                 </div>
 
@@ -1750,7 +2228,7 @@
                       <p class="home-greeting-sub">오늘도 멋진 산책을 떠나볼까요?</p>
                     </div>
                     <div class="home-greeting-right">
-                      <img src="petwalk-mascot.png" alt="보리 캐릭터" width="95" height="103" />
+                      <img src="petwalk-mascot.png" alt="보리 캐릭터" width="90" height="98" />
                     </div>
                   </div>
                   <div class="home-greeting-stats">
@@ -2012,28 +2490,41 @@
                     <div class="petlog-carousel-track" id="petlogCarouselTrack">
                       <div class="petlog-carousel-slide petlog-carousel-slide--base">
                         <div class="petlog-profile-card petlog-profile-card-main">
-                          <div class="petlog-profile-head">
-                            <div class="petlog-profile-inner">
-                              <div class="petlog-avatar">🐕</div>
-                              <div class="petlog-profile-info">
-                                <div class="petlog-profile-name" id="petDogName">반려견</div>
-                                <div class="petlog-profile-sub" id="petDogSub">견종 · 나이 · 성별</div>
+                          <div class="petlog-profile-banner">
+                            <div class="petlog-profile-head">
+                              <div class="petlog-profile-inner">
+                                <div class="petlog-avatar">
+                                  <img src="기본 강아지.png" alt="반려견 프로필" />
+                                </div>
+                                <div class="petlog-profile-info">
+                                  <div class="petlog-profile-name" id="petDogName">보리</div>
+                                  <div class="petlog-profile-sub" id="petDogSub">푸들 · 2살 · 암컷</div>
+                                </div>
                               </div>
+                              <div class="petlog-profile-add-slot"></div>
                             </div>
-                            <div class="petlog-profile-add-slot"></div>
                           </div>
                           <div class="petlog-stats">
                             <div class="petlog-stat">
-                              <div class="petlog-stat-val" id="petlogTotalWalks">0</div>
-                              <div class="petlog-stat-label">총 산책</div>
+                              <span class="petlog-stat-ico"><svg width="13" height="25" viewBox="0 0 13 25" fill="none"><path d="M7.5 4a2 2 0 10-.001-4A2 2 0 007.5 4zM4 25l1.5-7L3 16v-5.5L0 7l1.5-1.5L5 9l1-2h3l2.5 3.5H13l-1 2h-1.5L9 10l-1 2 3 3v10H9V17l-3-3-1 4.5L4 25z" fill="#19B23A"/></svg></span>
+                              <div class="petlog-stat-body">
+                                <div class="petlog-stat-val" id="petlogTotalWalks">47</div>
+                                <div class="petlog-stat-label">총 산책</div>
+                              </div>
                             </div>
                             <div class="petlog-stat">
-                              <div class="petlog-stat-val" id="petlogTotalKm">0km</div>
-                              <div class="petlog-stat-label">총 거리</div>
+                              <span class="petlog-stat-ico"><svg width="15" height="17" viewBox="0 0 12 15" fill="none"><path d="M6 0C2.69 0 0 2.69 0 6c0 4.5 6 9 6 9s6-4.5 6-9c0-3.31-2.69-6-6-6zm0 8.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="#19B23A"/></svg></span>
+                              <div class="petlog-stat-body">
+                                <div class="petlog-stat-val" id="petlogTotalKm">68km</div>
+                                <div class="petlog-stat-label">총 거리</div>
+                              </div>
                             </div>
                             <div class="petlog-stat">
-                              <div class="petlog-stat-val" id="petlogTotalHours">0h</div>
-                              <div class="petlog-stat-label">총 시간</div>
+                              <span class="petlog-stat-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#19B23A" stroke-width="1.8"/><path d="M12 7v5l3 2" stroke="#19B23A" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+                              <div class="petlog-stat-body">
+                                <div class="petlog-stat-val" id="petlogTotalHours">32h</div>
+                                <div class="petlog-stat-label">총 시간</div>
+                              </div>
                             </div>
                           </div>
                           <div class="petlog-dual">
@@ -3194,23 +3685,23 @@
           <div class="tabs hidden" id="tabs">
             <div class="tabs-inner">
               <button class="tab-hit" data-tab="walk" type="button" aria-label="산책">
-                <span class="tab-ico" aria-hidden="true">🚶</span>
+                <span class="tab-ico" aria-hidden="true"><img src="icons/navigation%20bar/산책.png" alt="" width="24" height="24"></span>
                 <span id="walkTabLabel">산책</span>
               </button>
               <button class="tab-hit" data-tab="pet" type="button" aria-label="반려견">
-                <span class="tab-ico" aria-hidden="true">🐕</span>
+                <span class="tab-ico" aria-hidden="true"><img src="icons/navigation%20bar/펫로그.png" alt="" width="24" height="24"></span>
                 <span>펫로그</span>
               </button>
               <button class="tab-hit" data-tab="home" type="button" aria-label="홈">
-                <span class="tab-ico" aria-hidden="true">⌂</span>
+                <span class="tab-ico" aria-hidden="true"><img src="icons/navigation%20bar/홈.png" alt="" width="24" height="24"></span>
                 <span>홈</span>
               </button>
               <button class="tab-hit" data-tab="explore" type="button" aria-label="여행">
-                <span class="tab-ico" aria-hidden="true">🧭</span>
+                <span class="tab-ico" aria-hidden="true"><img src="icons/navigation%20bar/여행.png" alt="" width="24" height="24"></span>
                 <span>여행</span>
               </button>
               <button class="tab-hit" data-tab="mypage" type="button" aria-label="마이페이지">
-                <span class="tab-ico" aria-hidden="true">👤</span>
+                <span class="tab-ico" aria-hidden="true"><img src="icons/navigation%20bar/마이페이지.png" alt="" width="24" height="24"></span>
                 <span>마이페이지</span>
               </button>
             </div>
@@ -3269,9 +3760,15 @@
         const breed = document.getElementById("dogBreedSelect");
         const age = document.getElementById("dogAgeSelect");
         const sex = document.getElementById("dogSexSelect");
-        const pb = breed && breed.selectedIndex >= 0 ? breed.options[breed.selectedIndex].text : "";
-        const pa = age && age.selectedIndex >= 0 ? age.options[age.selectedIndex].text : "";
-        const ps = sex && sex.selectedIndex >= 0 ? sex.options[sex.selectedIndex].text : "";
+        function label(sel) {
+          if (!sel || sel.selectedIndex < 0) return "";
+          const opt = sel.options[sel.selectedIndex];
+          if (!opt || !opt.value) return "";
+          return opt.text;
+        }
+        const pb = label(breed);
+        const pa = label(age);
+        const ps = label(sex);
         return [pb, pa, ps].filter(Boolean).join(" · ");
       }
 
@@ -4206,7 +4703,13 @@
           renderSchedules();
         }
 
+        function completeOne() {
+          state.schedules = state.schedules.filter((x) => x.id !== scheduleId);
+          renderSchedules();
+        }
+
         pane.addEventListener("pointerdown", (e) => {
+          if (e.target.closest(".home-schedule-bell")) return;
           if (e.pointerType === "mouse" && e.button !== 0) return;
           dragging = true;
           startX = e.clientX;
@@ -4224,6 +4727,14 @@
         function endDrag() {
           if (!dragging) return;
           dragging = false;
+          if (tx < -OPEN / 2) {
+            completeOne();
+            return;
+          }
+          if (tx > OPEN / 2) {
+            removeOne();
+            return;
+          }
           snap();
         }
         pane.addEventListener("pointerup", endDrag);
@@ -4235,7 +4746,7 @@
         });
         doneBtn.addEventListener("click", (e) => {
           e.stopPropagation();
-          removeOne();
+          completeOne();
         });
       }
 
@@ -4273,17 +4784,27 @@
             const metaLoc = s.loc ? escapeHtml(s.loc) : "";
             const bellSvg = SCHEDULE_BELL_SVG[s.type] || SCHEDULE_BELL_SVG.walk;
             return (
-              `<div class="home-schedule-item" data-schedule-id="${s.id}">
-                <div class="home-schedule-ico ${s.type}" aria-hidden="true">${s.ico}</div>
-                <div class="home-schedule-info">
-                  <div class="home-schedule-title">${escapeHtml(s.title)}</div>
-                  <div class="home-schedule-meta"><span>${metaTime}</span>${metaLoc ? `<span style="margin-left:10px">${metaLoc}</span>` : ""}</div>
+              `<div class="home-schedule-swipe" data-schedule-id="${s.id}">
+                <div class="home-schedule-swipe-under" aria-hidden="true">
+                  <button type="button" class="home-schedule-swipe-btn home-schedule-swipe-btn--del">삭제</button>
+                  <button type="button" class="home-schedule-swipe-btn home-schedule-swipe-btn--done">완료</button>
                 </div>
-                <button type="button" class="home-schedule-bell ${s.type}" aria-label="알림">${bellSvg}</button>
+                <div class="home-schedule-swipe-pane">
+                  <div class="home-schedule-ico ${s.type}" aria-hidden="true">${s.ico}</div>
+                  <div class="home-schedule-info">
+                    <div class="home-schedule-title">${escapeHtml(s.title)}</div>
+                    <div class="home-schedule-meta"><span>${metaTime}</span>${metaLoc ? `<span style="margin-left:10px">${metaLoc}</span>` : ""}</div>
+                  </div>
+                  <button type="button" class="home-schedule-bell ${s.type}" aria-label="알림">${bellSvg}</button>
+                </div>
               </div>`
             );
           })
           .join("");
+        list.querySelectorAll(".home-schedule-swipe").forEach((row) => {
+          const id = Number(row.dataset.scheduleId);
+          if (!Number.isNaN(id)) attachHomeScheduleSwipe(row, id);
+        });
       }
 
       function formatTime(t) {
@@ -4630,6 +5151,7 @@
           closeScheduleModal();
           renderSchedules();
         });
+        renderSchedules();
       })();
 
       function syncTraitsDogName() {
@@ -5122,31 +5644,47 @@
         });
       })();
 
-      // Signup checkbox interaction
+      // Signup form — empty / filled states (Figma iPhone 17 - 28 / - 20)
       const tosRequired = document.getElementById("tosRequired");
       const tosChip = document.getElementById("tosChip");
       const signupNext = document.getElementById("signupNext");
       const emailInput = document.getElementById("emailInput");
       const passwordInput = document.getElementById("passwordInput");
-      function syncTos() {
-        const ok = !!(tosRequired && tosRequired.checked);
-        if (tosChip) tosChip.textContent = ok ? "체크됨" : "미체크";
+      const emailInputWrap = document.getElementById("emailInputWrap");
+      const passwordInputWrap = document.getElementById("passwordInputWrap");
+      function isValidEmail(value) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
+      }
+      function updateSignupFieldState(input, wrap) {
+        if (!input || !wrap) return;
+        const valid = input.id === "emailInput"
+          ? isValidEmail(input.value)
+          : String(input.value || "").length >= 8;
+        wrap.classList.toggle("is-valid", valid);
+      }
+      function syncSignupForm() {
+        const tosOk = !!(tosRequired && tosRequired.checked);
+        const emailOk = emailInput ? isValidEmail(emailInput.value) : false;
+        const pwOk = passwordInput ? passwordInput.value.length >= 8 : false;
+        const ok = emailOk && pwOk && tosOk;
+        updateSignupFieldState(emailInput, emailInputWrap);
+        updateSignupFieldState(passwordInput, passwordInputWrap);
+        if (tosChip) tosChip.textContent = tosOk ? "체크됨" : "미체크";
         if (signupNext) {
           signupNext.disabled = !ok;
-          signupNext.style.opacity = ok ? "1" : "0.6";
-          signupNext.style.cursor = ok ? "pointer" : "not-allowed";
+          signupNext.classList.toggle("is-enabled", ok);
         }
       }
-      if (tosRequired) tosRequired.addEventListener("change", syncTos);
-      syncTos();
-
-      // Improve mobile keyboard invocation in WebView/mobile browsers
+      if (tosRequired) tosRequired.addEventListener("change", syncSignupForm);
       [emailInput, passwordInput].forEach((el) => {
         if (!el) return;
+        el.addEventListener("input", syncSignupForm);
+        el.addEventListener("blur", syncSignupForm);
         el.addEventListener("touchend", () => {
           setTimeout(() => el.focus(), 0);
         }, { passive: true });
       });
+      syncSignupForm();
 
       // Walk interactions
       const voiceActionIco = document.getElementById("voiceActionIco");
@@ -6334,10 +6872,12 @@
       // === userInfo: 우선순위 태그 ===
       const priorityTagGrid = document.getElementById("priorityTagGrid");
       const priorityTagCount = document.getElementById("priorityTagCount");
+      const priorityTagCheck = document.getElementById("priorityTagCheck");
       if (priorityTagGrid) {
         function updatePriorityCount() {
-          if (!priorityTagCount) return;
-          priorityTagCount.textContent = String(priorityTagGrid.querySelectorAll(".tag-chip.selected").length);
+          const count = priorityTagGrid.querySelectorAll(".tag-chip.selected").length;
+          if (priorityTagCount) priorityTagCount.textContent = String(count);
+          if (priorityTagCheck) priorityTagCheck.classList.toggle("is-visible", count > 0);
         }
         priorityTagGrid.querySelectorAll(".tag-chip").forEach(tag => {
           tag.addEventListener("click", () => {
@@ -6533,6 +7073,27 @@
         return best || TYPES[0];
       }
 
+      function formatTypeNameHtml(name) {
+        const trimmed = String(name || "").trim();
+        if (!trimmed) return "";
+        const lastSpace = trimmed.lastIndexOf(" ");
+        if (lastSpace > 0) {
+          const head = trimmed.slice(0, lastSpace);
+          const tail = trimmed.slice(lastSpace + 1);
+          return head + "<br>" + tail;
+        }
+        return trimmed;
+      }
+
+      function formatKoreanPhraseWrapHtml(text) {
+        const trimmed = String(text || "").trim();
+        if (!trimmed) return "";
+        return trimmed.split(/(\s+)/).map((part) => {
+          if (/^\s+$/.test(part)) return " ";
+          return '<span class="result-phrase">' + part + "</span>";
+        }).join("");
+      }
+
       function renderResult() {
         let type, norm;
         if (Object.keys(quizState).length >= 8) {
@@ -6595,8 +7156,8 @@
         const tagsEl = document.getElementById("resultTags");
         const axesEl = document.getElementById("resultAxes");
         if (emojiEl) emojiEl.textContent = type.emoji;
-        if (nameEl) nameEl.textContent = type.name;
-        if (taglineEl) taglineEl.textContent = type.tagline;
+        if (nameEl) nameEl.innerHTML = formatTypeNameHtml(type.name);
+        if (taglineEl) taglineEl.innerHTML = formatKoreanPhraseWrapHtml(type.tagline);
         if (descEl) descEl.textContent = type.desc;
         if (tagsEl) {
           tagsEl.innerHTML = "";
