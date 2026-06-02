@@ -3994,13 +3994,13 @@
 
       const SCHEDULE_TODO_ICON_BASE = "icons/home/todo/";
       const SCHEDULE_TYPE_ICON_SRC = {
-        walk: SCHEDULE_TODO_ICON_BASE + "산책.png",
-        medic: SCHEDULE_TODO_ICON_BASE + "병원.png",
-        feed: SCHEDULE_TODO_ICON_BASE + "급여.png",
-        bath: SCHEDULE_TODO_ICON_BASE + "목욕.png",
-        play: SCHEDULE_TODO_ICON_BASE + "놀이.png",
+        walk: SCHEDULE_TODO_ICON_BASE + "walk.png",
+        medic: SCHEDULE_TODO_ICON_BASE + "hospital.png",
+        feed: SCHEDULE_TODO_ICON_BASE + "feed.png",
+        bath: SCHEDULE_TODO_ICON_BASE + "bath.png",
+        play: SCHEDULE_TODO_ICON_BASE + "play.png",
       };
-      const SCHEDULE_BELL_ICON_SRC = SCHEDULE_TODO_ICON_BASE + "알림_초록.png";
+      const SCHEDULE_BELL_ICON_SRC = SCHEDULE_TODO_ICON_BASE + "alert-green.png";
 
       function getScheduleTypeIconSrc(type) {
         const key = ["walk", "medic", "feed", "bath", "play"].includes(type) ? type : "walk";
