@@ -1,0 +1,548 @@
+﻿<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PetWalk UI Mock</title>
+  <style>
+    :root { --bg:#f3fff5; --card:#fff; --text:#111111; --muted:#5f6b62; --primary:#00e933; --primary-dark:#19b23a; --line:#dff5e4; --shadow:0 16px 36px rgba(25,178,58,.14); --radius:22px; }
+    *{box-sizing:border-box} body{margin:0;font-family:"Segoe UI","Pretendard",Arial,sans-serif;background:radial-gradient(circle at 10% 10%,#ffffff 0%,var(--bg) 65%);color:var(--text)}
+    .wrap{max-width:1320px;margin:0 auto;padding:28px 22px 40px}.title{font-size:24px;font-weight:800;margin:8px 0 22px}
+    .phones{display:grid;grid-template-columns:minmax(320px, 420px);justify-content:center}
+    .phone{background:var(--card);border-radius:34px;padding:18px 14px 16px;min-height:760px;box-shadow:var(--shadow);border:1px solid #edf3fb;position:relative;overflow:hidden}
+    .screen{border-radius:28px;background:linear-gradient(180deg,#f9fff9 0%,#f2fff3 100%);height:100%;padding:12px;position:relative}
+    .row{display:flex;align-items:center;justify-content:space-between}.muted{color:var(--muted);font-size:12px}.h2{font-size:20px;font-weight:800;margin:0}
+    .chip{font-size:12px;background:#eaffe5;color:#0d6b20;padding:7px 10px;border-radius:999px;font-weight:700}
+    .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 8px 20px rgba(77,104,153,.08);padding:12px;margin-top:10px}
+    .card.clickable{cursor:pointer;transition:transform .08s ease, box-shadow .08s ease, border-color .08s ease}
+    .card.clickable:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(25,178,58,.16);border-color:#b6efc2}
+    .card.clickable:active{transform:translateY(0)}
+    .map{height:134px;border-radius:18px;background:radial-gradient(circle at 20% 30%,#cce4ff 0 9%,transparent 10%),radial-gradient(circle at 72% 68%,#c7f4da 0 11%,transparent 12%),linear-gradient(130deg,#f8fbff 0%,#e5f0ff 100%);position:relative;overflow:hidden}
+    .map:before,.map:after{content:"";position:absolute;border-radius:999px}.map:before{width:220px;height:220px;top:-94px;left:-70px;border:12px solid rgba(80,157,255,.28)}.map:after{width:220px;height:220px;bottom:-116px;right:-84px;border:10px dashed rgba(255,200,87,.6)}
+    .metric{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.metric .item{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:8px;text-align:center}
+    .big{font-size:40px;font-weight:900;letter-spacing:1px;line-height:1.05;text-align:center;margin:8px 0 10px}
+    .bar{background:#edf7ef;border-radius:99px;height:8px;margin:6px 0;overflow:hidden}.bar>span{display:block;height:100%;width:62%;background:linear-gradient(90deg,var(--primary),var(--primary-dark))}
+    .cta{margin-top:10px;width:100%;border:none;border-radius:14px;padding:12px;font-size:15px;font-weight:800;cursor:pointer;background:linear-gradient(90deg,var(--primary),var(--primary-dark));color:#fff}
+    .tabs{position:absolute;left:12px;right:12px;bottom:10px;background:#fff;border:1px solid var(--line);border-radius:18px;display:grid;grid-template-columns:repeat(4,1fr);padding:8px;gap:6px}
+    .tab{text-align:center;font-size:11px;color:var(--muted);padding:6px 0;border-radius:12px}.tab.active{background:#eaffe5;color:#0d6b20;font-weight:700}
+    .floating-reroute{position:absolute;left:16px;right:16px;bottom:106px;background:#fff;border-radius:16px;border:1px solid #e8eef7;box-shadow:0 12px 25px rgba(57,74,110,.18);padding:10px}
+    .btns{display:flex;gap:8px;margin-top:8px}.btn{flex:1;border-radius:10px;padding:9px 0;font-size:12px;font-weight:700;border:1px solid #dde8f8;background:#f9fbff;color:#3e5178}.btn.primary{background:#4ea7ff;color:#fff;border-color:#4ea7ff}
+    .views{height:100%}
+    .view{display:none;height:100%}
+    .view.active{display:block}
+    .home-bg{background:linear-gradient(180deg,#edffef 0%,#f7fff8 38%,#ffffff 100%);border-radius:20px;padding:8px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .iconbtn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px 10px;font-weight:800;color:#1a4d24;cursor:pointer}
+    .hint{font-size:12px;color:var(--muted);margin-top:8px}
+    .flow{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+    .flow-step{background:#f1f1f1;border-radius:6px;padding:8px 10px;font-size:13px;font-weight:700}
+    .flow-step.active{background:#d8ffd9;border:1px solid #9ce8a2}
+    .hero{margin-top:16px;padding:14px;border:1px solid var(--line);border-radius:18px;background:#fff}
+    .form{margin-top:10px}
+    .field{margin-top:10px}
+    .label{font-size:12px;font-weight:800;color:#1a4d24;margin-bottom:6px}
+    .input, .select{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:11px 12px;
+      background:#fff;
+      outline:none;
+      font-weight:700;
+      color:var(--text);
+    }
+    .select{appearance:none}
+    .actions{display:flex;gap:10px;margin-top:14px}
+    .cta.secondary{background:#ffffff;color:#1a4d24;border:1px solid #b6efc2}
+    .progress{height:10px;border-radius:999px;background:#edf7ef;overflow:hidden;border:1px solid var(--line);margin-top:10px}
+    .progress > span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--primary),var(--primary-dark));transition:width .18s ease}
+    .tabs.hidden{display:none}
+    .checkrow{display:flex;align-items:flex-start;gap:10px}
+    .check{width:18px;height:18px;margin-top:2px;accent-color:var(--primary-dark)}
+    .small{font-size:12px;color:var(--muted)}
+    @media (max-width:980px){.phones{grid-template-columns:1fr}.phone{min-height:720px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="title">PetWalk MVP UI (?곌껐???붾㈃ ?꾨줈?좏???</div>
+    <div class="phones">
+      <section class="phone">
+        <div class="screen">
+          <div class="views" id="views">
+            <!-- SIGNUP (app start -> signup) -->
+            <div class="view active" data-view="signup">
+              <div class="topbar">
+                <span class="chip">?뚯썝 媛??/span>
+                <span class="muted">1/3</span>
+              </div>
+              <p class="h2">PetWalk ?쒖옉?섍린</p>
+              <p class="muted">媛꾨떒 媛????諛붾줈 媛쒖씤??異붿쿇??諛쏆쓣 ???덉뼱??</p>
+              <div class="progress"><span data-progress></span></div>
+              <div class="form">
+                <div class="field">
+                  <div class="label">?대찓??/div>
+                  <input
+                    class="input"
+                    id="emailInput"
+                    type="email"
+                    inputmode="email"
+                    autocomplete="email"
+                    autocapitalize="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    enterkeyhint="next"
+                    placeholder="name@example.com"
+                    value="bori.owner@email.com"
+                  />
+                </div>
+                <div class="field">
+                  <div class="label">鍮꾨?踰덊샇</div>
+                  <input
+                    class="input"
+                    id="passwordInput"
+                    type="password"
+                    inputmode="text"
+                    autocomplete="new-password"
+                    autocapitalize="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    enterkeyhint="done"
+                    placeholder="8???댁긽"
+                    value="password"
+                  />
+                </div>
+                <div class="field">
+                  <div class="label">?쎄? ?숈쓽</div>
+                  <div class="card" style="margin-top:0;">
+                    <div class="checkrow">
+                      <input class="check" id="tosRequired" type="checkbox" />
+                      <label for="tosRequired" style="flex:1;cursor:pointer;">
+                        <div class="row">
+                          <span class="muted">?꾩닔 ?쎄? ?숈쓽</span>
+                          <span class="chip" id="tosChip">誘몄껜??/span>
+                        </div>
+                        <div class="small" style="margin-top:6px;">媛쒖씤?뺣낫 泥섎━諛⑹묠, ?꾩튂?뺣낫 ?댁슜?쎄?</div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="actions">
+                  <button class="cta" data-nav="userInfo" id="signupNext" style="flex:1;" disabled>?ㅼ쓬</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- USER INFO -->
+            <div class="view" data-view="userInfo">
+              <div class="topbar">
+                <button class="iconbtn" data-nav="signup">??/button>
+                <span class="muted">2/3</span>
+              </div>
+              <p class="h2">?좎? ?뺣낫 ?낅젰</p>
+              <p class="muted">異붿쿇 ?덉쭏???꾪빐 ?곗콉 ?좏샇瑜??뚮젮二쇱꽭??</p>
+              <div class="progress"><span data-progress></span></div>
+              <div class="form">
+                <div class="field">
+                  <div class="label">?됰꽕??/div>
+                  <input class="input" type="text" value="蹂대━ 蹂댄샇?? />
+                </div>
+                <div class="field">
+                  <div class="label">二??곗콉 ?쒓컙?</div>
+                  <select class="select">
+                    <option>?꾩묠(6~10)</option>
+                    <option selected>???18~22)</option>
+                    <option>?쇨컙(22~2)</option>
+                    <option>?좊룞??/option>
+                  </select>
+                </div>
+                <div class="field">
+                  <div class="label">以묒슂??湲곗?</div>
+                  <input
+                    class="input"
+                    id="priorityInput"
+                    type="text"
+                    inputmode="text"
+                    autocomplete="off"
+                    autocapitalize="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    placeholder="?? ?덉쟾(李⑤룄/援먯감濡? 쨌 ?쇱옟??쨌 洹몃뒛/?섎? 쨌 議곗슜??
+                    value=""
+                  />
+                </div>
+                <div class="actions">
+                  <button class="cta secondary" data-nav="signup" style="flex:1;">?댁쟾</button>
+                  <button class="cta" data-nav="dogInfo" style="flex:1;">?ㅼ쓬</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- DOG INFO -->
+            <div class="view" data-view="dogInfo">
+              <div class="topbar">
+                <button class="iconbtn" data-nav="userInfo">??/button>
+                <span class="muted">3/3</span>
+              </div>
+              <p class="h2">諛섎젮寃??뺣낫 ?낅젰</p>
+              <p class="muted">?대쫫/?섏씠/醫??깅퀎/?깃꺽??諛뷀깢?쇰줈 寃쎈줈瑜?異붿쿇?댁슂.</p>
+              <div class="progress"><span data-progress></span></div>
+              <div class="form">
+                <div class="field">
+                  <div class="label">?대쫫</div>
+                  <input class="input" id="dogNameInput" type="text" value="蹂대━" />
+                </div>
+                <div class="field">
+                  <div class="label">?섏씠</div>
+                  <select class="select">
+                    <option>1??/option>
+                    <option selected>2??/option>
+                    <option>3??/option>
+                    <option>4??/option>
+                    <option>5??/option>
+                    <option>6??/option>
+                    <option>7??/option>
+                    <option>8??/option>
+                    <option>9??/option>
+                    <option>10??/option>
+                    <option>11??/option>
+                    <option>12??/option>
+                    <option>13??/option>
+                    <option>14??/option>
+                    <option>15??/option>
+                    <option>16??/option>
+                    <option>17??/option>
+                    <option>18??/option>
+                    <option>19??/option>
+                    <option>20??/option>
+                    <option>20+</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <div class="label">醫?/div>
+                  <select class="select">
+                    <option>誘뱀뒪寃?/option>
+                    <option>留먰떚利?/option>
+                    <option>?몃뱾</option>
+                    <option>?щ찓?쇰땲??/option>
+                    <option>移섏??</option>
+                    <option>?쒖툌</option>
+                    <option>鍮꾩닊?꾨━??/option>
+                    <option>?뷀겕?뷀뀒由ъ뼱</option>
+                    <option>?μ뒪?덊듃</option>
+                    <option>?곗떆肄붽린</option>
+                    <option>鍮꾧?</option>
+                    <option>?꾨젋移섎텋?꾧렇</option>
+                    <option>?쒕컮?대늻</option>
+                    <option>蹂대뜑肄쒕━</option>
+                    <option>肄붿빱?ㅽ뙣?덉뼹</option>
+                    <option>怨⑤뱺由ы듃由щ쾭</option>
+                    <option>?섎툕?쇰룄由ы듃由щ쾭</option>
+                    <option>吏꾨룛媛?/option>
+                    <option>?щえ?덈뱶</option>
+                    <option>?쒕쿋由ъ븞?덉뒪??/option>
+                    <option>?꾨쿋瑜대쭔</option>
+                    <option>濡쒗듃??쇰윭</option>
+                    <option>?고??쒕뱶?쎈룆</option>
+                    <option>誘몃땲?댁쿂???/option>
+                    <option>?쇨렇</option>
+                    <option>湲고?</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <div class="label">?깅퀎</div>
+                  <select class="select">
+                    <option selected>?붿뻔</option>
+                    <option>?섏뻔</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <div class="label">?깃꺽(?붿빟)</div>
+                  <div class="card" style="margin-top:0;">
+                    <div class="muted">?먮꼫吏 ?믪쓬 쨌 ?먭레 誘쇨컧 쨌 ?먯깋???믪쓬</div>
+                  </div>
+                </div>
+                <div class="actions">
+                  <button class="cta secondary" data-nav="userInfo" style="flex:1;">?댁쟾</button>
+                  <button class="cta" data-nav="home" style="flex:1;">?꾨즺?섍퀬 ?덉쑝濡?/button>
+                </div>
+              </div>
+            </div>
+
+            <!-- HOME -->
+            <div class="view" data-view="home">
+              <div class="home-bg">
+              <div class="topbar">
+                <span class="chip">?ㅻ뒛 異붿쿇</span>
+                <span class="muted">??18:53</span>
+              </div>
+              <p class="h2">?덈뀞?섏꽭?? <span id="homeDogName">蹂대━</span> 蹂댄샇?먮떂</p>
+              <p class="muted">吏湲??좎뵪 18째C 쨌 泥닿컧 醫뗭쓬 쨌 ?쇱옟????쓬</p>
+              <div class="card">
+                <div class="map"></div>
+                <div class="row" style="margin-top:10px">
+                  <div>
+                    <div class="muted">異붿쿇 寃쎈줈</div>
+                    <div style="font-weight:800;">媛뺣? 洹몃뒛 猷⑦봽</div>
+                  </div>
+                  <div class="chip">蹂대━ 留욎땄 91??/div>
+                </div>
+                <div class="metric">
+                  <div class="item"><div class="muted">嫄곕━</div><strong>2.4 km</strong></div>
+                  <div class="item"><div class="muted">?덉긽</div><strong>34遺?/strong></div>
+                  <div class="item"><div class="muted">?쇱옟</div><strong>??쓬</strong></div>
+                </div>
+                <button class="cta" data-nav="routes">吏湲??곗콉 ?쒖옉</button>
+              </div>
+              <div class="card">
+                <div class="row"><strong>異붿쿇 ?댁쑀</strong><span class="muted">蹂대━ ?깊뼢 湲곕컲</span></div>
+                <p class="muted" style="margin:8px 0 0;">?먮꼫吏 ?믪쓬 + ?먭레 誘쇨컧: ?볤퀬 ??遺먮퉬??寃쎈줈瑜??곗꽑 ?쒖븞?댁슂.</p>
+              </div>
+              <div class="hint">?섎떒 ???먮뒗 踰꾪듉???뚮윭 ?붾㈃???꾪솚?⑸땲??</div>
+              </div>
+            </div>
+
+            <!-- ROUTES -->
+            <div class="view" data-view="routes">
+              <div class="topbar">
+                <button class="iconbtn" data-nav="home">??/button>
+                <span class="chip">2遺???媛깆떊</span>
+              </div>
+              <div class="row">
+                <span class="h2">寃쎈줈 鍮꾧탳</span>
+                <span class="muted">異붿쿇 2~3媛?/span>
+              </div>
+              <div class="card clickable" data-nav="walk" data-route-name="媛뺣? 洹몃뒛 猷⑦봽" data-route-meta="2.4km 쨌 34遺?쨌 ?쇱옟 ??쓬" role="button" tabindex="0" aria-label="1踰?寃쎈줈濡??곗콉 ?쒖옉">
+                <div class="row"><strong>1) 媛뺣? 洹몃뒛 猷⑦봽</strong><span class="chip">異붿쿇 91</span></div>
+                <p class="muted">2.4km 쨌 34遺?쨌 ?쇱옟 ??쓬 쨌 鍮꾨끂異?/p>
+                <div class="bar"><span></span></div>
+                <div class="muted">?곹빀?? ?먮꼫吏/?뚮났?띾룄 ?곗닔</div>
+              </div>
+              <div class="card clickable" data-nav="walk" data-route-name="怨듭썝 ?멸낸 肄붿뒪" data-route-meta="1.9km 쨌 29遺?쨌 ?쇱옟 以묎컙" role="button" tabindex="0" aria-label="2踰?寃쎈줈濡??곗콉 ?쒖옉">
+                <div class="row"><strong>2) 怨듭썝 ?멸낸 肄붿뒪</strong><span class="chip">異붿쿇 84</span></div>
+                <p class="muted">1.9km 쨌 29遺?쨌 ?쇱옟 以묎컙 쨌 洹몃뒛 蹂댄넻</p>
+                <div class="bar"><span style="width:54%"></span></div>
+                <div class="muted">?곹빀?? ?먭레誘쇨컧??由ъ뒪???쎄컙</div>
+              </div>
+              <div class="card clickable" data-nav="walk" data-route-name="二쇨굅吏 ?쒗솚 肄붿뒪" data-route-meta="1.4km 쨌 22遺?쨌 ?쇱옟 ??쓬" role="button" tabindex="0" aria-label="3踰?寃쎈줈濡??곗콉 ?쒖옉">
+                <div class="row"><strong>3) 二쇨굅吏 ?쒗솚 肄붿뒪</strong><span class="chip">異붿쿇 78</span></div>
+                <p class="muted">1.4km 쨌 22遺?쨌 ?쇱옟 ??쓬 쨌 ?⑥“濡쒖?</p>
+                <div class="bar"><span style="width:46%"></span></div>
+                <div class="muted">?곹빀?? 吏㏃? ?곗콉??諛깆뾽 寃쎈줈</div>
+              </div>
+            </div>
+
+            <!-- WALK -->
+            <div class="view" data-view="walk">
+              <div class="topbar">
+                <button class="iconbtn" data-nav="routes">??/button>
+                <span class="chip" id="voiceChip">?뚯꽦?덈궡 ON</span>
+              </div>
+              <div class="row" style="margin-bottom:8px;">
+                <div>
+                  <div class="muted">?곗콉 吏꾪뻾以?/div>
+                  <div style="font-weight:800;" id="walkRouteName">媛뺣? 洹몃뒛 猷⑦봽</div>
+                </div>
+                <button class="iconbtn" id="toggleVoice">?뚯꽦</button>
+              </div>
+              <div class="muted" id="walkRouteMeta">2.4km 쨌 34遺?쨌 ?쇱옟 ??쓬</div>
+              <div class="card" style="padding:8px;">
+                <div class="map" style="height:320px;"></div>
+              </div>
+              <div class="card">
+                <div class="big">00:27:42</div>
+                <div class="metric">
+                  <div class="item"><div class="muted">嫄몄쓬</div><strong>4,120</strong></div>
+                  <div class="item"><div class="muted">移쇰줈由?/div><strong>186</strong></div>
+                  <div class="item"><div class="muted">嫄곕━</div><strong>1.9 km</strong></div>
+                </div>
+              </div>
+              <div class="floating-reroute" id="rerouteCard" style="display:none;">
+                <div class="row">
+                  <strong>??醫뗭? 湲몄씠 ?덉뼱??/strong>
+                  <span class="muted" id="rerouteReason">?쇱옟 利앷? 媛먯?</span>
+                </div>
+                <div class="muted" style="margin-top:4px;" id="rerouteDetail">2遺??⑥텞, 諛섎젮寃?留덉＜移?鍮덈룄 ??쓬</div>
+                <div class="btns">
+                  <button class="btn" id="keepRoute">?좎??섍린</button>
+                  <button class="btn primary" id="changeRoute">寃쎈줈 蹂寃?/button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tabs hidden" id="tabs">
+            <button class="tab" data-tab="home" type="button">??/button>
+            <button class="tab" data-tab="walk" type="button">?곗콉</button>
+            <button class="tab" data-tab="history" type="button">湲곕줉</button>
+            <button class="tab" data-tab="my" type="button">留덉씠</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const views = Array.from(document.querySelectorAll(".view"));
+      const tabs = Array.from(document.querySelectorAll("#tabs .tab"));
+      let rerouteTimer = null;
+      const state = {
+        dogName: "蹂대━",
+      };
+      const progressByView = new Map([
+        ["signup", 0],
+        ["userInfo", 33],
+        ["dogInfo", 66],
+        ["home", 100],
+        ["routes", 100],
+        ["walk", 100],
+      ]);
+      const progressEls = Array.from(document.querySelectorAll("[data-progress]"));
+
+      function setActiveView(name) {
+        views.forEach(v => v.classList.toggle("active", v.dataset.view === name));
+        tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === name));
+        handleRerouteVisibility(name);
+        handleTabsVisibility(name);
+        handleProgress(name);
+        if (name === "home") syncHomeDogName();
+      }
+
+      function syncHomeDogName() {
+        const el = document.getElementById("homeDogName");
+        if (!el) return;
+        const safe = (state.dogName || "").trim() || "諛섎젮寃?;
+        el.textContent = safe;
+      }
+
+      function handleProgress(viewName) {
+        const value = progressByView.has(viewName) ? progressByView.get(viewName) : 100;
+        progressEls.forEach(el => {
+          el.style.width = `${value}%`;
+        });
+      }
+
+      function handleTabsVisibility(viewName) {
+        const tabBar = document.getElementById("tabs");
+        if (!tabBar) return;
+        const onboardingViews = new Set(["signup", "userInfo", "dogInfo"]);
+        tabBar.classList.toggle("hidden", onboardingViews.has(viewName));
+      }
+
+      function handleRerouteVisibility(viewName) {
+        const rerouteCard = document.getElementById("rerouteCard");
+        if (!rerouteCard) return;
+        rerouteCard.style.display = "none";
+        if (rerouteTimer) {
+          clearTimeout(rerouteTimer);
+          rerouteTimer = null;
+        }
+        if (viewName === "walk") {
+          // Show suggestion after walk map is visible for a moment.
+          rerouteTimer = setTimeout(() => {
+            rerouteCard.style.display = "block";
+          }, 2200);
+        }
+      }
+
+      // Button navigation
+      document.addEventListener("click", (e) => {
+        const navTarget = e.target && e.target.closest ? e.target.closest("[data-nav]") : null;
+        const nav = navTarget && navTarget.getAttribute ? navTarget.getAttribute("data-nav") : null;
+        if (navTarget && nav === "walk") {
+          const routeName = navTarget.getAttribute("data-route-name");
+          const routeMeta = navTarget.getAttribute("data-route-meta");
+          if (routeName) document.getElementById("walkRouteName").textContent = routeName;
+          if (routeMeta) document.getElementById("walkRouteMeta").textContent = routeMeta;
+        }
+        if (nav) setActiveView(nav);
+
+        const tab = e.target && e.target.getAttribute && e.target.getAttribute("data-tab");
+        if (tab) {
+          if (tab === "history" || tab === "my") {
+            alert("MVP ?꾨줈?좏??? ?꾩옱?????곗콉 ?먮쫫留??곌껐?섏뼱 ?덉뼱??");
+            return;
+          }
+          setActiveView(tab);
+        }
+      });
+
+      // Keyboard navigation for clickable cards
+      document.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        const el = document.activeElement;
+        if (!el || !el.getAttribute) return;
+        const nav = el.getAttribute("data-nav");
+        if (!nav) return;
+        e.preventDefault();
+        setActiveView(nav);
+      });
+
+      // Initialize UI state (tabs hidden on signup)
+      handleTabsVisibility("signup");
+      handleProgress("signup");
+
+      // Dog name binding (dogInfo -> home)
+      const dogNameInput = document.getElementById("dogNameInput");
+      if (dogNameInput) {
+        state.dogName = (dogNameInput.value || "").trim() || state.dogName;
+        dogNameInput.addEventListener("input", () => {
+          state.dogName = (dogNameInput.value || "").trim() || "諛섎젮寃?;
+        });
+      }
+      syncHomeDogName();
+
+      // Signup checkbox interaction
+      const tosRequired = document.getElementById("tosRequired");
+      const tosChip = document.getElementById("tosChip");
+      const signupNext = document.getElementById("signupNext");
+      const emailInput = document.getElementById("emailInput");
+      const passwordInput = document.getElementById("passwordInput");
+      function syncTos() {
+        const ok = !!(tosRequired && tosRequired.checked);
+        if (tosChip) tosChip.textContent = ok ? "泥댄겕?? : "誘몄껜??;
+        if (signupNext) {
+          signupNext.disabled = !ok;
+          signupNext.style.opacity = ok ? "1" : "0.6";
+          signupNext.style.cursor = ok ? "pointer" : "not-allowed";
+        }
+      }
+      if (tosRequired) tosRequired.addEventListener("change", syncTos);
+      syncTos();
+
+      // Improve mobile keyboard invocation in WebView/mobile browsers
+      [emailInput, passwordInput].forEach((el) => {
+        if (!el) return;
+        el.addEventListener("touchend", () => {
+          setTimeout(() => el.focus(), 0);
+        }, { passive: true });
+      });
+
+      // Walk interactions
+      const voiceChip = document.getElementById("voiceChip");
+      const toggleVoice = document.getElementById("toggleVoice");
+      let voiceOn = true;
+      toggleVoice.addEventListener("click", () => {
+        voiceOn = !voiceOn;
+        voiceChip.textContent = voiceOn ? "?뚯꽦?덈궡 ON" : "?뚯꽦?덈궡 OFF";
+      });
+
+      const rerouteCard = document.getElementById("rerouteCard");
+      const rerouteReason = document.getElementById("rerouteReason");
+      const rerouteDetail = document.getElementById("rerouteDetail");
+      document.getElementById("keepRoute").addEventListener("click", () => {
+        rerouteReason.textContent = "?꾩옱 寃쎈줈 ?좎?";
+        rerouteDetail.textContent = "?뚭쿋?댁슂. ?ㅼ쓬 ?곹솴 蹂?붽? 媛먯??섎㈃ ?ㅼ떆 ?쒖븞?좉쾶??";
+        rerouteCard.style.opacity = "0.92";
+      });
+      document.getElementById("changeRoute").addEventListener("click", () => {
+        rerouteReason.textContent = "寃쎈줈 蹂寃??꾨즺";
+        rerouteDetail.textContent = "??寃쎈줈濡??덈궡瑜??쒖옉?⑸땲?? ?뚯꽦 ?덈궡瑜??곕씪媛?몄슂.";
+        rerouteCard.style.opacity = "0.92";
+      });
+    })();
+  </script>
+</body>
+</html>
+
