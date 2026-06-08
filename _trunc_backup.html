@@ -1,0 +1,1815 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PetWalk UI Mock</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet">
+  <style>
+    :root { --main:#19B23A; --point:#00E933; --soft-mint:#C9FAD4; --black:#000000; --white:#FFFFFF; --sub:#AAAAAA; --sep:#F6F6F6; --bg:#FFFFFF; --card:#FFFFFF; --text:#000000; --muted:var(--sub); --primary:var(--main); --primary-dark:var(--main); --line:#000000; --shadow:0 16px 36px rgba(0,0,0,.14); --radius:22px; }
+    *{box-sizing:border-box} body{margin:0;font-family:"Pretendard",sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{max-width:1320px;margin:0 auto;padding:28px 22px 40px}.title{font-size:24px;font-weight:800;margin:8px 0 22px}
+    .phones{display:grid;grid-template-columns:minmax(320px, 420px);justify-content:center}
+    .phone{background:var(--card);border-radius:34px;padding:18px 14px 16px;min-height:760px;box-shadow:var(--shadow);border:1px solid var(--line);position:relative;overflow:hidden}
+    .screen{border-radius:28px;background:var(--white);height:100%;padding:12px;position:relative}
+    .row{display:flex;align-items:center;justify-content:space-between}.muted{color:var(--muted);font-size:12px}.h2{font-size:20px;font-weight:800;margin:0}
+    .app-header{position:absolute;left:12px;right:12px;top:10px;z-index:8;display:flex;align-items:center;justify-content:space-between;pointer-events:none}
+    .app-logo{font-family:"Madimi One", system-ui, sans-serif;font-size:22px;letter-spacing:.02em;color:var(--main);pointer-events:none}
+    .chip{font-size:12px;background:var(--point);color:var(--black);padding:7px 10px;border-radius:999px;font-weight:700}
+    .card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 8px 20px rgba(0,0,0,.08);padding:12px;margin-top:10px}
+    .card.clickable{cursor:pointer;transition:transform .08s ease, box-shadow .08s ease, border-color .08s ease}
+    .card.clickable:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(0,0,0,.16);border-color:var(--point)}
+    .card.clickable:active{transform:translateY(0)}
+    .map{height:134px;border-radius:18px;background:radial-gradient(circle at 20% 30%,var(--point) 0 9%,transparent 10%),radial-gradient(circle at 72% 68%,var(--main) 0 11%,transparent 12%),linear-gradient(130deg,var(--white) 0%,var(--white) 100%);position:relative;overflow:hidden}
+    .map:before,.map:after{content:"";position:absolute;border-radius:999px}.map:before{width:220px;height:220px;top:-94px;left:-70px;border:12px solid rgba(80,157,255,.28)}.map:after{width:220px;height:220px;bottom:-116px;right:-84px;border:10px dashed rgba(255,200,87,.6)}
+    .metric{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.metric .item{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:8px;text-align:center}
+    .big{font-size:40px;font-weight:900;letter-spacing:1px;line-height:1.05;text-align:center;margin:8px 0 10px}
+    .bar{background:var(--white);border-radius:99px;height:8px;margin:6px 0;overflow:hidden;border:1px solid var(--line)}.bar>span{display:block;height:100%;width:62%;background:linear-gradient(90deg,var(--primary),var(--primary-dark))}
+    .cta{margin-top:10px;width:100%;border:none;border-radius:14px;padding:12px;font-size:15px;font-weight:800;cursor:pointer;background:var(--main);color:var(--white)}
+    /* Bottom nav (ref image style) */
+    .tabs{position:absolute;left:0;right:0;bottom:0;background:var(--white);border-top:1px solid var(--sep);padding:8px 10px 10px;box-shadow:0 -6px 18px rgba(0,0,0,.06)}
+    .tabs-inner{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;gap:2px;max-width:100%}
+    .tab-hit{background:none;border:none;padding:6px 2px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--sub);font-size:10px;font-weight:700;-webkit-tap-highlight-color:transparent}
+    .tab-hit .tab-ico{font-size:20px;line-height:1;opacity:.8}
+    .tab-hit.active{color:var(--main)}
+    .tab-hit.active .tab-ico{opacity:1}
+    .view[data-view="walk"]{position:relative}
+    .reroute-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:20;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(2px)}
+    .reroute-overlay.show{display:flex}
+    .reroute-modal{background:var(--white);border-radius:20px;border:1px solid rgba(0,0,0,.06);box-shadow:0 16px 40px rgba(0,0,0,.18);padding:24px 20px;width:100%;max-width:320px;text-align:center;animation:modalIn .25s ease}
+    @keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+    .reroute-modal-icon{font-size:40px;margin-bottom:12px}
+    .reroute-modal-title{font-size:18px;font-weight:800;color:var(--text);margin-bottom:6px}
+    .reroute-modal-reason{font-size:13px;color:var(--main);font-weight:700;margin-bottom:4px}
+    .reroute-modal-detail{font-size:12px;color:var(--sub);margin-bottom:20px;line-height:1.5}
+    .reroute-btns{display:flex;flex-direction:column;gap:10px}
+    .reroute-btn{width:100%;border-radius:14px;padding:16px;font-size:16px;font-weight:800;cursor:pointer;border:none;transition:transform .1s ease,box-shadow .1s ease}
+    .reroute-btn:hover{transform:translateY(-1px)}
+    .reroute-btn:active{transform:translateY(0)}
+    .reroute-btn.primary{background:linear-gradient(135deg,#19B23A,#0fa34e);color:#fff;box-shadow:0 4px 14px rgba(25,178,58,.25)}
+    .reroute-btn.secondary{background:var(--white);color:var(--text);border:1px solid rgba(0,0,0,.1)}
+    .reroute-btn.secondary:hover{background:var(--sep)}
+    .btns{display:flex;gap:8px;margin-top:8px}.btn{flex:1;border-radius:10px;padding:9px 0;font-size:12px;font-weight:700;border:1px solid rgba(0,0,0,.08);background:var(--white);color:var(--text);transition:background .1s ease}.btn:hover{background:var(--sep)}.btn.primary{background:linear-gradient(135deg,#19B23A,#0fa34e);color:var(--white);border-color:transparent;box-shadow:0 2px 8px rgba(25,178,58,.2)}
+    .views{height:100%;padding-top:42px}
+    .screen--tabs .views{padding-bottom:74px}
+    .view{display:none;height:100%}
+    .view.active{display:block}
+    .view[data-view="walk"], .view[data-view="walkHome"]{overflow:auto}
+    .home-bg{background:var(--white);border-radius:20px;padding:8px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .iconbtn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px 10px;font-weight:800;color:var(--black);cursor:pointer}
+    .hint{font-size:12px;color:var(--muted);margin-top:8px}
+    .flow{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+    .flow-step{background:#ffffff;border:1px solid #000000;border-radius:6px;padding:8px 10px;font-size:13px;font-weight:700}
+    .flow-step.active{background:#00E933;border:1px solid #000000}
+    .hero{margin-top:16px;padding:14px;border:1px solid var(--line);border-radius:18px;background:#fff}
+    .form{margin-top:10px}
+    .field{margin-top:10px}
+    .label{font-size:12px;font-weight:800;color:var(--black);margin-bottom:6px}
+    .input, .select{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:11px 12px;
+      background:#fff;
+      outline:none;
+      font-weight:700;
+      color:var(--text);
+    }
+    .select{appearance:none}
+    .actions{display:flex;gap:10px;margin-top:14px}
+    .cta.secondary{background:#ffffff;color:var(--black);border:1px solid var(--line)}
+    .progress{height:10px;border-radius:999px;background:#ffffff;overflow:hidden;border:1px solid var(--line);margin-top:10px}
+    .progress > span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--primary),var(--primary-dark));transition:width .18s ease}
+    .tabs.hidden{display:none}
+    .checkrow{display:flex;align-items:flex-start;gap:10px}
+    .check{width:18px;height:18px;margin-top:2px;accent-color:var(--main)}
+    .small{font-size:12px;color:var(--muted)}
+    .req{color:#19B23A;margin-left:3px;font-weight:800}
+    .grid-card{border:1px solid #000000;border-radius:14px;background:#FFFFFF;overflow:auto}
+    .matrix{width:100%;border-collapse:collapse;min-width:520px}
+    .matrix th,.matrix td{border:1px solid #000000;padding:8px 6px;text-align:center;font-size:11px}
+    .matrix th:first-child,.matrix td:first-child{text-align:left;white-space:nowrap;font-weight:700;min-width:110px}
+    .matrix th{background:#F6F6F6;font-weight:800}
+    .matrix input[type="radio"], .matrix input[type="checkbox"]{accent-color:#19B23A;width:15px;height:15px}
+
+    /* === 시간대 선택 (chip + day tabs) === */
+    .timeslot-card{border:1px solid var(--line);border-radius:18px;background:#fff;padding:12px 12px 14px;box-shadow:0 4px 14px rgba(0,0,0,.04)}
+    .timeslot-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--sep);border-radius:12px;padding:4px;gap:4px;margin-bottom:12px}
+    .timeslot-tab{border:none;background:transparent;padding:9px 8px;border-radius:9px;font-size:13px;font-weight:800;cursor:pointer;color:var(--sub);transition:all .15s ease;display:flex;align-items:center;justify-content:center;gap:6px}
+    .timeslot-tab.active{background:#fff;color:var(--main);box-shadow:0 2px 6px rgba(0,0,0,.08)}
+    .timeslot-tab .count{font-size:10px;background:var(--main);color:#fff;border-radius:999px;padding:1px 7px;min-width:18px;text-align:center;font-weight:800}
+    .timeslot-tab.active .count{background:var(--main)}
+    .timeslot-tab:not(.active) .count{background:#cfd2cf;color:#fff}
+    .timeslot-pane{display:none}
+    .timeslot-pane.active{display:block}
+    .timeslot-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+    .timeslot-chip{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1.5px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;transition:all .15s ease;font-size:12px;text-align:left;font-family:inherit}
+    .timeslot-chip .ico{font-size:18px;line-height:1;flex-shrink:0}
+    .timeslot-chip .info{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+    .timeslot-chip .label{font-weight:800;color:var(--text);font-size:12px;line-height:1.2}
+    .timeslot-chip .desc{font-size:10px;color:var(--sub);font-weight:600;line-height:1.2}
+    .timeslot-chip .check{width:18px;height:18px;border-radius:50%;border:1.5px solid #d6d6d6;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff;transition:all .15s}
+    .timeslot-chip .check::after{content:"";width:0;height:0;background:#fff;border-radius:50%;transition:all .15s}
+    .timeslot-chip.selected{background:rgba(25,178,58,.08);border-color:var(--main);box-shadow:0 2px 8px rgba(25,178,58,.12)}
+    .timeslot-chip.selected .check{background:var(--main);border-color:var(--main)}
+    .timeslot-chip.selected .check::after{content:"✓";color:#fff;font-size:11px;font-weight:900;width:auto;height:auto;background:transparent;border-radius:0}
+    .timeslot-chip.selected .label{color:var(--main)}
+    .timeslot-chip:active{transform:scale(.97)}
+    .timeslot-summary{margin-top:10px;font-size:11px;color:var(--sub);text-align:center;font-weight:600}
+    .timeslot-summary strong{color:var(--main);font-weight:800}
+
+    /* === 태그 다중 선택 === */
+    .tag-grid{display:flex;flex-wrap:wrap;gap:7px}
+    .tag-chip{border:1.5px solid var(--line);background:#fff;color:var(--text);border-radius:999px;padding:9px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s ease;display:inline-flex;align-items:center;gap:5px}
+    .tag-chip .tag-ico{font-size:13px;line-height:1}
+    .tag-chip:hover{border-color:#a8e6b9}
+    .tag-chip.selected{background:var(--main);border-color:var(--main);color:#fff;box-shadow:0 3px 10px rgba(25,178,58,.22)}
+    .tag-chip.selected .tag-ico{filter:brightness(0) invert(1)}
+    .tag-chip:active{transform:scale(.96)}
+    .tag-helper{margin-top:8px;font-size:11px;color:var(--sub);font-weight:600}
+    .tag-helper strong{color:var(--main);font-weight:800}
+
+    /* === 성격 슬라이더 카드 (dogInfoTraits) === */
+    .trait-list{display:flex;flex-direction:column;gap:10px}
+    .trait-card{border:1px solid var(--line);border-radius:16px;background:#fff;padding:13px 14px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+    .trait-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .trait-card-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;color:var(--text)}
+    .trait-card-title .trait-emoji{font-size:18px;line-height:1}
+    .trait-card-value{font-size:11px;font-weight:800;color:var(--main);background:rgba(25,178,58,.1);padding:3px 8px;border-radius:999px;white-space:nowrap}
+    .trait-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;background:var(--sep);border-radius:10px;padding:4px}
+    .trait-scale-btn{border:none;background:transparent;padding:8px 4px;border-radius:7px;font-size:10px;font-weight:700;color:var(--sub);cursor:pointer;font-family:inherit;line-height:1.2;transition:all .15s ease}
+    .trait-scale-btn:hover{color:var(--text)}
+    .trait-scale-btn.active{background:var(--main);color:#fff;box-shadow:0 2px 6px rgba(25,178,58,.25);font-weight:800}
+    .trait-scale-axis{display:flex;justify-content:space-between;font-size:9px;color:var(--sub);font-weight:600;padding:4px 4px 0}
+
+    /* Auth (login / signup method) — sage / cream mood */
+    .view[data-view="login"],.view[data-view="signupMethod"]{
+      background:#ffffff;
+      border-radius:20px;height:100%;padding:22px 18px 24px;overflow:auto;border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 2px 8px rgba(0,0,0,.04);
+    }
+    .auth-login-title{text-align:center;font-size:28px;font-weight:800;letter-spacing:.06em;margin:8px 0 20px;color:var(--black)}
+    .auth-seg{display:grid;grid-template-columns:1fr 1fr;border-radius:10px;overflow:hidden;border:1px solid #19B23A;margin:0 auto 14px;max-width:240px;background:#FFFFFF}
+    .auth-seg-item{border:none;padding:8px 8px;font-size:12px;font-weight:700;cursor:pointer;background:transparent;color:#000000}
+    .auth-seg-item.active{background:#19B23A;color:#FFFFFF;box-shadow:none}
+    .auth-input{width:100%;border:1px solid rgba(83,127,94,.28);border-radius:12px;padding:14px 12px;font-size:15px;margin-bottom:10px;outline:none;box-sizing:border-box;background:rgba(255,255,255,.92)}
+    .auth-input:focus{border-color:var(--main);box-shadow:0 0 0 3px rgba(0,0,0,.12)}
+    .auth-input::placeholder{color:#000000}
+    .auth-checkrow{display:flex;align-items:center;gap:8px;margin:6px 0 18px;font-size:13px;color:#000000}
+    .auth-checkrow input{width:16px;height:16px;accent-color:var(--main)}
+    .auth-btn-black{width:100%;border:none;border-radius:12px;padding:15px;font-size:16px;font-weight:800;background:var(--main);color:#fff;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+    .auth-links{display:flex;align-items:center;justify-content:center;gap:10px;margin:18px 0 22px;font-size:13px;color:#000000;flex-wrap:wrap}
+    .auth-links .sep{color:rgba(83,127,94,.25);font-weight:300}
+    .auth-link-btn{border:none;background:none;padding:0;font:inherit;color:var(--black);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+    .auth-social-stack{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+    .auth-social-btn{display:flex;align-items:center;gap:12px;width:100%;border:none;border-radius:10px;padding:14px 14px;font-size:15px;font-weight:700;cursor:pointer;text-align:left}
+    .auth-social-btn .ico{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;flex-shrink:0}
+    .auth-social-btn.naver{background:var(--main);color:#fff}
+    .auth-social-btn.naver .ico{background:#fff;color:var(--black)}
+    .auth-social-btn.facebook{background:var(--point);color:#000}
+    .auth-social-btn.facebook .ico{background:#fff;color:#000}
+    .auth-social-btn.google{background:#fff;color:#000;border:1px solid #000}
+    .auth-social-btn.google .ico{background:#fff;border:1px solid #000;color:#000;font-weight:900;font-size:18px}
+    .view[data-view="login"] .auth-social-btn.naver,
+    .view[data-view="login"] .auth-social-btn.google,
+    .view[data-view="login"] .auth-social-btn.facebook{background:#FFFFFF;color:#000000;border:1px solid #19B23A}
+    .view[data-view="login"] .auth-social-btn.naver .ico,
+    .view[data-view="login"] .auth-social-btn.google .ico,
+    .view[data-view="login"] .auth-social-btn.facebook .ico{background:#FFFFFF;color:#000000;border:1px solid #19B23A}
+    .auth-social-btn.email-signup{background:var(--main);color:#fff;justify-content:flex-start}
+    .auth-social-btn.email-signup .ico{background:#fff;color:var(--black);font-size:16px}
+    .auth-back{position:absolute;left:18px;top:18px;border:1px solid #000000;background:#FFFFFF;border-radius:12px;width:40px;height:40px;font-size:20px;font-weight:700;cursor:pointer;color:#000000}
+    .view[data-view="signupMethod"]{position:relative;padding-top:56px}
+    .auth-method-title{text-align:center;font-size:16px;font-weight:800;margin:0 0 22px;line-height:1.4;color:var(--black)}
+    .auth-footer-note{text-align:center;font-size:13px;color:#000000;margin-top:22px;line-height:1.5}
+    .auth-inline-link{border:none;background:none;padding:0;font:inherit;font-weight:800;color:var(--black);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+    /* Email signup (PetWalk 시작하기) — same mood + top back */
+    .view[data-view="signup"]{background:#ffffff;border-radius:20px;padding:12px;height:100%;overflow:auto;border:1px solid #000000}
+    .view[data-view="signup"] .topbar{margin-bottom:6px}
+    .view[data-view="signup"] .chip{background:var(--soft-mint);color:#000000}
+    /* 마이페이지 */
+    .mypage-screen{padding:0;height:100%;overflow:auto}
+    .mypage-profile{
+      background:linear-gradient(135deg, #19B23A 0%, #0fa34e 40%, #00E933 100%);
+      border-radius:20px;
+      padding:28px 20px 22px;
+      margin-bottom:16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .mypage-profile::before{
+      content:"";position:absolute;width:160px;height:160px;border-radius:50%;
+      background:rgba(255,255,255,.08);top:-40px;right:-30px;
+    }
+    .mypage-profile::after{
+      content:"";position:absolute;width:100px;height:100px;border-radius:50%;
+      background:rgba(255,255,255,.06);bottom:-20px;left:-20px;
+    }
+    .mypage-profile-inner{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
+    .mypage-avatar{
+      width:60px;height:60px;border-radius:50%;
+      background:rgba(255,255,255,.22);
+      border:2.5px solid rgba(255,255,255,.5);
+      display:flex;align-items:center;justify-content:center;
+      font-size:28px;flex-shrink:0;
+    }
+    .mypage-profile-info{flex:1;color:#fff}
+    .mypage-profile-name{font-size:18px;font-weight:800;letter-spacing:.02em}
+    .mypage-profile-sub{font-size:12px;opacity:.82;margin-top:3px;font-weight:500}
+    .mypage-profile-edit{
+      background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.4);
+      color:#fff;border-radius:10px;padding:6px 12px;font-size:11px;font-weight:700;
+      cursor:pointer;backdrop-filter:blur(4px);white-space:nowrap;
+    }
+    .mypage-profile-edit:active{background:rgba(255,255,255,.35)}
+    .mypage-stats{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+      margin-top:16px;position:relative;z-index:1;
+    }
+    .mypage-stat{
+      background:rgba(255,255,255,.15);border-radius:12px;padding:10px 6px;
+      text-align:center;backdrop-filter:blur(4px);
+    }
+    .mypage-stat-val{font-size:18px;font-weight:900;color:#fff}
+    .mypage-stat-label{font-size:10px;color:rgba(255,255,255,.78);margin-top:2px;font-weight:600}
+
+    .mypage-group{margin-bottom:12px}
+    .mypage-group-title{font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;padding:0 4px;margin-bottom:6px}
+    .mypage-group-card{
+      background:#fff;border-radius:16px;overflow:hidden;
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 2px 8px rgba(0,0,0,.04);
+    }
+    .mypage-list{display:flex;flex-direction:column;gap:0}
+    .mypage-row{
+      width:100%;text-align:left;border:none;border-bottom:1px solid var(--sep);
+      padding:14px 16px;font-size:14px;font-weight:600;
+      background:transparent;color:var(--text);cursor:pointer;
+      display:flex;align-items:center;gap:12px;
+      transition:background .12s ease;
+    }
+    .mypage-row:last-child{border-bottom:none}
+    .mypage-row:hover{background:rgba(25,178,58,.04)}
+    .mypage-row:active{background:rgba(25,178,58,.08)}
+    .mypage-row-ico{
+      width:34px;height:34px;border-radius:10px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:16px;flex-shrink:0;
+    }
+    .mypage-row-ico.green{background:rgba(25,178,58,.1);color:#19B23A}
+    .mypage-row-ico.blue{background:rgba(59,130,246,.1);color:#3b82f6}
+    .mypage-row-ico.orange{background:rgba(249,115,22,.1);color:#f97316}
+    .mypage-row-ico.purple{background:rgba(139,92,246,.1);color:#8b5cf6}
+    .mypage-row-ico.red{background:rgba(239,68,68,.1);color:#ef4444}
+    .mypage-row-ico.cyan{background:rgba(6,182,212,.1);color:#06b6d4}
+    .mypage-row-text{flex:1;line-height:1.2;display:flex;flex-direction:column}
+    .mypage-row-hint{font-size:11px;color:var(--sub);font-weight:500;margin-top:2px;display:block}
+    .mypage-row-arrow{color:var(--sub);font-size:14px;opacity:.5;flex-shrink:0}
+
+    .mypage-row--danger{color:#AAAAAA}
+    .mypage-row--danger .mypage-row-ico{background:rgba(170,170,170,.1);color:#AAAAAA}
+    .mypage-row--danger:hover{background:rgba(170,170,170,.04)}
+
+    .mypage-row--sub{font-size:14px;font-weight:600;background:transparent;color:var(--text)}
+    .mypage-subtitle{font-size:17px;font-weight:800;color:#000000;margin:4px 0 12px}
+    .stub-muted{font-size:13px;color:var(--muted);line-height:1.5;margin:8px 0 16px}
+
+    .mypage-sub-screen{padding:4px 2px 8px;height:100%;overflow:auto}
+    /* Explore map */
+    .explore-shell{height:100%;display:flex;flex-direction:column;position:relative;background:#FFFFFF;border-radius:20px;overflow:hidden}
+    .explore-head{padding:10px 10px 8px;border-bottom:1px solid #000000;background:#FFFFFF}
+    .explore-location-wrap{position:relative}
+    .explore-location-btn{border:none;background:none;padding:0;display:flex;align-items:center;gap:6px;font-size:16px;font-weight:900;color:#000000;cursor:pointer}
+    .explore-location-arrow{width:22px;height:22px;border-radius:999px;background:#FFFFFF;border:1px solid #000000;display:flex;align-items:center;justify-content:center;font-size:12px;color:#000000}
+    .explore-location-menu{position:absolute;top:32px;left:0;right:0;background:#FFFFFF;border:1px solid #000000;border-radius:12px;box-shadow:0 10px 20px rgba(0,0,0,.12);padding:6px;display:none;z-index:3}
+    .explore-location-menu.show{display:block}
+    .explore-location-option{width:100%;border:none;background:#FFFFFF;padding:9px 10px;border-radius:10px;text-align:left;font-size:13px;font-weight:700;color:#000000;cursor:pointer}
+    .explore-location-option.active,.explore-location-option:hover{background:#00E933}
+    .explore-cats{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}
+    .explore-cat-btn{border:1px solid #000000;background:#FFFFFF;border-radius:12px;padding:8px 4px 7px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:700;color:#000000;cursor:pointer}
+    .explore-cat-btn .ico{width:22px;height:22px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:12px}
+    .explore-cat-btn.active{border-color:#000000;background:#00E933;color:#000000}
+    .explore-map-wrap{position:relative;flex:1;min-height:300px;background:#FFFFFF}
+    .explore-map{position:absolute;inset:0;overflow:hidden;touch-action:none;background:#FFFFFF}
+    .explore-map-grid{position:absolute;inset:0;background:
+      linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(255,255,255,.3) 1px, transparent 1px),
+      linear-gradient(180deg,#FFFFFF 0%,#00E933 45%,#FFFFFF 100%);
+      background-size:34px 34px,34px 34px,100% 100%;
+      transform-origin:center center;
+    }
+    .explore-river{position:absolute;left:10%;right:8%;top:42%;height:22%;background:rgba(106,168,220,.65);border-radius:999px;filter:blur(.5px);transform:rotate(-8deg)}
+    .explore-marker{position:absolute;width:26px;height:26px;border-radius:50%;border:2px solid #FFFFFF;box-shadow:0 2px 6px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;font-size:13px;color:#FFFFFF}
+    .explore-map-zoom{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px;z-index:2}
+    .explore-zoom-btn{width:34px;height:34px;border:1px solid #000000;background:#FFFFFF;border-radius:10px;font-size:18px;font-weight:800;color:#000000;cursor:pointer}
+    .explore-bottom-sheet{position:absolute;left:0;right:0;bottom:0;background:#FFFFFF;border-top:1px solid #000000;border-radius:16px 16px 0 0;box-shadow:0 -8px 20px rgba(0,0,0,.14);transform:translateY(calc(100% - 56px));transition:transform .25s ease;z-index:4;max-height:56%}
+    .explore-bottom-sheet.open{transform:translateY(0)}
+    .explore-bottom-sheet.full{top:0;bottom:0;max-height:none;border-radius:0;transform:translateY(0)}
+    .explore-sheet-toggle{width:100%;border:none;background:none;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+    .explore-sheet-toggle .left{display:flex;align-items:center;gap:8px;font-weight:800;color:#000000}
+    .explore-sheet-toggle .right{font-size:12px;color:#000000;font-weight:700}
+    .explore-sheet-list{padding:0 12px 12px;max-height:220px;overflow:auto}
+    .explore-list-item{border:1px solid #000000;border-radius:12px;padding:10px;margin-bottom:8px;background:#FFFFFF}
+    .explore-list-item .name{font-size:13px;font-weight:800}
+    .explore-list-item .meta{font-size:11px;color:var(--sub);margin-top:3px}
+
+    /* Walk home feed */
+    .walk-home{height:100%;overflow:auto;padding:0 0 10px}
+    .walk-home::-webkit-scrollbar{width:6px}
+    .walk-home::-webkit-scrollbar-thumb{background:var(--sep);border-radius:999px}
+    .walk-home::-webkit-scrollbar-track{background:transparent}
+    .walk-section{padding:14px 12px}
+    .walk-section + .walk-section{border-top:10px solid var(--sep)}
+    .walk-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .walk-section-title{font-size:14px;font-weight:800;color:var(--black)}
+    .walk-section-more{font-size:12px;font-weight:700;color:var(--sub);cursor:pointer;background:none;border:none;padding:0}
+    .hscroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
+    .hscroll::-webkit-scrollbar{height:6px}
+    .hscroll::-webkit-scrollbar-thumb{background:var(--sep);border-radius:999px}
+    .hcard{min-width:210px;max-width:210px;scroll-snap-align:start;border:1px solid rgba(0,0,0,.12);border-radius:14px;overflow:hidden;background:#fff}
+    .hcard-img{height:110px;background:linear-gradient(135deg,var(--sep) 0%, #FFFFFF 60%);position:relative}
+    .hcard-rank{position:absolute;left:10px;bottom:8px;background:var(--main);color:#fff;font-size:12px;font-weight:900;border-radius:999px;padding:4px 8px}
+    .hcard-body{padding:10px}
+    .hcard-title{font-size:13px;font-weight:800;color:var(--black);line-height:1.2}
+    .hcard-meta{font-size:11px;color:var(--sub);margin-top:6px}
+    .hcard-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+    .tag{font-size:10px;font-weight:800;padding:4px 8px;border-radius:999px;background:var(--sep);color:var(--black)}
+    .walk-reco .tag{background:var(--soft-mint)}
+    .walk-picked{border:1px solid #000000;border-radius:14px;padding:10px;background:#FFFFFF;margin:0 12px 12px;display:none}
+    .walk-picked.show{display:block}
+    .walk-picked-title{font-size:13px;font-weight:800;color:#000000}
+    .walk-picked-meta{font-size:11px;color:var(--sub);margin-top:5px}
+    .walk-picked-cta{margin-top:8px;width:100%;border:none;border-radius:10px;padding:10px 0;background:#19B23A;color:#FFFFFF;font-weight:800;cursor:pointer}
+    .view[data-view="pet"] .chip,
+    .view[data-view="home"] .chip{background:var(--soft-mint)}
+    @media (max-width:980px){.phones{grid-template-columns:1fr}.phone{min-height:720px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="title">PetWalk MVP UI (연결된 화면 프로토타입)</div>
+    <div class="phones">
+      <section class="phone">
+        <div class="screen">
+          <div class="app-header" aria-hidden="true">
+            <div class="app-logo">PetWalk</div>
+            <div></div>
+          </div>
+          <div class="views" id="views">
+            <!-- LOGIN (app entry) -->
+            <div class="view active" data-view="login">
+              <h1 class="auth-login-title">LOGIN</h1>
+              <div class="auth-seg" role="tablist" aria-label="로그인 유형">
+                <button type="button" class="auth-seg-item active" data-login-tab="member" aria-selected="true">회원</button>
+                <button type="button" class="auth-seg-item" data-login-tab="guest" aria-selected="false">비회원</button>
+              </div>
+              <input class="auth-input" type="text" placeholder="아이디 또는 이메일" autocomplete="username" />
+              <input class="auth-input" type="password" placeholder="비밀번호" autocomplete="current-password" />
+              <label class="auth-checkrow"><input type="checkbox" /> 로그인 상태 유지</label>
+              <button type="button" class="auth-btn-black">LOGIN</button>
+              <div class="auth-links">
+                <button type="button" class="auth-link-btn" data-nav="signupMethod">회원가입</button>
+                <span class="sep">|</span>
+                <button type="button" class="auth-link-btn">아이디찾기</button>
+                <span class="sep">|</span>
+                <button type="button" class="auth-link-btn">비밀번호찾기</button>
+              </div>
+              <div class="auth-social-stack">
+                <button type="button" class="auth-social-btn naver"><span class="ico">N</span><span style="flex:1;text-align:center;">네이버로 로그인하기</span></button>
+                <button type="button" class="auth-social-btn google"><span class="ico">G</span><span style="flex:1;text-align:center;">구글로 로그인하기</span></button>
+                <button type="button" class="auth-social-btn facebook"><span class="ico">f</span><span style="flex:1;text-align:center;">페이스북으로 로그인하기</span></button>
+              </div>
+            </div>
+
+            <!-- SIGNUP METHOD -->
+            <div class="view" data-view="signupMethod">
+              <button type="button" class="auth-back" data-nav="login" aria-label="뒤로">‹</button>
+              <p class="auth-method-title">회원가입 방법을 선택하세요</p>
+              <div class="auth-social-stack">
+                <button type="button" class="auth-social-btn naver"><span class="ico">N</span><span style="flex:1;text-align:center;">네이버로 회원가입</span></button>
+                <button type="button" class="auth-social-btn google"><span class="ico">G</span><span style="flex:1;text-align:center;">구글로 회원가입</span></button>
+                <button type="button" class="auth-social-btn facebook"><span class="ico">f</span><span style="flex:1;text-align:center;">페이스북으로 회원가입</span></button>
+                <button type="button" class="auth-social-btn email-signup" data-nav="signup"><span class="ico">✉</span><span style="flex:1;text-align:center;">이메일로 회원가입</span></button>
+              </div>
+              <p class="auth-footer-note">기존에 petwalk를 사용하셨나요? <button type="button" class="auth-inline-link" data-nav="login">로그인</button></p>
+            </div>
+
+            <!-- SIGNUP (PetWalk 시작하기) -->
+            <div class="view" data-view="signup">
+              <div class="topbar">
+                <button class="iconbtn" data-nav="signupMethod" aria-label="뒤로">←</button>
+                <span class="chip">회원 가입</span>
+                <span class="muted">1/3</span>
+              </div>
+              <p class="h2">PetWalk 시작하기</p>
+              <p class="muted">간단 가입 후 바로 개인화 추천을 받을 수 있어요.</p>
+              <div class="progress"><span data-progress></span></div>
+              <div class="form">
+                <div class="field">
+                  <div class="label">이메일 <span class="req">*</span></div>
+                  <input
+                    class="input"
+                    id="emailInput"
+                    type="email"
+                    inputmode="email"
+                    autocomplete="email"
+                    autocapitalize="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    enterkeyhint="next"
+                    placeholder="name@example.com"
+                    value="bori.owner@email.com"
+                  />
+                </div>
+                <div class="field">
+                  <div class="label">비밀번호 <span class="req">*</span></div>
+                  <input
+                    class="input"
+                    id="passwordInput"
+                    type="password"
+                    inputmode="text"
+                    autocomplete="new-password"
+                    autocapitalize="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    enterkeyhint="done"
+                    placeholder="8자 이상"
+                    value="password"
+                  />
+                </div>
+                <div class="field">
+                  <div class="label">“약관 동의”</div>
+                  <div class="card" style="margin-top:0;">
+                    <div class="checkrow">
+                      <input class="check" id="tosRequired" type="checkbox" />
+                      <label for="tosRequired" style="flex:1;cursor:pointer;">
+                        <div class="row">
+                          <span class="muted">필수 약관 동의</span>
+                          <span class="chip" id="tosChip">미체크</span>
+                        </div>
+                        <div class="small" style="margin-top:6px;">개인정보 처리방침, 위치정보 이용약관</div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="actions">
+                  <button class="cta" data-nav="userInfo" id="signupNext" style="flex:1;" disabled>다음</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- USER INFO -->
+            <div class="view" data-view="userInfo">
+              <div class="topbar">
+                <button class="iconbtn" data-nav="signup">←</button>
+                <span class="muted">2/3</span>
+              </div>
+              <p class="h2">유저 정보 입력</p>
+              <p class="muted">추천 품질을 위해 산책 선호를 알려주세요.</p>
+              <div class="progress"><span data-progress></span></div>
+              <div class="form">
+                <div class="field">
+                  <div class="label">닉네임 <span class="req">*</span></div>
+                  <input class="input" type="text" value="보리 보호자" />
+                </div>
+                <div class="field">
+                  <div class="label">주 산책 시간대 <span class="req">*</span></div>
+                  <div class="timeslot-card" id="timeslotCard">
+                    <div class="timeslot-tabs" role="tablist" aria-label="요일 구분">
+                      <button type="button" class="timeslot-tab active" data-day-tab="weekday" role="tab" aria-selected="true">
+                        <span>평일</span>
+                        <span class="count" data-count-for="weekday">0</span>
+                      </button>
+                      <button type="button" class="timeslot-tab" data-day-tab="weekend" role="tab" aria-selected="false">
+                        <span>주말</span>
+                        <span class="count" data-count-for="weekend">0</span>
+                      </button>
+                    </div>
+
+                    <div class="timeslot-pane active" data-day-pane="weekday">
+                      <div class="timeslot-grid">
+                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="dawn"><span class="ico">🌙</span><span class="info"><span class="label">새벽</span><span class="desc">04:00~06:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="morning"><span class="ico">🌅</span><span class="info"><span class="label">아침</span><span class="desc">06:00~09:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="forenoon"><span class="ico">☀️</span><span class="info"><span class="label">오전</span><span class="desc">09:00~12:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="afternoon"><span class="ico">🌤️</span><span class="info"><span class="label">낮</span><span class="desc">12:00~16:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip selected" data-day="weekday" data-slot="evening"><span class="ico">🌇</span><span class="info"><span class="label">저녁</span><span class="desc">16:00~20:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip selected" data-day="weekday" data-slot="night"><span class="ico">🌃</span><span class="info"><span class="label">밤</span><span class="desc">20:00~22:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekday" data-slot="late"><span class="ico">🌌</span><span class="info"><span class="label">심야</span><span class="desc">22:00~</span></span><span class="check"></span></button>
+                      </div>
+                    </div>
+
+                    <div class="timeslot-pane" data-day-pane="weekend">
+                      <div class="timeslot-grid">
+                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="dawn"><span class="ico">🌙</span><span class="info"><span class="label">새벽</span><span class="desc">04:00~06:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip selected" data-day="weekend" data-slot="morning"><span class="ico">🌅</span><span class="info"><span class="label">아침</span><span class="desc">06:00~09:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="forenoon"><span class="ico">☀️</span><span class="info"><span class="label">오전</span><span class="desc">09:00~12:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip selected" data-day="weekend" data-slot="afternoon"><span class="ico">🌤️</span><span class="info"><span class="label">낮</span><span class="desc">12:00~16:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip selected" data-day="weekend" data-slot="evening"><span class="ico">🌇</span><span class="info"><span class="label">저녁</span><span class="desc">16:00~20:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="night"><span class="ico">🌃</span><span class="info"><span class="label">밤</span><span class="desc">20:00~22:00</span></span><span class="check"></span></button>
+                        <button type="button" class="timeslot-chip" data-day="weekend" data-slot="late"><span class="ico">🌌</span><span class="info"><span class="label">심야</span><span class="desc">22:00~</span></span><span class="check"></span></button>
+                      </div>
+                    </div>
+
+                    <div class="timeslot-summary">평일·주말 모두 여러 시간대를 선택할 수 있어요.</div>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="label">산책 시 중요한 기준 <span class="small" style="font-weight:600;color:var(--sub);margin-left:4px;">(여러 개 선택 가능)</span></div>
+                  <div class="tag-grid" id="priorityTagGrid">
+                    <button type="button" class="tag-chip selected" data-tag="safety"><span class="tag-ico">🛡️</span>안전(차도/교차로)</button>
+                    <button type="button" class="tag-chip" data-tag="crowd"><span class="tag-ico">👥</span>한적함</button>
+                    <button type="button" class="tag-chip selected" data-tag="shade"><span class="tag-ico">🌳</span>그늘/수변</button>
+                    <button type="button" class="tag-chip" data-tag="quiet"><span class="tag-ico">🤫</span>조용함</button>
+                    <button type="button" class="tag-chip" data-tag="exercise"><span class="tag-ico">💪</span>운동량</button>
+                    <button type="button" class="tag-chip" data-tag="surface"><span class="tag-ico">🛣️</span>노면 상태</button>
+                    <button type="button" class="tag-chip" data-tag="friends"><span class="tag-ico">🐾</span>강아지 친구들</button>
+                    <button type="button" class="tag-chip" data-tag="cafe"><span class="tag-ico">☕</span>인근 카페</button>
+                    <button type="button" class="tag-chip" data-tag="view"><span class="tag-ico">📸</span>풍경/포토</button>
+                    <button type="button" class="tag-chip" data-tag="poo"><span class="tag-ico">🚮</span>배변봉투함</button>
+                    <button type="button" class="tag-chip" data-tag="nightlight"><span class="tag-ico">💡</span>야간 조명</button>
+                    <button type="button" class="tag-chip" data-tag="hill"><span class="tag-ico">⛰️</span>언덕/계단 적음</button>
+                  </div>
+                  <div class="tag-helper"><strong id="priorityTagCount">2</strong>개 선택됨 · 추천 알고리즘에 반영돼요</div>
+                </div>
+                <div class="actions">
+                  <button class="cta secondary" data-nav="signup" style="flex:1;">이전</button>
+                  <button class="cta" data-nav="dogInfo" style="flex:1;">다음</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- DOG INFO -->
+            <div class="view" data-view="dogInfo">
+              <div class="topbar">
+                <button class="iconbtn" data-nav="userInfo">←</button>
+                <span class="muted">3/4</span>
+              </div>
+              <p class="h2">반려견 정보 입력</p>
+              <p class="muted">이름·나이·종·성별을 알려주세요. 성격은 다음 단계에서 입력해요.</p>
+              <div class="progress"><span data-progress></span></div>
+              <div class="form">
+                <div class="field">
+                  <div class="label">이름</div>
+                  <input class="input" id="dogNameInput" type="text" value="보리" />
+                </div>
+                <div class="field">
+                  <div class="label">나이</div>
+                  <select class="select">
+                    <option>1살</option>
+                    <option selected>2살</option>
+                    <option>3살</option>
+                    <option>4살</option>
+                    <option>5살</option>
+                    <option>6살</option>
+                    <option>7살</option>
+                    <option>8살</option>
+                    <option>9살</option>
+                    <option>10살</option>
+                    <option>11살</option>
+                    <option>12살</option>
+                    <option>13살</option>
+                    <option>14살</option>
+                    <option>15살</option>
+                    <option>16살</option>
+                    <option>17살</option>
+                    <option>18살</option>
+                    <option>19살</option>
+                    <option>20살</option>
+                    <option>20+</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <div class="label">종</div>
+                  <select class="select">
+                    <option>믹스견</option>
+                    <option>말티즈</option>
+                    <option>푸들</option>
+                    <option>포메라니안</option>
+                    <option>치와와</option>
+                    <option>시츄</option>
+                    <option>비숑프리제</option>
+                    <option>요크셔테리어</option>
+                    <option>닥스훈트</option>
+                    <option>웰시코기</option>
+                    <option>비글</option>
+                    <option>프렌치불도그</option>
+                    <option>시바이누</option>
+                    <option>보더콜리</option>
+                    <option>코커스패니얼</option>
+                    <option>골든리트리버</option>
+                    <option>래브라도리트리버</option>
+                    <option>진돗개</option>
+                    <option>사모예드</option>
+                    <option>시베리안허스키</option>
+                    <option>도베르만</option>
+                    <option>로트와일러</option>
+                    <option>셰틀랜드쉽독</option>
+                    <option>미니어처핀셔</option>
+                    <option>퍼그</option>
+                    <option>그 외</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <div class="label">성별</div>
+                  <select class="select">
+                    <option selected>암컷</option>
+                    <option>수컷</option>
+                  </select>
+                </div>
+                <div class="actions">
+                  <button class="cta secondary" data-nav="userInfo" style="flex:1;">이전</button>
+                  <button class="cta" data-nav="dogInfoTraits" style="flex:1;">다음</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- DOG INFO: 성격 (별도 페이지) -->
+            <div class="view" data-view="dogInfoTraits">
+              <div class="topbar">
+                <button class="iconbtn" data-nav="dogInfo">←</button>
+                <span class="muted">4/4</span>
+              </div>
+              <p class="h2"><span id="traitsDogName">보리</span>의 성격</p>
+              <p class="muted">아이의 성향을 입력하면 더 잘 맞는 산책 코스를 추천해 드려요.</p>
+              <div class="progress"><span data-progress></span></div>
+              <div class="form">
+                <div class="trait-list" id="dogTraitList">
+                  <div class="trait-card" data-trait="active">
+                    <div class="trait-card-head">
+                      <div class="trait-card-title"><span class="trait-emoji">🐕‍🦺</span>활발해요</div>
+                      <div class="trait-card-value" data-trait-value>매우 그렇다</div>
+                    </div>
+                    <div class="trait-scale">
+                      <button type="button" class="trait-scale-btn" data-score="1">전혀</button>
+                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
+                      <button type="button" class="trait-scale-btn" data-score="3">보통</button>
+                      <button type="button" class="trait-scale-btn" data-score="4">그렇다</button>
+                      <button type="button" class="trait-scale-btn active" data-score="5">매우</button>
+                    </div>
+                  </div>
+                  <div class="trait-card" data-trait="shy">
+                    <div class="trait-card-head">
+                      <div class="trait-card-title"><span class="trait-emoji">🙈</span>소심해요</div>
+                      <div class="trait-card-value" data-trait-value>전혀 아니다</div>
+                    </div>
+                    <div class="trait-scale">
+                      <button type="button" class="trait-scale-btn active" data-score="1">전혀</button>
+                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
+                      <button type="button" class="trait-scale-btn" data-score="3">보통</button>
+                      <button type="button" class="trait-scale-btn" data-score="4">그렇다</button>
+                      <button type="button" class="trait-scale-btn" data-score="5">매우</button>
+                    </div>
+                  </div>
+                  <div class="trait-card" data-trait="curious">
+                    <div class="trait-card-head">
+                      <div class="trait-card-title"><span class="trait-emoji">🔍</span>호기심이 많아요</div>
+                      <div class="trait-card-value" data-trait-value>그렇다</div>
+                    </div>
+                    <div class="trait-scale">
+                      <button type="button" class="trait-scale-btn" data-score="1">전혀</button>
+                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
+                      <button type="button" class="trait-scale-btn" data-score="3">보통</button>
+                      <button type="button" class="trait-scale-btn active" data-score="4">그렇다</button>
+                      <button type="button" class="trait-scale-btn" data-score="5">매우</button>
+                    </div>
+                  </div>
+                  <div class="trait-card" data-trait="sensitive">
+                    <div class="trait-card-head">
+                      <div class="trait-card-title"><span class="trait-emoji">😟</span>낯선 환경에 민감해요</div>
+                      <div class="trait-card-value" data-trait-value>보통이다</div>
+                    </div>
+                    <div class="trait-scale">
+                      <button type="button" class="trait-scale-btn" data-score="1">전혀</button>
+                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
+                      <button type="button" class="trait-scale-btn active" data-score="3">보통</button>
+                      <button type="button" class="trait-scale-btn" data-score="4">그렇다</button>
+                      <button type="button" class="trait-scale-btn" data-score="5">매우</button>
+                    </div>
+                  </div>
+                  <div class="trait-card" data-trait="social">
+                    <div class="trait-card-head">
+                      <div class="trait-card-title"><span class="trait-emoji">🤝</span>사회성이 좋아요</div>
+                      <div class="trait-card-value" data-trait-value>그렇다</div>
+                    </div>
+                    <div class="trait-scale">
+                      <button type="button" class="trait-scale-btn" data-score="1">전혀</button>
+                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
+                      <button type="button" class="trait-scale-btn" data-score="3">보통</button>
+                      <button type="button" class="trait-scale-btn active" data-score="4">그렇다</button>
+                      <button type="button" class="trait-scale-btn" data-score="5">매우</button>
+                    </div>
+                  </div>
+                  <div class="trait-card" data-trait="energy">
+                    <div class="trait-card-head">
+                      <div class="trait-card-title"><span class="trait-emoji">⚡</span>에너지가 넘쳐요</div>
+                      <div class="trait-card-value" data-trait-value>그렇다</div>
+                    </div>
+                    <div class="trait-scale">
+                      <button type="button" class="trait-scale-btn" data-score="1">전혀</button>
+                      <button type="button" class="trait-scale-btn" data-score="2">아니다</button>
+                      <button type="button" class="trait-scale-btn" data-score="3">보통</button>
+                      <button type="button" class="trait-scale-btn active" data-score="4">그렇다</button>
+                      <button type="button" class="trait-scale-btn" data-score="5">매우</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="actions">
+                  <button class="cta secondary" data-nav="dogInfo" style="flex:1;">이전</button>
+                  <button class="cta" data-nav="home" style="flex:1;">완료하고 홈으로</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- HOME (메인홈) -->
+            <div class="view" data-view="home" data-tab-root="home">
+              <div class="home-bg">
+              <div class="topbar">
+                <span class="chip">오늘 추천</span>
+                <span class="muted">화 18:53</span>
+              </div>
+              <p class="h2">안녕하세요, <span id="homeDogName">보리</span> 보호자님</p>
+              <p class="muted">지금 날씨 18°C · 체감 좋음 · 혼잡도 낮음</p>
+              <div class="card">
+                <div class="map"></div>
+                <div class="row" style="margin-top:10px">
+                  <div>
+                    <div class="muted">추천 경로</div>
+                    <div style="font-weight:800;">강변 그늘 루프</div>
+                  </div>
+                  <div class="chip">보리 맞춤 91점</div>
+                </div>
+                <div class="metric">
+                  <div class="item"><div class="muted">거리</div><strong>2.4 km</strong></div>
+                  <div class="item"><div class="muted">예상</div><strong>34분</strong></div>
+                  <div class="item"><div class="muted">혼잡</div><strong>낮음</strong></div>
+                </div>
+                <button class="cta" data-nav="routes">지금 산책 시작</button>
+              </div>
+              <div class="card">
+                <div class="row"><strong>추천 이유</strong><span class="muted">보리 성향 기반</span></div>
+                <p class="muted" style="margin:8px 0 0;">에너지 높음 + 자극 민감: 넓고 덜 붐비는 경로를 우선 제안해요.</p>
+              </div>
+              <div class="hint">하단 탭으로 산책·반려견·탐색·마이페이지를 이동할 수 있어요.</div>
+              </div>
+            </div>
+
+            <!-- PET (반려견) -->
+            <div class="view" data-view="pet" data-tab-root="pet">
+              <div class="home-bg">
+                <div class="topbar">
+                  <span class="chip">내 반려견</span>
+                  <span class="muted">프로필</span>
+                </div>
+                <p class="h2"><span id="petDogName">보리</span>의 프로필</p>
+                <p class="muted">산책 성향과 기본 정보를 한눈에 볼 수 있어요.</p>
+                <div class="card">
+                  <div class="row"><strong>기본 정보</strong><span class="chip">맞춤 추천 반영</span></div>
+                  <p class="muted" style="margin:10px 0 0;">이름 · 나이 · 견종 · 성별은 가입 단계에서 입력한 값이 반영됩니다.</p>
+                </div>
+                <div class="card">
+                  <div class="row"><strong>성향 요약</strong><span class="muted">에너지 높음</span></div>
+                  <p class="muted" style="margin:10px 0 0;">자극 민감 · 탐색성 높음 — 경로 추천에 사용돼요.</p>
+                </div>
+                <p class="hint">상세 편집·건강 기록은 이후 버전에서 마이페이지와 연결할 수 있어요.</p>
+              </div>
+            </div>
+
+            <!-- EXPLORE (탐색) -->
+            <div class="view" data-view="explore" data-tab-root="explore">
+              <div class="explore-shell">
+                <div class="explore-head">
+                  <div class="explore-location-wrap">
+                    <button type="button" class="explore-location-btn" id="exploreLocationToggle" aria-expanded="false">
+                      <span id="exploreCurrentLocation">용산구 한강로3가</span>
+                      <span class="explore-location-arrow">▼</span>
+                    </button>
+                    <div class="explore-location-menu" id="exploreLocationMenu">
+                      <button type="button" class="explore-location-option active" data-location="용산구 한강로3가">용산구 한강로3가</button>
+                      <button type="button" class="explore-location-option" data-location="마포구 서교동">마포구 서교동</button>
+                      <button type="button" class="explore-location-option" data-location="성동구 성수동">성동구 성수동</button>
+                      <button type="button" class="explore-location-option" data-location="송파구 잠실동">송파구 잠실동</button>
+                    </div>
+                  </div>
+                  <div class="explore-cats" id="exploreCategoryBar">
+                    <button type="button" class="explore-cat-btn" data-cat="stay"><span class="ico" style="background:#19B23A;color:#FFFFFF;">🏨</span><span>숙소</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="food"><span class="ico" style="background:#00E933;color:#000000;">🍜</span><span>맛집</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="cafe"><span class="ico" style="background:#19B23A;color:#FFFFFF;">☕</span><span>카페</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="field"><span class="ico" style="background:#00E933;color:#000000;">🏟</span><span>운동장</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="trail"><span class="ico" style="background:#19B23A;color:#FFFFFF;">🥾</span><span>산책로</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="hospital"><span class="ico" style="background:#00E933;color:#000000;">🏥</span><span>병원</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="tour"><span class="ico" style="background:#19B23A;color:#FFFFFF;">📍</span><span>관광지</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="petshop"><span class="ico" style="background:#00E933;color:#000000;">🦴</span><span>펫용품</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="all"><span class="ico" style="background:#000000;color:#FFFFFF;">◎</span><span>전체</span></button>
+                  </div>
+                </div>
+                <div class="explore-map-wrap">
+                  <div class="explore-map" id="exploreMap">
+                    <div class="explore-map-grid" id="exploreMapGrid">
+                      <div class="explore-river"></div>
+                    </div>
+                    <div class="explore-map-zoom">
+                      <button class="explore-zoom-btn" id="exploreZoomIn" type="button">+</button>
+                      <button class="explore-zoom-btn" id="exploreZoomOut" type="button">-</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="explore-bottom-sheet" id="exploreBottomSheet">
+                  <button type="button" class="explore-sheet-toggle" id="exploreListToggle">
+                    <span class="left">☰ 목록보기</span>
+                    <span class="right" id="exploreListCount">전체 0개</span>
+                  </button>
+                  <div class="explore-sheet-list" id="exploreList"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ROUTES -->
+            <div class="view" data-view="routes" data-tab-root="walk">
+              <div class="topbar">
+                <button class="iconbtn" data-nav="home">←</button>
+                <span class="chip">2분 전 갱신</span>
+              </div>
+              <div class="row">
+                <span class="h2">경로 비교</span>
+                <span class="muted">추천 2~3개</span>
+              </div>
+              <div class="card clickable" data-nav="walk" data-route-name="강변 그늘 루프" data-route-meta="2.4km · 34분 · 혼잡 낮음" role="button" tabindex="0" aria-label="1번 경로로 산책 시작">
+                <div class="row"><strong>1) 강변 그늘 루프</strong><span class="chip">추천 91</span></div>
+                <p class="muted">2.4km · 34분 · 혼잡 낮음 · 비노출</p>
+                <div class="bar"><span></span></div>
+                <div class="muted">적합도: 에너지/회복속도 우수</div>
+              </div>
+              <div class="card clickable" data-nav="walk" data-route-name="공원 외곽 코스" data-route-meta="1.9km · 29분 · 혼잡 중간" role="button" tabindex="0" aria-label="2번 경로로 산책 시작">
+                <div class="row"><strong>2) 공원 외곽 코스</strong><span class="chip">추천 84</span></div>
+                <p class="muted">1.9km · 29분 · 혼잡 중간 · 그늘 보통</p>
+                <div class="bar"><span style="width:54%"></span></div>
+                <div class="muted">적합도: 자극민감도 리스크 약간</div>
+              </div>
+              <div class="card clickable" data-nav="walk" data-route-name="주거지 순환 코스" data-route-meta="1.4km · 22분 · 혼잡 낮음" role="button" tabindex="0" aria-label="3번 경로로 산책 시작">
+                <div class="row"><strong>3) 주거지 순환 코스</strong><span class="chip">추천 78</span></div>
+                <p class="muted">1.4km · 22분 · 혼잡 낮음 · 단조로움</p>
+                <div class="bar"><span style="width:46%"></span></div>
+                <div class="muted">적합도: 짧은 산책용 백업 경로</div>
+              </div>
+            </div>
+
+            <!-- WALK -->
+            <div class="view" data-view="walk" data-tab-root="walk">
+              <div class="topbar">
+                <button class="iconbtn" data-nav="routes">←</button>
+                <span class="chip" id="voiceChip">음성안내 ON</span>
+              </div>
+              <div class="row" style="margin-bottom:8px;">
+                <div>
+                  <div class="muted">산책 진행중</div>
+                  <div style="font-weight:800;" id="walkRouteName">강변 그늘 루프</div>
+                </div>
+                <button class="iconbtn" id="toggleVoice">음성</button>
+              </div>
+              <div class="muted" id="walkRouteMeta">2.4km · 34분 · 혼잡 낮음</div>
+              <div class="card" style="padding:8px;">
+                <div class="map" style="height:320px;"></div>
+              </div>
+              <div class="card">
+                <div class="big">00:27:42</div>
+                <div class="metric">
+                  <div class="item"><div class="muted">걸음</div><strong>4,120</strong></div>
+                  <div class="item"><div class="muted">칼로리</div><strong>186</strong></div>
+                  <div class="item"><div class="muted">거리</div><strong>1.9 km</strong></div>
+                </div>
+              </div>
+              <div class="floating-reroute" id="rerouteCard" style="display:none;">
+                <div class="row">
+                  <strong>더 좋은 길이 있어요</strong>
+                  <span class="muted" id="rerouteReason">혼잡 증가 감지</span>
+                </div>
+                <div class="muted" style="margin-top:4px;" id="rerouteDetail">2분 단축, 반려견 마주침 빈도 낮음</div>
+                <div class="btns">
+                  <button class="btn" id="keepRoute">유지하기</button>
+                  <button class="btn primary" id="changeRoute">경로 변경</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- WALK HOME (산책 탭 피드) -->
+            <div class="view" data-view="walkHome" data-tab-root="walk">
+              <div class="walk-home">
+                <div class="walk-picked" id="walkPickedCard">
+                  <div class="walk-picked-title" id="walkPickedTitle">산책로를 선택해 주세요</div>
+                  <div class="walk-picked-meta" id="walkPickedMeta">카드를 누르면 상세 정보가 여기에 표시됩니다.</div>
+                  <button type="button" class="walk-picked-cta" id="walkPickedStart">산책하기</button>
+                </div>
+                <div class="walk-section">
+                  <div class="walk-section-head">
+                    <div class="walk-section-title">자주 가는 길</div>
+                    <button type="button" class="walk-section-more">전체보기</button>
+                  </div>
+                  <div class="hscroll" aria-label="자주 가는 길 목록">
+                    <div class="hcard" data-walk-route="집 근처 보리 최애 공원" data-walk-meta="1.5km · 24분 · 익숙한 코스">
+                      <div class="hcard-img"><div class="hcard-rank">1위</div></div>
+                      <div class="hcard-body">
+                        <div class="hcard-title">집 근처 보리 최애 공원</div>
+                        <div class="hcard-meta">이번달 11회 방문</div>
+                      </div>
+                    </div>
+                    <div class="hcard" data-walk-route="동네 산책로" data-walk-meta="2.1km · 31분 · 나무 그늘 많음">
+                      <div class="hcard-img"><div class="hcard-rank">2위</div></div>
+                      <div class="hcard-body">
+                        <div class="hcard-title">동네 산책로</div>
+                        <div class="hcard-meta">이번달 9회 방문</div>
+                      </div>
+                    </div>
+                    <div class="hcard" data-walk-route="백빈건널목" data-walk-meta="1.2km · 20분 · 짧은 루프">
+                      <div class="hcard-img"><div class="hcard-rank">3위</div></div>
+                      <div class="hcard-body">
+                        <div class="hcard-title">백빈건널목</div>
+                        <div class="hcard-meta">이번달 7회 방문</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="walk-section walk-reco">
+                  <div class="walk-section-head">
+                    <div class="walk-section-title">반려견 성향 추천 코스</div>
+                    <button type="button" class="walk-section-more">전체보기</button>
+                  </div>
+                  <div class="hscroll" aria-label="반려견 성향 추천 코스">
+                    <div class="hcard" data-walk-route="노들섬" data-walk-meta="2.4km · 34분 · 잔디/그늘 균형">
+                      <div class="hcard-img"></div>
+                      <div class="hcard-body">
+                        <div class="row"><div class="hcard-title">노들섬</div><div class="hcard-meta">만족도 79%</div></div>
+                        <div class="hcard-tags">
+                          <span class="tag">#풀밭많</span><span class="tag">#한강산책</span><span class="tag">#쾌적함</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="hcard" data-walk-route="올림픽공원" data-walk-meta="2.8km · 39분 · 넓은 공간">
+                      <div class="hcard-img"></div>
+                      <div class="hcard-body">
+                        <div class="row"><div class="hcard-title">올림픽공원</div><div class="hcard-meta">만족도 84%</div></div>
+                        <div class="hcard-tags">
+                          <span class="tag">#잔잔함</span><span class="tag">#넓은공간</span><span class="tag">#그늘</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="hcard" data-walk-route="용산공원" data-walk-meta="2.0km · 30분 · 차분한 분위기">
+                      <div class="hcard-img"></div>
+                      <div class="hcard-body">
+                        <div class="row"><div class="hcard-title">용산공원</div><div class="hcard-meta">만족도 81%</div></div>
+                        <div class="hcard-tags">
+                          <span class="tag">#잔잔함</span><span class="tag">#한강인근</span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="walk-section">
+                  <div class="walk-section-head">
+                    <div class="walk-section-title">날씨/혼잡도 기반 추천 코스</div>
+                    <button type="button" class="walk-section-more">전체보기</button>
+                  </div>
+                  <div class="hscroll" aria-label="날씨/혼잡도 기반 추천 코스">
+                    <div class="hcard" data-walk-route="그늘 많은 루프 코스" data-walk-meta="1.9km · 29분 · 체감 시원">
+                      <div class="hcard-img"></div>
+                      <div class="hcard-body">
+                        <div class="hcard-title">그늘 많은 루프 코스</div>
+                        <div class="hcard-meta">오늘 혼잡도 낮음</div>
+                      </div>
+                    </div>
+                    <div class="hcard" data-walk-route="강변 바람 코스" data-walk-meta="2.2km · 33분 · 바람 쾌적">
+                      <div class="hcard-img"></div>
+                      <div class="hcard-body">
+                        <div class="hcard-title">강변 바람 코스</div>
+                        <div class="hcard-meta">체감 쾌적</div>
+                      </div>
+                    </div>
+                    <div class="hcard" data-walk-route="주거지 조용한 코스" data-walk-meta="1.6km · 25분 · 혼잡 낮음">
+                      <div class="hcard-img"></div>
+                      <div class="hcard-body">
+                        <div class="hcard-title">주거지 조용한 코스</div>
+                        <div class="hcard-meta">소음 낮음</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MYPAGE -->
+            <div class="view" data-view="mypage" data-tab-root="mypage">
+              <div class="mypage-screen">
+                <div class="mypage-profile">
+                  <div class="mypage-profile-inner">
+                    <div class="mypage-avatar">🐕</div>
+                    <div class="mypage-profile-info">
+                      <div class="mypage-profile-name" id="mypageDogName">보리 보호자</div>
+                      <div class="mypage-profile-sub">보리 · 푸들 · 2살</div>
+                    </div>
+                    <button type="button" class="mypage-profile-edit" data-nav="mypage_edit">편집</button>
+                  </div>
+                </div>
+
+                <div class="mypage-group">
+                  <div class="mypage-group-title">계정</div>
+                  <div class="mypage-group-card">
+                    <div class="mypage-list">
+                      <button type="button" class="mypage-row" data-nav="mypage_edit">
+                        <span class="mypage-row-ico green">✏️</span>
+                        <span class="mypage-row-text">내 정보 수정<span class="mypage-row-hint">닉네임, 산책 선호 변경</span></span>
+                        <span class="mypage-row-arrow">›</span>
+                      </button>
+                      <button type="button" class="mypage-row" data-nav="mypage_system">
+                        <span class="mypage-row-ico blue">⚙️</span>
+                        <span class="mypage-row-text">시스템 설정<span class="mypage-row-hint">알림, 음성, 폰트</span></span>
+                        <span class="mypage-row-arrow">›</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mypage-group">
+                  <div class="mypage-group-title">안내</div>
+                  <div class="mypage-group-card">
+                    <div class="mypage-list">
+                      <button type="button" class="mypage-row" data-nav="mypage_notice">
+                        <span class="mypage-row-ico orange">📢</span>
+                        <span class="mypage-row-text">공지사항</span>
+                        <span class="mypage-row-arrow">›</span>
+                      </button>
+                      <button type="button" class="mypage-row" data-nav="mypage_support">
+                        <span class="mypage-row-ico cyan">💬</span>
+                        <span class="mypage-row-text">고객 센터</span>
+                        <span class="mypage-row-arrow">›</span>
+                      </button>
+                      <button type="button" class="mypage-row" data-nav="mypage_terms">
+                        <span class="mypage-row-ico purple">📄</span>
+                        <span class="mypage-row-text">약관 및 정책</span>
+                        <span class="mypage-row-arrow">›</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mypage-group">
+                  <div class="mypage-group-card">
+                    <div class="mypage-list">
+                      <button type="button" class="mypage-row mypage-row--danger" data-action="logout">
+                        <span class="mypage-row-ico red">🚪</span>
+                        <span class="mypage-row-text">로그아웃</span>
+                        <span class="mypage-row-arrow">›</span>
+                      </button>
+                      <button type="button" class="mypage-row mypage-row--danger" data-action="withdraw">
+                        <span class="mypage-row-ico red">⚠️</span>
+                        <span class="mypage-row-text">탈퇴하기</span>
+                        <span class="mypage-row-arrow">›</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="view" data-view="mypage_system" data-tab-root="mypage">
+              <div class="mypage-sub-screen">
+                <div class="topbar">
+                  <button class="iconbtn" data-nav="mypage">←</button>
+                  <span class="muted">설정</span>
+                </div>
+                <p class="mypage-subtitle">시스템 설정</p>
+                <p class="stub-muted">아래 항목을 눌러 세부 설정 화면으로 이동합니다.</p>
+                <div class="mypage-group-card">
+                  <div class="mypage-list">
+                    <button type="button" class="mypage-row mypage-row--sub" data-nav="mypage_setting_situation">
+                      <span class="mypage-row-ico orange">🔔</span>
+                      <span class="mypage-row-text">상황별 맞춤 알림 설정</span>
+                      <span class="mypage-row-arrow">›</span>
+                    </button>
+                    <button type="button" class="mypage-row mypage-row--sub" data-nav="mypage_setting_voice">
+                      <span class="mypage-row-ico blue">🔊</span>
+                      <span class="mypage-row-text">음성 안내 기본 설정</span>
+                      <span class="mypage-row-arrow">›</span>
+                    </button>
+                    <button type="button" class="mypage-row mypage-row--sub" data-nav="mypage_setting_font">
+                      <span class="mypage-row-ico purple">🔤</span>
+                      <span class="mypage-row-text">폰트 크기 설정</span>
+                      <span class="mypage-row-arrow">›</span>
+                    </button>
+                    <button type="button" class="mypage-row mypage-row--sub" data-nav="mypage_setting_push">
+                      <span class="mypage-row-ico green">📲</span>
+                      <span class="mypage-row-text">PUSH 알림 설정</span>
+                      <span class="mypage-row-arrow">›</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="view" data-view="mypage_edit" data-tab-root="mypage">
+              <div class="mypage-sub-screen">
+                <div class="topbar">
+                  <button class="iconbtn" data-nav="mypage">←</button>
+                  <span class="muted">프로필</span>
+                </div>
+                <p class="mypage-subtitle">내 정보 수정</p>
+                <p class="stub-muted">닉네임·연락처 등 계정 정보를 수정하는 화면 예시입니다.</p>
+                <div class="card">
+                  <div class="label">닉네임</div>
+                  <input class="input" type="text" value="보리 보호자" />
+                </div>
+                <button type="button" class="cta" data-nav="mypage" style="margin-top:12px">저장하고 돌아가기</button>
+              </div>
+            </div>
+
+            <div class="view" data-view="mypage_notice" data-tab-root="mypage">
+              <div class="mypage-sub-screen">
+                <div class="topbar">
+                  <button class="iconbtn" data-nav="mypage">←</button>
+                  <span class="muted">안내</span>
+                </div>
+                <p class="mypage-subtitle">공지사항</p>
+                <div class="mypage-group-card">
+                  <div class="mypage-list">
+                    <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-ico orange">📢</span>
+                      <span class="mypage-row-text">[안내] 산책 추천 알고리즘 업데이트 (예시)</span>
+                      <span class="mypage-row-arrow">›</span>
+                    </button>
+                    <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-ico blue">🔧</span>
+                      <span class="mypage-row-text">[점검] 서비스 점검 안내 (예시)</span>
+                      <span class="mypage-row-arrow">›</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="view" data-view="mypage_support" data-tab-root="mypage">
+              <div class="mypage-sub-screen">
+                <div class="topbar">
+                  <button class="iconbtn" data-nav="mypage">←</button>
+                  <span class="muted">도움말</span>
+                </div>
+                <p class="mypage-subtitle">고객 센터</p>
+                <p class="stub-muted">FAQ·1:1 문의·전화 상담 등은 앱 정책에 맞춰 연결할 수 있어요.</p>
+                <div class="mypage-group-card">
+                  <div class="mypage-list">
+                    <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-ico cyan">❓</span>
+                      <span class="mypage-row-text">자주 묻는 질문</span>
+                      <span class="mypage-row-arrow">›</span>
+                    </button>
+                    <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-ico green">💬</span>
+                      <span class="mypage-row-text">1:1 문의하기</span>
+                      <span class="mypage-row-arrow">›</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="view" data-view="mypage_terms" data-tab-root="mypage">
+              <div class="mypage-sub-screen">
+                <div class="topbar">
+                  <button class="iconbtn" data-nav="mypage">←</button>
+                  <span class="muted">법적 고지</span>
+                </div>
+                <p class="mypage-subtitle">약관 및 정책</p>
+                <div class="mypage-group-card">
+                  <div class="mypage-list">
+                    <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-ico purple">📋</span>
+                      <span class="mypage-row-text">서비스 이용약관</span>
+                      <span class="mypage-row-arrow">›</span>
+                    </button>
+                    <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-ico purple">🔒</span>
+                      <span class="mypage-row-text">개인정보 처리방침</span>
+                      <span class="mypage-row-arrow">›</span>
+                    </button>
+                    <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-ico purple">📍</span>
+                      <span class="mypage-row-text">위치기반서비스 이용약관</span>
+                      <span class="mypage-row-arrow">›</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="view" data-view="mypage_setting_situation" data-tab-root="mypage">
+              <div class="mypage-sub-screen">
+                <div class="topbar">
+                  <button class="iconbtn" data-nav="mypage_system">←</button>
+                  <span class="muted">알림</span>
+                </div>
+                <p class="mypage-subtitle">상황별 맞춤 알림 설정</p>
+                <p class="stub-muted">혼잡도·날씨·산책 완료 등 상황별로 알림을 켜고 끌 수 있어요.</p>
+                <div class="card"><div class="muted">토글·시간대 설정 UI가 여기에 들어갑니다.</div></div>
+              </div>
+            </div>
+
+            <div class="view" data-view="mypage_setting_voice" data-tab-root="mypage">
+              <div class="mypage-sub-screen">
+                <div class="topbar">
+                  <button class="iconbtn" data-nav="mypage_system">←</button>
+                  <span class="muted">음성</span>
+                </div>
+                <p class="mypage-subtitle">음성 안내 기본 설정</p>
+                <p class="stub-muted">음성 켜짐/꺼짐, 안내 빈도, 볼륨 프리셋 등을 설정합니다.</p>
+                <div class="card"><div class="muted">산책 화면의 음성 토글과 연동되는 기본값입니다.</div></div>
+              </div>
+            </div>
+
+            <div class="view" data-view="mypage_setting_font" data-tab-root="mypage">
+              <div class="mypage-sub-screen">
+                <div class="topbar">
+                  <button class="iconbtn" data-nav="mypage_system">←</button>
+                  <span class="muted">표시</span>
+                </div>
+                <p class="mypage-subtitle">폰트 크기 설정</p>
+                <p class="stub-muted">작게 / 보통 / 크게 중 선택하는 접근성 옵션 예시입니다.</p>
+                <div class="mypage-group-card">
+                  <div class="mypage-list">
+                    <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-text">작게</span>
+                    </button>
+                    <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-text">보통 (기본)</span>
+                    </button>
+                    <button type="button" class="mypage-row mypage-row--sub">
+                      <span class="mypage-row-text">크게</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="view" data-view="mypage_setting_push" data-tab-root="mypage">
+              <div class="mypage-sub-screen">
+                <div class="topbar">
+                  <button class="iconbtn" data-nav="mypage_system">←</button>
+                  <span class="muted">PUSH</span>
+                </div>
+                <p class="mypage-subtitle">PUSH 알림 설정</p>
+                <p class="stub-muted">마케팅·서비스·산책 리마인더 등 푸시 채널을 구분해 관리합니다.</p>
+                <div class="card"><div class="muted">OS 권한과 앱 내 채널 스위치가 여기에 배치됩니다.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tabs hidden" id="tabs">
+            <div class="tabs-inner">
+              <button class="tab-hit" data-tab="walk" type="button" aria-label="산책">
+                <span class="tab-ico" aria-hidden="true">🚶</span>
+                <span>산책</span>
+              </button>
+              <button class="tab-hit" data-tab="pet" type="button" aria-label="반려견">
+                <span class="tab-ico" aria-hidden="true">🐕</span>
+                <span>펫로그</span>
+              </button>
+              <button class="tab-hit" data-tab="home" type="button" aria-label="홈">
+                <span class="tab-ico" aria-hidden="true">⌂</span>
+                <span>홈</span>
+              </button>
+              <button class="tab-hit" data-tab="explore" type="button" aria-label="탐색">
+                <span class="tab-ico" aria-hidden="true">🧭</span>
+                <span>탐색</span>
+              </button>
+              <button class="tab-hit" data-tab="mypage" type="button" aria-label="마이페이지">
+                <span class="tab-ico" aria-hidden="true">👤</span>
+                <span>마이페이지</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const views = Array.from(document.querySelectorAll(".view"));
+      const tabs = Array.from(document.querySelectorAll("#tabs .tab-hit"));
+      let rerouteTimer = null;
+      const state = {
+        dogName: "보리",
+      };
+      const progressByView = new Map([
+        ["login", 0],
+        ["signupMethod", 0],
+        ["signup", 25],
+        ["userInfo", 50],
+        ["dogInfo", 75],
+        ["dogInfoTraits", 100],
+        ["home", 100],
+        ["routes", 100],
+        ["walk", 100],
+        ["walkHome", 100],
+        ["pet", 100],
+        ["explore", 100],
+        ["mypage", 100],
+        ["mypage_system", 100],
+        ["mypage_edit", 100],
+        ["mypage_notice", 100],
+        ["mypage_support", 100],
+        ["mypage_terms", 100],
+        ["mypage_setting_situation", 100],
+        ["mypage_setting_voice", 100],
+        ["mypage_setting_font", 100],
+        ["mypage_setting_push", 100],
+      ]);
+      const progressEls = Array.from(document.querySelectorAll("[data-progress]"));
+
+      function setActiveView(name) {
+        views.forEach(v => v.classList.toggle("active", v.dataset.view === name));
+        const activeView = views.find(v => v.dataset.view === name);
+        const tabKey = (activeView && activeView.dataset.tabRoot) || name;
+        tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === tabKey));
+        handleRerouteVisibility(name);
+        handleTabsVisibility(name);
+        handleProgress(name);
+        if (name === "home") syncHomeDogName();
+        if (name === "pet") syncPetDogName();
+        if (name === "dogInfoTraits") syncTraitsDogName();
+      }
+
+      function syncHomeDogName() {
+        const el = document.getElementById("homeDogName");
+        if (!el) return;
+        const safe = (state.dogName || "").trim() || "반려견";
+        el.textContent = safe;
+      }
+
+      function syncPetDogName() {
+        const el = document.getElementById("petDogName");
+        if (!el) return;
+        const safe = (state.dogName || "").trim() || "반려견";
+        el.textContent = safe;
+      }
+
+      function syncTraitsDogName() {
+        const el = document.getElementById("traitsDogName");
+        if (!el) return;
+        const safe = (state.dogName || "").trim() || "반려견";
+        el.textContent = safe;
+      }
+
+      function handleProgress(viewName) {
+        const value = progressByView.has(viewName) ? progressByView.get(viewName) : 100;
+        progressEls.forEach(el => {
+          el.style.width = `${value}%`;
+        });
+      }
+
+      function handleTabsVisibility(viewName) {
+        const tabBar = document.getElementById("tabs");
+        const screen = document.querySelector(".phone .screen");
+        if (!tabBar) return;
+        const onboardingViews = new Set(["login", "signupMethod", "signup", "userInfo", "dogInfo", "dogInfoTraits"]);
+        const hide = onboardingViews.has(viewName);
+        tabBar.classList.toggle("hidden", hide);
+        if (screen) screen.classList.toggle("screen--tabs", !hide);
+      }
+
+      function handleRerouteVisibility(viewName) {
+        const rerouteCard = document.getElementById("rerouteCard");
+        if (!rerouteCard) return;
+        rerouteCard.style.display = "none";
+        if (rerouteTimer) {
+          clearTimeout(rerouteTimer);
+          rerouteTimer = null;
+        }
+        if (viewName === "walk") {
+          // Show suggestion after walk map is visible for a moment.
+          rerouteTimer = setTimeout(() => {
+            rerouteCard.style.display = "block";
+          }, 2200);
+        }
+      }
+
+      // Button navigation
+      document.addEventListener("click", (e) => {
+        const actionEl = e.target && e.target.closest ? e.target.closest("[data-action]") : null;
+        if (actionEl && actionEl.getAttribute) {
+          const action = actionEl.getAttribute("data-action");
+          if (action === "logout") {
+            setActiveView("login");
+            return;
+          }
+          if (action === "withdraw") {
+            if (confirm("정말 탈퇴하시겠어요? 이 작업은 되돌리기 어려울 수 있어요.")) {
+              alert("MVP 목업: 실제 탈퇴 API는 연결 전입니다.");
+            }
+            return;
+          }
+        }
+
+        const navTarget = e.target && e.target.closest ? e.target.closest("[data-nav]") : null;
+        const nav = navTarget && navTarget.getAttribute ? navTarget.getAttribute("data-nav") : null;
+        if (navTarget && nav === "walk") {
+          const routeName = navTarget.getAttribute("data-route-name");
+          const routeMeta = navTarget.getAttribute("data-route-meta");
+          if (routeName) document.getElementById("walkRouteName").textContent = routeName;
+          if (routeMeta) document.getElementById("walkRouteMeta").textContent = routeMeta;
+        }
+        if (nav) setActiveView(nav);
+
+        const tabEl = e.target && e.target.closest ? e.target.closest("[data-tab]") : null;
+        const tab = tabEl && tabEl.getAttribute ? tabEl.getAttribute("data-tab") : null;
+        if (tab) setActiveView(tab === "walk" ? "walkHome" : tab);
+      });
+
+      // Keyboard navigation for clickable cards
+      document.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        const el = document.activeElement;
+        if (!el || !el.getAttribute) return;
+        const nav = el.getAttribute("data-nav");
+        if (!nav) return;
+        e.preventDefault();
+        setActiveView(nav);
+      });
+
+      // Login tabs (회원 / 비회원)
+      document.querySelectorAll("[data-login-tab]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("[data-login-tab]").forEach((b) => {
+            const on = b === btn;
+            b.classList.toggle("active", on);
+            b.setAttribute("aria-selected", on ? "true" : "false");
+          });
+        });
+      });
+
+      // === 산책 시간대 chip 토글 / 평일·주말 탭 ===
+      function updateTimeslotCount(day) {
+        const countEl = document.querySelector(`.timeslot-tab .count[data-count-for="${day}"]`);
+        if (!countEl) return;
+        const n = document.querySelectorAll(`.timeslot-chip[data-day="${day}"].selected`).length;
+        countEl.textContent = n;
+      }
+      document.querySelectorAll(".timeslot-chip").forEach((chip) => {
+        chip.addEventListener("click", () => {
+          chip.classList.toggle("selected");
+          updateTimeslotCount(chip.getAttribute("data-day"));
+        });
+      });
+      document.querySelectorAll(".timeslot-tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const day = tab.getAttribute("data-day-tab");
+          document.querySelectorAll(".timeslot-tab").forEach((t) => {
+            const on = t === tab;
+            t.classList.toggle("active", on);
+            t.setAttribute("aria-selected", on ? "true" : "false");
+          });
+          document.querySelectorAll(".timeslot-pane").forEach((pane) => {
+            pane.classList.toggle("active", pane.getAttribute("data-day-pane") === day);
+          });
+        });
+      });
+      updateTimeslotCount("weekday");
+      updateTimeslotCount("weekend");
+
+      // === 산책 시 중요한 기준 — 태그 다중 선택 ===
+      const priorityTagGrid = document.getElementById("priorityTagGrid");
+      const priorityTagCount = document.getElementById("priorityTagCount");
+      function updatePriorityTagCount() {
+        if (!priorityTagGrid || !priorityTagCount) return;
+        priorityTagCount.textContent = priorityTagGrid.querySelectorAll(".tag-chip.selected").length;
+      }
+      if (priorityTagGrid) {
+        priorityTagGrid.addEventListener("click", (e) => {
+          const chip = e.target.closest(".tag-chip");
+          if (!chip) return;
+          chip.classList.toggle("selected");
+          updatePriorityTagCount();
+        });
+      }
+      updatePriorityTagCount();
+
+      // === 반려견 성격 5단계 척도 버튼 ===
+      const traitLabels = ["", "전혀 아니다", "아니다", "보통이다", "그렇다", "매우 그렇다"];
+      document.querySelectorAll(".trait-card").forEach((card) => {
+        card.addEventListener("click", (e) => {
+          const btn = e.target.closest(".trait-scale-btn");
+          if (!btn) return;
+          const score = parseInt(btn.getAttribute("data-score"), 10);
+          card.querySelectorAll(".trait-scale-btn").forEach((b) => {
+            b.classList.toggle("active", b === btn);
+          });
+          const valEl = card.querySelector("[data-trait-value]");
+          if (valEl) valEl.textContent = traitLabels[score] || "";
+        });
+      });
+
+      // Explore map interactions
+      const exploreMap = document.getElementById("exploreMap");
+      const exploreMapGrid = document.getElementById("exploreMapGrid");
+      const exploreLocationToggle = document.getElementById("exploreLocationToggle");
+      const exploreLocationMenu = document.getElementById("exploreLocationMenu");
+      const exploreCurrentLocation = document.getElementById("exploreCurrentLocation");
+      const exploreCategoryBar = document.getElementById("exploreCategoryBar");
+      const exploreList = document.getElementById("exploreList");
+      const exploreListCount = document.getElementById("exploreListCount");
+      const exploreBottomSheet = document.getElementById("exploreBottomSheet");
+      const exploreListToggle = document.getElementById("exploreListToggle");
+      const exploreZoomIn = document.getElementById("exploreZoomIn");
+      const exploreZoomOut = document.getElementById("exploreZoomOut");
+      const markerColors = {
+        stay: "#19B23A",
+        food: "#00E933",
+        cafe: "#19B23A",
+        field: "#00E933",
+        trail: "#19B23A",
+        hospital: "#00E933",
+        tour: "#19B23A",
+        petshop: "#00E933",
+      };
+      const categoryNames = {
+        stay: "숙소",
+        food: "맛집",
+        cafe: "카페",
+        field: "운동장",
+        trail: "산책로",
+        hospital: "병원",
+        tour: "관광지",
+        petshop: "펫용품판매소",
+      };
+      const categoryIcons = {
+        stay: "🏨",
+        food: "🍜",
+        cafe: "☕",
+        field: "🏟",
+        trail: "🥾",
+        hospital: "🏥",
+        tour: "📍",
+        petshop: "🦴",
+      };
+      const exploreSpots = [
+        { name: "한강 펫스테이", cat: "stay", x: 20, y: 22 },
+        { name: "강변 반려견호텔", cat: "stay", x: 74, y: 64 },
+        { name: "한강로 국수집", cat: "food", x: 36, y: 54 },
+        { name: "용산 강아지식당", cat: "food", x: 55, y: 31 },
+        { name: "한강 테라스 카페", cat: "cafe", x: 68, y: 20 },
+        { name: "철길 옆 카페", cat: "cafe", x: 18, y: 70 },
+        { name: "용산 실내운동장", cat: "field", x: 44, y: 72 },
+        { name: "강변 운동장", cat: "field", x: 82, y: 38 },
+        { name: "노들 산책로", cat: "trail", x: 60, y: 50 },
+        { name: "가족공원 산책로", cat: "trail", x: 28, y: 40 },
+        { name: "용산 24시 동물병원", cat: "hospital", x: 16, y: 33 },
+        { name: "리버 동물메디컬", cat: "hospital", x: 64, y: 79 },
+        { name: "전쟁기념관", cat: "tour", x: 46, y: 18 },
+        { name: "노들섬", cat: "tour", x: 76, y: 54 },
+        { name: "멍멍 펫샵", cat: "petshop", x: 33, y: 25 },
+        { name: "한강 펫용품점", cat: "petshop", x: 52, y: 62 },
+      ];
+      const exploreState = { selectedCat: null, zoom: 1, panX: 0, panY: 0, sheetOpen: false };
+
+      function renderExploreMarkers() {
+        if (!exploreMap || !exploreList || !exploreListCount) return;
+        exploreMap.querySelectorAll(".explore-marker").forEach((el) => el.remove());
+        exploreList.innerHTML = "";
+        const visible = exploreState.selectedCat ? exploreSpots.filter((s) => s.cat === exploreState.selectedCat) : exploreSpots;
+        visible.forEach((spot) => {
+          const marker = document.createElement("div");
+          marker.className = "explore-marker";
+          marker.style.left = `${spot.x}%`;
+          marker.style.top = `${spot.y}%`;
+          marker.style.background = markerColors[spot.cat];
+          marker.textContent = categoryIcons[spot.cat];
+          marker.title = `${categoryNames[spot.cat]}: ${spot.name}`;
+          exploreMap.appendChild(marker);
+
+          const item = document.createElement("div");
+          item.className = "explore-list-item";
+          item.innerHTML = `<div class="name">${spot.name}</div><div class="meta">${categoryNames[spot.cat]} · ${exploreCurrentLocation.textContent}</div>`;
+          exploreList.appendChild(item);
+        });
+        const label = exploreState.selectedCat ? categoryNames[exploreState.selectedCat] : "전체";
+        exploreListCount.textContent = `${label} ${visible.length}개`;
+      }
+
+      function setExploreTransform() {
+        if (!exploreMapGrid) return;
+        exploreMapGrid.style.transform = `translate(${exploreState.panX}px, ${exploreState.panY}px) scale(${exploreState.zoom})`;
+      }
+
+      function setExploreCategory(cat) {
+        exploreState.selectedCat = cat === "all" ? null : (exploreState.selectedCat === cat ? null : cat);
+        document.querySelectorAll(".explore-cat-btn").forEach((btn) => {
+          const btnCat = btn.getAttribute("data-cat");
+          const active = (btnCat === "all" && !exploreState.selectedCat) || btnCat === exploreState.selectedCat;
+          btn.classList.toggle("active", active);
+        });
+        renderExploreMarkers();
+      }
+
+      if (exploreCategoryBar) {
+        exploreCategoryBar.addEventListener("click", (e) => {
+          const btn = e.target.closest(".explore-cat-btn");
+          if (!btn) return;
+          setExploreCategory(btn.getAttribute("data-cat"));
+        });
+      }
+
+      if (exploreLocationToggle && exploreLocationMenu) {
+        exploreLocationToggle.addEventListener("click", () => {
+          const open = exploreLocationMenu.classList.toggle("show");
+          exploreLocationToggle.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+        exploreLocationMenu.addEventListener("click", (e) => {
+          const option = e.target.closest(".explore-location-option");
+          if (!option) return;
+          document.querySelectorAll(".explore-location-option").forEach((el) => el.classList.toggle("active", el === option));
+          exploreCurrentLocation.textContent = option.getAttribute("data-location");
+          exploreLocationMenu.classList.remove("show");
+          exploreLocationToggle.setAttribute("aria-expanded", "false");
+          renderExploreMarkers();
+        });
+      }
+
+      document.addEventListener("click", (e) => {
+        if (!exploreLocationMenu || !exploreLocationToggle) return;
+        if (exploreLocationMenu.contains(e.target) || exploreLocationToggle.contains(e.target)) return;
+        exploreLocationMenu.classList.remove("show");
+        exploreLocationToggle.setAttribute("aria-expanded", "false");
+      });
+
+      if (exploreListToggle && exploreBottomSheet) {
+        exploreListToggle.addEventListener("click", () => {
+          exploreState.sheetOpen = !exploreState.sheetOpen;
+          exploreBottomSheet.classList.toggle("open", exploreState.sheetOpen);
+          if (!exploreState.sheetOpen) exploreBottomSheet.classList.remove("full");
+        });
+      }
+      if (exploreListCount && exploreBottomSheet) {
+        exploreListCount.style.cursor = "pointer";
+        exploreListCount.addEventListener("click", () => {
+          exploreState.sheetOpen = true;
+          exploreBottomSheet.classList.add("open");
+          exploreBottomSheet.classList.add("full");
+        });
+      }
+
+      function changeExploreZoom(delta) {
+        exploreState.zoom = Math.max(0.8, Math.min(2.2, exploreState.zoom + delta));
+        setExploreTransform();
+      }
+
+      if (exploreZoomIn) exploreZoomIn.addEventListener("click", () => changeExploreZoom(0.1));
+      if (exploreZoomOut) exploreZoomOut.addEventListener("click", () => changeExploreZoom(-0.1));
+
+      if (exploreMap) {
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let startPanX = 0;
+        let startPanY = 0;
+        let pinchStartDist = 0;
+        let pinchStartZoom = 1;
+
+        exploreMap.addEventListener("wheel", (e) => {
+          e.preventDefault();
+          changeExploreZoom(e.deltaY < 0 ? 0.08 : -0.08);
+        }, { passive: false });
+
+        exploreMap.addEventListener("pointerdown", (e) => {
+          isDragging = true;
+          startX = e.clientX;
+          startY = e.clientY;
+          startPanX = exploreState.panX;
+          startPanY = exploreState.panY;
+          exploreMap.setPointerCapture(e.pointerId);
+        });
+        exploreMap.addEventListener("pointermove", (e) => {
+          if (!isDragging) return;
+          exploreState.panX = startPanX + (e.clientX - startX);
+          exploreState.panY = startPanY + (e.clientY - startY);
+          setExploreTransform();
+        });
+        exploreMap.addEventListener("pointerup", () => { isDragging = false; });
+        exploreMap.addEventListener("pointercancel", () => { isDragging = false; });
+
+        exploreMap.addEventListener("touchstart", (e) => {
+          if (e.touches.length !== 2) return;
+          const dx = e.touches[0].clientX - e.touches[1].clientX;
+          const dy = e.touches[0].clientY - e.touches[1].clientY;
+          pinchStartDist = Math.hypot(dx, dy);
+          pinchStartZoom = exploreState.zoom;
+        }, { passive: true });
+        exploreMap.addEventListener("touchmove", (e) => {
+          if (e.touches.length !== 2 || !pinchStartDist) return;
+          const dx = e.touches[0].clientX - e.touches[1].clientX;
+          const dy = e.touches[0].clientY - e.touches[1].clientY;
+          const nowDist = Math.hypot(dx, dy);
+          const ratio = nowDist / pinchStartDist;
+          exploreState.zoom = Math.max(0.8, Math.min(2.2, pinchStartZoom * ratio));
+          setExploreTransform();
+        }, { passive: true });
+      }
+
+      setExploreCategory("all");
+      setExploreTransform();
+
+      // Initialize UI state (tabs hidden until home)
+      handleTabsVisibility("login");
+      handleProgress("login");
+
+      // Dog name binding (dogInfo -> home)
+      const dogNameInput = document.getElementById("dogNameInput");
+      if (dogNameInput) {
+        state.dogName = (dogNameInput.value || "").trim() || state.dogName;
+        dogNameInput.addEventListener("input", () => {
+          state.dogName = (dogNameInput.value || "").trim() || "반려견";
+          syncPetDogName();
+        });
+      }
+      syncHomeDogName();
+      syncPetDogName();
+
+      // Signup checkbox interaction
+      const tosRequired = document.getElementById("tosRequired");
+      const tosChip = document.getElementById("tosChip");
+      const signupNext = document.getElementById("signupNext");
+      const emailInput = document.getElementById("emailInput");
+      const passwordInput = document.getElementById("passwordInput");
+      function syncTos() {
+        const ok = !!(tosRequired && tosRequired.checked);
+        if (tosChip) tosChip.textContent = ok ? "체크됨" : "미체크";
+        if (signupNext) {
+          signupNext.disabled = !ok;
+          signupNext.style.opacity = ok ? "1" : "0.6";
+          signupNext.style.cursor = ok ? "pointer" : "not-allowed";
+        }
+      }
+      if (tosRequired) tosRequired.addEventListener("change", syncTos);
+      syncTos();
+
+      // Improve mobile keyboard invocation in WebView/mobile browsers
+      [emailInput, passwordInput].forEach((el) => {
+        if (!el) return;
+        el.addEventListener("touchend", () => {
+          setTimeout(() => el.focus(), 0);
+        }, { passive: true });
+      });
+
+      // Walk interactions
+      const voiceChip = document.getElementById("voiceChip");
+      const toggleVoice = document.getElementById("toggleVoice");
+      const walkPickedCard = document.getElementById("walkPickedCard");
+      const walkPickedTitle = document.getElementById("walkPickedTitle");
+      const walkPickedMeta = document.getElementById("walkPickedMeta");
+      const walkPickedStart = document.getElementById("walkPickedStart");
+      let selectedWalkRoute = null;
+      let voiceOn = true;
+      toggleVoice.addEventListener("click", () => {
+        voiceOn = !voiceOn;
+        voiceChip.textContent = voiceOn ? "음성안내 ON" : "음성안내 OFF";
+      });
+
+      document.querySelectorAll(".hcard[data-walk-route]").forEach((card) => {
+        card.style.cursor = "pointer";
+        card.addEventListener("click", () => {
+          const routeName = card.getAttribute("data-walk-route");
+          const routeMeta = card.getAttribute("data-walk-meta") || "거리/시간 정보 준비 중";
+          selectedWalkRoute = { name: routeName, meta: routeMeta };
+          walkPickedTitle.textContent = routeName;
+          walkPickedMeta.textContent = routeMeta;
+          walkPickedCard.classList.add("show");
+        });
+
+      });
+      if (walkPickedStart) {
+        walkPickedStart.addEventListener("click", () => {
+          if (!selectedWalkRoute) return;
+          document.getElementById("walkRouteName").textContent = selectedWalkRoute.name;
+          document.getElementById("walkRouteMeta").textContent = selectedWalkRoute.meta;
+          setActiveView("walk");
+        });
+      }
+
+      const rerouteCard = document.getElementById("rerouteCard");
+      const rerouteReason = document.getElementById("rerouteReason");
+      const rerouteDetail = document.getElementById("rerouteDetail");
+      document.getElementById("keepRoute").addEventListener("click", () => {
+        rerouteReason.textContent = "현재 경로 유지";
+        rerouteDetail.textContent = "알겠어요. 다음 상황 변화가 감지되면 다시 제안할게요.";
+        rerouteCard.style.opacity = "0.92";
+      });
+      document.getElementById("changeRoute").addEventListener("click", () => {
+        rerouteReason.textContent = "경로 변경 완료";
+        rerouteDetail.textContent = "새 경로로 안내를 시작합니다. 음성 안내를 따라가세요.";
+        rerouteCard.style.opacity = "0.92";
+      });
+    })();
+  </script>
+</body>
+</html>
