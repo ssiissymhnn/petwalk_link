@@ -12,7 +12,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
   <style>
-    :root { --main:#10A34E; --point:#19B23A; --soft-mint:#C9FAD4; --black:#1e1e1e; --white:#FFFFFF; --sub:#7c7c7c; --sep:#f3f3f3; --bg:#ffffff; --card:#FFFFFF; --text:#1e1e1e; --muted:var(--sub); --primary:var(--main); --primary-dark:#096E32; --line:rgba(0,0,0,.08); --shadow:0 4px 14px rgba(0,0,0,.1); --radius:16px; --device-w:393px; --device-h:852px; --phone-shell-w:421px; --phone-shell-h:886px; --phone-display-scale:min(0.78, calc((100vh - 72px) / var(--phone-shell-h)), calc((100vw - 48px) / var(--phone-shell-w))); --accent:#10A34E; --accent-alt:#19B23A; --surface:#d9d9d9; --surface-alt:#cdcdcd; --surface-3:#eeeeef; --surface-4:#ebf7ec; --bg-alt:#ffffff; --bg-3:#f8fef8; --border:#919093; --border-alt:#999999; --text-secondary:#303030; --text-secondary-alt:#515151; --text-tertiary:#7c7c7c; --elevation-1:0px -2px 2px 1px rgba(0,0,0,0.02); --elevation-2:0px 1px 4px 0px rgba(12,12,13,0.05),0px 1px 4px 0px rgba(12,12,13,0.1); --shadow-black-main:0px 2px 8px 0px rgba(0,0,0,0.04); --shadow-black-stress:0px 4px 14px 0px rgba(0,0,0,0.1); --shadow-green-main:0px 6px 16px 0px rgba(16,163,78,0.12); --shadow-green-stress:0px 8px 22px 0px rgba(16,163,78,0.24); --border-3:#989da1; --accent-53:#9747ff; --space-15:15px; --space-30:30px; --space-52:52px; --icon-xs:16px; --icon-sm:20px; --icon-md:24px; --icon-lg:28px; --icon-box-sm:32px; --icon-box-md:34px; --icon-mypage:20px; --icon-box-mypage:30px; --icon-tab-walk:28px; --cal-dot-size:6px; }
+    :root { --main:#10A34E; --point:#19B23A; --soft-mint:#C9FAD4; --black:#1e1e1e; --white:#FFFFFF; --sub:#7c7c7c; --sep:#f3f3f3; --bg:#ffffff; --card:#FFFFFF; --text:#1e1e1e; --muted:var(--sub); --primary:var(--main); --primary-dark:#096E32; --line:rgba(0,0,0,.08); --shadow:0 4px 14px rgba(0,0,0,.1); --radius:16px; --device-w:393px; --device-h:852px; --phone-shell-w:421px; --phone-shell-h:886px; --phone-display-scale:min(0.78, calc((100vh - 72px) / var(--phone-shell-h)), calc((100vw - 48px) / var(--phone-shell-w))); --accent:#10A34E; --accent-alt:#19B23A; --surface:#d9d9d9; --surface-alt:#cdcdcd; --surface-3:#eeeeef; --surface-4:#ebf7ec; --bg-alt:#ffffff; --bg-3:#f8fef8; --border:#919093; --border-alt:#999999; --text-secondary:#303030; --text-secondary-alt:#515151; --text-tertiary:#7c7c7c; --elevation-1:0px -2px 2px 1px rgba(0,0,0,0.02); --elevation-2:0px 1px 4px 0px rgba(12,12,13,0.05),0px 1px 4px 0px rgba(12,12,13,0.1); --shadow-black-main:0px 2px 8px 0px rgba(0,0,0,0.04); --shadow-black-stress:0px 4px 14px 0px rgba(0,0,0,0.1); --shadow-green-main:0px 6px 16px 0px rgba(16,163,78,0.12); --shadow-green-stress:0px 8px 22px 0px rgba(16,163,78,0.24); --border-3:#989da1; --accent-53:#9747ff; --space-15:15px; --space-30:30px; --space-52:52px; --tab-page-pad-x:20px;--tab-page-pad-top:18px; --icon-xs:16px; --icon-sm:20px; --icon-md:24px; --icon-lg:28px; --icon-box-sm:32px; --icon-box-md:34px; --icon-mypage:20px; --icon-box-mypage:30px; --icon-tab-walk:28px; --cal-dot-size:6px; }
     @property --walk-sheet-peek{syntax:'<length>';inherits:true;initial-value:126px}
     *{box-sizing:border-box} body{margin:0;min-height:100vh;font-family:"Pretendard","Inter",-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text)}
     .tab-hit .tab-ico img,.home-stat-ico img,.home-quick-paw img,.wesen-notice-ico img,.schedule-type-btn .schedule-type-ico img,.home-schedule-ico img,.journal-schedule-ico img,.timeslot-chip .ico img{width:var(--icon-md);height:var(--icon-md);object-fit:contain;display:block}
@@ -43,7 +43,7 @@
     .screen.screen--home{background:#ffffff;padding:0}
     .app-global-topbar{
       position:absolute;top:0;left:0;right:0;z-index:35;
-      padding:var(--app-topbar-pad-top) 20px var(--app-topbar-pad-bottom);background:#fff;
+      padding:var(--app-topbar-pad-top) var(--tab-page-pad-x) var(--app-topbar-pad-bottom);background:#fff;
       display:none;align-items:center;box-sizing:border-box;
       min-height:var(--app-topbar-height);
     }
@@ -51,7 +51,17 @@
     .screen.show-app-logo .views{padding-top:var(--app-topbar-height)}
     .screen.show-app-logo.screen--walk-fullbleed .app-global-topbar{display:none}
     .screen.show-app-logo.screen--walk-fullbleed .views{padding-top:0}
-    .view[data-view="home"]{padding:0 20px 12px;background:#ffffff}
+    .view[data-view="home"],
+    .view[data-view="walkHome"],
+    .view[data-view="pet_monthly"],
+    .view[data-view="explore"],
+    .view[data-view="mypage"]{padding-left:var(--tab-page-pad-x);padding-right:var(--tab-page-pad-x);background:#ffffff}
+    .view[data-view="pet_monthly"],
+    .view[data-view="explore"],
+    .view[data-view="mypage"]{padding-top:var(--tab-page-pad-top)}
+    .view[data-view="home"]{padding-bottom:12px}
+    .view[data-view="walkHome"]{overflow:auto}
+    .view[data-view="pet_monthly"]{overflow:hidden}
     .row{display:flex;align-items:center;justify-content:space-between}.muted{color:var(--muted);font-size:12px}.h2{font-size:20px;font-weight:800;margin:0}
     .chip{font-size:12px;background:rgba(16,163,78,.1);color:var(--main);padding:7px 10px;border-radius:999px;font-weight:700}
     .card{background:var(--white);border:1px solid rgba(0,0,0,.06);border-radius:var(--radius);box-shadow:var(--shadow-black-main);padding:12px;margin-top:10px}
@@ -133,16 +143,13 @@
     .view.active{display:block}
     .view{background:#ffffff}
     .view[data-view="walk"]{overflow:hidden}
-    .view[data-view="walkHome"]{overflow:auto;background:#ffffff;padding:0 20px}
-    .view[data-view="pet_monthly"],
     .view[data-view="pet_walk_monthly"],
     .view[data-view="pet_journal"],
     .view[data-view="pet_add"],
     .view[data-view="pet_edit"],
     .view[data-view="pet_analysis_period"],
-    .view[data-view="pet_analysis_result"]{padding:0 20px;background:#ffffff}
-    .view[data-view="explore"],
-    .view[data-view="explore_place"]{padding:0 20px;background:#ffffff}
+    .view[data-view="pet_analysis_result"]{padding-left:var(--tab-page-pad-x);padding-right:var(--tab-page-pad-x);background:#ffffff}
+    .view[data-view="explore_place"]{padding-left:var(--tab-page-pad-x);padding-right:var(--tab-page-pad-x);background:#ffffff}
     .walk-home{background:#ffffff}
     .mypage-screen,.mypage-sub-screen{background:#ffffff}
     .petlog-screen{background:#ffffff}
@@ -150,6 +157,8 @@
 
     /* === Home (Figma 1027:670 메인 화면) === */
     .home-screen{display:flex;flex-direction:column;gap:25px;padding:0 0 12px;background:#ffffff}
+    .view[data-view="home"] #homeGreetingCard{margin-top:-10px}
+    .view[data-view="home"] .home-main-card + .home-section{margin-top:-8px}
     .home-topbar{
       position:relative;box-sizing:border-box;margin:0;padding:var(--app-topbar-pad-top) 0 var(--app-topbar-pad-bottom);
       background:transparent;border:none;border-radius:0;box-shadow:none;
@@ -212,8 +221,10 @@
       width:90px;height:98px;object-fit:contain;object-position:right top;
       display:block;filter:drop-shadow(0 3px 8px rgba(0,0,0,.10));
     }
-    .home-greeting-title{font-size:20.5px;font-weight:800;color:#000000;letter-spacing:0;line-height:1.31;font-family:"Pretendard",sans-serif;margin:0;display:flex;flex-direction:column;gap:2px}
-    .home-greeting-title .home-greeting-dog{display:block}
+    .home-greeting-title{font-size:18.5px;font-weight:800;color:#000000;letter-spacing:0;line-height:1.31;font-family:"Pretendard",sans-serif;margin:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:0}
+    .home-greeting-title #homeGreetingPrefix{white-space:nowrap}
+    .home-greeting-title #homeGreetingPrefix::after{content:", "}
+    .home-greeting-title .home-greeting-dog{display:inline;white-space:nowrap}
     .home-greeting-sub{font-size:12.57px;color:#666666;font-weight:600;margin:0;line-height:1.24;font-family:"Pretendard",sans-serif}
     .home-greeting-stats{display:flex;align-items:stretch;justify-content:space-between;gap:10px;margin-top:8px}
     .home-stat{flex:1;min-width:0;background:#f8fef8;border:1px solid #dbf1db;border-radius:10px;min-height:calc((55px + var(--fs-bump, 1px)) * var(--fs-scale, 1));height:auto;padding:10px 8px;text-align:center;display:flex;align-items:center;gap:7px;justify-content:center}
@@ -221,7 +232,7 @@
     .home-stat-body{display:flex;flex-direction:column;align-items:center;gap:0}
     .home-stat-val{font-size:14px;font-weight:600;color:#10a34e;line-height:19.6px;font-family:"Inter",sans-serif;text-align:center}
     .home-stat-val .home-stat-unit{font-size:14px;font-weight:600;color:#10a34e;margin-left:0}
-    .home-stat-label{font-size:11px;color:#4c5056;font-weight:600;font-family:"Pretendard",sans-serif;text-align:center;line-height:15.4px}
+    .home-stat-label{font-size:10px;color:#4c5056;font-weight:500;font-family:"Pretendard",sans-serif;text-align:center;line-height:14px}
     .screen:not([data-font-size="large"]) .home-stat-label--split span:first-child::after{content:" "}
     .screen[data-font-size="large"] .home-stat-label--split{display:flex;flex-direction:column;align-items:center;line-height:1.2;gap:1px}
     .home-quick-start-btn{
@@ -1010,27 +1021,20 @@
     /* 마이페이지 */
     .mypage-screen{padding:0;height:100%;overflow:auto}
     .mypage-profile{
-      background:linear-gradient(135deg, #10A34E 0%, #096E32 40%, #19B23A 100%);
+      background:url("icons/mypage/background-card.jpg") center top/cover no-repeat;
+      background-color:#f5faf3;
       border-radius:20px;
-      padding:28px 20px 22px;
+      padding:28px 0 22px;
       margin-bottom:16px;
       position:relative;
       overflow:hidden;
-      box-shadow:var(--shadow-green-stress);
+      box-shadow:none;
     }
-    .mypage-profile::before{
-      content:"";position:absolute;width:160px;height:160px;border-radius:50%;
-      background:rgba(255,255,255,.08);top:-40px;right:-30px;
-    }
-    .mypage-profile::after{
-      content:"";position:absolute;width:100px;height:100px;border-radius:50%;
-      background:rgba(255,255,255,.06);bottom:-20px;left:-20px;
-    }
-    .mypage-profile-inner{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
+    .mypage-profile-inner{display:flex;align-items:center;gap:14px;position:relative;z-index:1;padding-left:16px;padding-right:14px}
     .mypage-avatar{
       width:60px;height:60px;border-radius:50%;
-      background:rgba(255,255,255,.22);
-      border:2.5px solid rgba(255,255,255,.5);
+      background:#fff;
+      border:none;
       display:flex;align-items:center;justify-content:center;
       font-size:28px;flex-shrink:0;overflow:hidden;
     }
@@ -1047,15 +1051,15 @@
     }
     .mypage-edit-avatar img{width:100%;height:100%;object-fit:cover;display:block}
     .mypage-edit-avatar-label{font-size:13px;font-weight:700;color:var(--main)}
-    .mypage-profile-info{flex:1;color:#fff}
-    .mypage-profile-name{font-size:18px;font-weight:800;letter-spacing:.02em}
-    .mypage-profile-sub{font-size:12px;opacity:.82;margin-top:3px;font-weight:500}
+    .mypage-profile-info{flex:1;color:#303030}
+    .mypage-profile-name{font-size:18px;font-weight:800;letter-spacing:.02em;color:#303030}
+    .mypage-profile-sub{font-size:12px;color:#666;margin-top:3px;font-weight:500}
     .mypage-profile-edit{
-      background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.4);
-      color:#fff;border-radius:10px;padding:6px 12px;font-size:11px;font-weight:700;
-      cursor:pointer;backdrop-filter:blur(4px);white-space:nowrap;
+      background:#fff;border:none;
+      color:#10A34E;border-radius:10px;padding:6px 12px;font-size:11px;font-weight:700;
+      cursor:pointer;white-space:nowrap;box-shadow:none;flex-shrink:0;
     }
-    .mypage-profile-edit:active{background:rgba(255,255,255,.35)}
+    .mypage-profile-edit:active{background:rgba(16,163,78,.08)}
     .mypage-stats{
       display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
       margin-top:16px;position:relative;z-index:1;
@@ -1068,7 +1072,7 @@
     .mypage-stat-label{font-size:10px;color:rgba(255,255,255,.78);margin-top:2px;font-weight:600}
 
     .mypage-group{margin-bottom:12px}
-    .mypage-group-title{font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;padding:0 4px;margin-bottom:6px}
+    .mypage-group-title{font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;padding:0;margin-bottom:6px}
     .mypage-group-card{
       background:#fff;border-radius:16px;overflow:hidden;
       border:1px solid rgba(0,0,0,.06);
@@ -1099,19 +1103,18 @@
     .mypage-row-ico.cyan{background:rgba(6,182,212,.1);color:#06b6d4}
     .view[data-tab-root="mypage"] .mypage-row-ico,
     .view[data-tab-root="mypage"] .toggle-row-ico{
-      background:rgba(16,163,78,.08);color:var(--main);
+      width:var(--icon-box-mypage);height:var(--icon-box-mypage);
+      background:transparent;border-radius:0;color:inherit;
     }
     .view[data-tab-root="mypage"] .mypage-row-ico img,
     .view[data-tab-root="mypage"] .toggle-row-ico img{
-      opacity:.82;
-      filter:brightness(0) saturate(100%) invert(37%) sepia(74%) saturate(1045%) hue-rotate(115deg) brightness(95%) contrast(92%);
+      width:100%;height:100%;opacity:1;filter:none;
     }
     .view[data-tab-root="mypage"] .mypage-row--danger .mypage-row-ico{
-      background:rgba(0,0,0,.05);color:#9ca3af;
+      background:transparent;color:inherit;
     }
     .view[data-tab-root="mypage"] .mypage-row--danger .mypage-row-ico img{
-      opacity:.55;
-      filter:grayscale(1) brightness(.72);
+      opacity:1;filter:none;
     }
     .mypage-row-text{flex:1;line-height:1.2;display:flex;flex-direction:column}
     .mypage-row-hint{font-size:11px;color:var(--sub);font-weight:500;margin-top:2px;display:block}
@@ -1153,18 +1156,19 @@
     .mypage-sub-screen{padding:4px 2px 8px;height:100%;overflow:auto}
     /* Explore map */
     .explore-shell{height:100%;display:flex;flex-direction:column;position:relative;background:#FFFFFF;border-radius:20px;overflow:hidden;border:1px solid rgba(0,0,0,.06)}
-    .explore-head{padding:10px 10px 8px;border-bottom:1px solid rgba(0,0,0,.06);background:#FFFFFF}
-    .explore-location-wrap{position:relative}
-    .explore-location-btn{border:none;background:none;padding:0;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:var(--text);cursor:pointer;font-family:inherit}
-    .explore-location-arrow{width:22px;height:22px;border-radius:999px;background:var(--sep);border:none;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text)}
-    .explore-location-menu{position:absolute;top:32px;left:0;right:0;background:#FFFFFF;border:1px solid rgba(0,0,0,.06);border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.1);padding:6px;display:none;z-index:3}
+    .explore-head{padding:10px 0 8px;border-bottom:1px solid rgba(0,0,0,.06);background:#FFFFFF}
+    .explore-location-wrap{position:relative;padding-left:14px}
+    .explore-location-btn{border:none;background:none;padding:0;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:var(--text);cursor:default;font-family:inherit;pointer-events:none}
+    .explore-location-arrow{display:none}
+    .explore-location-menu{display:none !important}
     .explore-location-menu.show{display:block}
     .explore-location-option{width:100%;border:none;background:#FFFFFF;padding:9px 10px;border-radius:10px;text-align:left;font-size:13px;font-weight:700;color:var(--text);cursor:pointer;transition:background .1s ease}
     .explore-location-option.active{background:rgba(16,163,78,.1);color:var(--main)}
     .explore-location-option:hover{background:var(--sep)}
     .explore-cats{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}
     .explore-cat-btn{border:1px solid rgba(0,0,0,.06);background:#FFFFFF;border-radius:12px;padding:8px 4px 7px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:700;color:var(--text);cursor:pointer;transition:background .1s ease,border-color .1s ease}
-    .explore-cat-btn .ico{width:22px;height:22px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:12px}
+    .explore-cat-btn .ico{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0;flex-shrink:0}
+    .explore-cat-btn .ico img{width:100%;height:100%;object-fit:contain;display:block}
     .explore-cat-btn.active{border-color:var(--main);background:rgba(16,163,78,.1);color:var(--main)}
     .explore-map-wrap{position:relative;flex:1;min-height:300px;background:var(--sep)}
     .explore-map{position:absolute;inset:0;overflow:hidden;touch-action:none;background:var(--sep)}
@@ -1187,11 +1191,11 @@
     }
     .explore-bottom-sheet.open{height:auto;max-height:min(36vh,240px)}
     .explore-bottom-sheet:not(.open) .explore-sheet-list{display:none}
-    .explore-sheet-toggle{width:100%;border:none;background:none;padding:10px 14px;min-height:48px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;flex-shrink:0}
-    .explore-sheet-toggle .left{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--text)}
-    .explore-sheet-toggle .right{font-size:12px;color:var(--main);font-weight:700}
-    .explore-sheet-list{padding:0 12px 12px;overflow:auto;max-height:calc(min(36vh,240px) - 48px)}
-    .explore-list-item{border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:10px;margin-bottom:8px;background:#FFFFFF;box-shadow:0 1px 4px rgba(0,0,0,.04);transition:border-color .1s ease}
+    .explore-sheet-toggle{width:100%;border:none;background:none;padding:10px 18px 10px 12px;min-height:48px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;flex-shrink:0}
+    .explore-sheet-toggle .left{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--text);padding-left:4px}
+    .explore-sheet-toggle .right{font-size:12px;color:var(--main);font-weight:700;margin-right:6px}
+    .explore-sheet-list{padding:0 22px 12px 13px;overflow:auto;max-height:calc(min(36vh,240px) - 48px)}
+    .explore-list-item{border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:10px;margin:0 0 8px 4px;background:#FFFFFF;box-shadow:0 1px 4px rgba(0,0,0,.04);transition:border-color .1s ease}
     .explore-list-item:hover{border-color:rgba(16,163,78,.2)}
     .explore-list-item .name{font-size:13px;font-weight:800}
     .explore-list-item .meta{font-size:11px;color:var(--sub);margin-top:3px}
@@ -1200,7 +1204,7 @@
     .walk-home{height:100%;overflow:auto;padding:0 0 10px}
     .walk-home{scrollbar-width:none;-ms-overflow-style:none}
     .walk-home::-webkit-scrollbar{display:none;width:0;height:0}
-    .walk-section{padding:14px 12px}
+    .walk-section{padding:14px 0}
     .walk-section + .walk-section{border-top:8px solid var(--sep)}
     .walk-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .walk-section-title{font-size:15px;font-weight:800;color:var(--black);letter-spacing:-2%;}
@@ -1255,7 +1259,9 @@
       box-shadow:0 4px 14px rgba(0,0,0,.08);background:#2d2d2d center/cover no-repeat;
     }
     .walk-reco-card::before{
-      content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.55) 100%);pointer-events:none;
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(0,0,0,.52) 0%,rgba(0,0,0,.26) 44%,rgba(0,0,0,.08) 64%,transparent 78%);
+      pointer-events:none;
     }
     .walk-reco-card-inner{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;min-height:148px;padding:14px 14px 12px}
     .walk-reco-card-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:auto}
@@ -1296,18 +1302,18 @@
     .view[data-view="pet_monthly"] .chip,
     .view[data-view="home"] .chip{background:rgba(16,163,78,.1);color:var(--main)}
     /* Petlog */
-    .petlog-screen{padding:0;height:100%;overflow:auto;scrollbar-width:none;-ms-overflow-style:none}
+    .petlog-screen{padding:0;height:100%;overflow:hidden;scrollbar-width:none;-ms-overflow-style:none}
     .petlog-screen::-webkit-scrollbar{display:none;width:0;height:0}
+    .petlog-scroll{flex:1;min-height:0;overflow:auto;scrollbar-width:none;-ms-overflow-style:none}
+    .petlog-scroll::-webkit-scrollbar{display:none;width:0;height:0}
     .petlog-profile-card{
-      background:transparent;border-radius:0;padding:0 0 4px;margin-bottom:14px;position:relative;overflow:visible;
+      background:transparent;border-radius:0;padding:0 0 8px;margin-bottom:0;position:relative;overflow:visible;
     }
-    .petlog-profile-card-main{padding-top:8px}
+    .petlog-profile-card-main{padding-top:0}
     .petlog-profile-banner{
-      position:relative;height:164px;border-radius:10px;overflow:hidden;padding:13px;box-sizing:border-box;
-      background:
-        radial-gradient(ellipse 120px 80px at 88% 72%, rgba(168,210,145,.55) 0%, transparent 72%),
-        radial-gradient(ellipse 90px 60px at 92% 48%, rgba(210,235,190,.45) 0%, transparent 70%),
-        linear-gradient(135deg, #f7fbf4 0%, #edf7e8 52%, #f9fcf7 100%);
+      position:relative;min-height:0;border-radius:20px;overflow:hidden;padding:22px 19px 22px;box-sizing:border-box;
+      background:url("icons/petlog/profile-banner.jpg") center/cover no-repeat;
+      display:flex;flex-direction:column;justify-content:flex-start;gap:10px;
     }
     .petlog-profile-head{display:flex;align-items:flex-start;gap:8px;width:100%;position:relative;z-index:1}
     .petlog-profile-inner{display:flex;align-items:center;gap:0;position:relative;z-index:1;flex:1;min-width:0}
@@ -1315,11 +1321,11 @@
     .petlog-card-corner-add{position:relative;top:auto;right:auto;left:auto;z-index:3;padding:6px 10px;font-size:10px;font-weight:800;cursor:pointer;font-family:inherit;line-height:1.2;background:rgba(255,255,255,.92);border:1px solid #eeeeef;color:#10a34e;border-radius:8px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.06)}
     .petlog-card-corner-add:active{background:#f3fbf5}
     .petlog-profile-card::before{display:none}
-    .petlog-avatar{width:70px;height:70px;border-radius:50%;background:#ffffff;border:none;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:0}
+    .petlog-avatar{width:69.5px;height:69.5px;border-radius:50%;background:#ffffff;border:none;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
     .petlog-avatar img{width:100%;height:100%;object-fit:cover;display:block}
-    .petlog-profile-info{flex:1;min-width:0;color:#000000;padding:4px 0 0 10px;display:flex;flex-direction:column;gap:3px}
-    .petlog-profile-name{font-family:"Inter",sans-serif;font-size:16px;font-weight:600;line-height:22.4px;color:#000000;letter-spacing:0}
-    .petlog-profile-sub{font-family:"Pretendard",sans-serif;font-size:11px;font-weight:600;line-height:15.4px;color:#7a7f85;margin:0}
+    .petlog-profile-info{flex:1;min-width:0;color:#000000;padding:6px 0 0 10px;display:flex;flex-direction:column;gap:2px}
+    .petlog-profile-name{font-family:"Pretendard",sans-serif;font-size:17.5px;font-weight:800;line-height:1.35;color:#000000;letter-spacing:-.02em}
+    .petlog-profile-sub{font-family:"Pretendard",sans-serif;font-size:11px;font-weight:600;line-height:1.4;color:#7a7f85;margin:0}
     .petlog-add-btn{background:#ffffff;border:1px solid #eeeeef;color:#10a34e;border-radius:10px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.04)}
     .petlog-add-btn:active{background:#f3fbf5}
     .petlog-stats{display:flex;align-items:stretch;justify-content:space-between;gap:10px;margin:-67px 16px 0;position:relative;z-index:2}
@@ -1329,13 +1335,42 @@
     .petlog-stat-body{display:flex;flex-direction:column;align-items:center;gap:0}
     .petlog-stat-val{font-size:14px;font-weight:600;color:#10a34e;line-height:19.6px;font-family:"Inter",sans-serif;text-align:center}
     .petlog-stat-label{font-size:9px;color:#4c5056;margin-top:0;font-weight:600;font-family:"Pretendard",sans-serif;line-height:13px;text-align:center}
-    .petlog-root{padding:0 0 12px;overflow-x:hidden;display:flex;flex-direction:column}
-    .petlog-carousel-wrap{margin-bottom:0;padding-top:8px;flex-shrink:0}
+    .petlog-root{padding:0;overflow:hidden;display:flex;flex-direction:column;height:100%}
+    .petlog-carousel-wrap{margin-bottom:0;padding-top:0;flex-shrink:0}
     .petlog-cal-screen .mypage-subtitle{font-size:14px;font-weight:800}
-    .petlog-monthly-fixed{flex-shrink:0;padding:8px 6px 4px;margin-top:0}
-    .petlog-monthly-fixed .petlog-monthly-entry{margin:0}
+    .petlog-sections{display:flex;flex-direction:column;gap:10px;padding:6px 0 12px;flex-shrink:0}
+    .petlog-badge-dock{flex-shrink:0;padding:6px 0 4px;background:#ffffff;border-top:1px solid #f3f3f3}
+    .petlog-section-card{background:#ffffff;border-radius:16px;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04);padding:14px 14px 12px;text-align:left;font-family:inherit}
+    .petlog-section-title{font-size:12px;font-weight:700;color:#000000;margin:0 0 10px;font-family:"Pretendard",sans-serif;letter-spacing:-.01em}
+    .petlog-monthly-card{width:100%;cursor:pointer;border:1px solid #eeeeef;transition:border-color .12s ease,background .12s ease}
+    .petlog-monthly-card:hover{border-color:#dbf1db;background:#f8fef8}
+    .petlog-mini-cal{display:flex;flex-direction:column;gap:4px}
+    .petlog-mini-dow,.petlog-mini-days{display:grid;grid-template-columns:repeat(7,1fr);gap:0}
+    .petlog-mini-dow span{text-align:center;font-size:9px;font-weight:600;color:#898a8c;font-family:"Pretendard",sans-serif;line-height:1.3}
+    .petlog-mini-day{text-align:center;font-size:11px;font-weight:600;color:#4c5056;line-height:1;padding:4px 0;font-family:"Pretendard",sans-serif}
+    .petlog-mini-day.is-today{color:#10a34e;font-weight:800}
+    .petlog-mini-day.has-walk{position:relative}
+    .petlog-mini-dog-dots{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:8px;min-height:22px}
+    .petlog-mini-dog-dot{width:18px;height:18px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.1);background:var(--dog-color,#10a34e);flex-shrink:0}
+    .petlog-recent-card{margin-top:4px}
+    .petlog-recent-list{display:flex;flex-direction:column;gap:0}
+    .petlog-recent-item{display:flex;align-items:center;gap:10px;padding:10px 0}
+    .petlog-recent-item+.petlog-recent-item{border-top:1px solid #eeeeef}
+    .petlog-recent-thumb{width:56px;height:36px;border-radius:6px;background:#eaf6ee;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+    .petlog-recent-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .petlog-recent-body{flex:1;min-width:0}
+    .petlog-recent-name{font-size:12px;font-weight:600;color:#000000;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:"Pretendard",sans-serif}
+    .petlog-recent-meta{font-size:9.4px;font-weight:500;color:#898a8c;margin-top:3px;line-height:1.35;font-family:"Pretendard",sans-serif}
+    .petlog-badge-card{background:#eff7eb;border:1px solid rgba(16,163,78,.12);display:flex;align-items:center;gap:12px;padding:14px 14px;position:relative;overflow:hidden;margin:0}
+    .petlog-badge-dock .petlog-badge-card{border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+    .petlog-badge-ico{width:44.5px;height:44.5px;border-radius:50%;background:#10a34e;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(16,163,78,.25)}
+    .petlog-badge-ico img{width:22px;height:22px;object-fit:contain;display:block;filter:brightness(0) invert(1)}
+    .petlog-badge-body{flex:1;min-width:0}
+    .petlog-badge-title{font-size:14px;font-weight:600;color:#000000;line-height:1.35;font-family:"Pretendard",sans-serif}
+    .petlog-badge-sub{font-size:11px;font-weight:500;color:#5d5d5d;margin-top:2px;line-height:1.35;font-family:"Pretendard",sans-serif}
+    .petlog-badge-art{width:72px;height:72px;flex-shrink:0;object-fit:contain;opacity:.95}
     .petlog-carousel-viewport{overflow:hidden;width:100%}
-    .petlog-carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:0;padding:0 4px 10px;-webkit-overflow-scrolling:touch;touch-action:pan-x;scrollbar-width:none;-ms-overflow-style:none}
+    .petlog-carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:0;padding:0 0 10px;-webkit-overflow-scrolling:touch;touch-action:pan-x;scrollbar-width:none;-ms-overflow-style:none}
     .petlog-carousel-track::-webkit-scrollbar{display:none;width:0;height:0}
     .petlog-carousel-slide{flex:0 0 100%;scroll-snap-align:start;min-width:100%;box-sizing:border-box}
     .petlog-slide-add-inner{background:linear-gradient(145deg,#E8FDF0 0%,#C9FAD4 55%,#fff 100%);border:1.5px dashed rgba(16,163,78,.45);border-radius:20px;padding:28px 20px;text-align:center;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
@@ -1346,25 +1381,22 @@
     .petlog-carousel-dots.petlog-carousel-dots--empty{display:none !important;margin:0;height:0;overflow:hidden}
     .petlog-carousel-dots .dot{width:6px;height:6px;border-radius:50%;background:var(--sep);transition:background .2s,transform .2s}
     .petlog-carousel-dots .dot.active{background:var(--main);transform:scale(1.15)}
-    .petlog-dual{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:-52px 16px 0;position:relative;z-index:2;align-items:stretch;padding:0 2px}
+    .petlog-dual{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:5px 0 0;position:relative;z-index:2;align-items:stretch;padding:0}
     .petlog-dual-type-stack{align-self:stretch;min-width:0;width:100%;display:flex;flex-direction:column;gap:0}
-    .petlog-dual-cell{background:#ffffff;border:1px solid #eeeeef;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;min-height:88px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+    .petlog-dual-cell{background:#ffffff;border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:9px 10px;display:flex;flex-direction:column;gap:5px;align-items:flex-start;text-align:left;min-height:75px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
     .petlog-dual-side{border:none;cursor:pointer;font-family:inherit;width:100%}
-    .petlog-dual-label{font-size:10px;font-weight:500;color:#7a7f85;text-transform:none;font-family:"Pretendard",sans-serif}
+    .petlog-dual-label{font-size:9px;font-weight:500;color:#4c5056;text-transform:none;font-family:"Pretendard",sans-serif;line-height:1.3}
+    .petlog-dual-body{display:flex;align-items:flex-start;gap:7px;min-width:0;width:100%}
+    .petlog-dual-icon-wrap{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .petlog-dual-icon-wrap--leaf{background:#edf5eb}
+    .petlog-dual-icon-wrap--brain{background:#fdf2ef}
+    .petlog-dual-mini-emoji{font-size:14px;line-height:1;flex-shrink:0}
+    .petlog-dual-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
     .petlog-dual-mini-head{display:flex;align-items:center;gap:6px;min-width:0;width:100%}
-    .petlog-dual-mini-emoji{font-size:14px;line-height:1.5;flex-shrink:0}
-    .petlog-dual-mini-name{font-size:14px;font-weight:700;color:#000000;line-height:1.5;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:"Pretendard",sans-serif}
-    .petlog-dual-mini-tag{font-size:10px;font-weight:600;color:#666666;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-family:"Pretendard",sans-serif}
-    .petlog-dual-analysis .petlog-dual-mini-name{font-size:14px}
+    .petlog-dual-mini-name{font-size:11px;font-weight:700;color:#000000;line-height:1.4;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:"Pretendard",sans-serif}
+    .petlog-dual-mini-tag{font-size:9px;font-weight:500;color:#666666;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-family:"Pretendard",sans-serif}
+    .petlog-dual-analysis .petlog-dual-mini-name{font-size:11px}
     .petlog-dual-analysis .petlog-dual-mini-tag{color:#666666}
-    .petlog-monthly-entry{
-      width:100%;margin-top:0;display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:14px 16px;border:1px solid #eeeeef;border-radius:12px;background:#fff;cursor:pointer;
-      font-family:inherit;text-align:left;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:border-color .12s ease,background .12s ease;
-    }
-    .petlog-monthly-entry:hover{border-color:#dbf1db;background:#f8fef8}
-    .petlog-monthly-entry-title{font-size:14px;font-weight:800;color:#000;font-family:"Pretendard",sans-serif;flex:1;min-width:0}
-    .petlog-monthly-entry-arrow{font-size:20px;font-weight:700;color:#10a34e;flex-shrink:0;line-height:1}
     .petlog-cal-screen{padding-top:8px}
     .view[data-view="pet_walk_monthly"] .mypage-sub-screen.petlog-cal-screen{
       height:auto;min-height:0;overflow:visible;padding-bottom:16px;
@@ -1805,9 +1837,8 @@
     .walk-mode-option{display:flex;align-items:center;gap:14px;border:1.5px solid rgba(0,0,0,.08);background:#fff;border-radius:16px;padding:16px 14px;cursor:pointer;transition:all .15s ease;font-family:inherit;text-align:left;width:100%}
     .walk-mode-option:hover{border-color:rgba(16,163,78,.3);background:rgba(16,163,78,.03)}
     .walk-mode-option:active{transform:scale(.98)}
-    .walk-mode-ico{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
-    .walk-mode-ico.ai{background:linear-gradient(135deg,rgba(16,163,78,.15),rgba(0,233,51,.08))}
-    .walk-mode-ico.free{background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(96,165,250,.08))}
+    .walk-mode-ico{width:48px;height:48px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0;line-height:0}
+    .walk-mode-ico img{width:100%;height:100%;object-fit:contain;display:block}
     .walk-mode-info{flex:1;min-width:0}
     .walk-mode-name{font-size:15px;font-weight:900;color:var(--text);margin-bottom:2px}
     .walk-mode-hint{font-size:11px;color:var(--sub);font-weight:600;line-height:1.4}
@@ -2018,14 +2049,19 @@
     .font-opt{position:relative}
     .font-opt.selected{background:rgba(16,163,78,.06)}
     .font-opt.selected .mypage-row-text{color:var(--main);font-weight:800}
-    .font-opt.selected::after{content:"✓";position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--main);font-size:16px;font-weight:900}
+    #analysisPeriodGroup .font-opt.selected::after{content:"";position:absolute;right:16px;top:50%;transform:translateY(-50%);width:20px;height:20px;background:url("icons/mypage/check.png") center/contain no-repeat}
+    #fontSizeGroup .font-opt .toggle-switch--readonly,
+    #voiceStyleGroup .voice-style-opt .toggle-switch--readonly{pointer-events:none;flex-shrink:0;margin-left:8px}
+    #fontSizeGroup .font-opt.selected .toggle-track,
+    #voiceStyleGroup .voice-style-opt.selected .toggle-track{background:var(--main)}
+    #fontSizeGroup .font-opt.selected .toggle-track::after,
+    #voiceStyleGroup .voice-style-opt.selected .toggle-track::after{transform:translateX(20px)}
     .font-opt-preview--small{font-size:calc((13px + var(--fs-bump, 1px)) * 0.8)}
     .font-opt-preview--medium{font-size:calc((13px + var(--fs-bump, 1px)) * 1)}
     .font-opt-preview--large{font-size:calc((13px + var(--fs-bump, 1px)) * 1.2)}
     .voice-style-opt{position:relative;transition:background .15s ease}
     .voice-style-opt.selected{background:rgba(16,163,78,.06)}
     .voice-style-opt.selected .mypage-row-text{color:var(--main);font-weight:800}
-    .voice-style-opt.selected::after{content:"✓";position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--main);font-size:16px;font-weight:900}
     @media (max-width:980px){.phones{grid-template-columns:max-content;justify-content:center}}
     /* 실제 모바일 기기에서 열 때는 목업 축소 해제 */
     @media (max-width:480px){
@@ -2658,7 +2694,7 @@
                           </svg>
                         </span>
                         <span class="home-lw-loc-names" id="homeLocationNames">
-                          <span class="home-location-name active" id="homeLocText">청파동</span>
+                          <span class="home-location-name active" id="homeLocText">현 위치</span>
                           <span class="home-location-name inactive" id="homeSubLocText">송파1동</span>
                         </span>
                       </span>
@@ -2771,7 +2807,7 @@
                   <div class="walk-mode-desc">어떤 방식으로 산책을 시작할까요?</div>
                   <div class="walk-mode-options">
                     <button type="button" class="walk-mode-option" id="walkModeAi">
-                      <div class="walk-mode-ico ai">🤖</div>
+                      <div class="walk-mode-ico ai" aria-hidden="true"><img src="icons/walk_way/walk_ai.png" alt="" width="48" height="48" decoding="async"></div>
                       <div class="walk-mode-info">
                         <div class="walk-mode-name">AI 추천 코스</div>
                         <div class="walk-mode-hint">날씨·성향·컨디션에 맞는 최적 코스를 추천받아요</div>
@@ -2779,7 +2815,7 @@
                       <span class="walk-mode-arrow">›</span>
                     </button>
                     <button type="button" class="walk-mode-option" id="walkModeFree">
-                      <div class="walk-mode-ico free">🐾</div>
+                      <div class="walk-mode-ico free" aria-hidden="true"><img src="icons/walk_way/walk_free.png" alt="" width="48" height="48" decoding="async"></div>
                       <div class="walk-mode-info">
                         <div class="walk-mode-name">자유 산책</div>
                         <div class="walk-mode-hint">코스 없이 자유롭게 걸으며 기록해요</div>
@@ -2932,6 +2968,7 @@
             <div class="view" data-view="pet_monthly" data-tab-root="pet">
               <div class="petlog-screen petlog-root">
 
+                <div class="petlog-scroll">
                 <div class="petlog-carousel-wrap">
                   <div class="petlog-carousel-viewport">
                     <div class="petlog-carousel-track" id="petlogCarouselTrack">
@@ -2950,34 +2987,46 @@
                               </div>
                               <div class="petlog-profile-add-slot"></div>
                             </div>
-                          </div>
-                          <div class="petlog-dual">
-                            <div class="petlog-dual-type-stack">
-                              <button type="button" class="petlog-dual-cell petlog-dual-side" id="petPersonalityCard" data-nav="dogInfoResult" style="display:none;">
-                                <span class="petlog-dual-label">성격 유형</span>
-                                <span class="petlog-dual-mini-head">
-                                  <span class="petlog-dual-mini-emoji" id="petPersonalityEmoji">🐶</span>
-                                  <span class="petlog-dual-mini-name" id="petPersonalityName">사교왕 인싸형</span>
-                                </span>
-                                <span class="petlog-dual-mini-tag" id="petPersonalityTagline">사람도 강아지도 다 좋아하는 만능 인싸!</span>
-                              </button>
-                              <button type="button" class="petlog-dual-cell petlog-dual-side" id="petPersonalityEmpty" data-nav="dogInfoTraits">
-                                <span class="petlog-dual-label">성격 유형</span>
-                                <span class="petlog-dual-mini-head">
-                                  <span class="petlog-dual-mini-emoji">📋</span>
-                                  <span class="petlog-dual-mini-name">기질 테스트</span>
-                                </span>
-                                <span class="petlog-dual-mini-tag">8문항으로 산책 성향 유형을 확인해요.</span>
+                            <div class="petlog-dual">
+                              <div class="petlog-dual-type-stack">
+                                <button type="button" class="petlog-dual-cell petlog-dual-side" id="petPersonalityCard" data-nav="dogInfoResult" style="display:none;">
+                                  <span class="petlog-dual-label">성격 유형</span>
+                                  <div class="petlog-dual-body">
+                                    <span class="petlog-dual-icon-wrap petlog-dual-icon-wrap--leaf" aria-hidden="true">
+                                      <span class="petlog-dual-mini-emoji" id="petPersonalityEmoji">🐶</span>
+                                    </span>
+                                    <div class="petlog-dual-text">
+                                      <span class="petlog-dual-mini-name" id="petPersonalityName">사교왕 인싸형</span>
+                                      <span class="petlog-dual-mini-tag" id="petPersonalityTagline">사람도 강아지도 다 좋아하는 만능 인싸!</span>
+                                    </div>
+                                  </div>
+                                </button>
+                                <button type="button" class="petlog-dual-cell petlog-dual-side" id="petPersonalityEmpty" data-nav="dogInfoTraits">
+                                  <span class="petlog-dual-label">성격 유형</span>
+                                  <div class="petlog-dual-body">
+                                    <span class="petlog-dual-icon-wrap petlog-dual-icon-wrap--leaf" aria-hidden="true">
+                                      <span class="petlog-dual-mini-emoji">📋</span>
+                                    </span>
+                                    <div class="petlog-dual-text">
+                                      <span class="petlog-dual-mini-name">기질 테스트</span>
+                                      <span class="petlog-dual-mini-tag">8문항으로 산책 성향 유형을 확인해요.</span>
+                                    </div>
+                                  </div>
+                                </button>
+                              </div>
+                              <button type="button" class="petlog-dual-cell petlog-dual-side petlog-dual-analysis" data-nav="pet_analysis_period">
+                                <span class="petlog-dual-label">성향 분석</span>
+                                <div class="petlog-dual-body">
+                                  <span class="petlog-dual-icon-wrap petlog-dual-icon-wrap--brain" aria-hidden="true">
+                                    <span class="petlog-dual-mini-emoji">🧠</span>
+                                  </span>
+                                  <div class="petlog-dual-text">
+                                    <span class="petlog-dual-mini-name">AI 산책 리포트</span>
+                                    <span class="petlog-dual-mini-tag">패턴·스트레스·에너지 분석</span>
+                                  </div>
+                                </div>
                               </button>
                             </div>
-                            <button type="button" class="petlog-dual-cell petlog-dual-side petlog-dual-analysis" data-nav="pet_analysis_period">
-                              <span class="petlog-dual-label">성향 분석</span>
-                              <span class="petlog-dual-mini-head">
-                                <span class="petlog-dual-mini-emoji">🧠</span>
-                                <span class="petlog-dual-mini-name">AI 산책 리포트</span>
-                              </span>
-                              <span class="petlog-dual-mini-tag">패턴·스트레스·에너지 분석</span>
-                            </button>
                           </div>
                         </div>
                       </div>
@@ -2987,11 +3036,31 @@
                   <div class="petlog-carousel-dots petlog-carousel-dots--empty" id="petlogCarouselDots" aria-hidden="true"></div>
                 </div>
 
-                <div class="petlog-monthly-fixed">
-                  <button type="button" class="petlog-monthly-entry" data-nav="pet_walk_monthly">
-                    <span class="petlog-monthly-entry-title">월간 산책 기록</span>
-                    <span class="petlog-monthly-entry-arrow" aria-hidden="true">›</span>
+                <div class="petlog-sections">
+                  <button type="button" class="petlog-section-card petlog-monthly-card" data-nav="pet_walk_monthly">
+                    <h3 class="petlog-section-title">월간 산책 기록</h3>
+                    <div class="petlog-mini-cal" id="petlogMiniCal" aria-hidden="true"></div>
+                    <div class="petlog-mini-dog-dots" id="petlogMiniDogDots" aria-hidden="true"></div>
                   </button>
+
+                  <div class="petlog-section-card petlog-recent-card">
+                    <h3 class="petlog-section-title">최근 산책 코스</h3>
+                    <div class="petlog-recent-list" id="petlogRecentList"></div>
+                  </div>
+                </div>
+                </div>
+
+                <div class="petlog-badge-dock">
+                  <div class="petlog-section-card petlog-badge-card">
+                    <div class="petlog-badge-ico" aria-hidden="true">
+                      <img src="icons/home/top/streak-days.png" alt="" width="22" height="22" decoding="async">
+                    </div>
+                    <div class="petlog-badge-body">
+                      <div class="petlog-badge-title" id="petlogBadgeTitle">보리의 뱃지</div>
+                      <div class="petlog-badge-sub" id="petlogBadgeSub">38일 연속 산책 달성 중!</div>
+                    </div>
+                    <img class="petlog-badge-art" src="기본 강아지.png" alt="" id="petlogBadgeArt" decoding="async">
+                  </div>
                 </div>
 
               </div>
@@ -3156,28 +3225,21 @@
               <div class="explore-shell">
                 <div class="explore-head">
                   <div class="explore-location-wrap">
-                    <button type="button" class="explore-location-btn" id="exploreLocationToggle" aria-expanded="false">
-                      <span id="exploreCurrentLocation">용산구 한강로3가</span>
-                      <span class="explore-location-arrow">▼</span>
-                    </button>
-                    <div class="explore-location-menu" id="exploreLocationMenu">
-                      <button type="button" class="explore-location-option active" data-location="용산구 한강로3가">용산구 한강로3가</button>
-                      <button type="button" class="explore-location-option" data-location="마포구 서교동">마포구 서교동</button>
-                      <button type="button" class="explore-location-option" data-location="성동구 성수동">성동구 성수동</button>
-                      <button type="button" class="explore-location-option" data-location="송파구 잠실동">송파구 잠실동</button>
+                    <div class="explore-location-btn" id="exploreLocationToggle" aria-label="현 위치">
+                      <span id="exploreCurrentLocation">현 위치</span>
                     </div>
                   </div>
                   <div class="explore-cats" id="exploreCategoryBar">
-                    <button type="button" class="explore-cat-btn" data-cat="all"><span class="ico" style="background:#10A34E;color:#FFFFFF;">◎</span><span>전체</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="stay"><span class="ico" style="background:rgba(16,163,78,.12);color:#10A34E;">🏨</span><span>숙소</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="food"><span class="ico" style="background:rgba(0,233,51,.12);color:#096E32;">🍜</span><span>맛집</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="cafe"><span class="ico" style="background:rgba(16,163,78,.12);color:#10A34E;">☕</span><span>카페</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="field"><span class="ico" style="background:rgba(0,233,51,.12);color:#096E32;">🏟</span><span>운동장</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="trail"><span class="ico" style="background:rgba(16,163,78,.12);color:#10A34E;">🥾</span><span>산책로</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="hospital"><span class="ico" style="background:rgba(0,233,51,.12);color:#096E32;">🏥</span><span>병원</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="tour"><span class="ico" style="background:rgba(16,163,78,.12);color:#10A34E;">📍</span><span>관광지</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="petshop"><span class="ico" style="background:rgba(0,233,51,.12);color:#096E32;">🦴</span><span>펫용품</span></button>
-                    <button type="button" class="explore-cat-btn" data-cat="dogpark"><span class="ico" style="background:rgba(16,163,78,.12);color:#10A34E;">🐕‍🦺</span><span>반려견 놀이터</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="all"><span class="ico" aria-hidden="true"><img src="icons/trip/all.png" alt="" width="28" height="28" decoding="async"></span><span>전체</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="stay"><span class="ico" aria-hidden="true"><img src="icons/trip/stay.png" alt="" width="28" height="28" decoding="async"></span><span>숙소</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="food"><span class="ico" aria-hidden="true"><img src="icons/trip/food.png" alt="" width="28" height="28" decoding="async"></span><span>맛집</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="cafe"><span class="ico" aria-hidden="true"><img src="icons/trip/cafe.png" alt="" width="28" height="28" decoding="async"></span><span>카페</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="field"><span class="ico" aria-hidden="true"><img src="icons/trip/field.png" alt="" width="28" height="28" decoding="async"></span><span>운동장</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="trail"><span class="ico" aria-hidden="true"><img src="icons/trip/trail.png" alt="" width="28" height="28" decoding="async"></span><span>산책로</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="hospital"><span class="ico" aria-hidden="true"><img src="icons/trip/hospital.png" alt="" width="28" height="28" decoding="async"></span><span>병원</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="tour"><span class="ico" aria-hidden="true"><img src="icons/trip/tour.png" alt="" width="28" height="28" decoding="async"></span><span>관광지</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="petshop"><span class="ico" aria-hidden="true"><img src="icons/trip/petshop.png" alt="" width="28" height="28" decoding="async"></span><span>펫용품</span></button>
+                    <button type="button" class="explore-cat-btn" data-cat="dogpark"><span class="ico" aria-hidden="true"><img src="icons/trip/dogpark.png" alt="" width="28" height="28" decoding="async"></span><span>반려견 놀이터</span></button>
                   </div>
                 </div>
                 <div class="explore-map-wrap">
@@ -4056,10 +4118,12 @@
                     <button type="button" class="mypage-row mypage-row--sub voice-style-opt selected" data-voice-style="male_calm">
                       <span class="mypage-row-ico blue" aria-hidden="true"><img src="icons/mypage/system-settings/voice-guide/calm.png" alt="" width="24" height="24" decoding="async"></span>
                       <span class="mypage-row-text">차분하고 안정적인 톤<span class="toggle-row-hint">안내방송 스타일</span></span>
+                      <span class="toggle-switch toggle-switch--readonly" aria-hidden="true"><span class="toggle-track"></span></span>
                     </button>
                     <button type="button" class="mypage-row mypage-row--sub voice-style-opt" data-voice-style="female_soft">
                       <span class="mypage-row-ico blue" aria-hidden="true"><img src="icons/mypage/system-settings/voice-guide/soft.png" alt="" width="24" height="24" decoding="async"></span>
                       <span class="mypage-row-text">부드럽고 따뜻한 톤<span class="toggle-row-hint">친근하고 따뜻한 스타일</span></span>
+                      <span class="toggle-switch toggle-switch--readonly" aria-hidden="true"><span class="toggle-track"></span></span>
                     </button>
                   </div>
                 </div>
@@ -4077,13 +4141,19 @@
                 <div class="mypage-group-card" id="fontSizeGroup">
                   <div class="mypage-list">
                     <button type="button" class="mypage-row mypage-row--sub font-opt" data-font="small">
+                      <span class="mypage-row-ico purple" aria-hidden="true"><img src="icons/mypage/system-settings/font-settings/small.png" alt="" width="24" height="24" decoding="async"></span>
                       <span class="mypage-row-text font-opt-preview font-opt-preview--small">작게</span>
+                      <span class="toggle-switch toggle-switch--readonly" aria-hidden="true"><span class="toggle-track"></span></span>
                     </button>
                     <button type="button" class="mypage-row mypage-row--sub font-opt selected" data-font="medium">
+                      <span class="mypage-row-ico purple" aria-hidden="true"><img src="icons/mypage/system-settings/font-settings/normal.png" alt="" width="24" height="24" decoding="async"></span>
                       <span class="mypage-row-text font-opt-preview font-opt-preview--medium">보통</span>
+                      <span class="toggle-switch toggle-switch--readonly" aria-hidden="true"><span class="toggle-track"></span></span>
                     </button>
                     <button type="button" class="mypage-row mypage-row--sub font-opt" data-font="large">
+                      <span class="mypage-row-ico purple" aria-hidden="true"><img src="icons/mypage/system-settings/font-settings/big.png" alt="" width="24" height="24" decoding="async"></span>
                       <span class="mypage-row-text font-opt-preview font-opt-preview--large">크게</span>
+                      <span class="toggle-switch toggle-switch--readonly" aria-hidden="true"><span class="toggle-track"></span></span>
                     </button>
                   </div>
                 </div>
@@ -4798,8 +4868,8 @@
         if (ONBOARDING_VIEWS.has(viewName) || viewName === "walk" || viewName === "home") return false;
         const activeView = views.find(v => v.dataset.view === viewName);
         const tabRoot = (activeView && activeView.dataset.tabRoot) || viewName;
-        if (tabRoot === "mypage") return false;
-        return tabRoot === "walk" || tabRoot === "pet" || tabRoot === "explore";
+        if (tabRoot === "mypage" || tabRoot === "pet" || tabRoot === "explore") return false;
+        return tabRoot === "walk";
       }
 
       function setActiveView(name) {
@@ -4835,8 +4905,8 @@
           if (shouldShowWesenPrompt()) showWesenPrompt();
         }
         if (name === "walk") { ensureWalkLiveMap(); ensureWeatherLoaded(); setSheetState("collapsed"); }
-        if (name === "explore") ensureExploreMap();
-        if (name === "pet_monthly") { syncPetDogName(); syncPetPersonality(); initPetlogCarousel(); }
+        if (name === "explore") { ensureExploreMap(); refreshSharedCurrentLocation(); }
+        if (name === "pet_monthly") { syncPetDogName(); syncPetPersonality(); initPetlogCarousel(); syncPetlogSections(); }
         if (name === "pet_walk_monthly") {
           initCalSelectedDayForView();
           renderManualWalkRecords();
@@ -4979,10 +5049,8 @@
           fetchOpenMeteo(loc.lat, loc.lon).then((w) => updateWeatherChip(w));
           if (loc.label) setLocationLabel(loc.label);
           else fetchReverseGeocode(loc.lat, loc.lon).then((nm) => {
-            if (nm) {
-              setLocationLabel(nm);
-              userLocation.label = nm;
-            }
+            if (nm) setLocationLabel(nm);
+            else syncSharedCurrentLocation(null);
           });
         });
       }
@@ -5089,10 +5157,46 @@
         weatherLoadedAt = Date.now();
       }
 
-      function setLocationLabel(label) {
-        const el = document.getElementById("homeLocText");
-        if (label) state.homeLocations[state.activeHomeLocationIndex || 0] = label;
+      function getSharedLocationDisplay(label) {
+        const formatted = formatDongName(label || userLocation.label || "");
+        return formatted || "현 위치";
+      }
+
+      function syncSharedCurrentLocation(rawLabel) {
+        if (rawLabel) {
+          userLocation.label = rawLabel;
+          state.homeLocations[0] = rawLabel;
+        }
+        const display = (rawLabel || userLocation.label)
+          ? getSharedLocationDisplay(rawLabel || userLocation.label)
+          : "현 위치";
+        const exploreEl = document.getElementById("exploreCurrentLocation");
+        if (exploreEl) exploreEl.textContent = display;
         syncHomeLocationHeader();
+        if (typeof renderExploreMarkers === "function") renderExploreMarkers();
+      }
+
+      function refreshSharedCurrentLocation() {
+        return getUserLocation().then((loc) => {
+          if (loc.label) {
+            syncSharedCurrentLocation(loc.label);
+            return loc;
+          }
+          return fetchReverseGeocode(loc.lat, loc.lon).then((nm) => {
+            if (nm) {
+              loc.label = nm;
+              syncSharedCurrentLocation(nm);
+            } else {
+              syncSharedCurrentLocation(null);
+            }
+            return loc;
+          });
+        });
+      }
+
+      function setLocationLabel(label) {
+        if (label) syncSharedCurrentLocation(label);
+        else syncHomeLocationHeader();
       }
 
       function formatDongName(label) {
@@ -5109,7 +5213,9 @@
         if (!state.homeLocations.length) state.homeLocations = ["청파동"];
         if (state.activeHomeLocationIndex >= state.homeLocations.length) state.activeHomeLocationIndex = 0;
         const activeIdx = state.activeHomeLocationIndex || 0;
-        const active = formatDongName(state.homeLocations[activeIdx] || "서울");
+        const active = userLocation.label
+          ? getSharedLocationDisplay(userLocation.label)
+          : formatDongName(state.homeLocations[activeIdx] || "서울");
         const inactiveIdx = activeIdx === 0 ? 1 : 0;
         const inactive = state.homeLocations[inactiveIdx] ? formatDongName(state.homeLocations[inactiveIdx]) : "";
         if (names) {
@@ -5363,10 +5469,8 @@
             homeHeroMapObj.setView([userLocation.lat, userLocation.lon], 16, { animate: false });
             const locText = document.getElementById("homeLocText");
             fetchReverseGeocode(userLocation.lat, userLocation.lon).then((nm) => {
-              if (nm) {
-                userLocation.label = nm;
-                if (locText) locText.textContent = nm;
-              } else if (locText) locText.textContent = "현재 위치";
+              if (nm) syncSharedCurrentLocation(nm);
+              else syncSharedCurrentLocation(null);
             });
             setTimeout(() => homeHeroMapObj && homeHeroMapObj.invalidateSize(), 50);
           },
@@ -6768,29 +6872,6 @@
         });
       }
 
-      if (exploreLocationToggle && exploreLocationMenu) {
-        exploreLocationToggle.addEventListener("click", () => {
-          const open = exploreLocationMenu.classList.toggle("show");
-          exploreLocationToggle.setAttribute("aria-expanded", open ? "true" : "false");
-        });
-        exploreLocationMenu.addEventListener("click", (e) => {
-          const option = e.target.closest(".explore-location-option");
-          if (!option) return;
-          document.querySelectorAll(".explore-location-option").forEach((el) => el.classList.toggle("active", el === option));
-          exploreCurrentLocation.textContent = option.getAttribute("data-location");
-          exploreLocationMenu.classList.remove("show");
-          exploreLocationToggle.setAttribute("aria-expanded", "false");
-          renderExploreMarkers();
-        });
-      }
-
-      document.addEventListener("click", (e) => {
-        if (!exploreLocationMenu || !exploreLocationToggle) return;
-        if (exploreLocationMenu.contains(e.target) || exploreLocationToggle.contains(e.target)) return;
-        exploreLocationMenu.classList.remove("show");
-        exploreLocationToggle.setAttribute("aria-expanded", "false");
-      });
-
       if (exploreListToggle && exploreBottomSheet) {
         exploreListToggle.addEventListener("click", () => {
           exploreState.sheetOpen = !exploreState.sheetOpen;
@@ -6855,6 +6936,7 @@
       syncHomeWalkStats();
       syncPetDogName();
       syncHomeLocationHeader();
+      refreshSharedCurrentLocation();
       document.getElementById("homeLocationSwitcher")?.addEventListener("click", (e) => {
         if (e.target.closest(".home-location-name.active")) {
           openHomeLocationSheet();
@@ -8974,6 +9056,211 @@
         }
       }
 
+      let _walkRouteImageMap = null;
+
+      function extractBgImageUrl(bg) {
+        if (!bg || bg === "none") return "";
+        const m = String(bg).match(/url\(["']?([^"')]+)["']?\)/);
+        return m ? m[1] : "";
+      }
+
+      function getWalkRouteImageMap() {
+        if (_walkRouteImageMap) return _walkRouteImageMap;
+        _walkRouteImageMap = {};
+        document.querySelectorAll(".walk-reco-card[data-walk-route]").forEach((card) => {
+          const route = card.getAttribute("data-walk-route");
+          const bg = card.style.backgroundImage || getComputedStyle(card).backgroundImage;
+          const url = extractBgImageUrl(bg);
+          if (route && url) _walkRouteImageMap[route] = url;
+        });
+        document.querySelectorAll(".hcard[data-walk-route] .hcard-img").forEach((img) => {
+          const card = img.closest(".hcard[data-walk-route]");
+          if (!card) return;
+          const route = card.getAttribute("data-walk-route");
+          const url = extractBgImageUrl(getComputedStyle(img).backgroundImage);
+          if (route && url) _walkRouteImageMap[route] = url;
+        });
+        document.querySelectorAll(".walk-freq-card[data-walk-route]").forEach((card) => {
+          const route = card.getAttribute("data-walk-route");
+          const thumb = card.querySelector(".walk-freq-thumb");
+          if (!route || !thumb) return;
+          const url = extractBgImageUrl(getComputedStyle(thumb).backgroundImage);
+          if (url) _walkRouteImageMap[route] = url;
+        });
+        return _walkRouteImageMap;
+      }
+
+      function resolveWalkRouteImageUrl(routeName) {
+        const name = (routeName || "").trim();
+        if (!name) return "";
+        const map = getWalkRouteImageMap();
+        if (map[name]) return map[name];
+        const keys = Object.keys(map);
+        for (let i = 0; i < keys.length; i++) {
+          const key = keys[i];
+          if (name.includes(key) || key.includes(name)) return map[key];
+        }
+        if (name.includes("효창")) return map["효창공원 루프"] || "";
+        if (name.includes("한강")) return map["난지한강공원 링워크"] || map["반포 한강공원"] || "";
+        if (name.includes("월드컵") || name.includes("놀이터")) return map["월드컵공원 반려견 놀이터"] || "";
+        if (name.includes("올림픽")) return map["올림픽공원"] || "";
+        if (name.includes("둘레길")) return map["서울둘레길 15코스"] || "";
+        return "";
+      }
+
+      function getWalkStreakCount() {
+        const all = readManualWalkRecords().concat(readCompletedWalkRecords());
+        const today = new Date();
+        const walkDates = new Set(all.map((r) => r.date));
+        let streak = 0;
+        const d = new Date(today);
+        while (true) {
+          const ds = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+          if (walkDates.has(ds)) {
+            streak++;
+            d.setDate(d.getDate() - 1);
+          } else {
+            break;
+          }
+        }
+        return all.length === 0 ? 38 : streak;
+      }
+
+      function formatWalkRelativeLabel(dateStr, timeStr) {
+        if (!dateStr) return "";
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const parts = dateStr.split("-").map(Number);
+        const target = new Date(parts[0], parts[1] - 1, parts[2]);
+        target.setHours(0, 0, 0, 0);
+        const diff = Math.round((today - target) / 86400000);
+        let label = "";
+        if (diff === 0) label = "오늘";
+        else if (diff === 1) label = "어제";
+        else label = diff + "일전";
+        const bits = [label];
+        if (timeStr) bits.push(timeStr);
+        return bits.join(" · ");
+      }
+
+      function syncPetlogMiniCalendar() {
+        const calEl = document.getElementById("petlogMiniCal");
+        const dotsEl = document.getElementById("petlogMiniDogDots");
+        if (!calEl) return;
+
+        const now = new Date();
+        const today = now.getDate();
+        const dayOfWeek = now.getDay();
+        const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+        const weekStart = new Date(now);
+        weekStart.setDate(now.getDate() + mondayOffset);
+
+        const dowLabels = ["월", "화", "수", "목", "금", "토", "일"];
+        let dowHtml = '<div class="petlog-mini-dow">';
+        dowLabels.forEach((d) => { dowHtml += "<span>" + d + "</span>"; });
+        dowHtml += "</div>";
+
+        const allRecords = readManualWalkRecords().concat(readCompletedWalkRecords());
+        const walkedDates = new Set(allRecords.map((r) => r.date));
+
+        let daysHtml = '<div class="petlog-mini-days">';
+        const weekDates = [];
+        for (let i = 0; i < 7; i++) {
+          const d = new Date(weekStart);
+          d.setDate(weekStart.getDate() + i);
+          const isToday = d.toDateString() === now.toDateString();
+          const dateStr = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+          weekDates.push(dateStr);
+          const hasWalk = walkedDates.has(dateStr);
+          daysHtml += '<span class="petlog-mini-day' + (isToday ? " is-today" : "") + (hasWalk ? " has-walk" : "") + '">' + d.getDate() + "</span>";
+        }
+        daysHtml += "</div>";
+        calEl.innerHTML = dowHtml + daysHtml;
+
+        if (dotsEl) {
+          const dogName = (state.dogName || "").trim() || "보리";
+          const color = getDogColorById("primary");
+          dotsEl.innerHTML = '<span class="petlog-mini-dog-dot" style="--dog-color:' + color + '" title="' + escapeHtml(dogName) + '"></span>';
+        }
+      }
+
+      function syncPetlogRecentWalks() {
+        const listEl = document.getElementById("petlogRecentList");
+        if (!listEl) return;
+
+        const all = readManualWalkRecords().concat(readCompletedWalkRecords());
+        const sorted = all.slice().sort((a, b) => {
+          const ad = (a.date || "") + " " + (a.time || "00:00");
+          const bd = (b.date || "") + " " + (b.time || "00:00");
+          return bd.localeCompare(ad);
+        });
+
+        const demo = [
+          { routeName: "난지한강공원 링워크", date: "", time: "18:20", distance: 3.2, durationMin: 45, rel: "어제 · 18:20" },
+          { routeName: "효창공원 루프", date: "", time: "", distance: 2.1, durationMin: 32, rel: "3일전" },
+        ];
+
+        let items = sorted.slice(0, 2).map((r) => ({
+          routeName: r.routeName || "산책",
+          rel: formatWalkRelativeLabel(r.date, r.time),
+          distance: Number(r.distance || 0),
+          durationMin: r.durationMin || 0,
+        }));
+        if (!items.length) {
+          items = demo.map((d) => ({
+            routeName: d.routeName,
+            rel: d.rel,
+            distance: d.distance,
+            durationMin: d.durationMin,
+          }));
+        } else {
+          for (let i = items.length; i < 2 && demo[i]; i++) {
+            items.push({
+              routeName: demo[i].routeName,
+              rel: demo[i].rel,
+              distance: demo[i].distance,
+              durationMin: demo[i].durationMin,
+            });
+          }
+        }
+
+        listEl.innerHTML = items.map((item) => {
+          const metaParts = [item.rel];
+          if (item.distance) metaParts.push(item.distance.toFixed(1) + "km");
+          if (item.durationMin) metaParts.push(item.durationMin + "분");
+          const imgUrl = resolveWalkRouteImageUrl(item.routeName);
+          const thumbInner = imgUrl
+            ? '<img src="' + escapeHtml(imgUrl) + '" alt="" decoding="async">'
+            : "";
+          return '<div class="petlog-recent-item">' +
+            '<div class="petlog-recent-thumb" aria-hidden="true">' + thumbInner + "</div>" +
+            '<div class="petlog-recent-body">' +
+            '<div class="petlog-recent-name">' + escapeHtml(item.routeName) + "</div>" +
+            '<div class="petlog-recent-meta">' + escapeHtml(metaParts.join(" · ")) + "</div>" +
+            "</div></div>";
+        }).join("");
+      }
+
+      function syncPetlogBadge() {
+        const titleEl = document.getElementById("petlogBadgeTitle");
+        const subEl = document.getElementById("petlogBadgeSub");
+        const artEl = document.getElementById("petlogBadgeArt");
+        const dogName = (state.dogName || "").trim() || "보리";
+        const streak = getWalkStreakCount();
+        if (titleEl) titleEl.textContent = dogName + "의 뱃지";
+        if (subEl) subEl.textContent = streak + "일 연속 산책 달성 중!";
+        if (artEl) {
+          const avatar = document.querySelector('.petlog-carousel-slide--base .petlog-avatar img');
+          if (avatar && avatar.getAttribute("src")) artEl.src = avatar.getAttribute("src");
+        }
+      }
+
+      function syncPetlogSections() {
+        syncPetlogMiniCalendar();
+        syncPetlogRecentWalks();
+        syncPetlogBadge();
+      }
+
       function syncPetPersonality() {
         const card = document.getElementById("petPersonalityCard");
         const empty = document.getElementById("petPersonalityEmpty");
@@ -9088,7 +9375,7 @@
             el.setAttribute("data-nav", "pet_analysis_period");
             el.setAttribute("data-dog-id", dogId);
           });
-          slide.querySelectorAll(".petlog-monthly-entry, .petlog-monthly-fixed").forEach((el) => el.remove());
+          slide.querySelectorAll(".petlog-sections").forEach((el) => el.remove());
           track.appendChild(slide);
         });
         placePetlogAddButtonOnLastSlide(track);
@@ -9114,8 +9401,8 @@
         state.petAddQuizResult = null;
         clearQuizStateAndUI();
         setActiveView("pet_monthly");
-        const petView = document.querySelector('.view[data-view="pet_monthly"]');
-        if (petView) petView.scrollTop = 0;
+        const petScroll = document.querySelector('.view[data-view="pet_monthly"] .petlog-scroll');
+        if (petScroll) petScroll.scrollTop = 0;
         setTimeout(() => {
           const tr = document.getElementById("petlogCarouselTrack");
           if (!tr) return;
