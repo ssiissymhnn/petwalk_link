@@ -1157,10 +1157,10 @@
     /* Explore map */
     .explore-shell{height:100%;display:flex;flex-direction:column;position:relative;background:#FFFFFF;border-radius:20px;overflow:hidden;border:1px solid rgba(0,0,0,.06)}
     .explore-head{padding:10px 0 8px;border-bottom:1px solid rgba(0,0,0,.06);background:#FFFFFF}
-    .explore-location-wrap{position:relative;padding-left:14px}
-    .explore-location-btn{border:none;background:none;padding:0;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:var(--text);cursor:default;font-family:inherit;pointer-events:none}
-    .explore-location-arrow{display:none}
-    .explore-location-menu{display:none !important}
+    .explore-location-wrap{position:relative;padding-left:10px}
+    .explore-location-btn{border:none;background:none;padding:0;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:var(--text);cursor:pointer;font-family:inherit}
+    .explore-location-arrow{width:22px;height:22px;border-radius:999px;background:var(--sep);border:none;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text)}
+    .explore-location-menu{position:absolute;top:32px;left:0;right:0;background:#FFFFFF;border:1px solid rgba(0,0,0,.06);border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.1);padding:6px;display:none;z-index:3}
     .explore-location-menu.show{display:block}
     .explore-location-option{width:100%;border:none;background:#FFFFFF;padding:9px 10px;border-radius:10px;text-align:left;font-size:13px;font-weight:700;color:var(--text);cursor:pointer;transition:background .1s ease}
     .explore-location-option.active{background:rgba(16,163,78,.1);color:var(--main)}
@@ -3225,8 +3225,15 @@
               <div class="explore-shell">
                 <div class="explore-head">
                   <div class="explore-location-wrap">
-                    <div class="explore-location-btn" id="exploreLocationToggle" aria-label="현 위치">
-                      <span id="exploreCurrentLocation">현 위치</span>
+                    <button type="button" class="explore-location-btn" id="exploreLocationToggle" aria-expanded="false">
+                      <span id="exploreCurrentLocation">용산구 한강로3가</span>
+                      <span class="explore-location-arrow">▼</span>
+                    </button>
+                    <div class="explore-location-menu" id="exploreLocationMenu">
+                      <button type="button" class="explore-location-option active" data-location="용산구 한강로3가">용산구 한강로3가</button>
+                      <button type="button" class="explore-location-option" data-location="마포구 서교동">마포구 서교동</button>
+                      <button type="button" class="explore-location-option" data-location="성동구 성수동">성동구 성수동</button>
+                      <button type="button" class="explore-location-option" data-location="송파구 잠실동">송파구 잠실동</button>
                     </div>
                   </div>
                   <div class="explore-cats" id="exploreCategoryBar">
@@ -4905,7 +4912,7 @@
           if (shouldShowWesenPrompt()) showWesenPrompt();
         }
         if (name === "walk") { ensureWalkLiveMap(); ensureWeatherLoaded(); setSheetState("collapsed"); }
-        if (name === "explore") { ensureExploreMap(); refreshSharedCurrentLocation(); }
+        if (name === "explore") ensureExploreMap();
         if (name === "pet_monthly") { syncPetDogName(); syncPetPersonality(); initPetlogCarousel(); syncPetlogSections(); }
         if (name === "pet_walk_monthly") {
           initCalSelectedDayForView();
@@ -5049,8 +5056,10 @@
           fetchOpenMeteo(loc.lat, loc.lon).then((w) => updateWeatherChip(w));
           if (loc.label) setLocationLabel(loc.label);
           else fetchReverseGeocode(loc.lat, loc.lon).then((nm) => {
-            if (nm) setLocationLabel(nm);
-            else syncSharedCurrentLocation(null);
+            if (nm) {
+              setLocationLabel(nm);
+              userLocation.label = nm;
+            }
           });
         });
       }
@@ -5162,32 +5171,16 @@
         return formatted || "현 위치";
       }
 
-      function syncSharedCurrentLocation(rawLabel) {
-        if (rawLabel) {
-          userLocation.label = rawLabel;
-          state.homeLocations[0] = rawLabel;
-        }
-        const display = (rawLabel || userLocation.label)
-          ? getSharedLocationDisplay(rawLabel || userLocation.label)
-          : "현 위치";
-        const exploreEl = document.getElementById("exploreCurrentLocation");
-        if (exploreEl) exploreEl.textContent = display;
-        syncHomeLocationHeader();
-        if (typeof renderExploreMarkers === "function") renderExploreMarkers();
-      }
-
-      function refreshSharedCurrentLocation() {
+      function refreshHomeCurrentLocation() {
         return getUserLocation().then((loc) => {
           if (loc.label) {
-            syncSharedCurrentLocation(loc.label);
+            setLocationLabel(loc.label);
             return loc;
           }
           return fetchReverseGeocode(loc.lat, loc.lon).then((nm) => {
             if (nm) {
               loc.label = nm;
-              syncSharedCurrentLocation(nm);
-            } else {
-              syncSharedCurrentLocation(null);
+              setLocationLabel(nm);
             }
             return loc;
           });
@@ -5195,8 +5188,11 @@
       }
 
       function setLocationLabel(label) {
-        if (label) syncSharedCurrentLocation(label);
-        else syncHomeLocationHeader();
+        if (label) {
+          userLocation.label = label;
+          state.homeLocations[state.activeHomeLocationIndex || 0] = label;
+        }
+        syncHomeLocationHeader();
       }
 
       function formatDongName(label) {
@@ -5469,8 +5465,11 @@
             homeHeroMapObj.setView([userLocation.lat, userLocation.lon], 16, { animate: false });
             const locText = document.getElementById("homeLocText");
             fetchReverseGeocode(userLocation.lat, userLocation.lon).then((nm) => {
-              if (nm) syncSharedCurrentLocation(nm);
-              else syncSharedCurrentLocation(null);
+              if (nm) {
+                userLocation.label = nm;
+                if (locText) locText.textContent = getSharedLocationDisplay(nm);
+                setLocationLabel(nm);
+              } else if (locText) locText.textContent = "현재 위치";
             });
             setTimeout(() => homeHeroMapObj && homeHeroMapObj.invalidateSize(), 50);
           },
@@ -6872,6 +6871,29 @@
         });
       }
 
+      if (exploreLocationToggle && exploreLocationMenu) {
+        exploreLocationToggle.addEventListener("click", () => {
+          const open = exploreLocationMenu.classList.toggle("show");
+          exploreLocationToggle.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+        exploreLocationMenu.addEventListener("click", (e) => {
+          const option = e.target.closest(".explore-location-option");
+          if (!option) return;
+          document.querySelectorAll(".explore-location-option").forEach((el) => el.classList.toggle("active", el === option));
+          exploreCurrentLocation.textContent = option.getAttribute("data-location");
+          exploreLocationMenu.classList.remove("show");
+          exploreLocationToggle.setAttribute("aria-expanded", "false");
+          renderExploreMarkers();
+        });
+      }
+
+      document.addEventListener("click", (e) => {
+        if (!exploreLocationMenu || !exploreLocationToggle) return;
+        if (exploreLocationMenu.contains(e.target) || exploreLocationToggle.contains(e.target)) return;
+        exploreLocationMenu.classList.remove("show");
+        exploreLocationToggle.setAttribute("aria-expanded", "false");
+      });
+
       if (exploreListToggle && exploreBottomSheet) {
         exploreListToggle.addEventListener("click", () => {
           exploreState.sheetOpen = !exploreState.sheetOpen;
@@ -6936,7 +6958,7 @@
       syncHomeWalkStats();
       syncPetDogName();
       syncHomeLocationHeader();
-      refreshSharedCurrentLocation();
+      refreshHomeCurrentLocation();
       document.getElementById("homeLocationSwitcher")?.addEventListener("click", (e) => {
         if (e.target.closest(".home-location-name.active")) {
           openHomeLocationSheet();
