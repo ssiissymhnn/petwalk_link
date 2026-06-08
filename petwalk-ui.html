@@ -5955,6 +5955,16 @@
         return formatRouteDistance(info.totalDistance) + " • " + formatRouteDuration(info.estimatedDuration);
       }
 
+      function pickRandomAiRecoRoute() {
+        const cards = document.querySelectorAll('#walkRecoStack .walk-reco-card[data-walk-route]');
+        if (!cards.length) return null;
+        const card = cards[Math.floor(Math.random() * cards.length)];
+        return {
+          name: card.getAttribute("data-walk-route") || "",
+          meta: card.getAttribute("data-walk-meta") || "거리/시간 정보 준비 중",
+        };
+      }
+
       function beginWalkNavigationOrPicker(route) {
         if (!route.free) state.freeWalk = false;
         state.currentWalkReports = [];
@@ -7564,7 +7574,8 @@
       if (walkModeAi) {
         walkModeAi.addEventListener("click", function() {
           hideWalkModePicker();
-          setActiveView("walkHome");
+          const route = pickRandomAiRecoRoute();
+          if (route && route.name) beginWalkNavigationOrPicker(route);
         });
       }
       if (walkModeFree) {
