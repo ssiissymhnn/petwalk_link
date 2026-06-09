@@ -79,6 +79,8 @@
     .leaflet-control-attribution{font-size:9px !important;background:rgba(255,255,255,.6) !important;padding:0 4px !important}
     /* Leaflet 컨테이너의 stacking context를 격리해서 외부 오버레이가 항상 위에 뜨도록 */
     .walk-live-map-inner,.walkhome-mymap,.explore-leaflet,.home-hero-map-bg{isolation:isolate}
+    .view[data-view="walk"] .me-marker .me-dot{box-shadow:0 2px 6px rgba(16,163,78,.4)}
+    .view[data-view="walk"] .walk-route-endpoint .ep-ring{box-shadow:0 2px 6px rgba(16,163,78,.35)}
     .me-marker{position:relative;width:22px;height:22px}
     .me-marker .me-pulse{position:absolute;inset:-10px;border-radius:50%;background:rgba(16,163,78,.25);animation:mePulse 2s ease-out infinite}
     .me-marker .me-dot{position:absolute;inset:0;border-radius:50%;background:var(--main);border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
@@ -1689,7 +1691,11 @@
     .walk-live-sheet-handle::before{content:"";width:40px;height:4px;border-radius:999px;background:#d3d3d3}
     .walk-live-sheet-handle:active{cursor:grabbing}
     .walk-live-sheet-scroll{flex:1;overflow:auto;min-height:0;display:flex;flex-direction:column;-webkit-overflow-scrolling:touch}
-    .walk-report-marker{font-size:20px;line-height:1;text-align:center;background:#fff;border-radius:12px;padding:2px 4px;box-shadow:0 2px 10px rgba(0,0,0,.2);border:2px solid rgba(16,163,78,.45)}
+    .walk-report-marker{font-size:18px;line-height:1;text-align:center;background:#fff;border-radius:12px;padding:2px 4px;box-shadow:0 2px 10px rgba(0,0,0,.2);border:2px solid rgba(16,163,78,.45)}
+    .walk-report-marker--map{width:36px;height:36px;border-radius:50%;border:2px solid #fff;padding:0;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(16,163,78,.35);overflow:hidden}
+    .walk-report-marker--map img{width:22px;height:22px;object-fit:contain;display:block;pointer-events:none}
+    .walk-report-marker--map-lg{overflow:hidden}
+    .walk-report-marker--map-lg img{width:66px;height:66px;transform:translateY(-4px)}
 
     /* 산책 시작 반려견 선택 팝업 */
     .walk-dog-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:4000;display:none;align-items:center;justify-content:center;padding:20px 16px;backdrop-filter:blur(3px)}
@@ -3019,7 +3025,7 @@
                                 <span class="petlog-dual-label">성향 분석</span>
                                 <div class="petlog-dual-body">
                                   <span class="petlog-dual-icon-wrap petlog-dual-icon-wrap--brain" aria-hidden="true">
-                                    <span class="petlog-dual-mini-emoji"><img src="icons/petlog/AI_report.png" alt="" width="22" height="22" decoding="async"></span>
+                                    <span class="petlog-dual-mini-emoji"><img src="icons/petlog/ai-report.png" alt="" width="22" height="22" decoding="async"></span>
                                   </span>
                                   <div class="petlog-dual-text">
                                     <span class="petlog-dual-mini-name">AI 산책 리포트</span>
@@ -3060,7 +3066,7 @@
                       <div class="petlog-badge-title" id="petlogBadgeTitle">보리의 뱃지</div>
                       <div class="petlog-badge-sub" id="petlogBadgeSub">38일 연속 산책 달성 중!</div>
                     </div>
-                    <img class="petlog-badge-art" src="icons/petlog/뱃지.png" alt="" id="petlogBadgeArt" decoding="async">
+                    <img class="petlog-badge-art" src="icons/petlog/badge.png" alt="" id="petlogBadgeArt" decoding="async">
                   </div>
                 </div>
 
@@ -5616,20 +5622,41 @@
         });
       }
 
+      function resolveWalkReportMapIcon(iconSrc) {
+        if (typeof iconSrc !== "string") return iconSrc;
+        if (iconSrc.includes("/map/report/")) return iconSrc;
+        if (iconSrc.includes("/bottom_sheet/information/")) {
+          return iconSrc.replace("/bottom_sheet/information/", "/map/report/");
+        }
+        return iconSrc;
+      }
+
+      function isLargeWalkReportMapIcon(mapIcon) {
+        return typeof mapIcon === "string" && (/\/no_people\.png$/.test(mapIcon) || /\/attack_dog\.png$/.test(mapIcon));
+      }
+
       function addWalkReportMarker(icon, label, color) {
         if (!leafletAvailable() || !walkLiveMap || !walkLiveMarker) return;
         if (!walkReportLayer) walkReportLayer = L.layerGroup().addTo(walkLiveMap);
         const ll = walkLiveMarker.getLatLng();
         const safe = String(label || "").replace(/"/g, "&quot;");
-        const border = color ? `style="border-color:${color}"` : "";
+        const border = color ? ' style="border-color:' + color + '"' : "";
         const isImg = typeof icon === "string" && icon.startsWith("icons/");
+        const isReportImg = isImg && (icon.includes("/bottom_sheet/information/") || icon.includes("/map/report/"));
+        const mapIcon = isReportImg ? resolveWalkReportMapIcon(icon) : icon;
+        const isLargeReport = isReportImg && isLargeWalkReportMapIcon(mapIcon);
+        const imgSize = isLargeReport ? 66 : 22;
+        let markerClass = "walk-report-marker";
+        if (isReportImg) {
+          markerClass += " walk-report-marker--map" + (isLargeReport ? " walk-report-marker--map-lg" : "");
+        }
         const content = isImg
-          ? '<img src="' + icon + '" alt="" width="24" height="24" style="display:block;object-fit:contain">'
+          ? '<img src="' + mapIcon + '" alt="" width="' + imgSize + '" height="' + imgSize + '" decoding="async">'
           : String(icon || "");
         L.marker(ll, {
           icon: L.divIcon({
             className: "",
-            html: '<div class="walk-report-marker" ' + border + ' title="' + safe + '">' + content + "</div>",
+            html: '<div class="' + markerClass + '"' + border + ' title="' + safe + '">' + content + "</div>",
             iconSize: [36, 36],
             iconAnchor: [18, 34],
           }),
@@ -8853,7 +8880,7 @@
       };
 
       const PETLOG_TYPE_IMAGES = {
-        observer: "icons/petlog/관찰자형.png",
+        observer: "icons/petlog/observer-type.png",
       };
 
       function renderPetlogTypeIcon(el, typeId, emojiFallback) {
@@ -9306,7 +9333,7 @@
         const streak = getWalkStreakCount();
         if (titleEl) titleEl.textContent = dogName + "의 뱃지";
         if (subEl) subEl.textContent = streak + "일 연속 산책 달성 중!";
-        if (artEl) artEl.src = "icons/petlog/뱃지.png";
+        if (artEl) artEl.src = "icons/petlog/badge.png";
       }
 
       function syncPetlogSections() {
