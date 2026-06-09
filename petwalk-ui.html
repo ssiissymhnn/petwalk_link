@@ -568,7 +568,7 @@
       position:relative;flex-shrink:0;
     }
     .view[data-view="dogInfoResult"] .result-hero-mascot{
-      width:100px;height:124px;object-fit:contain;display:block;
+      width:100px;height:100px;object-fit:contain;display:block;
     }
 
     /* === Petlog 성격 카드 (퀴즈 결과 반영) === */
@@ -1312,7 +1312,7 @@
     .petlog-profile-card-main{padding-top:0}
     .petlog-profile-banner{
       position:relative;min-height:0;border-radius:20px;overflow:hidden;padding:22px 19px 22px;box-sizing:border-box;
-      background:url("icons/petlog/profile-banner.jpg") center/cover no-repeat;
+      background:url("icons/petlog/profile-banner.png") center/cover no-repeat;
       display:flex;flex-direction:column;justify-content:flex-start;gap:10px;
     }
     .petlog-profile-head{display:flex;align-items:flex-start;gap:8px;width:100%;position:relative;z-index:1}
@@ -1390,7 +1390,8 @@
     .petlog-dual-icon-wrap{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
     .petlog-dual-icon-wrap--leaf{background:#edf5eb}
     .petlog-dual-icon-wrap--brain{background:#fdf2ef}
-    .petlog-dual-mini-emoji{font-size:14px;line-height:1;flex-shrink:0}
+    .petlog-dual-mini-emoji{font-size:14px;line-height:1;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+    .petlog-dual-mini-emoji img{width:22px;height:22px;object-fit:contain;display:block}
     .petlog-dual-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
     .petlog-dual-mini-head{display:flex;align-items:center;gap:6px;min-width:0;width:100%}
     .petlog-dual-mini-name{font-size:11px;font-weight:700;color:#000000;line-height:1.4;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:"Pretendard",sans-serif}
@@ -3018,7 +3019,7 @@
                                 <span class="petlog-dual-label">성향 분석</span>
                                 <div class="petlog-dual-body">
                                   <span class="petlog-dual-icon-wrap petlog-dual-icon-wrap--brain" aria-hidden="true">
-                                    <span class="petlog-dual-mini-emoji">🧠</span>
+                                    <span class="petlog-dual-mini-emoji"><img src="icons/petlog/AI_report.png" alt="" width="22" height="22" decoding="async"></span>
                                   </span>
                                   <div class="petlog-dual-text">
                                     <span class="petlog-dual-mini-name">AI 산책 리포트</span>
@@ -3059,7 +3060,7 @@
                       <div class="petlog-badge-title" id="petlogBadgeTitle">보리의 뱃지</div>
                       <div class="petlog-badge-sub" id="petlogBadgeSub">38일 연속 산책 달성 중!</div>
                     </div>
-                    <img class="petlog-badge-art" src="기본 강아지.png" alt="" id="petlogBadgeArt" decoding="async">
+                    <img class="petlog-badge-art" src="icons/petlog/뱃지.png" alt="" id="petlogBadgeArt" decoding="async">
                   </div>
                 </div>
 
@@ -8851,6 +8852,40 @@
         REC: "회복력", DEF: "경계성", ATT: "의존성",
       };
 
+      const PETLOG_TYPE_IMAGES = {
+        observer: "icons/petlog/관찰자형.png",
+      };
+
+      function renderPetlogTypeIcon(el, typeId, emojiFallback) {
+        if (!el) return;
+        const src = typeId && PETLOG_TYPE_IMAGES[typeId];
+        if (src) {
+          el.innerHTML = '<img src="' + src + '" alt="" width="22" height="22" decoding="async">';
+        } else {
+          el.textContent = emojiFallback || "🐶";
+        }
+      }
+
+      function applyResultTypeArt(type) {
+        const mascotEl = document.querySelector('.view[data-view="dogInfoResult"] .result-hero-mascot');
+        const emojiEl = document.getElementById("resultEmoji");
+        const src = type && type.id ? PETLOG_TYPE_IMAGES[type.id] : "";
+        if (mascotEl && src) {
+          mascotEl.src = src;
+          mascotEl.style.display = "block";
+          if (emojiEl) emojiEl.style.display = "none";
+        } else {
+          if (mascotEl) {
+            mascotEl.src = "기본 강아지.png";
+            mascotEl.style.display = "block";
+          }
+          if (emojiEl) {
+            emojiEl.style.display = "";
+            emojiEl.textContent = (type && type.emoji) || "🐶";
+          }
+        }
+      }
+
       // 유형 정의
       const TYPES = [
         {
@@ -9053,7 +9088,7 @@
         const descEl = document.getElementById("resultDesc");
         const tagsEl = document.getElementById("resultTags");
         const axesEl = document.getElementById("resultAxes");
-        if (emojiEl) emojiEl.textContent = type.emoji;
+        applyResultTypeArt(type);
         if (nameEl) nameEl.innerHTML = formatTypeNameHtml(type.name);
         if (taglineEl) taglineEl.innerHTML = formatKoreanPhraseWrapHtml(type.tagline);
         if (descEl) descEl.textContent = type.desc;
@@ -9271,10 +9306,7 @@
         const streak = getWalkStreakCount();
         if (titleEl) titleEl.textContent = dogName + "의 뱃지";
         if (subEl) subEl.textContent = streak + "일 연속 산책 달성 중!";
-        if (artEl) {
-          const avatar = document.querySelector('.petlog-carousel-slide--base .petlog-avatar img');
-          if (avatar && avatar.getAttribute("src")) artEl.src = avatar.getAttribute("src");
-        }
+        if (artEl) artEl.src = "icons/petlog/뱃지.png";
       }
 
       function syncPetlogSections() {
@@ -9297,7 +9329,7 @@
           const emojiEl = document.getElementById("petPersonalityEmoji");
           const nameEl = document.getElementById("petPersonalityName");
           const taglineEl = document.getElementById("petPersonalityTagline");
-          if (emojiEl) emojiEl.textContent = personality.emoji;
+          renderPetlogTypeIcon(emojiEl, personality.id, personality.emoji);
           if (nameEl) nameEl.textContent = personality.name;
           if (taglineEl) taglineEl.textContent = personality.tagline;
         } else {
@@ -9379,7 +9411,7 @@
                 const em = btns[0].querySelector(".petlog-dual-mini-emoji");
                 const nm = btns[0].querySelector(".petlog-dual-mini-name");
                 const tg = btns[0].querySelector(".petlog-dual-mini-tag");
-                if (em) em.textContent = p.emoji || "🐶";
+                if (em) renderPetlogTypeIcon(em, p.id, p.emoji || "🐶");
                 if (nm) nm.textContent = p.name;
                 if (tg) tg.textContent = p.tagline || "";
               }
