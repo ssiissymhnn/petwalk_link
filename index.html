@@ -13,7 +13,9 @@
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
   <style>
     :root { --main:#10A34E; --point:#19B23A; --soft-mint:#C9FAD4; --black:#1e1e1e; --white:#FFFFFF; --sub:#7c7c7c; --sep:#f3f3f3; --bg:#ffffff; --card:#FFFFFF; --text:#1e1e1e; --muted:var(--sub); --primary:var(--main); --primary-dark:#096E32; --line:rgba(0,0,0,.08); --shadow:0 4px 14px rgba(0,0,0,.1); --radius:16px; --device-w:393px; --device-h:852px; --phone-shell-w:421px; --phone-shell-h:886px; --phone-display-scale:min(0.78, calc((100vh - 72px) / var(--phone-shell-h)), calc((100vw - 48px) / var(--phone-shell-w))); --accent:#10A34E; --accent-alt:#19B23A; --surface:#d9d9d9; --surface-alt:#cdcdcd; --surface-3:#eeeeef; --surface-4:#ebf7ec; --bg-alt:#ffffff; --bg-3:#f8fef8; --border:#919093; --border-alt:#999999; --text-secondary:#303030; --text-secondary-alt:#515151; --text-tertiary:#7c7c7c; --elevation-1:0px -2px 2px 1px rgba(0,0,0,0.02); --elevation-2:0px 1px 4px 0px rgba(12,12,13,0.05),0px 1px 4px 0px rgba(12,12,13,0.1); --shadow-black-main:0px 2px 8px 0px rgba(0,0,0,0.04); --shadow-black-stress:0px 4px 14px 0px rgba(0,0,0,0.1); --shadow-green-main:0px 6px 16px 0px rgba(16,163,78,0.12); --shadow-green-stress:0px 8px 22px 0px rgba(16,163,78,0.24); --border-3:#989da1; --accent-53:#9747ff; --space-15:15px; --space-30:30px; --space-52:52px; --tab-page-pad-x:20px;--tab-page-pad-top:18px; --icon-xs:16px; --icon-sm:20px; --icon-md:24px; --icon-lg:28px; --icon-box-sm:32px; --icon-box-md:34px; --icon-mypage:20px; --icon-box-mypage:30px; --icon-tab-walk:28px; --cal-dot-size:6px; }
-    @property --walk-sheet-peek{syntax:'<length>';inherits:true;initial-value:126px}
+    @property --walk-sheet-collapsed-peek{syntax:'<length>';inherits:true;initial-value:118px}
+    @property --walk-sheet-expand-progress{syntax:'<number>';inherits:true;initial-value:0}
+    @property --walk-fab-expand-progress{syntax:'<number>';inherits:true;initial-value:0}
     *{box-sizing:border-box} body{margin:0;min-height:100vh;font-family:"Pretendard","Inter",-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text)}
     .tab-hit .tab-ico img,.home-stat-ico img,.home-quick-paw img,.wesen-notice-ico img,.schedule-type-btn .schedule-type-ico img,.home-schedule-ico img,.journal-schedule-ico img,.timeslot-chip .ico img{width:var(--icon-md);height:var(--icon-md);object-fit:contain;display:block}
     .mypage-row-ico img,.toggle-row-ico img{width:var(--icon-mypage);height:var(--icon-mypage);object-fit:contain;display:block}
@@ -1319,6 +1321,11 @@
     }
     .petlog-profile-head{display:flex;align-items:flex-start;gap:8px;width:100%;position:relative;z-index:1}
     .petlog-profile-inner{display:flex;align-items:center;gap:0;position:relative;z-index:1;flex:1;min-width:0}
+    .petlog-profile-tap{
+      border:none;background:transparent;cursor:pointer;text-align:left;font-family:inherit;padding:0;
+      flex:1;min-width:0;display:flex;align-items:center;gap:0;color:inherit;
+    }
+    .petlog-profile-tap:active{opacity:.92}
     .petlog-profile-add-slot{flex-shrink:0;align-self:flex-start;display:flex;align-items:center;gap:8px;margin-left:auto}
     .petlog-card-corner-add{position:relative;top:auto;right:auto;left:auto;z-index:3;padding:6px 10px;font-size:10px;font-weight:800;cursor:pointer;font-family:inherit;line-height:1.2;background:rgba(255,255,255,.92);border:1px solid #eeeeef;color:#10a34e;border-radius:8px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.06)}
     .petlog-card-corner-add:active{background:#f3fbf5}
@@ -1344,14 +1351,20 @@
     .petlog-badge-dock{flex-shrink:0;padding:6px 0 4px;background:#ffffff;border-top:1px solid #f3f3f3}
     .petlog-section-card{background:#ffffff;border-radius:16px;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.04);padding:14px 14px 12px;text-align:left;font-family:inherit}
     .petlog-section-title{font-size:12px;font-weight:700;color:#000000;margin:0 0 10px;font-family:"Pretendard",sans-serif;letter-spacing:-.01em}
-    .petlog-monthly-card{width:100%;cursor:pointer;border:1px solid #eeeeef;transition:border-color .12s ease,background .12s ease}
-    .petlog-monthly-card:hover{border-color:#dbf1db;background:#f8fef8}
+    .petlog-section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+    .petlog-section-head .petlog-section-title{margin-bottom:0}
+    .petlog-monthly-card{width:100%;border:1px solid #eeeeef}
     .petlog-mini-cal{display:flex;flex-direction:column;gap:4px}
     .petlog-mini-dow,.petlog-mini-days{display:grid;grid-template-columns:repeat(7,1fr);gap:0}
     .petlog-mini-dow span{text-align:center;font-size:9px;font-weight:600;color:#898a8c;font-family:"Pretendard",sans-serif;line-height:1.3}
-    .petlog-mini-day{text-align:center;font-size:11px;font-weight:600;color:#4c5056;line-height:1;padding:4px 0;font-family:"Pretendard",sans-serif}
-    .petlog-mini-day.is-today{color:#10a34e;font-weight:800}
-    .petlog-mini-day.has-walk{position:relative}
+    .petlog-mini-day{display:flex;align-items:center;justify-content:center;padding:2px 0;height:26px;font-family:"Pretendard",sans-serif}
+    .petlog-mini-day-num{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:600;color:#4c5056;line-height:1;
+    }
+    .petlog-mini-day.is-today .petlog-mini-day-num{color:#10a34e;font-weight:800}
+    .petlog-mini-day.has-walk .petlog-mini-day-num{background:#10a34e;color:#fff;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,.12)}
+    .petlog-mini-day.is-today.has-walk .petlog-mini-day-num{color:#fff}
     .petlog-mini-dog-dots{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:8px;min-height:22px}
     .petlog-mini-dog-dot{width:18px;height:18px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.1);background:var(--dog-color,#10a34e);flex-shrink:0}
     .petlog-recent-card{margin-top:4px}
@@ -1410,8 +1423,8 @@
     .view[data-view="pet_walk_monthly"] .cal-agenda-list::-webkit-scrollbar{display:none;width:0;height:0}
     .petlog-cal-screen .walk-section-title,
     .petlog-cal-screen .stub-muted{margin-left:0;margin-right:0}
-    .petlog-cal-head{margin-bottom:10px}
-    .petlog-cal-title-wrap{min-width:0}
+    .petlog-cal-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+    .petlog-cal-title-wrap{min-width:0;flex:1}
     .petlog-cal-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
     .petlog-cal-toolbar .cal-dog-filter{flex:1;min-width:0;margin-bottom:0}
     .petlog-cal-actions{display:flex;flex-shrink:0;align-items:center;gap:6px}
@@ -1754,8 +1767,8 @@
     /* Walk live v2 tweaks */
     .screen--tabs .view[data-view="walk"]{padding-bottom:0}
     .view[data-view="walk"]{padding:0}
-    .walk-live{height:100%;border-radius:0;position:relative;overflow:hidden;--walk-motion-duration:.26s;--walk-motion-ease:cubic-bezier(.4,0,.2,1);--walk-sheet-peek:126px;--walk-sheet-expanded-px:520px;--walk-hud-lift:calc(var(--walk-sheet-peek) + 12px);--walk-fab-size:44px;--walk-loc-size:42px;--walk-hud-gap:10px;transition:--walk-sheet-peek var(--walk-motion-duration) var(--walk-motion-ease)}
-    .walk-live.sheet-expanded{--walk-sheet-peek:var(--walk-sheet-expanded-px)}
+    .walk-live{height:100%;border-radius:0;position:relative;overflow:hidden;--walk-motion-duration:.26s;--walk-fab-rise-duration:.16s;--walk-fab-fall-duration:.56s;--walk-motion-ease:cubic-bezier(.4,0,.2,1);--walk-sheet-collapsed-peek:118px;--walk-sheet-expanded-px:620px;--walk-sheet-expand-progress:0;--walk-fab-expand-progress:0;--walk-sheet-active-height:calc(var(--walk-sheet-collapsed-peek) + (var(--walk-sheet-expanded-px) - var(--walk-sheet-collapsed-peek)) * var(--walk-sheet-expand-progress));--walk-sheet-handle-h:22px;--walk-sheet-top-h:90px;--walk-fab-stack-gap:8px;--walk-fab-base-boost:22px;--walk-fab-expanded-rise:200px;--walk-fab-base-bottom:calc(var(--walk-sheet-collapsed-peek) - var(--walk-sheet-handle-h) + var(--walk-fab-stack-gap) + var(--walk-fab-base-boost));--walk-fab-bottom:calc(var(--walk-fab-base-bottom) + var(--walk-fab-expanded-rise) * var(--walk-fab-expand-progress));--walk-fab-size:44px;--walk-loc-size:42px;--walk-hud-gap:8px;transition:--walk-sheet-expand-progress var(--walk-motion-duration) var(--walk-motion-ease),--walk-fab-expand-progress var(--walk-fab-fall-duration) var(--walk-motion-ease)}
+    .walk-live.sheet-expanded{--walk-sheet-expand-progress:1;--walk-fab-expand-progress:1;transition:--walk-sheet-expand-progress var(--walk-motion-duration) var(--walk-motion-ease),--walk-fab-expand-progress var(--walk-fab-rise-duration) var(--walk-motion-ease)}
     .walk-live-map-shell{position:absolute;inset:0;min-height:0}
     .walk-live-map{inset:0}
     .walk-live-menu-item{color:var(--text)}
@@ -1776,7 +1789,7 @@
     .walk-hud-meta{font-size:9.4px;font-weight:500;color:#b3b3b3}
     .walk-live-hud-weather{
       position:absolute;left:14px;z-index:6;width:45px;padding:8px 7px 7px;
-      bottom:calc(var(--walk-hud-lift) + var(--walk-loc-size) + var(--walk-hud-gap));
+      bottom:calc(var(--walk-fab-bottom) + var(--walk-loc-size) + var(--walk-hud-gap));
       display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;pointer-events:none;
       background:rgba(255,255,255,.93);border:1px solid rgba(255,255,255,.76);border-radius:20px;
       box-shadow:0 7px 19px rgba(27,50,74,.15),0 1px 5px rgba(0,0,0,.07);backdrop-filter:blur(10px);
@@ -1805,13 +1818,15 @@
     .walk-weather-divider{width:29px;height:5px;border-radius:999px;background:linear-gradient(90deg,#45B7FF,#2F8BFF);box-shadow:0 2px 5px rgba(47,139,255,.24)}
     .walk-live-hud-weather #walkHudWeatherDesc{font-weight:800;font-size:8px;color:#8A8F98;line-height:1}
     .walk-live-fab-loc{
-      position:absolute;left:14px;bottom:var(--walk-hud-lift);z-index:6;width:var(--walk-loc-size);height:var(--walk-loc-size);border:none;border-radius:50%;
+      position:absolute;left:14px;z-index:6;width:var(--walk-loc-size);height:var(--walk-loc-size);border:none;border-radius:50%;
+      bottom:var(--walk-fab-bottom);
       background:rgba(255,255,255,.95);box-shadow:0 2px 10px rgba(0,0,0,.12);cursor:pointer;
-      display:flex;align-items:center;justify-content:center;padding:0
+      display:flex;align-items:center;justify-content:center;padding:0;
     }
     .walk-live-fab-stack{
-      position:absolute;right:12px;bottom:var(--walk-hud-lift);z-index:6;
-      display:flex;flex-direction:column-reverse;align-items:center;gap:10px
+      position:absolute;right:12px;z-index:6;
+      bottom:var(--walk-fab-bottom);
+      display:flex;flex-direction:column-reverse;align-items:center;gap:8px;
     }
     .walk-live-fab-end{
       width:var(--walk-fab-size);height:var(--walk-fab-size);border:none;border-radius:50%;background:rgba(255,255,255,.95);
@@ -1910,7 +1925,7 @@
       position:absolute;left:0;right:0;bottom:0;
       background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -8px 28px rgba(0,0,0,.12);z-index:5;
       display:flex;flex-direction:column;overflow:hidden;
-      height:var(--walk-sheet-peek);
+      height:var(--walk-sheet-active-height);
     }
     .walk-live-sheet.state-collapsed .walk-live-sheet-handle{display:flex}
     .walk-live-sheet.state-collapsed .walk-live-sheet-scroll{display:none}
@@ -1988,6 +2003,7 @@
     .traits-skip-top-btn:hover{color:#515151;border-color:#d0d3d8;background:#fafafa}
     .traits-skip-top-btn:active{background:#f3f4f6}
     .wesen-skip-confirm-overlay{position:absolute;inset:0;z-index:55;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:0 28px;backdrop-filter:blur(2px)}
+    #profileDiscardConfirmOverlay,#petDiscardConfirmOverlay{z-index:9100}
     .wesen-skip-confirm-overlay.show{display:flex}
     .wesen-skip-confirm-box{background:#fff;border-radius:20px;padding:24px 20px 18px;width:100%;max-width:300px;box-shadow:0 12px 40px rgba(0,0,0,.18);text-align:center}
     .wesen-skip-confirm-title{font-size:16px;font-weight:900;color:var(--text);margin:0 0 8px;line-height:1.35}
@@ -2920,54 +2936,67 @@
               </div>
             </div>
 
-            <!-- PET: 반려견 정보 수정 -->
+            <!-- PET: 반려견 정보 수정 (마이페이지 프로필과 별도) -->
             <div class="view" data-view="pet_edit" data-tab-root="pet">
               <div class="mypage-sub-screen">
                 <div class="topbar">
-                  <button class="iconbtn" data-nav="pet_monthly">←</button>
+                  <button type="button" class="iconbtn" id="petEditBackBtn" aria-label="뒤로">←</button>
                   <span class="muted">정보 수정</span>
                 </div>
                 <p class="mypage-subtitle">반려견 정보 수정</p>
-                <p class="stub-muted">보리의 정보를 수정할 수 있어요.</p>
+                <p class="stub-muted" id="petEditHint">반려견의 정보를 수정할 수 있어요.</p>
+                <div class="mypage-edit-avatar-wrap">
+                  <button type="button" class="mypage-edit-avatar-btn" id="petEditAvatarBtn" aria-label="반려견 사진 변경">
+                    <div class="mypage-edit-avatar" id="petEditAvatarPreview">
+                      <img id="petEditAvatarImg" src="기본 강아지.png" alt="" width="88" height="88" decoding="async" />
+                    </div>
+                    <span class="mypage-edit-avatar-label">프로필 사진 변경</span>
+                  </button>
+                  <input type="file" id="petEditAvatarInput" accept="image/*,.heic,.heif" hidden />
+                </div>
                 <div class="form">
                   <div class="field">
                     <div class="label">이름</div>
-                    <input class="input" type="text" value="보리" />
+                    <input class="input" type="text" id="petEditNameInput" placeholder="반려견 이름" />
                   </div>
                   <div class="field">
                     <div class="label">나이</div>
-                    <select class="select">
-                      <option>1살</option><option selected>2살</option><option>3살</option><option>4살</option><option>5살</option>
+                    <select class="select" id="petEditAgeSelect">
+                      <option>1살</option><option>2살</option><option>3살</option><option>4살</option><option>5살</option>
                       <option>6살</option><option>7살</option><option>8살</option><option>9살</option><option>10살</option>
+                      <option>11살</option><option>12살</option><option>13살</option><option>14살</option><option>15살</option>
+                      <option>16살</option><option>17살</option><option>18살</option><option>19살</option><option>20살</option>
+                      <option>20+</option>
                     </select>
                   </div>
                   <div class="field">
                     <div class="label">견종</div>
-                    <select class="select">
-                      <option>믹스견</option><option>말티즈</option><option selected>푸들</option><option>포메라니안</option>
-                      <option>치와와</option><option>시츄</option><option>비숑프리제</option><option>골든리트리버</option>
-                      <option>진돗개</option><option>웰시코기</option><option>프렌치불도그</option><option>그 외</option>
+                    <select class="select" id="petEditBreedSelect">
+                      <option>믹스견</option><option>말티즈</option><option>푸들</option><option>포메라니안</option>
+                      <option>치와와</option><option>시츄</option><option>비숑프리제</option><option>요크셔테리어</option>
+                      <option>닥스훈트</option><option>웰시코기</option><option>비글</option><option>프렌치불도그</option>
+                      <option>시바이누</option><option>보더콜리</option><option>코커스패니얼</option><option>골든리트리버</option>
+                      <option>래브라도리트리버</option><option>진돗개</option><option>사모예드</option><option>시베리안허스키</option>
+                      <option>도베르만</option><option>로트와일러</option><option>셰틀랜드쉽독</option><option>미니어처핀셔</option>
+                      <option>퍼그</option><option>그 외</option>
                     </select>
                   </div>
                   <div class="field">
                     <div class="label">성별</div>
-                    <select class="select">
-                      <option selected>암컷</option><option>수컷</option>
+                    <select class="select" id="petEditSexSelect">
+                      <option>암컷</option><option>수컷</option>
                     </select>
                   </div>
                   <div class="field">
                     <div class="label">몸무게 (kg)</div>
-                    <input class="input" type="number" value="5.2" />
+                    <input class="input" type="number" id="petEditWeightInput" placeholder="예: 5.2" step="0.1" min="0" />
                   </div>
                   <div class="field">
                     <div class="label">성격 메모</div>
-                    <input class="input" type="text" value="활발하고 호기심 많음" />
-                  </div>
-                  <div class="actions" style="margin-top:18px;">
-                    <button class="cta secondary" data-nav="pet_monthly" style="flex:1;">취소</button>
-                    <button class="cta" data-nav="pet_monthly" style="flex:1;">저장하기</button>
+                    <input class="input" type="text" id="petEditMemoInput" placeholder="예: 활발하고 호기심 많음" />
                   </div>
                 </div>
+                <button type="button" class="cta" id="petEditSaveBtn" style="margin-top:12px">저장하고 돌아가기</button>
               </div>
             </div>
 
@@ -2983,15 +3012,15 @@
                         <div class="petlog-profile-card petlog-profile-card-main">
                           <div class="petlog-profile-banner">
                             <div class="petlog-profile-head">
-                              <div class="petlog-profile-inner">
+                              <button type="button" class="petlog-profile-inner petlog-profile-tap" data-nav="pet_edit" data-pet-id="primary" aria-label="반려견 프로필 수정">
                                 <div class="petlog-avatar">
-                                  <img src="기본 강아지.png" alt="반려견 프로필" />
+                                  <img id="petDogAvatarImg" src="기본 강아지.png" alt="반려견 프로필" />
                                 </div>
                                 <div class="petlog-profile-info">
                                   <div class="petlog-profile-name" id="petDogName">보리</div>
                                   <div class="petlog-profile-sub" id="petDogSub">푸들 · 2살 · 암컷</div>
                                 </div>
-                              </div>
+                              </button>
                               <div class="petlog-profile-add-slot"></div>
                             </div>
                             <div class="petlog-dual">
@@ -3044,11 +3073,14 @@
                 </div>
 
                 <div class="petlog-sections">
-                  <button type="button" class="petlog-section-card petlog-monthly-card" data-nav="pet_walk_monthly">
-                    <h3 class="petlog-section-title">월간 산책 기록</h3>
+                  <div class="petlog-section-card petlog-monthly-card">
+                    <div class="petlog-section-head">
+                      <h3 class="petlog-section-title">월간 산책 기록</h3>
+                      <button type="button" class="home-section-action" data-nav="pet_walk_monthly">자세히 보기 →</button>
+                    </div>
                     <div class="petlog-mini-cal" id="petlogMiniCal" aria-hidden="true"></div>
                     <div class="petlog-mini-dog-dots" id="petlogMiniDogDots" aria-hidden="true"></div>
-                  </button>
+                  </div>
 
                   <div class="petlog-section-card petlog-recent-card">
                     <h3 class="petlog-section-title">최근 산책 코스</h3>
@@ -3063,8 +3095,8 @@
                       <img src="icons/home/top/streak-days.png" alt="" width="22" height="22" decoding="async">
                     </div>
                     <div class="petlog-badge-body">
-                      <div class="petlog-badge-title" id="petlogBadgeTitle">보리의 뱃지</div>
-                      <div class="petlog-badge-sub" id="petlogBadgeSub">38일 연속 산책 달성 중!</div>
+                      <div class="petlog-badge-title" id="petlogBadgeTitle">반려견의 뱃지</div>
+                      <div class="petlog-badge-sub" id="petlogBadgeSub">0일 연속 산책 달성 중!</div>
                     </div>
                     <img class="petlog-badge-art" src="icons/petlog/badge.png" alt="" id="petlogBadgeArt" decoding="async">
                   </div>
@@ -3084,6 +3116,7 @@
                   <div class="petlog-cal-title-wrap">
                     <p class="mypage-subtitle" style="margin-bottom:4px;">월간 산책 기록</p>
                   </div>
+                  <button type="button" class="home-section-action" id="petWalkMonthlyDetailBtn" style="flex-shrink:0;">자세히 보기 →</button>
                 </div>
 
                 <div class="petlog-cal-toolbar">
@@ -3449,6 +3482,10 @@
                     </div>
                     <button type="button" class="walk-live-fab-loc" id="walkLocateBtn" aria-label="현재 위치 보기"><img class="walk-live-fab-img" src="icons/walk_live/map/location.png" alt="" width="24" height="24"></button>
                     <div class="walk-live-fab-stack">
+                      <button type="button" class="walk-live-fab-voice" id="voiceActionBtn" aria-label="음성 안내">
+                        <span class="voice-pulse"></span>
+                        <span id="voiceActionIco">🔊</span>
+                      </button>
                       <button type="button" class="walk-live-fab-end" id="walkEndFab" aria-label="산책 종료">
                         <span class="walk-live-fab-end-ico" aria-hidden="true"></span>
                         <span class="walk-live-fab-end-label">종료</span>
@@ -3933,7 +3970,7 @@
             <div class="view" data-view="mypage_edit" data-tab-root="mypage">
               <div class="mypage-sub-screen">
                 <div class="topbar">
-                  <button class="iconbtn" data-nav="mypage">←</button>
+                  <button type="button" class="iconbtn" id="mypageEditBackBtn" aria-label="뒤로">←</button>
                   <span class="muted">프로필</span>
                 </div>
                 <p class="mypage-subtitle">내 정보 수정</p>
@@ -3945,7 +3982,7 @@
                     </div>
                     <span class="mypage-edit-avatar-label">프로필 사진 변경</span>
                   </button>
-                  <input type="file" id="editAvatarInput" accept="image/*" hidden />
+                  <input type="file" id="editAvatarInput" accept="image/*,.heic,.heif" hidden />
                 </div>
                 <div class="card">
                   <div class="label">닉네임</div>
@@ -4211,7 +4248,19 @@
             </div>
           </div>
 
-          <!-- 프로필 수정 나가기 확인 -->
+          <!-- 반려견 정보 수정 나가기 확인 -->
+          <div class="wesen-skip-confirm-overlay" id="petDiscardConfirmOverlay" aria-hidden="true">
+            <div class="wesen-skip-confirm-box" role="dialog" aria-modal="true" aria-labelledby="petDiscardConfirmTitle">
+              <h3 class="wesen-skip-confirm-title" id="petDiscardConfirmTitle">저장하지 않고 나가시겠어요?</h3>
+              <p class="wesen-skip-confirm-desc">변경한 내용이 저장되지 않았어요.<br>나가면 수정 내용이 사라집니다.</p>
+              <div class="wesen-skip-confirm-actions">
+                <button type="button" class="wesen-skip-confirm-stay" id="petDiscardConfirmStay">계속 수정하기</button>
+                <button type="button" class="wesen-skip-confirm-go" id="petDiscardConfirmLeave">나가기</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 마이페이지 프로필 수정 나가기 확인 -->
           <div class="wesen-skip-confirm-overlay" id="profileDiscardConfirmOverlay" aria-hidden="true">
             <div class="wesen-skip-confirm-box" role="dialog" aria-modal="true" aria-labelledby="profileDiscardConfirmTitle">
               <h3 class="wesen-skip-confirm-title" id="profileDiscardConfirmTitle">저장하지 않고 나가시겠어요?</h3>
@@ -4357,13 +4406,16 @@
       let rerouteTimer = null;
       let reportCheckTimer = null;
       const state = {
-        dogName: "보리",
+        dogName: "",
         userName: "",
         userAge: "",
         userGender: "",
         userNickname: "",
         userAvatar: "",
         primaryPetSub: "",
+        primaryPetAvatar: "",
+        primaryPetWeight: "",
+        primaryPetMemo: "",
         petPersonality: null,
         petAddQuizResult: null,
         dogTraitsFrom: null,
@@ -4396,8 +4448,11 @@
       const PETLOG_EXTRA_PETS_KEY = "petwalk_extra_pet_names";
       const PRIMARY_PET_KEY = "petwalk_primary_pet";
       const USER_PROFILE_KEY = "petwalk_user_profile";
+      const VOICE_SETTINGS_KEY = "petwalk_voice_settings";
       const DEFAULT_USER_AVATAR = "petwalk-mascot.png";
+      const DEFAULT_PET_AVATAR = "기본 강아지.png";
       const MANUAL_WALK_RECORDS_KEY = "petwalk_manual_walk_records";
+      const COMPLETED_WALK_RECORDS_KEY = "petwalk_completed_walk_records";
       const SCHEDULES_KEY = "petwalk_schedules";
       const SCHEDULE_LOGS_KEY = "petwalk_schedule_logs";
       const FONT_SIZE_KEY = "petwalk_font_size";
@@ -4622,12 +4677,137 @@
         return [pb, pa, ps].filter(Boolean).join(" · ");
       }
 
-      function saveUserProfileToStorage() {
+      function resolveProfileAvatarForDisplay(avatar) {
+        const v = (avatar || "").trim();
+        if (!v) return DEFAULT_USER_AVATAR;
+        if (v.startsWith("data:") || v.startsWith("blob:")) return v;
+        if (v === DEFAULT_USER_AVATAR) return DEFAULT_USER_AVATAR;
         try {
-          localStorage.setItem(USER_PROFILE_KEY, JSON.stringify({
-            nickname: state.userNickname || "",
-            avatar: state.userAvatar || DEFAULT_USER_AVATAR,
+          const path = new URL(v, window.location.href).pathname;
+          if (path.endsWith("/" + DEFAULT_USER_AVATAR) || path.endsWith(DEFAULT_USER_AVATAR)) return DEFAULT_USER_AVATAR;
+        } catch (_) {}
+        return v;
+      }
+
+      function normalizeProfileAvatarForStorage(src) {
+        const v = (src || "").trim();
+        if (!v) return DEFAULT_USER_AVATAR;
+        if (v.startsWith("data:") || v.startsWith("blob:")) return v;
+        if (v === DEFAULT_USER_AVATAR) return DEFAULT_USER_AVATAR;
+        try {
+          const path = new URL(v, window.location.href).pathname;
+          if (path.endsWith("/" + DEFAULT_USER_AVATAR) || path.endsWith(DEFAULT_USER_AVATAR)) return DEFAULT_USER_AVATAR;
+        } catch (_) {}
+        return v;
+      }
+
+      function setProfileAvatarElement(img, avatar) {
+        if (!img) return;
+        const src = resolveProfileAvatarForDisplay(avatar);
+        if (img.getAttribute("src") !== src) img.setAttribute("src", src);
+      }
+
+      function saveUserProfileToStorage() {
+        const payload = {
+          nickname: state.userNickname || "",
+          avatar: state.userAvatar || DEFAULT_USER_AVATAR,
+        };
+        try {
+          localStorage.setItem(USER_PROFILE_KEY, JSON.stringify(payload));
+          return { ok: true, avatarSaved: true };
+        } catch (_) {
+          try {
+            localStorage.setItem(USER_PROFILE_KEY, JSON.stringify({
+              nickname: payload.nickname,
+              avatar: DEFAULT_USER_AVATAR,
+            }));
+            return { ok: true, avatarSaved: false };
+          } catch (_) {
+            return { ok: false, avatarSaved: false };
+          }
+        }
+      }
+
+      function isImageUploadFile(file) {
+        if (!file) return false;
+        if (file.type && file.type.startsWith("image/")) return true;
+        const name = (file.name || "").toLowerCase();
+        return /\.(heic|heif|jpg|jpeg|png|gif|webp|bmp)$/i.test(name);
+      }
+
+      function compressImageDataUrl(dataUrl, maxSize, quality) {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            let w = img.width;
+            let h = img.height;
+            const max = maxSize || 400;
+            if (w > max || h > max) {
+              if (w > h) {
+                h = Math.round(h * max / w);
+                w = max;
+              } else {
+                w = Math.round(w * max / h);
+                h = max;
+              }
+            }
+            const canvas = document.createElement("canvas");
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext("2d");
+            if (!ctx) {
+              reject(new Error("canvas"));
+              return;
+            }
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL("image/jpeg", quality || 0.82));
+          };
+          img.onerror = () => reject(new Error("image"));
+          img.src = dataUrl;
+        });
+      }
+
+      function compressImageFile(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            compressImageDataUrl(reader.result, 400, 0.82)
+              .then(resolve)
+              .catch(reject);
+          };
+          reader.onerror = () => reject(new Error("read"));
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function saveVoiceSettingsToStorage() {
+        try {
+          const toggle = document.getElementById("toggleVoiceDefault");
+          localStorage.setItem(VOICE_SETTINGS_KEY, JSON.stringify({
+            voiceOnDefault: !!(toggle && toggle.checked),
+            voiceStyle: voiceStyle || "male_calm",
           }));
+        } catch (_) {}
+      }
+
+      function loadVoiceSettingsFromStorage() {
+        try {
+          const raw = localStorage.getItem(VOICE_SETTINGS_KEY);
+          if (!raw) return;
+          const data = JSON.parse(raw);
+          if (data && typeof data.voiceStyle === "string" && data.voiceStyle) {
+            voiceStyle = data.voiceStyle;
+          }
+          const toggle = document.getElementById("toggleVoiceDefault");
+          if (toggle && typeof data.voiceOnDefault === "boolean") {
+            toggle.checked = data.voiceOnDefault;
+          }
+          const voiceStyleGroup = document.getElementById("voiceStyleGroup");
+          if (voiceStyleGroup) {
+            voiceStyleGroup.querySelectorAll(".voice-style-opt").forEach((btn) => {
+              btn.classList.toggle("selected", btn.dataset.voiceStyle === voiceStyle);
+            });
+          }
         } catch (_) {}
       }
 
@@ -4654,11 +4834,12 @@
         const avatarImg = document.getElementById("mypageAvatarImg");
         const nick = (state.userNickname || "").trim();
         if (profileName) profileName.textContent = nick || "보호자";
-        if (avatarImg) avatarImg.src = state.userAvatar || DEFAULT_USER_AVATAR;
+        setProfileAvatarElement(avatarImg, state.userAvatar);
         syncMypageProfileSub();
       }
 
       let profileEditBaseline = null;
+      let profileEditDirty = false;
       function getActiveViewName() {
         const active = document.querySelector(".view.active[data-view]");
         return active ? active.dataset.view : null;
@@ -4666,23 +4847,66 @@
       function getCurrentProfileEditValues() {
         const editInput = document.getElementById("editNicknameInput");
         const editAvatarImg = document.getElementById("editAvatarImg");
+        const rawAvatar = editAvatarImg
+          ? (editAvatarImg.getAttribute("src") || editAvatarImg.src || DEFAULT_USER_AVATAR)
+          : DEFAULT_USER_AVATAR;
         return {
           nickname: editInput ? editInput.value.trim() : "",
-          avatar: (editAvatarImg && editAvatarImg.src) || DEFAULT_USER_AVATAR,
+          avatar: normalizeProfileAvatarForStorage(rawAvatar),
         };
+      }
+      function profileEditValuesEqual(a, b) {
+        if (!a || !b) return false;
+        return (a.nickname || "") === (b.nickname || "")
+          && resolveProfileAvatarForDisplay(a.avatar) === resolveProfileAvatarForDisplay(b.avatar);
       }
       function initProfileEditBaseline() {
         const editInput = document.getElementById("editNicknameInput");
         const editAvatarImg = document.getElementById("editAvatarImg");
         if (editInput) editInput.value = state.userNickname || "";
-        if (editAvatarImg) editAvatarImg.src = state.userAvatar || DEFAULT_USER_AVATAR;
+        setProfileAvatarElement(editAvatarImg, state.userAvatar);
+        profileEditDirty = false;
         profileEditBaseline = getCurrentProfileEditValues();
       }
+      function markProfileEditDirty() {
+        profileEditDirty = true;
+      }
+      function saveProfileFromEditForm() {
+        const editInput = document.getElementById("editNicknameInput");
+        const newName = editInput ? editInput.value.trim() : "";
+        if (!newName) {
+          alert("닉네임을 입력해 주세요.");
+          return;
+        }
+        const draft = getCurrentProfileEditValues();
+        state.userNickname = newName;
+        state.userAvatar = draft.avatar;
+        const signupNick = document.getElementById("signupNicknameInput");
+        if (signupNick) signupNick.value = newName;
+        const saveResult = saveUserProfileToStorage();
+        profileEditBaseline = null;
+        profileEditDirty = false;
+        applyUserProfileToMypage();
+        setActiveView("mypage");
+        requestAnimationFrame(() => applyUserProfileToMypage());
+        if (!saveResult.ok) {
+          alert("프로필을 저장하지 못했어요. 잠시 후 다시 시도해 주세요.");
+          return;
+        }
+        if (!saveResult.avatarSaved && draft.avatar.startsWith("data:")) {
+          alert("닉네임은 저장되었어요. 프로필 사진이 너무 커서 사진은 저장하지 못했어요.");
+        }
+      }
       function hasUnsavedProfileEdit() {
+        if (profileEditDirty) return true;
         if (!profileEditBaseline) return false;
-        const current = getCurrentProfileEditValues();
-        return current.nickname !== profileEditBaseline.nickname
-          || current.avatar !== profileEditBaseline.avatar;
+        return !profileEditValuesEqual(getCurrentProfileEditValues(), profileEditBaseline);
+      }
+      function tryLeaveMypageProfileEdit(nav, tab) {
+        if (!confirmLeaveProfileEdit(nav, tab)) return false;
+        if (nav) setActiveView(nav);
+        else if (tab) setActiveView(tab === "walk" ? "walkHome" : tab === "pet" ? "pet_monthly" : tab);
+        return true;
       }
       let profileEditPendingNav = null;
       let profileEditPendingTab = null;
@@ -4715,6 +4939,7 @@
       }
       function completeProfileEditLeave() {
         profileEditBaseline = null;
+        profileEditDirty = false;
         hideProfileDiscardConfirm();
         const nav = profileEditPendingNav;
         const tab = profileEditPendingTab;
@@ -4730,6 +4955,105 @@
         saveUserProfileToStorage();
       }
 
+      function resolvePetAvatarForDisplay(avatar) {
+        const v = (avatar || "").trim();
+        if (!v) return DEFAULT_PET_AVATAR;
+        if (v.startsWith("data:") || v.startsWith("blob:")) return v;
+        if (v === DEFAULT_PET_AVATAR) return DEFAULT_PET_AVATAR;
+        try {
+          const path = new URL(v, window.location.href).pathname;
+          if (path.endsWith("/" + DEFAULT_PET_AVATAR) || path.endsWith(DEFAULT_PET_AVATAR)) return DEFAULT_PET_AVATAR;
+        } catch (_) {}
+        return v;
+      }
+
+      function normalizePetAvatarForStorage(src) {
+        const v = (src || "").trim();
+        if (!v) return DEFAULT_PET_AVATAR;
+        if (v.startsWith("data:") || v.startsWith("blob:")) return v;
+        if (v === DEFAULT_PET_AVATAR) return DEFAULT_PET_AVATAR;
+        try {
+          const path = new URL(v, window.location.href).pathname;
+          if (path.endsWith("/" + DEFAULT_PET_AVATAR) || path.endsWith(DEFAULT_PET_AVATAR)) return DEFAULT_PET_AVATAR;
+        } catch (_) {}
+        return v;
+      }
+
+      function setPetAvatarElement(img, avatar) {
+        if (!img) return;
+        const src = resolvePetAvatarForDisplay(avatar);
+        if (img.getAttribute("src") !== src) img.setAttribute("src", src);
+      }
+
+      function parsePrimaryPetSubline(sub) {
+        const parts = (sub || "").split("·").map((s) => s.trim()).filter(Boolean);
+        return { breed: parts[0] || "", age: parts[1] || "", sex: parts[2] || "" };
+      }
+
+      function getSelectLabel(sel) {
+        if (!sel || sel.selectedIndex < 0) return "";
+        const opt = sel.options[sel.selectedIndex];
+        if (!opt || !opt.value && !opt.text) return "";
+        return (opt.text || "").trim();
+      }
+
+      function setSelectByLabel(selectId, label) {
+        const sel = document.getElementById(selectId);
+        if (!sel || !label) return;
+        for (let i = 0; i < sel.options.length; i++) {
+          const opt = sel.options[i];
+          if ((opt.text || "").trim() === label || (opt.value || "").trim() === label) {
+            sel.selectedIndex = i;
+            return;
+          }
+        }
+      }
+
+      function getPetEditSubline() {
+        const breed = getSelectLabel(document.getElementById("petEditBreedSelect"));
+        const age = getSelectLabel(document.getElementById("petEditAgeSelect"));
+        const sex = getSelectLabel(document.getElementById("petEditSexSelect"));
+        return [breed, age, sex].filter(Boolean).join(" · ");
+      }
+
+      function savePrimaryPetToStorage() {
+        const payload = {
+          name: state.dogName || "",
+          sub: state.primaryPetSub || "",
+          avatar: state.primaryPetAvatar || DEFAULT_PET_AVATAR,
+          weight: state.primaryPetWeight || "",
+          memo: state.primaryPetMemo || "",
+        };
+        try {
+          localStorage.setItem(PRIMARY_PET_KEY, JSON.stringify(payload));
+          return { ok: true, avatarSaved: true };
+        } catch (_) {
+          try {
+            localStorage.setItem(PRIMARY_PET_KEY, JSON.stringify({
+              name: payload.name,
+              sub: payload.sub,
+              avatar: DEFAULT_PET_AVATAR,
+              weight: payload.weight,
+              memo: payload.memo,
+            }));
+            return { ok: true, avatarSaved: false };
+          } catch (_) {
+            return { ok: false, avatarSaved: false };
+          }
+        }
+      }
+
+      function syncPrimaryPetDisplay() {
+        syncPetDogName();
+        syncHomeDogName();
+        syncMypageProfileSub();
+        const traitsName = document.getElementById("traitsDogName");
+        const resultName = document.getElementById("resultDogName");
+        const safe = getPrimaryDogDisplayName();
+        if (traitsName) traitsName.textContent = safe;
+        if (resultName) resultName.textContent = safe;
+      }
+
       function savePrimaryPetProfileFromSignupForm() {
         const nickEl = document.getElementById("signupNicknameInput");
         if (nickEl) state.userNickname = nickEl.value.trim();
@@ -4737,11 +5061,10 @@
         const name = (nameIn && nameIn.value ? nameIn.value.trim() : "") || (state.dogName || "").trim() || "반려견";
         state.dogName = name;
         state.primaryPetSub = getDogInfoSubline();
+        if (!state.primaryPetAvatar) state.primaryPetAvatar = DEFAULT_PET_AVATAR;
         applyUserProfileToMypage();
         saveUserProfileToStorage();
-        try {
-          localStorage.setItem(PRIMARY_PET_KEY, JSON.stringify({ name: state.dogName, sub: state.primaryPetSub }));
-        } catch (_) {}
+        savePrimaryPetToStorage();
       }
 
       function loadPrimaryPetProfileFromStorage() {
@@ -4751,9 +5074,153 @@
           const j = JSON.parse(raw);
           if (j && typeof j.name === "string" && j.name.trim()) state.dogName = j.name.trim();
           if (j && typeof j.sub === "string") state.primaryPetSub = j.sub;
+          if (j && typeof j.avatar === "string" && j.avatar.trim()) state.primaryPetAvatar = j.avatar.trim();
+          if (j && typeof j.weight === "string") state.primaryPetWeight = j.weight;
+          if (j && typeof j.memo === "string") state.primaryPetMemo = j.memo;
           const nameIn = document.getElementById("dogNameInput");
           if (nameIn && state.dogName) nameIn.value = state.dogName;
         } catch (_) {}
+      }
+
+      let petEditBaseline = null;
+      let petEditDirty = false;
+      let petEditPendingNav = null;
+      let petEditPendingTab = null;
+
+      function getCurrentPetEditValues() {
+        const nameInput = document.getElementById("petEditNameInput");
+        const avatarImg = document.getElementById("petEditAvatarImg");
+        const rawAvatar = avatarImg
+          ? (avatarImg.getAttribute("src") || avatarImg.src || DEFAULT_PET_AVATAR)
+          : DEFAULT_PET_AVATAR;
+        return {
+          name: nameInput ? nameInput.value.trim() : "",
+          avatar: normalizePetAvatarForStorage(rawAvatar),
+          sub: getPetEditSubline(),
+          weight: (document.getElementById("petEditWeightInput") || {}).value || "",
+          memo: ((document.getElementById("petEditMemoInput") || {}).value || "").trim(),
+        };
+      }
+
+      function petEditValuesEqual(a, b) {
+        if (!a || !b) return false;
+        return (a.name || "") === (b.name || "")
+          && resolvePetAvatarForDisplay(a.avatar) === resolvePetAvatarForDisplay(b.avatar)
+          && (a.sub || "") === (b.sub || "")
+          && (a.weight || "") === (b.weight || "")
+          && (a.memo || "") === (b.memo || "");
+      }
+
+      function markPetEditDirty() {
+        petEditDirty = true;
+      }
+
+      function hasUnsavedPetEdit() {
+        if (petEditDirty) return true;
+        if (!petEditBaseline) return false;
+        return !petEditValuesEqual(getCurrentPetEditValues(), petEditBaseline);
+      }
+
+      function showPetDiscardConfirm() {
+        const overlay = document.getElementById("petDiscardConfirmOverlay");
+        if (!overlay) return;
+        overlay.classList.add("show");
+        overlay.setAttribute("aria-hidden", "false");
+      }
+
+      function hidePetDiscardConfirm() {
+        const overlay = document.getElementById("petDiscardConfirmOverlay");
+        if (!overlay) return;
+        overlay.classList.remove("show");
+        overlay.setAttribute("aria-hidden", "true");
+      }
+
+      function clearPetEditPendingNavigation() {
+        petEditPendingNav = null;
+        petEditPendingTab = null;
+      }
+
+      function confirmLeavePetEdit(nav, tab) {
+        if (!hasUnsavedPetEdit()) {
+          petEditBaseline = null;
+          petEditDirty = false;
+          clearPetEditPendingNavigation();
+          return true;
+        }
+        petEditPendingNav = nav || null;
+        petEditPendingTab = tab || null;
+        showPetDiscardConfirm();
+        return false;
+      }
+
+      function completePetEditLeave() {
+        petEditBaseline = null;
+        petEditDirty = false;
+        hidePetDiscardConfirm();
+        const nav = petEditPendingNav;
+        const tab = petEditPendingTab;
+        clearPetEditPendingNavigation();
+        if (nav) setActiveView(nav);
+        else if (tab) setActiveView(tab === "walk" ? "walkHome" : tab === "pet" ? "pet_monthly" : tab);
+      }
+
+      function tryLeavePetEdit(nav, tab) {
+        if (!confirmLeavePetEdit(nav, tab)) return false;
+        if (nav) setActiveView(nav);
+        else if (tab) setActiveView(tab === "walk" ? "walkHome" : tab === "pet" ? "pet_monthly" : tab);
+        return true;
+      }
+
+      function initPetEditForm() {
+        const hint = document.getElementById("petEditHint");
+        const nameInput = document.getElementById("petEditNameInput");
+        const weightInput = document.getElementById("petEditWeightInput");
+        const memoInput = document.getElementById("petEditMemoInput");
+        const safe = getPrimaryDogDisplayName();
+        if (hint) hint.textContent = safe + "의 정보를 수정할 수 있어요.";
+        if (nameInput) nameInput.value = state.dogName || "";
+        if (weightInput) weightInput.value = state.primaryPetWeight || "";
+        if (memoInput) memoInput.value = state.primaryPetMemo || "";
+        setPetAvatarElement(document.getElementById("petEditAvatarImg"), state.primaryPetAvatar);
+        const parsed = parsePrimaryPetSubline(state.primaryPetSub || getDogInfoSubline());
+        setSelectByLabel("petEditBreedSelect", parsed.breed);
+        setSelectByLabel("petEditAgeSelect", parsed.age);
+        setSelectByLabel("petEditSexSelect", parsed.sex);
+        petEditDirty = false;
+        petEditBaseline = getCurrentPetEditValues();
+      }
+
+      function savePetEditForm() {
+        const nameInput = document.getElementById("petEditNameInput");
+        const newName = nameInput ? nameInput.value.trim() : "";
+        if (!newName) {
+          alert("반려견 이름을 입력해 주세요.");
+          return;
+        }
+        const avatarImg = document.getElementById("petEditAvatarImg");
+        const rawAvatar = avatarImg
+          ? (avatarImg.getAttribute("src") || avatarImg.src || DEFAULT_PET_AVATAR)
+          : DEFAULT_PET_AVATAR;
+        state.dogName = newName;
+        state.primaryPetAvatar = normalizePetAvatarForStorage(rawAvatar);
+        state.primaryPetSub = getPetEditSubline();
+        state.primaryPetWeight = (document.getElementById("petEditWeightInput") || {}).value || "";
+        state.primaryPetMemo = ((document.getElementById("petEditMemoInput") || {}).value || "").trim();
+        const dogNameInput = document.getElementById("dogNameInput");
+        if (dogNameInput) dogNameInput.value = newName;
+        const saveResult = savePrimaryPetToStorage();
+        petEditBaseline = null;
+        petEditDirty = false;
+        syncPrimaryPetDisplay();
+        setActiveView("pet_monthly");
+        requestAnimationFrame(() => syncPrimaryPetDisplay());
+        if (!saveResult.ok) {
+          alert("반려견 정보를 저장하지 못했어요. 잠시 후 다시 시도해 주세요.");
+          return;
+        }
+        if (!saveResult.avatarSaved && state.primaryPetAvatar.startsWith("data:")) {
+          alert("정보는 저장되었어요. 프로필 사진이 너무 커서 사진은 저장하지 못했어요.");
+        }
       }
 
       function normalizeLegacyExtraPetEntry(x) {
@@ -4796,8 +5263,47 @@
         } catch (_) {}
       }
 
+      function loadCompletedWalkRecordsFromStorage() {
+        try {
+          const j = JSON.parse(localStorage.getItem(COMPLETED_WALK_RECORDS_KEY) || "[]");
+          state.completedWalkRecords = Array.isArray(j) ? j : [];
+        } catch (_) {
+          state.completedWalkRecords = [];
+        }
+      }
+
+      function writeCompletedWalkRecords() {
+        try {
+          localStorage.setItem(COMPLETED_WALK_RECORDS_KEY, JSON.stringify(state.completedWalkRecords || []));
+        } catch (_) {}
+      }
+
       function readCompletedWalkRecords() {
         return state.completedWalkRecords || [];
+      }
+
+      function computeConsecutiveWalkStreak(records) {
+        const all = Array.isArray(records) ? records : [];
+        if (!all.length) return 0;
+        const walkDates = new Set(all.map((r) => r.date).filter(Boolean));
+        if (!walkDates.size) return 0;
+        const today = new Date();
+        let streak = 0;
+        const d = new Date(today);
+        while (true) {
+          const ds = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+          if (walkDates.has(ds)) {
+            streak++;
+            d.setDate(d.getDate() - 1);
+          } else {
+            break;
+          }
+        }
+        return streak;
+      }
+
+      function getPrimaryDogDisplayName() {
+        return (state.dogName || "").trim() || "반려견";
       }
 
       function saveCompletedWalk(opts) {
@@ -4823,6 +5329,8 @@
         };
         if (!state.completedWalkRecords) state.completedWalkRecords = [];
         state.completedWalkRecords.push(rec);
+        writeCompletedWalkRecords();
+        syncHomeWalkStats();
         return rec;
       }
 
@@ -4912,13 +5420,22 @@
         }
         if (name === "mypage") applyUserProfileToMypage();
         if (name === "mypage_edit") initProfileEditBaseline();
+        if (name === "pet_edit") initPetEditForm();
         if (name === "home") { syncHomeDogName(); syncHomeWalkStats(); renderSchedules(); syncHomeGreeting(); ensureWeatherLoaded(); ensureHomeMiniMap(); }
         if (name === "userInfo" || name === "dogInfo") syncUserProfileFromForm();
         if (name === "walkHome") {
           ensureWalkHomeMap();
           if (shouldShowWesenPrompt()) showWesenPrompt();
         }
-        if (name === "walk") { ensureWalkLiveMap(); ensureWeatherLoaded(); setSheetState("collapsed"); }
+        if (name === "walk") {
+          ensureWalkLiveMap();
+          ensureWeatherLoaded();
+          setSheetState("collapsed");
+          requestAnimationFrame(() => {
+            syncWalkSheetExpandedPx();
+            setTimeout(syncWalkSheetExpandedPx, 120);
+          });
+        }
         if (name === "explore") ensureExploreMap();
         if (name === "pet_monthly") { syncPetDogName(); syncPetPersonality(); initPetlogCarousel(); syncPetlogSections(); }
         if (name === "pet_walk_monthly") {
@@ -4980,23 +5497,12 @@
         const todayKm = todayRecords.reduce((sum, r) => sum + (Number(r.distance) || 0), 0);
         const todayCount = todayRecords.length;
 
-        const walkDates = new Set(all.map(r => r.date));
-        let streak = 0;
-        const d = new Date(today);
-        while (true) {
-          const ds = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-          if (walkDates.has(ds)) {
-            streak++;
-            d.setDate(d.getDate() - 1);
-          } else {
-            break;
-          }
-        }
+        const streak = computeConsecutiveWalkStreak(all);
 
         const useDemo = all.length === 0;
         const displayKm = useDemo ? "4.2" : todayKm.toFixed(1);
         const displayCount = useDemo ? 2 : todayCount;
-        const displayStreak = useDemo ? 48 : streak;
+        const displayStreak = streak;
 
         const homeStatKm = document.getElementById("homeStatKm");
         const homeStatCount = document.getElementById("homeStatCount");
@@ -5720,11 +6226,14 @@
       function syncPetDogName() {
         const el = document.getElementById("petDogName");
         const subEl = document.getElementById("petDogSub");
-        const safe = (state.dogName || "").trim() || "반려견";
+        const avatarImg = document.getElementById("petDogAvatarImg");
+        const safe = getPrimaryDogDisplayName();
         if (el) el.textContent = safe;
         const sub = (state.primaryPetSub || "").trim() || getDogInfoSubline();
         if (subEl) subEl.textContent = sub || "견종 · 나이 · 성별";
+        setPetAvatarElement(avatarImg, state.primaryPetAvatar);
         if (renderCalDogChips) renderCalDogChips();
+        syncPetlogBadge();
       }
 
       // === 오늘의 일정 (Home) ===
@@ -6698,12 +7207,16 @@
         if (nav && getActiveViewName() === "mypage_edit" && nav !== "mypage_edit" && !confirmLeaveProfileEdit(nav, null)) {
           skipDefaultNav = true;
         }
+        if (nav && getActiveViewName() === "pet_edit" && nav !== "pet_edit" && !confirmLeavePetEdit(nav, null)) {
+          skipDefaultNav = true;
+        }
         if (!skipDefaultNavForWalk && !skipDefaultNav && nav) setActiveView(nav);
 
         const tabEl = e.target && e.target.closest ? e.target.closest("[data-tab]") : null;
         const tab = tabEl && tabEl.getAttribute ? tabEl.getAttribute("data-tab") : null;
         if (tab) {
           if (getActiveViewName() === "mypage_edit" && !confirmLeaveProfileEdit(null, tab)) return;
+          if (getActiveViewName() === "pet_edit" && !confirmLeavePetEdit(null, tab)) return;
           setActiveView(tab === "walk" ? "walkHome" : tab === "pet" ? "pet_monthly" : tab);
         }
       });
@@ -6724,6 +7237,7 @@
           return;
         }
         if (getActiveViewName() === "mypage_edit" && nav !== "mypage_edit" && !confirmLeaveProfileEdit(nav, null)) return;
+        if (getActiveViewName() === "pet_edit" && nav !== "pet_edit" && !confirmLeavePetEdit(nav, null)) return;
         if (nav === "dogInfoTraits") prepareDogInfoTraitsEntry(el);
         setActiveView(nav);
       });
@@ -6959,6 +7473,7 @@
 
       // Dog name binding (dogInfo -> home) + primary pet subline (종·나이·성별)
       loadPrimaryPetProfileFromStorage();
+      loadCompletedWalkRecordsFromStorage();
       loadUserProfileFromStorage();
       applyUserProfileToMypage();
       const dogNameInput = document.getElementById("dogNameInput");
@@ -7028,13 +7543,10 @@
             const pick = devDogPool[Math.floor(Math.random() * devDogPool.length)];
             state.dogName = pick;
             state.primaryPetSub = "개발 모드 · 임의 반려견";
-            try {
-              localStorage.setItem(PRIMARY_PET_KEY, JSON.stringify({ name: pick, sub: state.primaryPetSub }));
-            } catch (_) {}
+            savePrimaryPetToStorage();
             const dn = document.getElementById("dogNameInput");
             if (dn) dn.value = pick;
-            syncHomeDogName();
-            syncPetDogName();
+            syncPrimaryPetDisplay();
           }
           setActiveView("home");
         });
@@ -7105,9 +7617,9 @@
       const walkDogChangeMenu = document.getElementById("walkDogChangeMenu");
       let voiceOn = true;
       let sheetState = "mid";
-      let voiceGuidanceTimer = null;
       let voiceGuidanceStep = 0;
       let voiceStyle = "male_calm";
+      loadVoiceSettingsFromStorage();
       const NATURAL_VOICE_PROFILE = { rate: 1, pitch: 1 };
       const CHROME_SOFT_WARM_PITCH = 0.5;
       const CURATED_WINDOWS_VOICES = {
@@ -7121,6 +7633,13 @@
       const synth = window.speechSynthesis;
       function isMacPlatform() {
         return /Macintosh|Mac OS X|iPhone|iPad|iPod/i.test(navigator.userAgent || "");
+      }
+      function isIOSDevice() {
+        return /iPhone|iPad|iPod/i.test(navigator.userAgent || "");
+      }
+      function isSafariBrowser() {
+        const ua = navigator.userAgent || "";
+        return /Safari/i.test(ua) && !/Chrome|CriOS|FxiOS|Edg|OPR/i.test(ua);
       }
       function isWindowsPlatform() {
         return /Windows/i.test(navigator.userAgent || "");
@@ -7201,7 +7720,12 @@
       }
       function pickChromeVoice(style, voices) {
         const femaleKo = pickChromeFemaleVoice(voices);
-        if (style === "male_calm") return femaleKo;
+        if (style === "male_calm") {
+          const maleKo = voices.find((voice) => !isFemaleKoVoice(voice))
+            || voices.find((voice) => voiceNameMatches(voice, [/injoon/i, /인준/i, /male/i, /남성/i]))
+            || voices[0] || null;
+          return maleKo || femaleKo;
+        }
         const curated = findCuratedVoice(CURATED_WINDOWS_VOICES.female_soft.patterns, voices);
         return curated || femaleKo;
       }
@@ -7227,8 +7751,61 @@
         if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = refreshSpeechVoices;
       }
 
-      function speak(text) {
-        if (!voiceOn || !synth) return;
+      let speechQueue = [];
+      let speechSpeaking = false;
+      let voiceGuidanceTimer = null;
+
+      function flushSpeechQueue() {
+        speechQueue = [];
+        speechSpeaking = false;
+      }
+
+      function processSpeechQueue() {
+        if (!voiceOn || !synth || speechSpeaking || !speechQueue.length) return;
+        speechSpeaking = true;
+        const text = speechQueue.shift();
+        const utter = new SpeechSynthesisUtterance(text);
+        configureSpeechUtterance(utter, voiceStyle);
+        const done = () => {
+          speechSpeaking = false;
+          if (speechQueue.length) {
+            setTimeout(processSpeechQueue, isIOSDevice() ? 350 : 120);
+          }
+        };
+        utter.onend = done;
+        utter.onerror = done;
+        synth.speak(utter);
+      }
+
+      function ensureSpeechReady() {
+        if (!synth) return;
+        synth.getVoices();
+        if (synth.paused) synth.resume();
+      }
+
+      function speak(text, onEnd) {
+        if (!voiceOn || !synth) {
+          if (onEnd) onEnd();
+          return;
+        }
+        ensureSpeechReady();
+        if (onEnd) {
+          const utter = new SpeechSynthesisUtterance(text);
+          configureSpeechUtterance(utter, voiceStyle);
+          const done = () => {
+            setTimeout(onEnd, isIOSDevice() ? 300 : 80);
+          };
+          utter.onend = done;
+          utter.onerror = done;
+          if (!isIOSDevice()) synth.cancel();
+          synth.speak(utter);
+          return;
+        }
+        if (isIOSDevice()) {
+          speechQueue.push(text);
+          processSpeechQueue();
+          return;
+        }
         synth.cancel();
         const utter = new SpeechSynthesisUtterance(text);
         configureSpeechUtterance(utter, voiceStyle);
@@ -7259,40 +7836,51 @@
         ];
       }
 
+      function scheduleVoiceGuidanceStep(delayMs, fn) {
+        voiceGuidanceTimer = setTimeout(fn, delayMs);
+      }
+
       function startVoiceGuidance(routeName, routeMeta, isFreeWalk) {
         stopVoiceGuidance();
         voiceGuidanceStep = 0;
+        const freeMessages = [
+          "좋은 페이스로 걷고 있어요!",
+          "주변을 살펴보세요. 좋은 경치가 보일 수 있어요.",
+          "지금까지 잘 걷고 있어요. 계속 화이팅!",
+          "수분 보충 잊지 마세요.",
+          "반려견의 컨디션도 체크해 주세요.",
+        ];
         if (isFreeWalk) {
-          speak("자유 산책을 시작합니다. 원하는 길을 자유롭게 걸어보세요!");
-          voiceGuidanceTimer = setInterval(() => {
-            voiceGuidanceStep++;
-            const freeMessages = [
-              "좋은 페이스로 걷고 있어요!",
-              "주변을 살펴보세요. 좋은 경치가 보일 수 있어요.",
-              "지금까지 잘 걷고 있어요. 계속 화이팅!",
-              "수분 보충 잊지 마세요.",
-              "반려견의 컨디션도 체크해 주세요.",
-            ];
-            const msg = freeMessages[(voiceGuidanceStep - 1) % freeMessages.length];
-            speak(msg);
-          }, 45000);
+          speak("자유 산책을 시작합니다. 원하는 길을 자유롭게 걸어보세요!", () => {
+            scheduleVoiceGuidanceStep(45000, function runFreeGuidance() {
+              if (!voiceOn) return;
+              const msg = freeMessages[voiceGuidanceStep % freeMessages.length];
+              voiceGuidanceStep++;
+              speak(msg, () => scheduleVoiceGuidanceStep(45000, runFreeGuidance));
+            });
+          });
           return;
         }
         const script = buildGuidanceScript(routeName, routeMeta);
-        speak(script[0]);
-        voiceGuidanceTimer = setInterval(() => {
-          voiceGuidanceStep++;
-          if (voiceGuidanceStep < script.length) {
-            speak(script[voiceGuidanceStep]);
-          } else {
+        const runGuidedStep = (step) => {
+          if (!voiceOn || step >= script.length) {
             stopVoiceGuidance();
+            return;
           }
-        }, 30000);
+          speak(script[step], () => {
+            scheduleVoiceGuidanceStep(30000, () => runGuidedStep(step + 1));
+          });
+        };
+        speak(script[0], () => scheduleVoiceGuidanceStep(30000, () => runGuidedStep(1)));
       }
 
       function stopVoiceGuidance() {
-        if (voiceGuidanceTimer) { clearInterval(voiceGuidanceTimer); voiceGuidanceTimer = null; }
-        if (synth) synth.cancel();
+        if (voiceGuidanceTimer) {
+          clearTimeout(voiceGuidanceTimer);
+          voiceGuidanceTimer = null;
+        }
+        flushSpeechQueue();
+        if (synth && !isIOSDevice()) synth.cancel();
         voiceGuidanceStep = 0;
       }
 
@@ -7356,23 +7944,139 @@
         if (chip) chip.textContent = voiceOn ? "음성 안내 중" : "산책 중";
         if (!voiceOn && synth) synth.cancel();
       }
+      function setReportAccordionOpen(open) {
+        const body = document.getElementById("walkReportBody");
+        const arrow = document.getElementById("walkReportArrow");
+        if (!body) return;
+        body.style.display = open ? "" : "none";
+        if (arrow) arrow.classList.toggle("open", open);
+      }
+      function measureWalkSheetExpandedHeight() {
+        const minForReport = 620;
+        if (!walkLiveSheet) return minForReport;
+        const reportAccordion = document.getElementById("walkReportAccordion");
+        const reportBody = document.getElementById("walkReportBody");
+        const reportGrid = document.getElementById("walkReportGrid");
+        if (!reportAccordion) return minForReport;
+
+        const handle = walkLiveSheet.querySelector(".walk-live-sheet-handle");
+        const sheetTop = walkLiveSheet.querySelector(".walk-sheet-top");
+        const scroll = walkLiveSheet.querySelector(".walk-live-sheet-scroll");
+        let scrollWasHidden = false;
+        let bodyWasHidden = false;
+
+        if (reportBody && getComputedStyle(reportBody).display === "none") {
+          bodyWasHidden = true;
+          reportBody.style.setProperty("display", "block", "important");
+        }
+
+        if (scroll && getComputedStyle(scroll).display === "none") {
+          scrollWasHidden = true;
+          scroll.style.setProperty("display", "flex", "important");
+          scroll.style.setProperty("position", "absolute");
+          scroll.style.setProperty("left", "0");
+          scroll.style.setProperty("right", "0");
+          scroll.style.setProperty("width", "100%");
+          scroll.style.setProperty("visibility", "hidden");
+          scroll.style.setProperty("pointer-events", "none");
+        }
+
+        let total = 0;
+        if (handle) total += handle.offsetHeight;
+        if (sheetTop) total += sheetTop.offsetHeight;
+
+        if (scroll && scroll.offsetHeight) {
+          total += scroll.offsetHeight;
+        } else {
+          const log = walkLiveSheet.querySelector(".walk-live-log");
+          const actions = walkLiveSheet.querySelector(".walk-live-actions");
+          if (log) total += log.offsetHeight;
+          if (actions) total += actions.offsetHeight;
+        }
+
+        if (reportGrid && reportGrid.offsetHeight) {
+          const fromTop = (handle ? handle.offsetHeight : 0) + (sheetTop ? sheetTop.offsetHeight : 0);
+          const gridBottom = reportGrid.offsetTop + reportGrid.offsetHeight;
+          const actions = reportGrid.closest(".walk-live-actions");
+          if (actions) {
+            total = Math.max(total, fromTop + actions.offsetTop + gridBottom + 36);
+          }
+        }
+
+        if (scrollWasHidden) {
+          scroll.style.removeProperty("display");
+          scroll.style.removeProperty("position");
+          scroll.style.removeProperty("left");
+          scroll.style.removeProperty("right");
+          scroll.style.removeProperty("width");
+          scroll.style.removeProperty("visibility");
+          scroll.style.removeProperty("pointer-events");
+        }
+        if (bodyWasHidden) {
+          reportBody.style.removeProperty("display");
+        }
+
+        if (sheetState === "expanded") {
+          const sheetRect = walkLiveSheet.getBoundingClientRect();
+          const measureTarget = reportGrid || reportAccordion;
+          const targetRect = measureTarget.getBoundingClientRect();
+          if (sheetRect.height > 0 && targetRect.height > 0) {
+            total = Math.max(total, Math.ceil(targetRect.bottom - sheetRect.top + 36));
+          }
+        }
+
+        return Math.max(minForReport, total + 32);
+      }
+      function syncWalkCollapsedPeek() {
+        const walkLiveEl = walkLiveSheet && walkLiveSheet.closest(".walk-live");
+        if (!walkLiveEl || !walkLiveSheet) return 118;
+        const handle = walkLiveSheet.querySelector(".walk-live-sheet-handle");
+        const sheetTop = walkLiveSheet.querySelector(".walk-sheet-top");
+        let h = 0;
+        if (handle) h += handle.offsetHeight;
+        if (sheetTop) h += sheetTop.offsetHeight;
+        const peek = Math.max(108, Math.ceil(h + 2));
+        walkLiveEl.style.setProperty("--walk-sheet-collapsed-peek", peek + "px");
+        return peek;
+      }
+      function syncWalkSheetFabMetrics() {
+        const walkLiveEl = walkLiveSheet && walkLiveSheet.closest(".walk-live");
+        if (!walkLiveEl || !walkLiveSheet) return;
+        const handle = walkLiveSheet.querySelector(".walk-live-sheet-handle");
+        const sheetTop = walkLiveSheet.querySelector(".walk-sheet-top");
+        const handleH = handle ? handle.offsetHeight : 22;
+        const topH = sheetTop ? sheetTop.offsetHeight : 90;
+        if (handle) walkLiveEl.style.setProperty("--walk-sheet-handle-h", handleH + "px");
+        if (sheetTop) walkLiveEl.style.setProperty("--walk-sheet-top-h", topH + "px");
+        const peek = syncWalkCollapsedPeek();
+        const gap = parseFloat(getComputedStyle(walkLiveEl).getPropertyValue("--walk-fab-stack-gap")) || 8;
+        const boost = parseFloat(getComputedStyle(walkLiveEl).getPropertyValue("--walk-fab-base-boost")) || 22;
+        const baseBottom = Math.ceil(peek - handleH + gap + boost);
+        walkLiveEl.style.setProperty("--walk-fab-base-bottom", baseBottom + "px");
+        walkLiveEl.style.removeProperty("--walk-fab-bottom");
+      }
       function syncWalkSheetExpandedPx() {
         const walkLiveEl = walkLiveSheet && walkLiveSheet.closest(".walk-live");
         if (!walkLiveEl) return;
-        const cap = Math.round((walkLiveEl.clientHeight || window.innerHeight) * 0.58);
-        walkLiveEl.style.setProperty("--walk-sheet-expanded-px", Math.min(540, cap) + "px");
+        const viewH = walkLiveEl.clientHeight || window.innerHeight;
+        const maxCap = Math.min(820, Math.round(viewH * 0.88));
+        const target = measureWalkSheetExpandedHeight();
+        walkLiveEl.style.setProperty("--walk-sheet-expanded-px", Math.min(Math.max(target, 620), maxCap) + "px");
+        syncWalkSheetFabMetrics();
       }
       function setSheetState(next) {
         sheetState = (next === "expanded") ? "expanded" : "collapsed";
         if (!walkLiveSheet) return;
         walkLiveSheet.classList.remove("state-collapsed", "state-expanded");
         walkLiveSheet.classList.add(sheetState === "expanded" ? "state-expanded" : "state-collapsed");
+        setReportAccordionOpen(sheetState === "expanded");
         const walkLiveEl = walkLiveSheet.closest(".walk-live");
         if (walkLiveEl) {
-          syncWalkSheetExpandedPx();
+          if (sheetState === "expanded") syncWalkSheetExpandedPx();
+          else syncWalkSheetFabMetrics();
           walkLiveEl.classList.toggle("sheet-expanded", sheetState === "expanded");
         }
-        setTimeout(() => walkLiveMap && walkLiveMap.invalidateSize(), 280);
+        setTimeout(() => walkLiveMap && walkLiveMap.invalidateSize(), 300);
       }
 
       if (walkMoreBtn && walkMoreMenu) {
@@ -7862,35 +8566,144 @@
       const editAvatarBtn = document.getElementById("editAvatarBtn");
       const editAvatarInput = document.getElementById("editAvatarInput");
       const editAvatarImg = document.getElementById("editAvatarImg");
+      const editNicknameInput = document.getElementById("editNicknameInput");
+      if (editNicknameInput) {
+        editNicknameInput.addEventListener("input", markProfileEditDirty);
+        editNicknameInput.addEventListener("change", markProfileEditDirty);
+      }
       if (editAvatarBtn && editAvatarInput) {
-        editAvatarBtn.addEventListener("click", () => editAvatarInput.click());
+        editAvatarBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          editAvatarInput.value = "";
+          editAvatarInput.click();
+        });
       }
       if (editAvatarInput) {
         editAvatarInput.addEventListener("change", () => {
           const file = editAvatarInput.files && editAvatarInput.files[0];
-          if (!file || !file.type.startsWith("image/")) return;
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (editAvatarImg) editAvatarImg.src = reader.result;
-          };
-          reader.readAsDataURL(file);
+          if (!file || !isImageUploadFile(file)) return;
+          compressImageFile(file)
+            .then((dataUrl) => {
+              setProfileAvatarElement(editAvatarImg, dataUrl);
+              markProfileEditDirty();
+            })
+            .catch(() => {
+              const reader = new FileReader();
+              reader.onload = () => {
+                setProfileAvatarElement(editAvatarImg, reader.result);
+                markProfileEditDirty();
+              };
+              reader.readAsDataURL(file);
+            });
+        });
+      }
+
+      const mypageEditBackBtn = document.getElementById("mypageEditBackBtn");
+      if (mypageEditBackBtn) {
+        mypageEditBackBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          tryLeaveMypageProfileEdit("mypage", null);
         });
       }
 
       const saveNicknameBtn = document.getElementById("saveNicknameBtn");
       if (saveNicknameBtn) {
-        saveNicknameBtn.addEventListener("click", () => {
-          const editInput = document.getElementById("editNicknameInput");
-          const newName = editInput ? editInput.value.trim() : "";
-          if (!newName) return;
-          const draft = getCurrentProfileEditValues();
-          state.userNickname = newName;
-          state.userAvatar = draft.avatar;
-          if (signupNicknameInput) signupNicknameInput.value = newName;
-          applyUserProfileToMypage();
-          saveUserProfileToStorage();
-          profileEditBaseline = null;
-          setActiveView("mypage");
+        saveNicknameBtn.addEventListener("click", () => saveProfileFromEditForm());
+      }
+
+      const petDiscardConfirmStay = document.getElementById("petDiscardConfirmStay");
+      const petDiscardConfirmLeave = document.getElementById("petDiscardConfirmLeave");
+      const petDiscardConfirmOverlay = document.getElementById("petDiscardConfirmOverlay");
+      if (petDiscardConfirmStay) {
+        petDiscardConfirmStay.addEventListener("click", () => {
+          hidePetDiscardConfirm();
+          clearPetEditPendingNavigation();
+        });
+      }
+      if (petDiscardConfirmLeave) {
+        petDiscardConfirmLeave.addEventListener("click", completePetEditLeave);
+      }
+      if (petDiscardConfirmOverlay) {
+        petDiscardConfirmOverlay.addEventListener("click", (e) => {
+          if (e.target === petDiscardConfirmOverlay) {
+            hidePetDiscardConfirm();
+            clearPetEditPendingNavigation();
+          }
+        });
+      }
+
+      const petEditAvatarBtn = document.getElementById("petEditAvatarBtn");
+      const petEditAvatarInput = document.getElementById("petEditAvatarInput");
+      const petEditAvatarImg = document.getElementById("petEditAvatarImg");
+      const petEditNameInput = document.getElementById("petEditNameInput");
+      const petEditWeightInput = document.getElementById("petEditWeightInput");
+      const petEditMemoInput = document.getElementById("petEditMemoInput");
+      ["petEditAgeSelect", "petEditBreedSelect", "petEditSexSelect"].forEach((id) => {
+        const sel = document.getElementById(id);
+        if (sel) sel.addEventListener("change", markPetEditDirty);
+      });
+      if (petEditNameInput) {
+        petEditNameInput.addEventListener("input", markPetEditDirty);
+        petEditNameInput.addEventListener("change", markPetEditDirty);
+      }
+      if (petEditWeightInput) {
+        petEditWeightInput.addEventListener("input", markPetEditDirty);
+        petEditWeightInput.addEventListener("change", markPetEditDirty);
+      }
+      if (petEditMemoInput) {
+        petEditMemoInput.addEventListener("input", markPetEditDirty);
+        petEditMemoInput.addEventListener("change", markPetEditDirty);
+      }
+      if (petEditAvatarBtn && petEditAvatarInput) {
+        petEditAvatarBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          petEditAvatarInput.value = "";
+          petEditAvatarInput.click();
+        });
+      }
+      if (petEditAvatarInput) {
+        petEditAvatarInput.addEventListener("change", () => {
+          const file = petEditAvatarInput.files && petEditAvatarInput.files[0];
+          if (!file || !isImageUploadFile(file)) return;
+          compressImageFile(file)
+            .then((dataUrl) => {
+              setPetAvatarElement(petEditAvatarImg, dataUrl);
+              markPetEditDirty();
+            })
+            .catch(() => {
+              const reader = new FileReader();
+              reader.onload = () => {
+                setPetAvatarElement(petEditAvatarImg, reader.result);
+                markPetEditDirty();
+              };
+              reader.readAsDataURL(file);
+            });
+        });
+      }
+      const petEditBackBtn = document.getElementById("petEditBackBtn");
+      if (petEditBackBtn) {
+        petEditBackBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          tryLeavePetEdit("pet_monthly", null);
+        });
+      }
+      const petEditSaveBtn = document.getElementById("petEditSaveBtn");
+      if (petEditSaveBtn) {
+        petEditSaveBtn.addEventListener("click", () => savePetEditForm());
+      }
+
+      const toggleVoiceDefault = document.getElementById("toggleVoiceDefault");
+      if (toggleVoiceDefault) {
+        toggleVoiceDefault.addEventListener("change", saveVoiceSettingsToStorage);
+      }
+
+      const petWalkMonthlyDetailBtn = document.getElementById("petWalkMonthlyDetailBtn");
+      if (petWalkMonthlyDetailBtn) {
+        petWalkMonthlyDetailBtn.addEventListener("click", () => {
+          state.journalSelectedDay = state.calSelectedDay || new Date().getDate();
+          setActiveView("pet_journal");
         });
       }
 
@@ -7900,9 +8713,9 @@
       };
       function speakPreviewForStyle(style, text) {
         if (!synth) return;
-        synth.cancel();
         const utter = new SpeechSynthesisUtterance(text || voicePreviewTexts[style] || voicePreviewTexts.male_calm);
         configureSpeechUtterance(utter, style);
+        if (!isIOSDevice()) synth.cancel();
         synth.speak(utter);
       }
       function speakPreview(text) {
@@ -7917,6 +8730,7 @@
           voiceStyleGroup.querySelectorAll(".voice-style-opt").forEach(b => b.classList.remove("selected"));
           btn.classList.add("selected");
           voiceStyle = btn.dataset.voiceStyle;
+          saveVoiceSettingsToStorage();
           speakPreviewForStyle(voiceStyle);
         });
       }
@@ -8094,26 +8908,12 @@
         }
       }
 
-      function applyWalkDayCircleStyle(day, activeDogs) {
+      function applyWalkDayCircleStyle(day) {
         const numEl = day.querySelector(".cal-day-num");
         if (!numEl) return;
         clearWalkDayCircleStyle(day);
-        const walked = (day.dataset.dogs || "").split(",").map((s) => s.trim()).filter(Boolean);
-        const visible = walked.filter((d) => activeDogs.includes(d));
-        if (!visible.length) return;
-
-        const colors = visible.map((d) => getDogColorById(d === "bori" ? "primary" : d));
-        if (colors.length === 1) {
-          day.classList.add("has-walk-single");
-          day.style.setProperty("--walk-fill", colors[0]);
-        } else if (colors.length === 2) {
-          day.classList.add("has-walk-multi");
-          day.style.setProperty("--walk-fill-1", colors[0]);
-          day.style.setProperty("--walk-fill-2", colors[1]);
-        } else {
-          day.classList.add("has-walk-multi");
-          numEl.style.background = "linear-gradient(135deg, " + colors.join(", ") + ")";
-        }
+        day.classList.add("has-walk-single");
+        day.style.setProperty("--walk-fill", "#10A34E");
       }
 
       function getScheduleTypeLabel(type) {
@@ -8467,7 +9267,7 @@
                 .some((d) => activeDogs.includes(d));
             }
             day.classList.toggle("has-walk", showWalk);
-            if (showWalk) applyWalkDayCircleStyle(day, activeDogs);
+            if (showWalk) applyWalkDayCircleStyle(day);
             else clearWalkDayCircleStyle(day);
           });
         }
@@ -8588,6 +9388,46 @@
           });
         }
 
+        function saveJournalImageBlob(blob) {
+          if (!blob) {
+            showShareToast("이미지 저장에 실패했어요.");
+            return;
+          }
+          const fileName = "petwalk-journal-" + (state.journalSelectedDay || "record") + ".png";
+          const file = new File([blob], fileName, { type: "image/png" });
+          if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+            navigator.share({ files: [file], title: "PetWalk 산책 일지" })
+              .then(function() { showShareToast("사진이 저장되었습니다!"); })
+              .catch(function(err) {
+                if (err && err.name === "AbortError") return;
+                fallbackDownloadJournalBlob(blob, fileName);
+              });
+            return;
+          }
+          fallbackDownloadJournalBlob(blob, fileName);
+        }
+
+        function fallbackDownloadJournalBlob(blob, fileName) {
+          if (isIOSDevice() || isSafariBrowser()) {
+            const url = URL.createObjectURL(blob);
+            const win = window.open(url, "_blank");
+            if (win) {
+              showShareToast("이미지를 길게 눌러 사진에 저장하세요.");
+            } else {
+              showShareToast("이미지를 길게 눌러 사진에 저장하세요.");
+              window.location.href = url;
+            }
+            setTimeout(function() { URL.revokeObjectURL(url); }, 60000);
+            return;
+          }
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
+          a.download = fileName;
+          a.click();
+          URL.revokeObjectURL(a.href);
+          showShareToast("사진이 저장되었습니다!");
+        }
+
         if (sharePhotoBtn) {
           sharePhotoBtn.addEventListener("click", function() {
             const target = document.getElementById("journalCaptureArea");
@@ -8598,13 +9438,7 @@
             closeSharePopup();
             html2canvas(target, { backgroundColor: "#ffffff", scale: 2, useCORS: true }).then(function(canvas) {
               canvas.toBlob(function(blob) {
-                if (!blob) return;
-                const a = document.createElement("a");
-                a.href = URL.createObjectURL(blob);
-                a.download = "petwalk-journal-" + (state.journalSelectedDay || "record") + ".png";
-                a.click();
-                URL.revokeObjectURL(a.href);
-                showShareToast("사진이 저장되었습니다!");
+                saveJournalImageBlob(blob);
               }, "image/png");
             }).catch(function() {
               showShareToast("이미지 저장에 실패했어요.");
@@ -8746,8 +9580,11 @@
             poop: !!((document.getElementById("manualRecordPoop") || {}).checked),
           };
           writeManualWalkRecords(readManualWalkRecords().concat(rec));
+          state.manualWalkRecords = readManualWalkRecords();
           renderManualWalkRecords();
           if (renderCalDogChips) renderCalDogChips();
+          syncHomeWalkStats();
+          syncPetlogSections();
           closeManualRecordModal();
         });
       }
@@ -9194,20 +10031,7 @@
 
       function getWalkStreakCount() {
         const all = readManualWalkRecords().concat(readCompletedWalkRecords());
-        const today = new Date();
-        const walkDates = new Set(all.map((r) => r.date));
-        let streak = 0;
-        const d = new Date(today);
-        while (true) {
-          const ds = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-          if (walkDates.has(ds)) {
-            streak++;
-            d.setDate(d.getDate() - 1);
-          } else {
-            break;
-          }
-        }
-        return all.length === 0 ? 38 : streak;
+        return computeConsecutiveWalkStreak(all);
       }
 
       function formatWalkRelativeLabel(dateStr, timeStr) {
@@ -9256,13 +10080,13 @@
           const dateStr = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
           weekDates.push(dateStr);
           const hasWalk = walkedDates.has(dateStr);
-          daysHtml += '<span class="petlog-mini-day' + (isToday ? " is-today" : "") + (hasWalk ? " has-walk" : "") + '">' + d.getDate() + "</span>";
+          daysHtml += '<span class="petlog-mini-day' + (isToday ? " is-today" : "") + (hasWalk ? " has-walk" : "") + '"><span class="petlog-mini-day-num">' + d.getDate() + "</span></span>";
         }
         daysHtml += "</div>";
         calEl.innerHTML = dowHtml + daysHtml;
 
         if (dotsEl) {
-          const dogName = (state.dogName || "").trim() || "보리";
+          const dogName = getPrimaryDogDisplayName();
           const color = getDogColorById("primary");
           dotsEl.innerHTML = '<span class="petlog-mini-dog-dot" style="--dog-color:' + color + '" title="' + escapeHtml(dogName) + '"></span>';
         }
@@ -9329,7 +10153,7 @@
         const titleEl = document.getElementById("petlogBadgeTitle");
         const subEl = document.getElementById("petlogBadgeSub");
         const artEl = document.getElementById("petlogBadgeArt");
-        const dogName = (state.dogName || "").trim() || "보리";
+        const dogName = getPrimaryDogDisplayName();
         const streak = getWalkStreakCount();
         if (titleEl) titleEl.textContent = dogName + "의 뱃지";
         if (subEl) subEl.textContent = streak + "일 연속 산책 달성 중!";
@@ -9422,6 +10246,11 @@
           slide.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
           const dogId = "extra_" + i;
           slide.dataset.dogId = dogId;
+          const tapBtn = slide.querySelector(".petlog-profile-tap");
+          if (tapBtn) {
+            tapBtn.removeAttribute("data-nav");
+            tapBtn.setAttribute("aria-label", pet.name + " 프로필");
+          }
           const nameEl = slide.querySelector(".petlog-profile-name");
           if (nameEl) nameEl.textContent = pet.name;
           const subEl = slide.querySelector(".petlog-profile-sub");
